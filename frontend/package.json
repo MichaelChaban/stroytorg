@@ -4,9 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve stroytorg --configuration=development",
-    "test": "nx test",
-    "lint": "nx lint",
-    "build": "nx build",
+    "test": "nx test stroytorg --configuration=development",
+    "lint": "nx lint stroytorg --configuration=development",
+    "build": "nx build stroytorg --configuration=development",
     "generate:component": "nx generate @schematics/angular:component",
     "generate:service": "nx generate @schematics/angular:service",
     "list-projects": "nx list",

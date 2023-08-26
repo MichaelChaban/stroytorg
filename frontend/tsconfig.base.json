@@ -14,7 +14,15 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@frontend/shared/button": ["libs/shared/button/src/index.ts"],
+      "@frontend/stroytorg/main-page": [
+        "libs/stroytorg/main-page/src/index.ts"
+      ],
+      "@frontend/stroytorg/stroytorg-routing-shell": [
+        "libs/stroytorg/stroytorg-routing-shell/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

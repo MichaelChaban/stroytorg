@@ -4,6 +4,14 @@ export const stroytorgRoutingShellRoutes: Route[] = [
   {
     path: 'welcome',
     loadChildren: () =>
-      import('@frontend/stroytorg/main-page').then((c) => c.MainPageComponent),
+      import('@frontend/stroytorg/main-page').then((c) => c.mainPageRoutes),
+  },
+  {
+    path: '*',
+    redirectTo: ''
+  },
+  {
+    path: '**',
+    redirectTo: ''
   },
 ];

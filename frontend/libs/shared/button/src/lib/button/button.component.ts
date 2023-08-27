@@ -1,25 +1,43 @@
 /* eslint-disable @angular-eslint/component-selector */
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DefaultButtonDirective } from './components/directives/defaultButton.directive';
-import { RouterButtonDirective } from './components/directives/routerButton.directive';
+import { ButtonStyleDirective } from './components/directives/buttonStyle.directive';
+import { ButtonStyle, ButtonType } from '@frontend/shared/domain';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'stroytorg-button',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonStyleDirective, MatIconModule],
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  hostDirectives: [
-    DefaultButtonDirective, RouterButtonDirective
-  ]
 })
 export class ButtonComponent {
+  @Input()
+  buttonStyle = ButtonStyle.DEFAULT_BUTTON;
 
   @Input()
-  queryParams: { [key: string]: any} = {};
+  buttonType: ButtonType = ButtonType.DEFAULT_BUTTON;
 
   @Input()
-  params: { [key: string]: any} = {};
+  queryParams: { [key: string]: any } = {};
+
+  @Input()
+  params: { [key: string]: any } = {};
+
+  @Input()
+  label!: string;
+
+  @Input()
+  buttonFn = new EventEmitter<any>();
+
+  callButtonFn(){
+    this.buttonFn.emit();
+  }
 }

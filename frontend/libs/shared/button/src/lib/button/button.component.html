@@ -1,1 +1,13 @@
-<button>Hello</button>
+<ng-container *ngIf="buttonType === 'DEFAULT_BUTTON'">
+    <button [buttonStyle]="buttonStyle">{{ label }}</button>
+</ng-container>
+
+<ng-container *ngIf="buttonType === 'ICON_BUTTON'">
+    <div class="display-flex">
+        <button [buttonStyle]="buttonStyle">{{ label }}</button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="buttonType === 'ROUTER_BUTTON'">
+    <button [buttonStyle]="buttonStyle">{{ label }}</button>
+</ng-container>

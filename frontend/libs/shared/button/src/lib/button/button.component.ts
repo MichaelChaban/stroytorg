@@ -1,19 +1,15 @@
 /* eslint-disable @angular-eslint/component-selector */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonStyleDirective } from './components/directives/buttonStyle.directive';
-import { ButtonStyle, ButtonType } from '@frontend/shared/domain';
+import { ButtonStyle, Icons } from '@frontend/shared/domain';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'stroytorg-button',
   standalone: true,
-  imports: [CommonModule, ButtonStyleDirective, MatIconModule],
+  imports: [CommonModule, ButtonStyleDirective, MatIconModule, RouterModule],
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,21 +19,14 @@ export class ButtonComponent {
   buttonStyle = ButtonStyle.DEFAULT_BUTTON;
 
   @Input()
-  buttonType: ButtonType = ButtonType.DEFAULT_BUTTON;
+  routerLink!: string;
 
   @Input()
-  queryParams: { [key: string]: any } = {};
-
-  @Input()
-  params: { [key: string]: any } = {};
+  queryParams!: { [key: string]: any };
 
   @Input()
   label!: string;
 
   @Input()
-  buttonFn = new EventEmitter<any>();
-
-  callButtonFn(){
-    this.buttonFn.emit();
-  }
+  icon!: Icons;
 }

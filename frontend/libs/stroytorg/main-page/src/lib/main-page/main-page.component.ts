@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '@frontend/shared/button';
-import { ButtonStyle, ButtonType } from '@frontend/shared/domain';
+import { ButtonStyle, Icons } from '@frontend/shared/domain';
 
 @Component({
   selector: 'frontend-main-page',
@@ -11,6 +11,6 @@ import { ButtonStyle, ButtonType } from '@frontend/shared/domain';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent {
-  buttonStyle = ButtonStyle.WARNING_BUTTON;
-  buttonType = ButtonType.ICON_BUTTON;
+  buttonStyle = ButtonStyle.PRIMARY_BUTTON;
+  icon = Icons.HOME;
 }

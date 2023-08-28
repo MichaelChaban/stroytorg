@@ -1,5 +1,0 @@
-export enum ButtonType{
-    DEFAULT_BUTTON = 'DEFAULT_BUTTON',
-    ICON_BUTTON = 'ICON_BUTTON',
-    ROUTER_BUTTON = 'ROUTER_BUTTON',
-}

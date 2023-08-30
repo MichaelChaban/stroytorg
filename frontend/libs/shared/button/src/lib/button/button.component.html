@@ -1,5 +1,16 @@
-<button [buttonStyle]="buttonStyle" [class.icon-button]="icon.length > 0" [routerLink]="routerLink"
-    [queryParams]="queryParams" class="icon-button d-inline-flex align-items-center">
-    <mat-icon *ngIf="icon.length > 0" class="me-2">{{ icon }}</mat-icon>
-    <span>{{ label }}</span>
+<button
+  class="d-inline-flex align-items-center"
+  [buttonStyle]="buttonStyle"
+  [class.icon-label-button]="icon && label"
+  [class.icon-button]="icon && !label"
+  [routerLink]="routerLink"
+  [queryParams]="queryParams"
+  matTooltip="Info about the action"
+>
+  <mat-icon *ngIf="icon" [class.me-2]="label">
+    {{ icon }}
+  </mat-icon>
+  <span *ngIf="label">
+    {{ label }}
+  </span>
 </button>

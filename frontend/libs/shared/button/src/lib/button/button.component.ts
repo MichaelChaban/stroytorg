@@ -1,23 +1,21 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonStyleDirective } from './components/directives/buttonStyle.directive';
-import { ButtonStyle, Icons } from '@frontend/shared/domain';
-import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { ButtonStyleDirective, TooltipDirective } from './components/directives/index';
+import { ButtonStyle, Icons } from '@frontend/shared/domain';
+import { TooltipModel } from './models/index';
 
 @Component({
   selector: 'stroytorg-button',
   standalone: true,
   imports: [
     CommonModule,
-    ButtonStyleDirective, 
+    ButtonStyleDirective,
+    TooltipDirective,
     RouterModule,
     MatIconModule,
-    MatTooltipModule,
-    MatButtonModule
   ],
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
@@ -38,4 +36,7 @@ export class ButtonComponent {
 
   @Input()
   icon?: Icons;
+
+  @Input()
+  tooltip!: TooltipModel;
 }

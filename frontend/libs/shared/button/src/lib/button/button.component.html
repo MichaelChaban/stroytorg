@@ -1,11 +1,11 @@
 <button
-  class="d-inline-flex align-items-center"
+  class="button d-inline-flex align-items-center"
   [buttonStyle]="buttonStyle"
+  [tooltip]="tooltip"
   [class.icon-label-button]="icon && label"
   [class.icon-button]="icon && !label"
   [routerLink]="routerLink"
   [queryParams]="queryParams"
-  matTooltip="Info about the action"
 >
   <mat-icon *ngIf="icon" [class.me-2]="label">
     {{ icon }}

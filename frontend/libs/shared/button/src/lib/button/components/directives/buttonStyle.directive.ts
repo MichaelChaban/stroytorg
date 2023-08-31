@@ -1,7 +1,6 @@
 /* eslint-disable @angular-eslint/directive-selector */
 import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 import { ButtonStyle } from '@frontend/shared/domain';
-import { setDefaultButton, setPrimaryButton, setWarningButton } from './utils/buttonStyle.utils';
 
 @Directive({
   selector: '[buttonStyle]',
@@ -9,15 +8,27 @@ import { setDefaultButton, setPrimaryButton, setWarningButton } from './utils/bu
 })
 export class ButtonStyleDirective {
 
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
+
   @Input()
   set buttonStyle(value: ButtonStyle){
     switch(value){
-      case 'DEFAULT_BUTTON': setDefaultButton(this.el, this.renderer); break;
-      case 'PRIMARY_BUTTON': setPrimaryButton(this.el, this.renderer); break;
-      case 'WARNING_BUTTON': setWarningButton(this.el, this.renderer); break;
+      case 'DEFAULT_BUTTON': this.setDefaultButton(); break;
+      case 'PRIMARY_BUTTON': this.setPrimaryButton(); break;
+      case 'WARNING_BUTTON': this.setWarningButton(); break;
       default: break;
     }
   }
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  private setDefaultButton(){
+    return this.renderer.addClass(this.el.nativeElement, 'default-button')
+  }
+  
+  private setPrimaryButton(){
+    return this.renderer.addClass(this.el.nativeElement, 'primary-button')
+  }
+  
+  private setWarningButton(){
+    return this.renderer.addClass(this.el.nativeElement, 'warning-button')
+  }
 }

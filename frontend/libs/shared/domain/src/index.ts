@@ -1,1 +1,5 @@
-export * from './lib/enums/index';
+export * from './lib/enums';
+
+export * from './lib/models';
+
+export * from './lib/utils';

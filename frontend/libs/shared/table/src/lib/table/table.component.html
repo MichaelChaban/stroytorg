@@ -1,0 +1,23 @@
+<div class="mat-elevation-z8">
+  <table class="full-width-table" aria-label="Elements">
+    <thead>
+      <tr>
+        <th *ngFor="let header of columnDefinitions">
+          {{ header.headerName }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of pagedData.pagedData.data">
+        <td *ngFor="let column of columnDefinitions">
+          {{ column.value ? column.value(row) : '' }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <stroytorg-paginator
+    [currentPage]="pagedData.page"
+    [totalPages]="pagedData.pagedData.total"
+  >
+  </stroytorg-paginator>
+</div>

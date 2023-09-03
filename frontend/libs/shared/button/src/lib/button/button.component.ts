@@ -4,8 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonStyleDirective, TooltipDirective } from './components/directives/index';
-import { ButtonStyle, Icons } from '@frontend/shared/domain';
-import { TooltipModel } from './models/index';
+import { ButtonStyle, Icons, TooltipModel } from '@frontend/shared/domain';
 
 @Component({
   selector: 'stroytorg-button',

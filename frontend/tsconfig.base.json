@@ -17,6 +17,8 @@
     "paths": {
       "@frontend/shared/button": ["libs/shared/button/src/index.ts"],
       "@frontend/shared/domain": ["libs/shared/domain/src/index.ts"],
+      "@frontend/shared/paginator": ["libs/shared/paginator/src/index.ts"],
+      "@frontend/shared/table": ["libs/shared/table/src/index.ts"],
       "@frontend/stroytorg/main-page": [
         "libs/stroytorg/main-page/src/index.ts"
       ],

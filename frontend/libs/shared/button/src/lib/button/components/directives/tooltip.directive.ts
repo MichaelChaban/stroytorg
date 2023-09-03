@@ -6,7 +6,7 @@ import {
   Renderer2,
   HostListener,
 } from '@angular/core';
-import { TooltipModel } from '../../models';
+import { TooltipModel } from '../../../../../../domain/src/lib/models';
 
 @Directive({
   selector: '[tooltip]',

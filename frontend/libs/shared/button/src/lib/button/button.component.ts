@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonStyleDirective, TooltipDirective } from './directives/index';
 import { ButtonStyle, Icons } from '@frontend/shared/domain';
-import { TooltipModel } from '@frontend/shared/domain';
+import { TooltipPropertiesModel } from '@frontend/shared/domain';
 
 @Component({
   selector: 'stroytorg-button',
@@ -38,5 +38,5 @@ export class ButtonComponent {
   icon?: Icons;
 
   @Input()
-  tooltip!: TooltipModel;
+  tooltip!: TooltipPropertiesModel;
 }

@@ -23,7 +23,7 @@ import { TooltipPropertiesModel } from '@frontend/shared/domain';
 })
 export class ButtonComponent {
   @Input()
-  buttonStyle = ButtonStyle.DEFAULT_BUTTON;
+  buttonStyle?: ButtonStyle;
 
   @Input()
   routerLink?: string;
@@ -38,5 +38,5 @@ export class ButtonComponent {
   icon?: Icons;
 
   @Input()
-  tooltip!: TooltipPropertiesModel;
+  tooltip?: TooltipPropertiesModel;
 }

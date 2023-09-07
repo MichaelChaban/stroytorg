@@ -1,0 +1,38 @@
+<ng-container *ngIf="cardDefinition && cardData">
+  <div *ngFor="let element of cardDefinition">
+    <div *ngIf="element.elementType === 'label' && element?.label">
+      <h3>{{ element.label | keyOrFn : cardData }}</h3>
+    </div>
+    <div *ngIf="element.elementType === 'content' && element?.content">
+      <p>{{ element.content | keyOrFn : cardData }}</p>
+    </div>
+    <div
+      *ngIf="
+        element.elementType === 'actions' &&
+        element?.actions &&
+        (element?.actions)!.length > 0
+      "
+    >
+      <div *ngFor="let action of element.actions">
+        <stroytorg-button
+          [buttonStyle]="action?.buttonStyle"
+          [label]="action?.label"
+          [tooltip]="action?.tooltip"
+          [icon]="action?.icon"
+          [queryParams]="isSet(action?.queryParams)"
+          [routerLink]="isSet(action?.routerLink)"
+          (click)="action?.onClick(cardData)"
+        ></stroytorg-button>
+      </div>
+    </div>
+    <div *ngIf="element.elementType === 'image' && element?.imageName">
+      <img
+        [src]="baseImagePath + element.imageName"
+        [alt]="element.imageName"
+      />
+    </div>
+    <div *ngIf="element.elementType === 'template' && element?.template">
+      <ng-template [ngTemplateOutlet]="element.template!"></ng-template>
+    </div>
+  </div>
+</ng-container>

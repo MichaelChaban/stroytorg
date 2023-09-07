@@ -1,1 +1,5 @@
-<p>card works!</p>
+<div *ngIf="data && cardDefinition" class="cards-container">
+    <ng-container *ngFor="let row of data">
+        <card-element class="card" [cardDefinition]="cardDefinition" [cardData]="row"></card-element>
+    </ng-container>
+</div>

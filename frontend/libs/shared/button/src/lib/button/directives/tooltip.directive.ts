@@ -13,7 +13,7 @@ import { TooltipPropertiesModel } from '@frontend/shared/domain';
   standalone: true,
 })
 export class TooltipDirective {
-  @Input() tooltip!: TooltipPropertiesModel | null;
+  @Input() tooltip?: TooltipPropertiesModel;
 
   private tooltipElement!: HTMLElement;
   private tooltipTimeout: any;

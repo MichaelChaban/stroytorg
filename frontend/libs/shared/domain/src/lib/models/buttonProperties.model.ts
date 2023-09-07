@@ -4,8 +4,9 @@ import { TooltipPropertiesModel } from "./tooltipProperties.model";
 export interface ButtonPropertiesModel{
     label?: string;
     icon?: Icons;
-    buttonStyle: ButtonStyle;
+    buttonStyle?: ButtonStyle;
     routerLink?: string;
     queryParams?: string;
     tooltip?: TooltipPropertiesModel;
+    onClick?: (row: any) => any;
 }

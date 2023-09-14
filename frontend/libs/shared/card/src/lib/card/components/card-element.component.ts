@@ -20,6 +20,8 @@ export class CardElementComponent<T> {
 
   baseImagePath = '';
 
+  showContent = false;
+
   isSet(element: any) {
     if (element) {
       return element;

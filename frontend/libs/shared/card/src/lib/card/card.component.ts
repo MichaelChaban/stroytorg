@@ -15,9 +15,6 @@ import { CardElementComponent } from './components/card-element.component';
 })
 export class CardComponent<T> {
   @Input()
-  elementsInRowCount!: number;
-
-  @Input()
   cardDefinition!: CardDefinition[];
 
   @Input()

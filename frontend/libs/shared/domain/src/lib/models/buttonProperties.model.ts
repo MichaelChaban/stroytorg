@@ -8,5 +8,6 @@ export interface ButtonPropertiesModel{
     routerLink?: string;
     queryParams?: string;
     tooltip?: TooltipPropertiesModel;
+    width?: number;
     onClick?: (row: any) => any;
 }

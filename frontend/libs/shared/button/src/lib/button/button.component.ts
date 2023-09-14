@@ -39,4 +39,14 @@ export class ButtonComponent {
 
   @Input()
   tooltip?: TooltipPropertiesModel;
+
+  @Input()
+  width?: number;
+
+  getButtonStyles(){
+    if(!this.width){
+      return null;
+    }
+    return { '--button-width': `${this.width}%` }
+  }
 }

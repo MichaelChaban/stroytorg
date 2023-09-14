@@ -3,7 +3,7 @@ import { ButtonPropertiesModel } from '@frontend/shared/domain';
 
 export interface CardDefinition {
   elementType: CardElementType;
-  display: 'flex' | 'block';
+  display?: 'flex';
   label?: string | ( (row: any) => string );
   content?: string | ( (row: any) => string );
   imageName?: string;

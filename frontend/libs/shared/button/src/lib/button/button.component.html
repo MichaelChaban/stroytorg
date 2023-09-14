@@ -6,12 +6,13 @@
   [class.icon-label-button]="icon && label"
   [class.icon-button]="icon && !label"
   [routerLink]="routerLink"
+  [ngStyle]="getButtonStyles()"
   [queryParams]="queryParams"
 >
   <mat-icon *ngIf="icon" [class.me-2]="label">
     {{ icon }}
   </mat-icon>
-  <span *ngIf="label">
+  <span *ngIf="label" [class.m-auto]="!icon">
     {{ label }}
   </span>
 </button>

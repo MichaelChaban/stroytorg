@@ -6,14 +6,14 @@ import {
   Renderer2,
   HostListener,
 } from '@angular/core';
-import { TooltipModel } from '../../models';
+import { TooltipPropertiesModel } from '@frontend/shared/domain';
 
 @Directive({
   selector: '[tooltip]',
   standalone: true,
 })
 export class TooltipDirective {
-  @Input() tooltip!: TooltipModel | null;
+  @Input() tooltip?: TooltipPropertiesModel;
 
   private tooltipElement!: HTMLElement;
   private tooltipTimeout: any;

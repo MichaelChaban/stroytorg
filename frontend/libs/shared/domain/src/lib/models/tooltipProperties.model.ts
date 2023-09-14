@@ -1,4 +1,4 @@
-export interface TooltipModel{
+export interface TooltipPropertiesModel{
     tooltipText: string;
     tooltipPosition: 'above' | 'left' | 'right' | 'below';
 }

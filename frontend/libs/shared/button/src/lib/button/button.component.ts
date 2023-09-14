@@ -3,8 +3,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { ButtonStyleDirective, TooltipDirective } from './components/directives/index';
-import { ButtonStyle, Icons, TooltipModel } from '@frontend/shared/domain';
+import { ButtonStyleDirective, TooltipDirective } from './directives/index';
+import { ButtonStyle, Icons, TooltipPropertiesModel } from '@frontend/shared/domain';
 
 @Component({
   selector: 'stroytorg-button',
@@ -22,7 +22,7 @@ import { ButtonStyle, Icons, TooltipModel } from '@frontend/shared/domain';
 })
 export class ButtonComponent {
   @Input()
-  buttonStyle = ButtonStyle.DEFAULT_BUTTON;
+  buttonStyle?: ButtonStyle;
 
   @Input()
   routerLink?: string;
@@ -37,5 +37,15 @@ export class ButtonComponent {
   icon?: Icons;
 
   @Input()
-  tooltip!: TooltipModel;
+  tooltip?: TooltipPropertiesModel;
+
+  @Input()
+  width?: number;
+
+  getButtonStyles(){
+    if(!this.width){
+      return null;
+    }
+    return { '--button-width': `${this.width}%` }
+  }
 }

@@ -1,0 +1,40 @@
+<ng-container *ngIf="cardDefinition && cardData">
+  <div class="w-100" *ngFor="let element of cardDefinition">
+    <div
+      *ngIf="element.elementType === 'label' || element.elementType === 'content' || element.elementType === 'actions'"
+      class="default-p" [class.display-flex]="element.displayFlex">
+      <ng-container *ngIf="element.elementType === 'label' && element?.label">
+        <h1 class="fw-bold fs-5 mt-3">{{ element.label | keyOrFn :
+          cardData }}</h1>
+      </ng-container>
+      <ng-container *ngIf="element.elementType === 'content' && element?.content">
+        <div class="content-container" [ngClass]="{'show-all': showContent}">
+          {{ element.content | keyOrFn : cardData }}
+        </div>
+        <p class="text-end">
+          <small class="show-more-less" (click)="showContent = !showContent">
+            {{ showContent ? 'менше' : 'більше' }}
+          </small>
+        </p>
+      </ng-container>
+      <ng-container *ngIf="
+          element.elementType === 'actions' &&
+          element?.actions
+        ">
+        <div class="mt-1" *ngFor="let action of element.actions">
+          <stroytorg-button [width]="action.width" [buttonStyle]="action?.buttonStyle" [label]="action?.label"
+            [tooltip]="action?.tooltip" [icon]="action?.icon" [queryParams]="isSet(action?.queryParams)"
+            [routerLink]="isSet(action?.routerLink)" (click)="action?.onClick(cardData)"></stroytorg-button>
+        </div>
+      </ng-container>
+    </div>
+
+    <ng-container *ngIf="element.elementType === 'image' && element?.imageName">
+      <div class="imageClass" [style.--imageName]="element?.imageName"></div>
+    </ng-container>
+
+    <ng-container *ngIf="element.elementType === 'template' && element?.template">
+      <ng-template [ngTemplateOutlet]="element.template!"></ng-template>
+    </ng-container>    
+  </div>
+</ng-container>

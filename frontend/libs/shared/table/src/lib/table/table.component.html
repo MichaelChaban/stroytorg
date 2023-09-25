@@ -1,8 +1,8 @@
-<div class="mat-elevation-z8">
-  <table class="full-width-table" aria-label="Elements">
+<div class="table-responsive">
+  <table class="table table-hover">
     <thead>
       <tr>
-        <th *ngFor="let header of columnDefinitions">
+        <th class="min-width-6" *ngFor="let header of columnDefinitions">
           {{ header.headerName }}
         </th>
       </tr>
@@ -10,14 +10,14 @@
     <tbody>
       <tr *ngFor="let row of pagedData.pagedData.data">
         <td *ngFor="let column of columnDefinitions">
-          {{ column.value ? column.value(row) : '' }}
+          {{ column.value ? (column.value | keyOrFn: row) : '' }}
         </td>
       </tr>
     </tbody>
   </table>
-  <stroytorg-paginator
-    [currentPage]="pagedData.page"
-    [totalPages]="pagedData.pagedData.total"
-  >
-  </stroytorg-paginator>
 </div>
+<stroytorg-paginator
+[currentPage]="pagedData.page"
+[totalPages]="pagedData.pagedData.total"
+>
+</stroytorg-paginator>

@@ -11,11 +11,11 @@ import { getMainPageTableColumnDefinitions } from './main-page.columnDefinition'
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
 })
-export class MainPageComponent implements OnInit{
-  pagedData: PagedData<any> = { number: 0, page: 0, pagedData: {total: 2, data: [{ id: 1, name: 'Hello' }, { id: 2, name: 'Hello' }]} }
+export class MainPageComponent implements OnInit {
+  pagedData: PagedData<any> = { number: 0, page: 1, pagedData: { total: 2, data: [{ id: 1, name: 'Hello', age: '1', year: '2022',  }, { id: 2, name: 'Hello', age: '2', year: '2021' }] } }
   columnDefinitions!: ColumnsDefinition[];
 
-  ngOnInit(){
+  ngOnInit() {
     this.columnDefinitions = getMainPageTableColumnDefinitions();
   }
 }

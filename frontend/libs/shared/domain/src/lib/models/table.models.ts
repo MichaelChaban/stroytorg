@@ -3,7 +3,7 @@ import { ButtonStyle, Icons } from "@frontend/shared/domain";
 export interface ColumnsDefinition{
     headerName?: string;
     headerAction?: ColumnActionDefinition[];
-    value?: (row: any) => any | string;
+    value?: ((row: any) => any) | string;
     columnAction?: ColumnActionDefinition[];
     widthClass?: string;
 }

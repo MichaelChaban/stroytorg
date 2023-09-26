@@ -1,16 +1,15 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-
-import { Icons, InputType } from '@frontend/shared/domain';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ButtonComponent } from '@frontend/shared/button';
+import { ButtonStyle, Icons, InputType, TooltipPropertiesModel } from '@frontend/shared/domain';
 
 @Component({
-  selector: 'stroytorg-editor',
+  selector: 'stroytorg-input',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatInputModule, MatFormFieldModule],
+  imports: [CommonModule, MatInputModule, MatFormFieldModule, ButtonComponent],
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,4 +30,9 @@ export class InputComponent {
 
   @Input()
   icon?: Icons;
+
+  @Input()
+  buttonTooltip?: TooltipPropertiesModel = { tooltipPosition: 'above', tooltipText: 'Пошук' };
+
+  buttonStyle: ButtonStyle = ButtonStyle.PRIMARY_BUTTON;
 }

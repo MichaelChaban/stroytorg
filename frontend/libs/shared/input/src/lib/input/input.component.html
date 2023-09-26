@@ -1,4 +1,18 @@
-<input class="input" [type]="inputType" [placeholder]="placeholder ?? ''" [readOnly]="readonly" [value]="text">
-<ng-container *ngIf="icon">
-    <mat-icon>{{ icon }}</mat-icon>
-</ng-container>
+<div class="display-flex align-items-center gap-1">
+  <input
+    class="input"
+    [class.input-with-icon]="icon"
+    [type]="inputType"
+    [placeholder]="placeholder ?? ''"
+    [readOnly]="readonly"
+    [value]="text"
+  />
+  <ng-container *ngIf="icon">
+    <stroytorg-button
+      class="input-button"
+      [buttonStyle]="buttonStyle"
+      [tooltip]="buttonTooltip"
+      [icon]="icon"
+    ></stroytorg-button>
+  </ng-container>
+</div>

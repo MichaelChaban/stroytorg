@@ -1,0 +1,18 @@
+.input{
+    padding: 0.3em 0.5em;
+    border: 0.25px solid #ccc;
+    border-radius: 0.3em;
+}
+
+.input:focus{
+    border: none;
+    outline: 2px solid #ff7e47;
+}
+
+.input-button>button{
+    padding-block: 0.25em !important;
+}
+
+.gap-1{
+    gap: 0.2em;
+}

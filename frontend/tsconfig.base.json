@@ -18,7 +18,7 @@
       "@frontend/shared/button": ["libs/shared/button/src/index.ts"],
       "@frontend/shared/card": ["libs/shared/card/src/index.ts"],
       "@frontend/shared/domain": ["libs/shared/domain/src/index.ts"],
-      "@frontend/shared/input": ["libs/shared/input/src/index.ts"],
+      "@frontend/shared/form": ["libs/shared/form/src/index.ts"],
       "@frontend/stroytorg/main-page": [
         "libs/stroytorg/main-page/src/index.ts"
       ],

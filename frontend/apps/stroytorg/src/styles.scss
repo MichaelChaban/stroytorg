@@ -1,6 +1,8 @@
 @import './node_modules/bootstrap/scss/bootstrap.scss';
 @import './styles/index.scss';
+@import url('https://fonts.googleapis.com/css2?family=Exo+2&display=swap');
 
 body {
     background-color: #FAFDFF;
+    font-family: 'Exo 2', sans-serif;
 }

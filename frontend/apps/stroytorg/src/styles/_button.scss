@@ -1,6 +1,7 @@
 //////////////
 /// BUTTON ///
 //////////////
+
 .button {
   border-radius: 5px;
   padding: 0.75em 2em;
@@ -10,11 +11,15 @@
   width: var(--button-width);
 }
 
+.button:active{
+  transform: scale(0.98);
+}
 
 
 //////////////////////////////
 /// DEFAULT BUTTON PALETTE ///
 //////////////////////////////
+
 .default-button {
   background-color: #ff7e47;
   color: #ffffff;
@@ -22,13 +27,8 @@
 }
 
 .default-button:hover {
-  background-color: #f3a280;
+  box-shadow:#db4c0f50 0 0 0 3px;
   cursor: pointer;
-}
-
-.default-button:active {
-  background-color: #db4b0f;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
 }
 
 
@@ -36,6 +36,7 @@
 //////////////////////////////
 /// PRIMARY BUTTON PALETTE ///
 //////////////////////////////
+
 .primary-button {
   background-color: transparent;
   color: #ff7e47;
@@ -43,13 +44,8 @@
 }
 
 .primary-button:hover {
-  background-color: #fff1eb;
+  box-shadow:#ffac8975 0 0 0 3px;
   cursor: pointer;
-}
-
-.primary-button:active {
-  background-color: #fadacd;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -57,6 +53,7 @@
 //////////////////////////////
 /// WARNING BUTTON PALETTE ///
 //////////////////////////////
+
 .warning-button {
   background-color: #d10202;
   color: #ffffff;
@@ -64,13 +61,8 @@
 }
 
 .warning-button:hover {
-  background-color: #ff5252;
+  box-shadow:#ff525286 0 0 0 3px;
   cursor: pointer;
-}
-
-.warning-button:active {
-  background-color: #a70000;
-  box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.7);
 }
 
 
@@ -78,6 +70,7 @@
 //////////////////////////////////
 /// BUTTON WITH LABEL AND ICON ///
 //////////////////////////////////
+
 .icon-label-button {
   display: flex;
   align-items: center;
@@ -91,6 +84,7 @@
 /////////////////////////////
 /// BUTTON ONLY WITH ICON ///
 /////////////////////////////
+
 .icon-button {
   display: flex;
   align-items: center;
@@ -103,6 +97,7 @@
 ///////////////
 /// TOOLTIP ///
 ///////////////
+
 .tooltip {
   position: absolute;
   background-color: rgb(0, 0, 0, 0.7);

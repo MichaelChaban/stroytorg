@@ -1,7 +1,7 @@
 {
-  "name": "shared-input",
+  "name": "shared-form",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/input/src",
+  "sourceRoot": "libs/shared/form/src",
   "prefix": "frontend",
   "tags": [],
   "projectType": "library",
@@ -10,7 +10,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/shared/input/jest.config.ts",
+        "jestConfig": "libs/shared/form/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -25,8 +25,8 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "libs/shared/input/**/*.ts",
-          "libs/shared/input/**/*.html"
+          "libs/shared/form/**/*.ts",
+          "libs/shared/form/**/*.html"
         ]
       }
     }

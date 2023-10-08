@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'shared-input',
+  displayName: 'shared-form',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../coverage/libs/shared/input',
+  coverageDirectory: '../../../coverage/libs/shared/form',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

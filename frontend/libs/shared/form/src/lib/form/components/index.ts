@@ -1,1 +1,2 @@
-export * from './input/input.component';
+export * from './input';
+export * from './error-tooltip';

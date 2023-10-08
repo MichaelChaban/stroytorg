@@ -3,23 +3,17 @@
     <input
       placeholder
       class="input"
-      [class.input-invalid]="formControl.errors"
+      title=""
+      [class.input-invalid]="formControl.errors && formControl.touched"
       [formControl]="formControl"
       [type]="inputType"
       [readOnly]="readonly"
       [value]="value ?? ''"
       [required]="isRequired()"
     />
-    <label id="label">{{ label }}</label>
-    <ng-container *ngIf="formControl && formControl.errors">
-      <div class="error-container">
-        <mat-icon class="error-icon">
-          {{ errorIcon }}
-        </mat-icon>
-        <div class="error-tooltip">
-          {{ formControl.errors | error }}
-        </div>
-      </div>
+    <label id="floating-placeholder">{{ label }}</label>
+    <ng-container *ngIf="formControl && formControl.errors && formControl.touched">
+      <error-tooltip [errors]="formControl.errors"></error-tooltip>
     </ng-container>
   </div>
   <ng-container *ngIf="button">

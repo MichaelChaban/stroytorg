@@ -2,21 +2,19 @@
 import { ChangeDetectionStrategy, Component, Input, Optional, Self } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '@frontend/shared/button';
-import { ButtonPropertiesModel, Icons, InputType } from '@frontend/shared/domain';
+import { ButtonProperties, InputType } from '@frontend/shared/domain';
 import { MatIconModule } from '@angular/material/icon';
 import { NgControl, ReactiveFormsModule } from '@angular/forms';
 import { BaseInputControls, BaseFormControlInputComponent } from '../../forms';
 import { ErrorPipe } from '../../pipes';
 import { PlaceholderDirective } from './directives/placeholder.directive';
-
-const ERROR_ICON = Icons.ERROR;
+import { ErrorTooltipComponent } from './../error-tooltip';
 
 @Component({
   selector: 'stroytorg-input',
-  standalone: true,
-  imports: [CommonModule, ButtonComponent, MatIconModule, ReactiveFormsModule, ErrorPipe, PlaceholderDirective],
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+  standalone: true,
+  imports: [CommonModule, ButtonComponent, MatIconModule, ReactiveFormsModule, ErrorPipe, PlaceholderDirective, ErrorTooltipComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -25,7 +23,7 @@ const ERROR_ICON = Icons.ERROR;
     },
   ],
 })
-export class InputComponent extends BaseFormControlInputComponent  {
+export class InputComponent extends BaseFormControlInputComponent {
 
   constructor(@Optional() @Self() ngControl: NgControl) {
     super(ngControl);
@@ -35,13 +33,11 @@ export class InputComponent extends BaseFormControlInputComponent  {
   inputType: InputType = InputType.TEXT;
 
   @Input()
-  button?: ButtonPropertiesModel;
+  button?: ButtonProperties;
 
   isSet(element: any) {
     if (element) {
       return element;
     }
   }
-
-  errorIcon = ERROR_ICON;
 }

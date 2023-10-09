@@ -1,0 +1,16 @@
+<div>
+  <button (click)="previousMonth()">Previous</button>
+  <span>
+    {{ getMonthName() }} &nbsp; {{ year }}
+  </span>
+  <button (click)="nextMonth()">Next</button>
+</div>
+<br />
+<div class="calendar">
+  <span *ngFor="let weekDay of weekDaysName" class="day">
+    {{ weekDay }}
+  </span>
+  <span *ngFor="let day of monthDays" class="day">
+    {{ day.dayNumber }}
+  </span>
+</div>

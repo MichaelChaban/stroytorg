@@ -1,4 +1,4 @@
-export enum Icons{
+export enum Icon{
     HOME = 'home',
     SEARCH = 'search',
     ERROR = 'error_outline',

@@ -3,22 +3,26 @@ import { Component, OnInit } from "@angular/core";
 import { DatePickerService } from "./services";
 import { DatePicker, WEEK_DAYS_NANE } from "./models";
 import { CommonModule } from "@angular/common";
+import { MatIconModule } from "@angular/material/icon";
+import { Icon } from "@frontend/shared/domain";
 
 @Component({
     selector: 'stroytorg-datepicker',
     templateUrl: './datePicker.component.html',
     standalone: true,
-    imports: [CommonModule]
+    imports: [CommonModule, MatIconModule]
 })
 export class DatePickerComponent implements OnInit {
-    public monthDays!: DatePicker[];
 
-    public monthNumber!: number;
-    public year!: number;
+    previosMonthIcon = Icon.DOUBLE_LEFT;
+    nextMonthIcon = Icon.DOUBLE_RIGHT;
+    monthDays!: DatePicker[];
+    monthNumber!: number;
+    year!: number;
 
-    public weekDaysName = WEEK_DAYS_NANE;
+    weekDaysName = WEEK_DAYS_NANE;
 
-    constructor(public datePickerService: DatePickerService) { }
+    constructor(readonly datePickerService: DatePickerService) { }
 
     ngOnInit(): void {
         this.setMonthDays(this.datePickerService.getCurrentMonth());

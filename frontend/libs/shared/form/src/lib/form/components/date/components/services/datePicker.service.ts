@@ -2,6 +2,8 @@ import { Day, Month } from "@frontend/shared/domain";
 import { DatePicker } from "../models";
 import { Injectable } from "@angular/core";
 
+const DAYS_IN_PICKER = 42;
+
 @Injectable({
     providedIn: 'root'
 })
@@ -20,20 +22,24 @@ export class DatePickerService {
 
     public getMonth(monthIndex: number, year: number): DatePicker[] {
         const days = [];
-        const firstday = this.createDatePicker(1, monthIndex, year);
-
-        for (let i = 1; i < firstday.weekDayNumber; i++) {
-            days.push({
-                weekDayNumber: i,
-                monthIndex: monthIndex,
-                year: year,
-            } as DatePicker);
+        const firstday = this.createDatePicker(0, monthIndex, year);
+        for (let i = firstday.weekDayNumber; i > 0; i--) {
+            const previousMonthIndex = monthIndex - 1 < 0 ? 11 : monthIndex - 1;
+            const previousYear = previousMonthIndex === 11 ? year - 1 : year;
+            const previosMonthDaysCount = new Date(previousYear, previousMonthIndex, 0).getDate();
+            days.push(this.createDatePicker(previosMonthDaysCount - 1 - i, previousMonthIndex, previousYear));
         }
         days.push(firstday);
 
-        const countDaysInMonth = new Date(year, monthIndex + 1, 0).getDate();
-        for (let i = 2; i < countDaysInMonth + 1; i++) {
+        const countDaysInMonth = new Date(year, monthIndex, 0).getDate() - 1;
+        for (let i = 1; i < countDaysInMonth + 1; i++) {
             days.push(this.createDatePicker(i, monthIndex, year));
+        }
+
+        for (let i = 0; days.length < DAYS_IN_PICKER; i++) {
+            const nextMonthIndex = monthIndex + 1 > 11 ? 0 : monthIndex + 1;
+            const nextYear = nextMonthIndex === 0 ? year + 1 : year;
+            days.push(this.createDatePicker(i, nextMonthIndex, nextYear));
         }
 
         return days;
@@ -62,7 +68,7 @@ export class DatePickerService {
         return {
             monthIndex: monthIndex,
             month: this.getMonthName(monthIndex),
-            dayNumber: dayNumber,
+            dayNumber: dayNumber + 1,
             year: year,
             weekDayNumber: weekDayNumber,
             weekDayName: this.getWeekDayShortName(weekDayNumber)

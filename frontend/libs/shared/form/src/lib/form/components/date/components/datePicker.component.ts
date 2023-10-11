@@ -34,8 +34,8 @@ export class DatePickerComponent implements OnInit {
 
     nextMonth() {
         this.monthNumber++;
-        if (this.monthNumber == 13) {
-            this.monthNumber = 1;
+        if (this.monthNumber > 11) {
+            this.monthNumber = 0;
             this.year++;
         }
         return this.setMonthDays(this.datePickerService.getMonth(this.monthNumber, this.year));
@@ -43,9 +43,8 @@ export class DatePickerComponent implements OnInit {
 
     previousMonth() {
         this.monthNumber--;
-
-        if (this.monthNumber < 1) {
-            this.monthNumber = 12;
+        if (this.monthNumber < 0) {
+            this.monthNumber = 11;
             this.year--;
         }
 
@@ -54,7 +53,8 @@ export class DatePickerComponent implements OnInit {
 
     private setMonthDays(days: DatePicker[]) {
         this.monthDays = days;
-        this.monthNumber = this.monthDays[0].monthIndex;
-        this.year = this.monthDays[0].year;
+        const currectMonthDate = this.monthDays.find(x => x.dayNumber === 1)!;
+        this.monthNumber = currectMonthDate.monthIndex;
+        this.year = currectMonthDate.year;
     }
 }

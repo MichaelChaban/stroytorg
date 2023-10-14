@@ -12,8 +12,8 @@ import { ButtonProperties, ButtonStyle, Icon, InputType } from '@frontend/shared
 })
 export class MainPageComponent {
   button: ButtonProperties = {
-    buttonStyle: ButtonStyle.PRIMARY_BUTTON,
     icon: Icon.HOME,
+    label: 'Home',
     tooltip: { tooltipPosition: 'above', tooltipText: 'Пошук' }
   };
 

@@ -1,3 +1,1 @@
-export * from './datePicker.component';
-export * from './models';
-export * from './services';
+export * from './date-picker';

@@ -9,11 +9,28 @@
   font-size: 15px;
   transition: 0.2s;
   width: var(--button-width);
+
+  &:active{
+    transform: scale(0.98);
+  }
 }
 
-.button:active{
-  transform: scale(0.98);
+
+
+/////////////////////////////
+/// SIMPLE BUTTON PALETTE ///
+/////////////////////////////
+
+.simple-button{
+  background-color: transparent;
+  border: none;
+
+  &:hover{
+    background-color: rgb(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
 }
+
 
 
 //////////////////////////////
@@ -24,11 +41,10 @@
   background-color: #ff7e47;
   color: #ffffff;
   border: none;
-}
 
-.default-button:hover {
-  box-shadow:#db4c0f50 0 0 0 3px;
-  cursor: pointer;
+  &:hover {
+    box-shadow:#db4c0f50 0 0 0 3px;
+    cursor: pointer;}
 }
 
 
@@ -41,11 +57,11 @@
   background-color: transparent;
   color: #ff7e47;
   border: 2px solid #ff7e47;
-}
 
-.primary-button:hover {
-  box-shadow:#ffac8975 0 0 0 3px;
-  cursor: pointer;
+  &:hover {
+    box-shadow:#ffac8975 0 0 0 3px;
+    cursor: pointer;
+  }
 }
 
 
@@ -58,11 +74,11 @@
   background-color: #d10202;
   color: #ffffff;
   border: none;
-}
 
-.warning-button:hover {
-  box-shadow:#ff525286 0 0 0 3px;
-  cursor: pointer;
+  &:hover {
+    box-shadow:#ff525286 0 0 0 3px;
+    cursor: pointer;
+  }
 }
 
 

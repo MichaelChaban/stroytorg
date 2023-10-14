@@ -6,7 +6,7 @@ export interface DatePickerDate {
     weekDayNumber: number;
     weekDayShortName: string;
     weekDayFullName: string;
-    className: string;
+    classNames: string;
 }
 
 export const WEEK_DAYS_NANE = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];

@@ -11,6 +11,7 @@ export class DatePickerService {
 
     private currentYear!: number;
     private currentMonthIndex!: number;
+    private readonly TODAY = new Date();
 
     constructor() {
         this.initializeDate();
@@ -23,12 +24,16 @@ export class DatePickerService {
     public getMonth(monthIndex: number, year: number): DatePickerDate[] {
         const days = [];
         const firstday = this.createDatePicker(0, monthIndex, year, 'current-month');
+        const previousMonthIndex = monthIndex - 1 < 0 ? 11 : monthIndex - 1;
+        const previousYear = previousMonthIndex === 11 ? year - 1 : year;
+        const previosMonthDaysCount = new Date(previousYear, previousMonthIndex, 0).getDate();
+        const nextMonthIndex = monthIndex + 1 > 11 ? 0 : monthIndex + 1;
+        const nextYear = nextMonthIndex === 0 ? year + 1 : year;
+        
         for (let i = firstday.weekDayNumber; i > 0; i--) {
-            const previousMonthIndex = monthIndex - 1 < 0 ? 11 : monthIndex - 1;
-            const previousYear = previousMonthIndex === 11 ? year - 1 : year;
-            const previosMonthDaysCount = new Date(previousYear, previousMonthIndex, 0).getDate();
             days.push(this.createDatePicker(previosMonthDaysCount - 1 - i, previousMonthIndex, previousYear, 'not-current-month'));
         }
+        
         days.push(firstday);
 
         const countDaysInMonth = new Date(year, monthIndex, 0).getDate() - 1;
@@ -37,8 +42,6 @@ export class DatePickerService {
         }
 
         for (let i = 0; days.length < DAYS_IN_PICKER; i++) {
-            const nextMonthIndex = monthIndex + 1 > 11 ? 0 : monthIndex + 1;
-            const nextYear = nextMonthIndex === 0 ? year + 1 : year;
             days.push(this.createDatePicker(i, nextMonthIndex, nextYear, 'not-current-month'));
         }
 
@@ -72,17 +75,16 @@ export class DatePickerService {
             monthIndex: monthIndex,
             monthDayNumber: monthDayNumber,
             weekDayNumber: weekDayNumber,
-            weekDayShortName: this.getWeekDayShortName(weekDayNumber),
-            weekDayFullName: this.getWeekDayFullName(weekDayNumber),
-            className: isToday ? 'today' : className
+            weekDayShortName: this.getWeekDayShortName(weekDayNumber + 1),
+            weekDayFullName: this.getWeekDayFullName(weekDayNumber + 1),
+            classNames: isToday ? 'today' : className
         } as DatePickerDate;
     }
 
-    private isToday(monthDayNumber: number, monthIndex: number, year: number) : boolean {
-        const today = new Date();
+    private isToday(monthDayNumber: number, monthIndex: number, year: number): boolean {
         const dateToCheck = new Date(year, monthIndex, monthDayNumber);
-        return dateToCheck.getDate() === today.getDate() &&
-            dateToCheck.getMonth() === today.getMonth() &&
-            dateToCheck.getFullYear() === today.getFullYear();
+        return dateToCheck.getDate() === this.TODAY.getDate() &&
+            dateToCheck.getMonth() === this.TODAY.getMonth() &&
+            dateToCheck.getFullYear() === this.TODAY.getFullYear();
     }
 }

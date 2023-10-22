@@ -1,11 +1,12 @@
 <div class="datepicker-container">
   <div class="p-2">
     <h4>Виберіть дату</h4>
-    <h5>{{ viewFacade.selectedDate.weekDayFullName }}, {{ viewFacade.selectedDate.month }} {{ viewFacade.selectedDate.monthDayNumber + 1 }}</h5>
+    <h5>{{ viewFacade.selectedDate.weekDayFullName }}, {{ viewFacade.selectedDate.monthName }} {{ viewFacade.selectedDate.monthDayNumber + 1 }}</h5>
+    <h6>{{ viewFacade.selectedDate.year }}</h6>
   </div>
   <div class="mt-3 display-flex justify-content-between">
     <div class="month-year-selector-container">
-      <stroytorg-button [label]="viewFacade.getMonthName()"></stroytorg-button>
+      <stroytorg-button [label]="viewFacade.getMonthName()" (click)="selectMonth()"></stroytorg-button>
       <stroytorg-button [label]="viewFacade.year.toString()"></stroytorg-button>
     </div>
     <div>
@@ -30,9 +31,9 @@
   <div class="days-container">
     <ng-container *ngFor="let day of viewFacade.monthDays; let index = index">
       <stroytorg-button
-        class="date-picker-button"
+        class="date-picker-button {{day.classNames}}"
         [label]="(day.monthDayNumber + 1).toString()"
-        (click)="selectMonth(day)"
+        (click)="selectDate(day)"
       ></stroytorg-button>
     </ng-container>
   </div>

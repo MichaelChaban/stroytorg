@@ -8,6 +8,6 @@ import { Component } from "@angular/core";
     standalone: true,
     imports: [CommonModule],
 })
-export class YearPickerComponent{
+export class YearPickerDialogComponent{
 
 }

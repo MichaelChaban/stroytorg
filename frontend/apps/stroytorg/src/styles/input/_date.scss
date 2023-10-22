@@ -34,3 +34,15 @@
     width: 2em;
     text-align: center;
 }
+
+.today {
+    & > button > span {
+        color: red;
+    }
+}
+
+.not-current-month {
+    & > button > span {
+        color:#dddddd;
+    }
+}

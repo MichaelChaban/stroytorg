@@ -1,6 +1,6 @@
 export interface DatePickerDate {
     year: number;
-    month: string;
+    monthName: string;
     monthIndex: number;
     monthDayNumber: number;
     weekDayNumber: number;

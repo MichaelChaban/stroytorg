@@ -71,7 +71,7 @@ export class DatePickerService {
         const isToday = this.isToday(monthDayNumber, monthIndex, year);
         return {
             year: year,
-            month: this.getMonthName(monthIndex),
+            monthName: this.getMonthName(monthIndex),
             monthIndex: monthIndex,
             monthDayNumber: monthDayNumber,
             weekDayNumber: weekDayNumber,
@@ -83,7 +83,7 @@ export class DatePickerService {
 
     private isToday(monthDayNumber: number, monthIndex: number, year: number): boolean {
         const dateToCheck = new Date(year, monthIndex, monthDayNumber);
-        return dateToCheck.getDate() === this.TODAY.getDate() &&
+        return dateToCheck.getDate() === this.TODAY.getDate() - 1 &&
             dateToCheck.getMonth() === this.TODAY.getMonth() &&
             dateToCheck.getFullYear() === this.TODAY.getFullYear();
     }

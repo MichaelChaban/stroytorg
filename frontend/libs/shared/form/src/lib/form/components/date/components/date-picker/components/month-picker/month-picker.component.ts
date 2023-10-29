@@ -14,7 +14,7 @@ export class MonthPickerComponent{
 
     monthNames = MONTHS_NAMES;
 
-    @Input() isVisible = false;
+    @Input() isVisible?: boolean | null;
 
     @Output() monthChange = new EventEmitter<string>();
 

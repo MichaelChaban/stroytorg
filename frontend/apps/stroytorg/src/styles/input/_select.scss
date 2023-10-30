@@ -1,0 +1,39 @@
+.select-container {
+    position: relative;
+}
+
+.input-select-container {
+    position: relative;
+
+    &>mat-icon {
+        position: absolute;
+        top: 15%;
+        right: 2%;
+        cursor: pointer;
+    }
+}
+
+.options-container {
+    width: 100%;
+    margin-top: 0.25em;
+    position: absolute;
+    border: 0.25px solid #ccc;
+    border-radius: 0.3em;
+    background-color: #ffffff;
+    z-index: 3;
+
+    &>div {
+        padding: 0.5em;
+        border-bottom: 0.25px solid #ccc;
+        transition: 0.2s;
+
+        &:last-child {
+            border: none;
+        }
+
+        &:hover {
+            background-color: #e6e6e6;
+            cursor: pointer;
+        }
+    }
+}

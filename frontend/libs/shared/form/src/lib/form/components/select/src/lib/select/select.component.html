@@ -1,0 +1,18 @@
+<div class="select-container">
+  <div class="input-select-container">
+    <stroytorg-input
+      [value]="value"
+      [label]="label"
+      [required]="required"
+      [readonly]="readonly"
+      [disabled]="disabled"
+      (click)="toggleOptionsList()"
+    ></stroytorg-input>
+    <mat-icon (click)="toggleOptionsList(true)">{{ icon }}</mat-icon>
+  </div>
+  <div class="options-container" *ngIf="showOptions && options">
+    <div *ngFor="let option of options" (click)="selectOption(option)">
+      <span>{{ option.value }}</span>
+    </div>
+  </div>
+</div>

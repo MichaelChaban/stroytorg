@@ -5,13 +5,13 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonComponent } from '@frontend/shared/button';
 import { DatePickerViewFacade } from './date-picker.view-facade';
-import { MonthPickerComponent } from './components';
+import { SelectComponent } from '../../../select/src';
 
 @Component({
   selector: 'stroytorg-datepicker',
   templateUrl: './date-picker.component.html',
   standalone: true,
-  imports: [CommonModule, MatIconModule, ButtonComponent, MonthPickerComponent],
+  imports: [CommonModule, MatIconModule, ButtonComponent, SelectComponent],
   providers: [DatePickerViewFacade],
 })
 export class DatePickerComponent implements OnInit {

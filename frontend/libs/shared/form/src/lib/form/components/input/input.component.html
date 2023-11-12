@@ -12,8 +12,10 @@
       [value]="value ?? ''"
       [required]="isRequired()"
     />
-    <label id="floating-placeholder">{{ label }}</label>
-    <ng-container *ngIf="formControl && formControl.errors && formControl.touched">
+    <label [class.active]="value" id="floating-placeholder">{{ label }}</label>
+    <ng-container
+      *ngIf="formControl && formControl.errors && formControl.touched"
+    >
       <error-tooltip [errors]="formControl.errors"></error-tooltip>
     </ng-container>
   </div>

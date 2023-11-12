@@ -7,20 +7,23 @@ import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 })
 export class PlaceholderDirective {
 
+  private inputValue = null;
+
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
-  @HostListener('input') onInput() {
+  @HostListener('input')
+  onInput() {
     this.toggleLabel();
   }
 
   private toggleLabel() {
-    const input = this.el.nativeElement;
+    this.inputValue = this.el.nativeElement.value;
     const label = this.el.nativeElement.parentElement.querySelector('label');
 
-    if (input.value) {
-      this.renderer.addClass(label, 'active');
-    } else {
-      this.renderer.removeClass(label, 'active');
+    if (this.inputValue) {
+      return this.renderer.addClass(label, 'active');
     }
+    
+    return this.renderer.removeClass(label, 'active');
   }
 }

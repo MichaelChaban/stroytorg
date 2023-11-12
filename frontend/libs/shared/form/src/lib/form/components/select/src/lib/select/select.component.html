@@ -1,4 +1,4 @@
-<div class="select-container">
+<div class="select-container" [selectStyle]="selectStyle">
   <div class="input-select-container">
     <stroytorg-input
       [value]="value"
@@ -11,8 +11,13 @@
     <mat-icon (click)="toggleOptionsList(true)">{{ icon }}</mat-icon>
   </div>
   <div class="options-container" *ngIf="showOptions && options">
-    <div *ngFor="let option of options" (click)="selectOption(option)">
-      <span>{{ option.value }}</span>
+    <div
+      class="w-100 text-truncate"
+      *ngFor="let option of options"
+      [tooltip]="getTooltip(option.label)"
+      (click)="selectOption(option)"
+    >
+      <span>{{ option.label }}</span>
     </div>
   </div>
 </div>

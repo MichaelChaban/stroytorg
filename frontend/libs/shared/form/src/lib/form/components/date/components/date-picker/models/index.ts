@@ -1,1 +1,1 @@
-export * from './date-picker-date.model';
+export * from './datePickerDate.model';

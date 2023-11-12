@@ -30,6 +30,12 @@
     text-align: center;
 }
 
+.date-picker-button-container{
+    display: flex;
+    align-self: center;
+    justify-content: center;
+}
+
 .date-picker-button > button {
     padding: 0.25em !important;
     width: 2em;

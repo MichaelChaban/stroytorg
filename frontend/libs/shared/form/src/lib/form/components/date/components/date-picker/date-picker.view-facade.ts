@@ -1,18 +1,22 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DatePickerService } from './services';
 import { Icon } from '@frontend/shared/domain';
-import { DatePickerDate, WEEK_DAYS_NANE } from './models';
-import { BehaviorSubject } from 'rxjs';
+import { DatePickerDate, MONTHS_NAMES, MONTH_OPTIONS, WEEK_DAYS_NANE } from './models';
+import { FormGroup } from '@angular/forms';
+import { createFormGroup, patchValueToModel } from './date-picker.model';
 
 @Injectable()
 export class DatePickerViewFacade {
 
+  readonly datePickerService = inject(DatePickerService);
+
+  formGroup!: FormGroup;
+
   previosMonthIcon = Icon.DOUBLE_LEFT;
   nextMonthIcon = Icon.DOUBLE_RIGHT;
   weekDaysName = WEEK_DAYS_NANE;
-
-  isMonthDatePickerVisible$ = new BehaviorSubject<boolean>(false);
-  isYearDatePickerVisible$ = new BehaviorSubject<boolean>(false);
+  monthOptions = MONTH_OPTIONS;
+  yearOptions = MONTHS_NAMES;
 
   monthDays!: DatePickerDate[];
   monthNumber!: number;
@@ -20,10 +24,9 @@ export class DatePickerViewFacade {
 
   selectedDate!: DatePickerDate;
 
-  constructor(readonly datePickerService: DatePickerService) {}
-
   init() {
     this.setMonthDays(this.datePickerService.getCurrentMonth());
+    this.initFormGroup();
   }
 
   getMonthName() {
@@ -32,14 +35,7 @@ export class DatePickerViewFacade {
 
   selectDate(date: DatePickerDate) {
     this.selectedDate = date;
-  }
-
-  selectMonth(): void{
-    this.isMonthDatePickerVisible$.next(true);
-  }
-
-  selectYear(): void{
-    this.isYearDatePickerVisible$.next(true);
+    patchValueToModel(this.formGroup, this.selectedDate);
   }
 
   previousMonth() {
@@ -75,5 +71,14 @@ export class DatePickerViewFacade {
     this.selectedDate = this.selectedDate
       ? this.selectedDate
       : this.monthDays.find((x) => x.classNames.includes('today'))!;
+  }
+
+  private initFormGroup() {
+    this.formGroup = createFormGroup(this.selectedDate);
+    this.formGroup.valueChanges.subscribe({
+      next: (x) => this.setMonthDays(
+          this.datePickerService.getMonth(x.month, x.year)
+        )
+    });
   }
 }

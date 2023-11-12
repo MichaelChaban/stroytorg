@@ -8,14 +8,17 @@
 
     &>mat-icon {
         position: absolute;
-        top: 15%;
+        top: 16%;
         right: 2%;
         cursor: pointer;
+        transform: scale(0.8);
     }
 }
 
 .options-container {
     width: 100%;
+    max-height: 10em;
+    overflow-y: scroll;
     margin-top: 0.25em;
     position: absolute;
     border: 0.25px solid #ccc;
@@ -65,11 +68,12 @@
             background-color: transparent;
         }
     }
+    border-radius: 5px;
+    background-color: rgb(0, 0, 0, 0.05);
 
     &:hover {
         color: #000000;
-        background-color: rgb(0, 0, 0, 0.1);
-        border-radius: 5px;
+        background-color: rgb(0, 0, 0, 0.2);
         cursor: pointer;
     }
 }

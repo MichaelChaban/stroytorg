@@ -1,15 +1,15 @@
 <div class="datepicker-container">
   <div class="p-2">
     <h4>Виберіть дату</h4>
-    <h5>{{ viewFacade.selectedDate.weekDayFullName }}, {{ viewFacade.selectedDate.monthName }} {{ viewFacade.selectedDate.monthDayNumber + 1 }}</h5>
+    <h5>{{ viewFacade.selectedDate.weekDayFullName }},{{ viewFacade.selectedDate.monthName }} {{ viewFacade.selectedDate.monthDayNumber + 1 }}</h5>
     <h6>{{ viewFacade.selectedDate.year }}</h6>
   </div>
   <div class="mt-3 display-flex">
-    <div class="month-year-selector-container">
-      <stroytorg-select></stroytorg-select>
-      <stroytorg-select [value]="viewFacade.selectedDate.year"></stroytorg-select>
+    <div class="month-year-selector-container" [formGroup]="viewFacade.formGroup">
+      <stroytorg-select formControlName="month" [options]="viewFacade.monthOptions"></stroytorg-select>
+      <stroytorg-select formControlName="year"></stroytorg-select>
     </div>
-    <div class="display-flex justify-content-center">
+    <div class="date-picker-button-container">
       <stroytorg-button
         class="date-picker-button"
         [icon]="viewFacade.previosMonthIcon"

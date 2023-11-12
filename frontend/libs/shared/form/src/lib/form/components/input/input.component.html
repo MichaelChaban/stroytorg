@@ -9,10 +9,9 @@
       [type]="inputType"
       [readOnly]="readonly"
       [disabled]="disabled"
-      [value]="value ?? ''"
       [required]="isRequired()"
     />
-    <label [class.active]="value" id="floating-placeholder">{{ label }}</label>
+    <label [class.active]="formControl?.value" id="floating-placeholder">{{ label }}</label>
     <ng-container
       *ngIf="formControl && formControl.errors && formControl.touched"
     >
@@ -22,12 +21,12 @@
   <ng-container *ngIf="button">
     <stroytorg-button
       class="input-button"
-      [buttonStyle]="button.buttonStyle"
-      [label]="button.label"
-      [tooltip]="button.tooltip"
-      [icon]="button.icon"
-      [queryParams]="isSet(button.queryParams)"
-      [routerLink]="isSet(button.routerLink)"
+      [buttonStyle]="button?.buttonStyle"
+      [label]="button?.label"
+      [tooltip]="button?.tooltip"
+      [icon]="button?.icon"
+      [queryParams]="isSet(button?.queryParams)"
+      [routerLink]="isSet(button?.routerLink)"
       (click)="button?.onClick($event)"
     ></stroytorg-button>
   </ng-container>

@@ -53,7 +53,7 @@ export class DatePickerService {
     }
 
     public getWeekDayShortName(weekDayIndex: number) {
-        return Day[weekDayIndex].slice(0, 2);
+        return Day[weekDayIndex]?.slice(0, 2);
     }
 
     public getWeekDayFullName(weekDayIndex: number) {

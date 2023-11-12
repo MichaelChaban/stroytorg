@@ -1,16 +1,16 @@
 <div class="select-container" [selectStyle]="selectStyle">
   <div class="input-select-container">
     <stroytorg-input
-      [value]="value"
       [label]="label"
       [required]="required"
       [readonly]="readonly"
       [disabled]="disabled"
       (click)="toggleOptionsList()"
+      [formControl]="formControl"
     ></stroytorg-input>
     <mat-icon (click)="toggleOptionsList(true)">{{ icon }}</mat-icon>
   </div>
-  <div class="options-container" *ngIf="showOptions && options">
+  <div class="options-container" *ngIf="showOptions && options.length">
     <div
       class="w-100 text-truncate"
       *ngFor="let option of options"

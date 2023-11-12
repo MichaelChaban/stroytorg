@@ -1,7 +1,6 @@
 import { NgControl } from "@angular/forms";
 
-export abstract class BaseInputControls<T> {
-    value?: T;
+export abstract class BaseInputControls {
 
     readonly ngControl?: NgControl | null;
 

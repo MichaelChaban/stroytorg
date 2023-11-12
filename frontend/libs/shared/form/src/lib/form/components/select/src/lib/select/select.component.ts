@@ -10,16 +10,17 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputComponent } from '../../../../input';
-import { NgControl } from '@angular/forms';
+import { NgControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import {
   Icon,
   SelectStyle,
   TooltipDirective,
   TooltipProperties,
+  ValueToKeyPipe,
 } from '@frontend/shared/domain';
 import { SelectStyleDirective } from './directives';
-import { BaseInputControls, BaseFormControlInputComponent } from '../../../../../forms';
+import { BaseFormControlInputComponent, BaseInputControls } from '../../../../../forms';
 
 @Component({
   selector: 'stroytorg-select',
@@ -30,17 +31,27 @@ import { BaseInputControls, BaseFormControlInputComponent } from '../../../../..
     InputComponent,
     SelectStyleDirective,
     TooltipDirective,
+    ReactiveFormsModule,
+    ValueToKeyPipe,
   ],
   templateUrl: './select.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
+providers: [
     {
       provide: BaseInputControls,
       useExisting: SelectComponent,
+      multi: true,
     },
   ],
 })
 export class SelectComponent extends BaseFormControlInputComponent {
+
+  constructor(
+    @Optional() @Self() ngControl: NgControl,
+    private elRef: ElementRef
+  ) {
+    super(ngControl);
+  }
   
   @HostListener('document:click', ['$event'])
   onClick(event: Event) {
@@ -55,18 +66,13 @@ export class SelectComponent extends BaseFormControlInputComponent {
   @Input()
   isTooltipSet?: boolean;
 
-  selectedOption: any;
+  @Input()
+  options: { label: any, value: any }[] = [];
+
   showOptions = false;
-
-  constructor(
-    @Optional() @Self() ngControl: NgControl,
-    private elRef: ElementRef
-  ) {
-    super(ngControl);
-  }
-
+  
   get icon() {
-    return this.value ? Icon.CLOSE : Icon.EXPAND_MORE;
+    return this.formControl.value ? Icon.CLOSE : Icon.EXPAND_MORE;
   }
 
   getTooltip(label: string): TooltipProperties | undefined {
@@ -80,22 +86,16 @@ export class SelectComponent extends BaseFormControlInputComponent {
     };
   }
 
-  options = [
-    { value: 2023, label: '2023' },
-    { value: '2023', label: '2023' },
-    { value: '2023', label: '2023' },
-  ];
-
   toggleOptionsList(isRemove?: boolean): void {
-    if (isRemove && this.value) {
-      this.value = null;
+    if (isRemove && this.formControl.value) {
+      this.formControl.setValue(null);
     }
 
     this.showOptions = !this.showOptions;
   }
 
   selectOption(option: any) {
-    this.value = option.value;
+    this.formControl.setValue(option.value);
     this.showOptions = false;
   }
 }

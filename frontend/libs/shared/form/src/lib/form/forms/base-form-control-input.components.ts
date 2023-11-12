@@ -10,7 +10,7 @@ const noFn = () => { };
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BaseFormControlInputComponent implements BaseInputControls<any>, ControlValueAccessor, OnInit {
+export class BaseFormControlInputComponent implements BaseInputControls, ControlValueAccessor, OnInit {
 
     readonly ngControl!: NgControl;
 
@@ -22,9 +22,6 @@ export class BaseFormControlInputComponent implements BaseInputControls<any>, Co
             this.ngControl.valueAccessor = this;
         }
     }
-
-    @Input()
-    value?: any;
 
     @Input()
     label!: string;

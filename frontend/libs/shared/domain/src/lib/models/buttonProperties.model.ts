@@ -1,13 +1,13 @@
-import { ButtonStyle, Icons } from "../enums";
-import { TooltipPropertiesModel } from "./tooltipProperties.model";
+import { ButtonStyle, Icon } from "../enums";
+import { TooltipModel } from "./tooltipProperties.model";
 
 export interface ButtonPropertiesModel{
     label?: string;
-    icon?: Icons;
+    icon?: Icon;
     buttonStyle?: ButtonStyle;
     routerLink?: string;
     queryParams?: string;
-    tooltip?: TooltipPropertiesModel;
+    tooltip?: TooltipModel;
     width?: number;
     onClick?: (row: any) => any;
 }

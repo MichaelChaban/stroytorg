@@ -1,4 +1,4 @@
-export enum Icons{
-    HOME = 'home',
-    NONE = ''
+export enum Icon {
+  HOME = 'home',
+  NONE = '',
 }

@@ -1,5 +1,12 @@
-<p>main-page works!</p>
-<stroytorg-table
-    [pagedData]="pagedData"
-    [columnDefinitions]="columnDefinitions"
-></stroytorg-table>
+<div class="page-container">
+<div class="container">
+    <stroytorg-table 
+        useTableStore 
+        [staticFilter]="{ itemId: 12 }" 
+        [autostart]="true" 
+        tableRepository="TvojeMama"
+        [pagedData]="pagedData" 
+        [columnDefinitions]="columnDefinitions">
+    </stroytorg-table>
+</div>
+</div>

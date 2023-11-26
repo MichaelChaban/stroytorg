@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/component-selector */
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +19,7 @@ import { ButtonStyle, Icons, TooltipPropertiesModel } from '@frontend/shared/dom
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ButtonComponent {
   @Input()
@@ -41,6 +42,9 @@ export class ButtonComponent {
 
   @Input()
   width?: number;
+
+  @Input()
+  disabled = false;
 
   getButtonStyles(){
     if(!this.width){

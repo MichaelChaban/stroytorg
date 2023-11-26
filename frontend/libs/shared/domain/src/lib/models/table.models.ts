@@ -20,7 +20,7 @@ export interface ColumnActionDefinition{
 
 export interface PagedData<T>{
     page: number;
-    number: number;
+    size: number;
     pagedData: {
         total: number;
         data: T[];

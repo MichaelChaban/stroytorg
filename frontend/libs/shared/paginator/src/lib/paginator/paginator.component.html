@@ -1,9 +1,13 @@
 <div class="paginator">
-  <button (click)="previousPage()" [disabled]="currentPage === 1">
-    Previous
-  </button>
-  <span>Page {{ currentPage }} of {{ totalPages }}</span>
-  <button (click)="nextPage()" [disabled]="currentPage === totalPages">
-    Next
-  </button>
+  <stroytorg-button 
+    label="Previous" 
+    (click)="previousPage()" 
+    [disabled]="paginatorState.page === 1">
+  </stroytorg-button>
+  <span class="px-3">Page {{ paginatorState.page }} of {{ paginatorState.total }}</span>
+  <stroytorg-button 
+    label="Next" 
+    (click)="nextPage()" 
+    [disabled]="paginatorState.page === paginatorState.total">
+  </stroytorg-button>
 </div>

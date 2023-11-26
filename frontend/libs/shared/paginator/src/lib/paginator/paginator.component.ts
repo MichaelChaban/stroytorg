@@ -1,32 +1,57 @@
-/* eslint-disable @angular-eslint/component-selector */
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ButtonComponent } from '@frontend/shared/button';
+import { PaginatorState } from './paginator.model';
+import { PagedData } from '@frontend/shared/domain';
 
 @Component({
   selector: 'stroytorg-paginator',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonComponent],
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PaginatorComponent {
-  @Input() currentPage = 1;
-  @Input() totalPages = 1;
+export class PaginatorComponent implements OnChanges {
+  @Output() pageChange = new EventEmitter<PaginatorState>();
 
-  @Output() pageChange = new EventEmitter<number>();
+  @Input()
+  page!: PagedData<any>;
+
+  protected paginatorState: PaginatorState = { page: 0, size: 0, total: 0 };
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['page']) {
+      this.updatePaginatorState();
+    }
+  }
 
   previousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.pageChange.emit(this.currentPage);
+    if (this.paginatorState.page > 1) {
+      this.paginatorState.page--;
+      this.pageChange.emit(this.paginatorState);
     }
   }
 
   nextPage() {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.pageChange.emit(this.currentPage);
+    if (this.paginatorState.page < this.paginatorState.total) {
+      this.paginatorState.page++;
+      this.pageChange.emit(this.paginatorState);
     }
+  }
+
+  private updatePaginatorState() {
+    this.paginatorState.page = this.page?.page;
+    this.paginatorState.total = this.page?.pagedData?.total;
+    this.paginatorState.size = this.page?.size;
   }
 }

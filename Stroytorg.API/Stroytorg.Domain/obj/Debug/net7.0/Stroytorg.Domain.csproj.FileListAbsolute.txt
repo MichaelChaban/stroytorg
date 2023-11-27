@@ -1,0 +1,12 @@
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Domain\bin\Debug\net7.0\Stroytorg.Domain.deps.json
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Domain\bin\Debug\net7.0\Stroytorg.Domain.dll
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Domain\bin\Debug\net7.0\Stroytorg.Domain.pdb
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Domain\obj\Debug\net7.0\Stroytorg.Domain.csproj.AssemblyReference.cache
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Domain\obj\Debug\net7.0\Stroytorg.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Domain\obj\Debug\net7.0\Stroytorg.Domain.AssemblyInfoInputs.cache
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Domain\obj\Debug\net7.0\Stroytorg.Domain.AssemblyInfo.cs
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Domain\obj\Debug\net7.0\Stroytorg.Domain.csproj.CoreCompileInputs.cache
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Domain\obj\Debug\net7.0\Stroytorg.Domain.dll
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Domain\obj\Debug\net7.0\refint\Stroytorg.Domain.dll
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Domain\obj\Debug\net7.0\Stroytorg.Domain.pdb
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Domain\obj\Debug\net7.0\ref\Stroytorg.Domain.dll

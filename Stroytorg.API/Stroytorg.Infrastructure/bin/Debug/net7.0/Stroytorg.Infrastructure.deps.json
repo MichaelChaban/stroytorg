@@ -1,0 +1,49 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "Stroytorg.Infrastructure/1.0.0": {
+        "dependencies": {
+          "Stroytorg.Application": "1.0.0"
+        },
+        "runtime": {
+          "Stroytorg.Infrastructure.dll": {}
+        }
+      },
+      "Stroytorg.Application/1.0.0": {
+        "dependencies": {
+          "Stroytorg.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Stroytorg.Application.dll": {}
+        }
+      },
+      "Stroytorg.Domain/1.0.0": {
+        "runtime": {
+          "Stroytorg.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Stroytorg.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Stroytorg.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Stroytorg.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

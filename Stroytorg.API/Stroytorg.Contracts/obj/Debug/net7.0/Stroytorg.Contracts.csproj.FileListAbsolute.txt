@@ -1,0 +1,12 @@
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Contracts\bin\Debug\net7.0\Stroytorg.Contracts.deps.json
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Contracts\bin\Debug\net7.0\Stroytorg.Contracts.dll
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Contracts\bin\Debug\net7.0\Stroytorg.Contracts.pdb
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Contracts\obj\Debug\net7.0\Stroytorg.Contracts.csproj.AssemblyReference.cache
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Contracts\obj\Debug\net7.0\Stroytorg.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Contracts\obj\Debug\net7.0\Stroytorg.Contracts.AssemblyInfoInputs.cache
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Contracts\obj\Debug\net7.0\Stroytorg.Contracts.AssemblyInfo.cs
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Contracts\obj\Debug\net7.0\Stroytorg.Contracts.csproj.CoreCompileInputs.cache
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Contracts\obj\Debug\net7.0\Stroytorg.Contracts.dll
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Contracts\obj\Debug\net7.0\refint\Stroytorg.Contracts.dll
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Contracts\obj\Debug\net7.0\Stroytorg.Contracts.pdb
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Contracts\obj\Debug\net7.0\ref\Stroytorg.Contracts.dll

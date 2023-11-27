@@ -1,0 +1,17 @@
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\bin\Debug\net7.0\Stroytorg.Infrastructure.deps.json
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\bin\Debug\net7.0\Stroytorg.Infrastructure.dll
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\bin\Debug\net7.0\Stroytorg.Infrastructure.pdb
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\obj\Debug\net7.0\Stroytorg.Infrastructure.csproj.AssemblyReference.cache
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\obj\Debug\net7.0\Stroytorg.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\obj\Debug\net7.0\Stroytorg.Infrastructure.AssemblyInfoInputs.cache
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\obj\Debug\net7.0\Stroytorg.Infrastructure.AssemblyInfo.cs
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\obj\Debug\net7.0\Stroytorg.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\obj\Debug\net7.0\Stroytorg.Infrastructure.dll
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\obj\Debug\net7.0\refint\Stroytorg.Infrastructure.dll
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\obj\Debug\net7.0\Stroytorg.Infrastructure.pdb
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\obj\Debug\net7.0\ref\Stroytorg.Infrastructure.dll
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\bin\Debug\net7.0\Stroytorg.Application.dll
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\bin\Debug\net7.0\Stroytorg.Domain.dll
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\bin\Debug\net7.0\Stroytorg.Application.pdb
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\bin\Debug\net7.0\Stroytorg.Domain.pdb
+C:\Mike\Minnhite\stroytorg\Stroytorg.API\Stroytorg.Infrastructure\obj\Debug\net7.0\Stroytorg.Infrastructure.csproj.CopyComplete

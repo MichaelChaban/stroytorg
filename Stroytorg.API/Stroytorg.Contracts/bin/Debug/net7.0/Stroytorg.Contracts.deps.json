@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "Stroytorg.Contracts/1.0.0": {
+        "runtime": {
+          "Stroytorg.Contracts.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Stroytorg.Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

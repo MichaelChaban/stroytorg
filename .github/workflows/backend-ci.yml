@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          path: 'Stroytorg.API'
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
@@ -25,9 +23,12 @@ jobs:
 
       - name: Restore dependencies
         run: dotnet restore
+        working-directory: ./Stroytorg.API
 
       - name: Build
         run: dotnet build --configuration Release
+        working-directory: ./Stroytorg.API
 
       - name: Run tests
         run: dotnet test --configuration Release --no-build
+        working-directory: ./Stroytorg.API

@@ -360,3 +360,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignore bin and obj directories
+**/bin/
+**/obj/
+
+# Ignore DLL and PDB files
+*.dll
+*.pdb

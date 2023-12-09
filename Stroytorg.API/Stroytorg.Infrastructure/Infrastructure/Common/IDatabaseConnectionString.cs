@@ -1,4 +1,4 @@
-﻿namespace Stroytorg.Infrastructure.Infrastructure;
+﻿namespace Stroytorg.Infrastructure.Infrastructure.Common;
 
 public interface IDatabaseConnectionString
 {

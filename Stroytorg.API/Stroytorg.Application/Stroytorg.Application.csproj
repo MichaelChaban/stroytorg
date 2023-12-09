@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Stroytorg.Contracts\Stroytorg.Contracts.csproj" />
+    <ProjectReference Include="..\Stroytorg.Infrastructure\Stroytorg.Infrastructure.csproj" />
     <ProjectReference Include="..\Stroytorg.Domain\Stroytorg.Domain.csproj" />
   </ItemGroup>
 

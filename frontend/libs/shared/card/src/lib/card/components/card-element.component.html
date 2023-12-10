@@ -2,7 +2,7 @@
   <div class="w-100" *ngFor="let element of cardDefinition">
     <div
       *ngIf="element.elementType === 'label' || element.elementType === 'content' || element.elementType === 'actions'"
-      class="default-p" [class.display-flex]="element.display === 'flex'">
+      class="default-p" [class.display-flex]="element.displayFlex">
       <ng-container *ngIf="element.elementType === 'label' && element?.label">
         <h1 class="fw-bold fs-5 mt-3">{{ element.label | keyOrFn :
           cardData }}</h1>
@@ -36,6 +36,5 @@
     <ng-container *ngIf="element.elementType === 'template' && element?.template">
       <ng-template [ngTemplateOutlet]="element.template!"></ng-template>
     </ng-container>    
-
   </div>
 </ng-container>

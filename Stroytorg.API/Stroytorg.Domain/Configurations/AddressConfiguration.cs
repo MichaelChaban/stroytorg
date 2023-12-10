@@ -14,6 +14,6 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
 
         builder.HasMany(a => a.Orders)
             .WithOne(u => u.ShippingAddress)
-            .HasForeignKey(a => a.ShippingAddress);
+            .HasForeignKey(a => a.ShippingAddressId);
     }
 }

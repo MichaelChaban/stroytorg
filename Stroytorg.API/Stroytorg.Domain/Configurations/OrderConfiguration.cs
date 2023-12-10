@@ -18,6 +18,6 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
 
         builder.HasOne(x => x.ShippingAddress)
             .WithMany(x => x.Orders)
-            .HasForeignKey(x => x.ShippingAddress);
+            .HasForeignKey(x => x.ShippingAddressId);
     }
 }

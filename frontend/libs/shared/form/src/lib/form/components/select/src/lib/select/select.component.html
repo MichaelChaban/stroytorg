@@ -10,14 +10,16 @@
     ></stroytorg-input>
     <mat-icon (click)="toggleOptionsList(true)">{{ icon }}</mat-icon>
   </div>
-  <div class="options-container" *ngIf="showOptions && options.length">
-    <div
-      class="w-100 text-truncate"
-      *ngFor="let option of options"
-      [tooltip]="getTooltip(option.label)"
-      (click)="selectOption(option)"
-    >
-      <span>{{ option.label }}</span>
-    </div>
-  </div>
+  
 </div>
+<select [(ngModel)]="selectedValue">
+  <option
+      class="w-100 text-truncate"
+      *ngFor="let option of selectOptions"
+      [tooltip]="getTooltip(option.label)"
+      [value]="option.value"
+      (click)="writeValue(option)"
+    >
+    {{option.label}}
+    </option>
+</select>

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputComponent } from '../../../../input';
-import { NgControl, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import {
   Icon,
@@ -32,6 +32,7 @@ import { BaseFormControlInputComponent, BaseInputControls } from '../../../../..
     SelectStyleDirective,
     TooltipDirective,
     ReactiveFormsModule,
+    FormsModule,
     ValueToKeyPipe,
   ],
   templateUrl: './select.component.html',
@@ -59,6 +60,14 @@ export class SelectComponent extends BaseFormControlInputComponent {
       this.showOptions = false;
     }
   }
+
+  selectOptions = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' }
+  ];
+
+  selectedValue: any;
 
   @Input()
   selectStyle?: SelectStyle;
@@ -94,7 +103,7 @@ export class SelectComponent extends BaseFormControlInputComponent {
     this.showOptions = !this.showOptions;
   }
 
-  selectOption(option: any) {
+  override writeValue(option: any) {
     this.formControl.setValue(option.value);
     this.showOptions = false;
   }

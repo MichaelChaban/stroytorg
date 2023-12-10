@@ -1,6 +1,7 @@
 //////////////
 /// BUTTON ///
 //////////////
+
 .button {
   border-radius: 0.5rem;
   padding: 0.6rem 1.5rem;
@@ -8,6 +9,26 @@
   font-size: 15px;
   transition: 0.2s;
   width: var(--button-width);
+
+  &:active{
+    transform: scale(0.98);
+  }
+}
+
+
+
+/////////////////////////////
+/// SIMPLE BUTTON PALETTE ///
+/////////////////////////////
+
+.simple-button{
+  background-color: transparent;
+  border: none;
+
+  &:hover{
+    background-color: rgb(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
 }
 
 
@@ -15,20 +36,15 @@
 //////////////////////////////
 /// DEFAULT BUTTON PALETTE ///
 //////////////////////////////
+
 .default-button {
   background-color: #ff7e47;
   color: #ffffff;
   border: none;
-}
 
-.default-button:hover {
-  background-color: #f3a280;
-  cursor: pointer;
-}
-
-.default-button:active {
-  background-color: #db4b0f;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
+  &:hover {
+    box-shadow:#db4c0f50 0 0 0 3px;
+    cursor: pointer;}
 }
 
 
@@ -36,20 +52,16 @@
 //////////////////////////////
 /// PRIMARY BUTTON PALETTE ///
 //////////////////////////////
+
 .primary-button {
   background-color: transparent;
   color: #ff7e47;
   border: 2px solid #ff7e47;
-}
 
-.primary-button:hover {
-  background-color: #fff1eb;
-  cursor: pointer;
-}
-
-.primary-button:active {
-  background-color: #fadacd;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  &:hover {
+    box-shadow:#ffac8975 0 0 0 3px;
+    cursor: pointer;
+  }
 }
 
 
@@ -57,20 +69,16 @@
 //////////////////////////////
 /// WARNING BUTTON PALETTE ///
 //////////////////////////////
+
 .warning-button {
   background-color: #d10202;
   color: #ffffff;
   border: none;
-}
 
-.warning-button:hover {
-  background-color: #ff5252;
-  cursor: pointer;
-}
-
-.warning-button:active {
-  background-color: #a70000;
-  box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.7);
+  &:hover {
+    box-shadow:#ff525286 0 0 0 3px;
+    cursor: pointer;
+  }
 }
 
 
@@ -78,6 +86,7 @@
 //////////////////////////////////
 /// BUTTON WITH LABEL AND ICON ///
 //////////////////////////////////
+
 .icon-label-button {
   display: flex;
   align-items: center;
@@ -91,6 +100,7 @@
 /////////////////////////////
 /// BUTTON ONLY WITH ICON ///
 /////////////////////////////
+
 .icon-button {
   display: flex;
   align-items: center;
@@ -103,6 +113,7 @@
 ///////////////
 /// TOOLTIP ///
 ///////////////
+
 .tooltip {
   position: absolute;
   background-color: rgb(0, 0, 0, 0.7);

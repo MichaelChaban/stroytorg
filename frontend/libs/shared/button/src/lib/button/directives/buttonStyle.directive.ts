@@ -16,7 +16,8 @@ export class ButtonStyleDirective {
       case 'DEFAULT_BUTTON': this.setDefaultButton(); break;
       case 'PRIMARY_BUTTON': this.setPrimaryButton(); break;
       case 'WARNING_BUTTON': this.setWarningButton(); break;
-      default: this.setDefaultButton(); break;
+      case 'SIMPLE_BUTTON': this.setSimpleButton(); break;
+      default: this.setSimpleButton(); break;
     }
   }
 
@@ -30,5 +31,9 @@ export class ButtonStyleDirective {
   
   private setWarningButton(){
     return this.renderer.addClass(this.el.nativeElement, 'warning-button')
+  }
+
+  private setSimpleButton(){
+    return this.renderer.addClass(this.el.nativeElement, 'simple-button')
   }
 }

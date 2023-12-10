@@ -1,0 +1,33 @@
+<div *ngIf="formControl" class="display-flex align-items-center gap-1">
+  <div class="input-container">
+    <input
+      placeholder
+      class="input"
+      title=""
+      [class.input-invalid]="formControl.errors && formControl.touched"
+      [formControl]="formControl"
+      [type]="inputType"
+      [readOnly]="readonly"
+      [disabled]="disabled"
+      [required]="isRequired()"
+    />
+    <label [class.active]="formControl?.value" id="floating-placeholder">{{ label }}</label>
+    <ng-container
+      *ngIf="formControl && formControl.errors && formControl.touched"
+    >
+      <error-tooltip [errors]="formControl.errors"></error-tooltip>
+    </ng-container>
+  </div>
+  <ng-container *ngIf="button">
+    <stroytorg-button
+      class="input-button"
+      [buttonStyle]="button?.buttonStyle"
+      [label]="button?.label"
+      [tooltip]="button?.tooltip"
+      [icon]="button?.icon"
+      [queryParams]="isSet(button?.queryParams)"
+      [routerLink]="isSet(button?.routerLink)"
+      (click)="button?.onClick($event)"
+    ></stroytorg-button>
+  </ng-container>
+</div>

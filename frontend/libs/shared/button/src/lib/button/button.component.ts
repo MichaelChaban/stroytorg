@@ -3,9 +3,9 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { ButtonStyleDirective, TooltipDirective } from './directives/index';
-import { ButtonStyle, Icons } from '@frontend/shared/domain';
-import { TooltipPropertiesModel } from '@frontend/shared/domain';
+import { ButtonStyleDirective } from './directives/index';
+import { ButtonStyle, Icon, TooltipDirective } from '@frontend/shared/domain';
+import { TooltipProperties } from '@frontend/shared/domain';
 
 @Component({
   selector: 'stroytorg-button',
@@ -35,10 +35,10 @@ export class ButtonComponent {
   label?: string;
 
   @Input()
-  icon?: Icons;
+  icon?: Icon;
 
   @Input()
-  tooltip?: TooltipPropertiesModel;
+  tooltip?: TooltipProperties;
 
   @Input()
   width?: number;

@@ -1,5 +1,5 @@
 import { TemplateRef } from '@angular/core';
-import { ButtonPropertiesModel } from '@frontend/shared/domain';
+import { ButtonProperties } from '@frontend/shared/domain';
 
 export interface CardDefinition {
   elementType: CardElementType;
@@ -7,7 +7,7 @@ export interface CardDefinition {
   label?: string | ( (row: any) => string );
   content?: string | ( (row: any) => string );
   imageName?: string;
-  actions?: ButtonPropertiesModel[];
+  actions?: ButtonProperties[];
   template?: TemplateRef<any>;
   classes?: string;
 }

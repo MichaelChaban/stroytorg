@@ -1,11 +1,10 @@
 /* eslint-disable @angular-eslint/component-selector */
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { ButtonStyleDirective, TooltipDirective } from './directives/index';
-import { ButtonStyle, Icon } from '@frontend/shared/domain';
-import { TooltipModel } from '@frontend/shared/domain';
+import { ButtonStyleDirective } from './directives/index';
+import { ButtonStyle, Icon, TooltipDirective, TooltipProperties } from '@frontend/shared/domain';
 
 @Component({
   selector: 'stroytorg-button',
@@ -20,6 +19,7 @@ import { TooltipModel } from '@frontend/shared/domain';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ButtonComponent {
   @Input()
@@ -38,10 +38,13 @@ export class ButtonComponent {
   icon?: Icon;
 
   @Input()
-  tooltip?: TooltipModel;
+  tooltip?: TooltipProperties;
 
   @Input()
   width?: number;
+
+  @Input()
+  disabled = false;
 
   getButtonStyles(){
     if(!this.width){

@@ -5,15 +5,16 @@ import {
   Input,
   Renderer2,
   HostListener,
+  OnDestroy,
 } from '@angular/core';
-import { TooltipModel } from '@frontend/shared/domain';
+import { TooltipProperties } from '@frontend/shared/domain';
 
 @Directive({
   selector: '[tooltip]',
   standalone: true,
 })
-export class TooltipDirective {
-  @Input() tooltip?: TooltipModel;
+export class TooltipDirective implements OnDestroy {
+  @Input() tooltip?: TooltipProperties;
 
   private tooltipElement!: HTMLElement;
   private tooltipTimeout: any;
@@ -21,6 +22,12 @@ export class TooltipDirective {
   private readonly TRANSITION_DURATION = 150;
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
+
+  ngOnDestroy(): void {
+    return this.removeTooltipWithDelay();
+  }
+
+  
 
   @HostListener('mouseenter')
   onMouseEnter() {

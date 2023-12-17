@@ -1,0 +1,32 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@stroytorg/shared": ["libs/shared/src/index.ts"],
+      "@stroytorg/stroytorg": ["libs/stroytorg/src/index.ts"],
+      "@stroytorg/stroytorg-assets": [
+        "libs/stroytorg-assets/src/index.ts"
+      ],
+      "@stroytorg/shared-styles": [
+        "libs/stroytorg-assets/src/index.ts"
+      ],
+      "@stroytorg/stroytorg-components": [
+        "libs/stroytorg-components/src/index.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

@@ -1,25 +1,26 @@
 {
-  "name": "stroytorg",
+  "name": "stroytorg.app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "frontend",
-  "sourceRoot": "apps/stroytorg/src",
+  "prefix": "stroytorg",
+  "sourceRoot": "apps/stroytorg.app/src",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/stroytorg",
-        "index": "apps/stroytorg/src/index.html",
-        "main": "apps/stroytorg/src/main.ts",
+        "outputPath": "dist/apps/stroytorg.app",
+        "index": "apps/stroytorg.app/src/index.html",
+        "browser": "apps/stroytorg.app/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/stroytorg/tsconfig.app.json",
+        "tsConfig": "apps/stroytorg.app/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/stroytorg/src/favicon.ico",
-          "apps/stroytorg/src/assets"
+          "apps/stroytorg.app/src/favicon.ico",
+          "apps/stroytorg.app/src/assets"
         ],
-        "styles": ["@stroytorg/shared-styles"],
+        "styles": ["libs/stroytorg-assets/src/lib/shared-styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -39,12 +40,9 @@
           "outputHashing": "all"
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
-          "sourceMap": true,
-          "namedChunks": true
+          "sourceMap": true
         }
       },
       "defaultConfiguration": "production"
@@ -53,10 +51,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "stroytorg:build:production"
+          "buildTarget": "stroytorg.app:build:production"
         },
         "development": {
-          "browserTarget": "stroytorg:build:development"
+          "buildTarget": "stroytorg.app:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -64,31 +62,25 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "stroytorg:build"
+        "buildTarget": "stroytorg.app:build"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "apps/stroytorg/**/*.ts",
-          "apps/stroytorg/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/stroytorg/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
+        "jestConfig": "apps/stroytorg.app/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "stroytorg.app:build",
+        "staticFilePath": "dist/apps/stroytorg.app/browser"
       }
     }
   }

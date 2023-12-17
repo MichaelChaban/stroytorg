@@ -1,0 +1,40 @@
+<div class="datepicker-container">
+  <div class="p-2">
+    <h4>Виберіть дату</h4>
+    <h5>{{ viewFacade.selectedDate.weekDayFullName }},{{ viewFacade.selectedDate.monthName }} {{ viewFacade.selectedDate.monthDayNumber + 1 }}</h5>
+    <h6>{{ viewFacade.selectedDate.year }}</h6>
+  </div>
+  <div class="mt-3 display-flex">
+    <div class="month-year-selector-container" [formGroup]="viewFacade.formGroup">
+      <stroytorg-select formControlName="month" [options]="viewFacade.monthOptions"></stroytorg-select>
+      <stroytorg-select formControlName="year"></stroytorg-select>
+    </div>
+    <div class="date-picker-button-container">
+      <stroytorg-button
+        class="date-picker-button"
+        [icon]="viewFacade.previosMonthIcon"
+        (click)="previousMonth()"
+      ></stroytorg-button>
+      <stroytorg-button
+        class="date-picker-button"
+        [icon]="viewFacade.nextMonthIcon"
+        (click)="nextMonth()"
+      ></stroytorg-button>
+    </div>
+  </div>
+  <div class="mt-3 d-flex justify-content-center day-header">
+    <div *ngFor="let weekDay of viewFacade.weekDaysName">
+      {{ weekDay }}
+    </div>
+  </div>
+  <hr />
+  <div class="days-container">
+    <ng-container *ngFor="let day of viewFacade.monthDays; let index = index">
+      <stroytorg-button
+        class="date-picker-button {{day.classNames}}"
+        [label]="(day.monthDayNumber + 1).toString()"
+        (click)="selectDate(day)"
+      ></stroytorg-button>
+    </ng-container>
+  </div>
+</div>

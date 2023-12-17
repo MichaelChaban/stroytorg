@@ -1,0 +1,111 @@
+/////////////
+/// INPUT ///
+/////////////
+
+.input {
+    width: 100%;
+    padding: 0.3em 0.5em;
+    border: 0.25px solid #ccc;
+    border-radius: 0.3em;
+    outline: none;
+    transition: 0.2s;
+}
+
+
+
+/////////////////////
+/// INVALID INPUT ///
+/////////////////////
+
+.input-invalid{
+    border: 0.25px solid #d10202;
+}
+
+
+
+////////////////////////////
+/// FLOATING PLACEHOLDER ///
+////////////////////////////
+
+.input-container {
+    width: 100%;
+    position: relative;
+}
+
+#floating-placeholder {
+    font-size: 16px;
+    color: #afbdcf;
+    padding: 0.3em 0.5em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 0.2s ease all;
+    pointer-events: none;
+}
+
+#floating-placeholder.active{
+    font-size: 12px;
+    color: #f78858;
+    top: -1em;
+    left: 1em;
+    background: #ffffff;
+    padding: 0 0.3em;
+}
+
+
+
+///////////////////////////////////////
+/// SPACE BETWEEN BUTTON AND INPUTR ///
+///////////////////////////////////////
+
+.gap-1 {
+    gap: 0.2em;
+}
+
+
+
+/////////////////////
+/// ERROR TOOLTIP ///
+/////////////////////
+
+.error-container {
+    position: absolute;
+    color: #d10202;
+    top: 0.3em;
+    right: 1em;
+
+    & .error-icon:hover{
+        cursor: help;
+    }
+
+    & .error-icon:hover+.error-tooltip {
+        display: block;
+    }
+}
+
+.error-tooltip {
+    position: absolute;
+    font-size: small;
+    top: -3em;
+    display: none;
+    text-wrap: nowrap;
+    background-color: #ffffff;
+    border: 2px solid #d10202;
+    color: #d10202;
+    text-align: center;
+    padding: 0.25em 0.5em;
+    border-radius: 4px;
+    transform: translateX(-44%);
+    z-index: 2;
+    transition: 0.3s;
+}
+
+
+
+/////////////////////
+/// BUTTON HEIGHT ///
+/////////////////////
+
+.input-button>button{
+    padding-block: 0.25em !important;
+}

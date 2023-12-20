@@ -16,13 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@stroytorg/shared": ["libs/shared/src/index.ts"],
+      "@stroytorg/shared-styles": ["libs/stroytorg-assets/src/index.ts"],
       "@stroytorg/stroytorg": ["libs/stroytorg/src/index.ts"],
-      "@stroytorg/stroytorg-assets": [
-        "libs/stroytorg-assets/src/index.ts"
-      ],
-      "@stroytorg/shared-styles": [
-        "libs/stroytorg-assets/src/index.ts"
-      ],
+      "@stroytorg/stroytorg-assets": ["libs/stroytorg-assets/src/index.ts"],
       "@stroytorg/stroytorg-components": [
         "libs/stroytorg-components/src/index.ts"
       ]

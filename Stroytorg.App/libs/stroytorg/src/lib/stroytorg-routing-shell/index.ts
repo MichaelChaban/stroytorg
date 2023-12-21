@@ -1,0 +1,1 @@
+export * from './stroytorg-routing-shell.routes';

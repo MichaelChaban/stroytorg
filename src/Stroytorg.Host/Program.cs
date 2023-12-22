@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
 using Stroytorg.Host.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +20,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

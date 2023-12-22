@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve stroytorg.app --configuration:development"
+    "start": "nx serve stroytorg.app --configuration=development",
+    "build": "nx build stroytorg.app --configuration=development",
+    "build-prod": "nx build stroytorg.app --configuration=production"
   },
   "private": true,
   "dependencies": {

@@ -1,0 +1,32 @@
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+COPY ["Stroytorg.Host/Stroytorg.Host.csproj", "Stroytorg.API/Stroytorg.Host/"]
+COPY ["Stroytorg.Application/Stroytorg.Application.csproj", "Stroytorg.API/Stroytorg.Application/"]
+COPY ["Stroytorg.Contracts/Stroytorg.Contracts.csproj", "Stroytorg.API/Stroytorg.Contracts/"]
+COPY ["Stroytorg.Domain/Stroytorg.Domain.csproj", "Stroytorg.API/Stroytorg.Domain/"]
+COPY ["Stroytorg.Infrastructure/Stroytorg.Infrastructure.csproj", "Stroytorg.API/Stroytorg.Infrastructure/"]
+
+RUN dotnet restore "Stroytorg.API/Stroytorg.Host/Stroytorg.Host.csproj"
+
+COPY . .
+
+WORKDIR "/src/Stroytorg.Host"
+
+RUN dotnet build "Stroytorg.Host.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Stroytorg.Host.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+
+COPY --from=publish /app/publish .
+
+EXPOSE 80
+EXPOSE 443
+
+ENTRYPOINT ["dotnet", "Stroytorg.Host.dll"]

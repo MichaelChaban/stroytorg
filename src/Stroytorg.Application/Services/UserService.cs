@@ -5,8 +5,11 @@ namespace Stroytorg.Application.Services;
 
 public class UserService : IUserService
 {
-    public Task<User> GetByIdAsync(int userId)
+    public async Task<User> GetByIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        await Task.Yield();
+        return new User(FirstName: "Mykhailo",
+            Id: 1,
+            LastName: "Chaban");
     }
 }

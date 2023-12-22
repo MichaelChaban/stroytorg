@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./src
+      dockerfile: Stroytorg.Host/Dockerfile
+    ports:
+      - "5000:80"
+    networks:
+      - stroytorg-network
+    depends_on:
+      - database
+    environment:
+      - ConnectionStrings:DefaultConnection=Host=database;Port=5432;Database=your_database_name;Username=your_username;Password=your_password
+
+  frontend:
+    build:
+      context: ./src
+      dockerfile: Stroytorg.App/Dockerfile
+    ports:
+      - "8080:80"
+    networks:
+      - stroytorg-network
+    depends_on:
+      - backend
+  
+  database:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: your_database_name
+      POSTGRES_USER: your_username
+      POSTGRES_PASSWORD: your_password
+    ports:
+      - "5432:5432"
+    networks:
+      - stroytorg-network
+
+networks:
+  stroytorg-network:
+    driver: bridge

@@ -25,7 +25,7 @@ public class StroytorgDbContext : DbContext, IStroytorgDbContext
 
     public void Migrate()
     {
-        Database.Migrate();
+        //Database.Migrate();
     }
 
     public void Commit() => SaveChanges();

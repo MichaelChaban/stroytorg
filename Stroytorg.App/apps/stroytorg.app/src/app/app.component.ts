@@ -1,14 +1,31 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { NavbarModel, StroytorgNavbarComponent } from '@stroytorg/stroytorg-components';
 
 @Component({
   standalone: true,
-  imports: [NxWelcomeComponent, RouterModule],
+  imports: [RouterModule, StroytorgNavbarComponent],
   selector: 'stroytorg-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'stroytorg.app';
+  pages: NavbarModel[] = [
+    {
+      name: 'Home',
+      link: '/home',
+      active: true
+    },
+    {
+      name: 'Materials',
+      link: '/materials',
+      active: false
+    },
+    {
+      name: 'About',
+      link: '/about',
+      active: false
+    }
+  ]
 }

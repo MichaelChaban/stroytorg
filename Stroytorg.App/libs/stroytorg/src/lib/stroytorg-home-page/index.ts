@@ -1,1 +1,0 @@
-export * from './stroytorg-home-page.component';

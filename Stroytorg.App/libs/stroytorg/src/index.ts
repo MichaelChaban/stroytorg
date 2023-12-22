@@ -1,2 +1,2 @@
-export * from './lib/stroytorg-routing-shell';
-export * from './lib/stroytorg-home-page';
+export * from './lib/pages/stroytorg-home/stroytorg-home.component';
+export * from './lib/pages/stroytorg.routes';

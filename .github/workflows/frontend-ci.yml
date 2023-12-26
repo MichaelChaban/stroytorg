@@ -23,8 +23,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./frontend
+        working-directory: ./src/Stroytorg.App
 
       - name: Build Angular app
         run: npm run build
-        working-directory: ./frontend
+        working-directory: ./src/Stroytorg.App

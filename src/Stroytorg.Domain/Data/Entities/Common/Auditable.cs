@@ -2,7 +2,7 @@
 
 namespace Stroytorg.Domain.Data.Entities.Common;
 
-public class Auditable : BaseEntity
+public class Auditable : BaseEntity<int>
 {
     [Required]
     [StringLength(255)]

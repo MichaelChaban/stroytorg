@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.AspNetCore.Server.Kestrel.Https;
 using Stroytorg.Host.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +7,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddServices(builder.Configuration);
+
+#if DEBUG
+    builder.Services.AddCors(options => options.AddPolicy(
+        name: "Stroytorg",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().WithExposedHeaders("Content-Disposition");
+        }));
+#endif
 
 var app = builder.Build();
 

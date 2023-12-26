@@ -27,6 +27,4 @@ public class User : Auditable
     public UserProfileEnum Profile { get; set; }
 
     public virtual ICollection<Order>? Orders { get; set; }
-
-    public virtual ICollection<Address>? Addresses { get; set; }
 }

@@ -26,7 +26,7 @@ public class Order : Auditable
 
     public ShippingTypeEnum ShippingType { get; set; }
 
-    public int ShippingAddressId { get; set; }
+    public string? ShippingAddress { get; set; }
 
     public PaymentTypeEnum PaymentType { get; set; }
 
@@ -35,6 +35,4 @@ public class Order : Auditable
     public virtual User? User {  get; set; }
 
     public virtual ICollection<OrderMaterialMap>? OrderMaterialMap { get; set; }
-
-    public virtual Address? ShippingAddress { get; set; }
 }

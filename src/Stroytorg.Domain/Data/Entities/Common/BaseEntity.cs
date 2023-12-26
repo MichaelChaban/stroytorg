@@ -1,8 +1,14 @@
 ﻿namespace Stroytorg.Domain.Data.Entities.Common;
 
-public class BaseEntity : IEntity<int>
+public class  BaseEntity<T> : IEntity, IEntity<T>
 {
-    public int Id { get; set; }
+    public virtual required T Id { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool IsNew => this.Id!.Equals(default(T));
+
+    object IEntity.Id
+    {
+        get => this.Id!;
+        set => this.Id = (T)value;
+    }
 }

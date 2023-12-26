@@ -1,8 +1,8 @@
 # Use the official PostgreSQL image
-FROM postgres:latest
+FROM postgres
 
-ENV POSTGRES_DB=your_database_name
-ENV POSTGRES_USER=your_username
-ENV POSTGRES_PASSWORD=your_password
+ENV POSTGRES_DB Stroytorg
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD postgres
 
 EXPOSE 5432

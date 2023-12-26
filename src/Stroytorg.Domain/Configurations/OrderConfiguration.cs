@@ -15,9 +15,5 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder.HasMany(x => x.OrderMaterialMap)
             .WithOne(x => x.Order)
             .HasForeignKey(x => x.OrderId);
-
-        builder.HasOne(x => x.ShippingAddress)
-            .WithMany(x => x.Orders)
-            .HasForeignKey(x => x.ShippingAddressId);
     }
 }

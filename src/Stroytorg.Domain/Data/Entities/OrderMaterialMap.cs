@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Stroytorg.Domain.Data.Entities;
 
-public class OrderMaterialMap : BaseEntity
+public class OrderMaterialMap : BaseEntity<int>
 {
     [Required]
     public int OrderId { get; set; }

@@ -25,7 +25,7 @@ public class StroytorgDbContext : DbContext, IStroytorgDbContext
 
     public void Migrate()
     {
-        //Database.Migrate();
+        Database.Migrate();
     }
 
     public void Commit() => SaveChanges();
@@ -52,8 +52,6 @@ public class StroytorgDbContext : DbContext, IStroytorgDbContext
     }
 
     public virtual DbSet<User> User { get; set; }
-
-    public virtual DbSet<Address> Address { get; set; }
 
     public virtual DbSet<Category> Category { get; set; }
 

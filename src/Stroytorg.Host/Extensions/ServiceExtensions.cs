@@ -4,6 +4,9 @@ using Stroytorg.Application.Extensions;
 using Stroytorg.Application.Services;
 using Stroytorg.Application.Services.Interfaces;
 using Stroytorg.Domain.Data.Entities;
+using Stroytorg.Domain.Data.Entities.Common;
+using Stroytorg.Domain.Data.Repositories;
+using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 using Stroytorg.Infrastructure.Infrastructure;
 using Stroytorg.Infrastructure.Infrastructure.Common;
@@ -15,12 +18,11 @@ public static class ServiceExtensions
 {
     public static void AddServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.RegisterAutoMapper();
-
+        services.AddHttpContextAccessor();
+        services.AddAutoMapper();
         services.AddMicroservices();
-        services.AddScoped<IUnitOfWork, StroytorgDbContext>();
-        services.AddSingleton<IDatabaseConnectionString, ConnectionStringConfig>();
-        services.AddScoped<StroytorgDbContext>();
+        services.AddDb();
+        services.AddRepositories();
     }
 
     public static void MigrateDatabase(this IApplicationBuilder app)
@@ -30,21 +32,34 @@ public static class ServiceExtensions
         {
             using (var scope = scopeFactory.CreateScope())
             {
-                scope.ServiceProvider.GetRequiredService<StroytorgDbContext>().Migrate();
+                scope.ServiceProvider.GetRequiredService<IStroytorgDbContext>().Migrate();
             }
         }
     }
 
     private static void AddMicroservices(this IServiceCollection services)
     {
-        services.AddScoped<IUserService, UserService>();
+        services.TryAddScoped<IUserService, UserService>();
     }
 
-    private static void RegisterAutoMapper(this IServiceCollection services)
+    private static void AddDb(this IServiceCollection services)
+    {
+        services.TryAddScoped<IUnitOfWork, StroytorgDbContext>();
+        services.AddSingleton<IDatabaseConnectionString, ConnectionStringConfig>();
+        services.TryAddScoped<IStroytorgDbContext, StroytorgDbContext>();
+    }
+
+    private static void AddRepositories(this IServiceCollection services)
+    {
+        services.TryAddScoped<IUserContext, UserContext>();
+        services.TryAddScoped<IUserRepository, UserRepository>();
+    }
+
+    private static void AddAutoMapper(this IServiceCollection services)
     {
         services.AddResponseCaching();
         IMapper mapper = AutoMapperFactory.CreateMapper();
-        _ = services.AddSingleton(mapper);
+        services.TryAddSingleton(mapper);
         services.TryAddScoped<IAutoMapperTypeMapper, AutoMapperTypeMapper>();
     }
 }

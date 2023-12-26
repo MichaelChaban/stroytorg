@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   api:
@@ -7,27 +7,41 @@ services:
       dockerfile: Stroytorg.Host/Dockerfile
     depends_on:
       - db
-    
+    networks:
+      - stroytorg-network
+
   frontend:
     build:
       context: ./src/Stroytorg.App
       dockerfile: Dockerfile
+    ports:
+      - "4200:80"
     depends_on:
       - api
-  
+    networks:
+      - stroytorg-network
+
   db:
     build:
       context: ./deploy/db
       dockerfile: Dockerfile
     ports:
       - "5432:5432"
+    networks:
+      - stroytorg-network
 
   router:
-     build:
-       context: ./deploy/router
-       dockerfile: Dockerfile
-     ports:
-       - 80:80
-     depends_on:
-       - api
-       - frontend
+    build:
+      context: ./deploy/router
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - api
+      - frontend
+    networks:
+      - stroytorg-network
+
+networks:
+  stroytorg-network:
+    driver: bridge

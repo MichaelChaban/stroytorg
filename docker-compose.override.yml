@@ -3,7 +3,7 @@ version: '3.4'
 services:
   api:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=DevelopmentDocker
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "80"

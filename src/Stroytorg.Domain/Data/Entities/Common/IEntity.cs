@@ -1,6 +1,11 @@
 ﻿namespace Stroytorg.Domain.Data.Entities.Common;
 
-public interface IEntity<T>
+public interface IEntity
 {
-    T Id { get; set; }
+    object Id { get; set; }
+}
+
+public interface IEntity<T> : IEntity
+{
+    new T Id { get; set; }
 }

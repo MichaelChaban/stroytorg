@@ -19,7 +19,6 @@ namespace Stroytorg.Domain.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedBy = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
@@ -38,13 +37,13 @@ namespace Stroytorg.Domain.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Password = table.Column<string>(type: "text", nullable: false),
                     FirstName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     PhoneNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     BirthDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Profile = table.Column<int>(type: "integer", nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedBy = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
@@ -73,7 +72,6 @@ namespace Stroytorg.Domain.Migrations
                     Length = table.Column<double>(type: "double precision", nullable: true),
                     Weigth = table.Column<double>(type: "double precision", nullable: true),
                     IsFavorite = table.Column<bool>(type: "boolean", nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedBy = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
@@ -109,7 +107,6 @@ namespace Stroytorg.Domain.Migrations
                     ShippingAddress = table.Column<string>(type: "text", nullable: true),
                     PaymentType = table.Column<int>(type: "integer", nullable: false),
                     OrderStatus = table.Column<int>(type: "integer", nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedBy = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
@@ -137,8 +134,7 @@ namespace Stroytorg.Domain.Migrations
                     MaterialId = table.Column<int>(type: "integer", nullable: false),
                     TotalMaterialAmount = table.Column<double>(type: "double precision", nullable: true),
                     TotalMaterialWeight = table.Column<double>(type: "double precision", nullable: true),
-                    UnitPrice = table.Column<double>(type: "double precision", nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    UnitPrice = table.Column<double>(type: "double precision", nullable: true)
                 },
                 constraints: table =>
                 {

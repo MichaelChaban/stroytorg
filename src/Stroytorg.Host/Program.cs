@@ -8,6 +8,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddServices(builder.Configuration);
 
+builder.Services.AddJwt(builder.Configuration);
+
 #if DEBUG
     builder.Services.AddCors(options => options.AddPolicy(
         name: "Stroytorg",

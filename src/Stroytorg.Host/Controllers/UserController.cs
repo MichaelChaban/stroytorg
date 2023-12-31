@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stroytorg.Application.Services.Interfaces;
-using Stroytorg.Contracts.Models;
+using Stroytorg.Contracts.Models.User;
+using Stroytorg.Contracts.ResponseModels;
 
 namespace Stroytorg.Host.Controllers;
 
@@ -16,7 +17,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public async Task<User> GetByIdAsync([FromQuery] object request, int id)
+    public async Task<BusinessResponse<User>> GetByIdAsync([FromQuery] object request, int id)
     {
         return await userService.GetByIdAsync(id);
     }

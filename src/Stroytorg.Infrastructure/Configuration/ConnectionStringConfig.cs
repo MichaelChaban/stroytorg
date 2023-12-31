@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Stroytorg.Infrastructure.Configuration;
-using Stroytorg.Infrastructure.Infrastructure.Common;
+using Stroytorg.Infrastructure.Configuration.Interfaces;
 
-namespace Stroytorg.Infrastructure.Infrastructure;
+namespace Stroytorg.Infrastructure.Configuration;
 
 public class ConnectionStringConfig : AutoBindConfig, IDatabaseConnectionString
 {

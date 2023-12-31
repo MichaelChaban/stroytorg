@@ -12,6 +12,11 @@ public class UserRepository : RepositoryBase<User, int>, IUserRepository
     {
     }
 
+    public async Task<User?> GetByEmailAsync(string email)
+    {
+        return await GetDbSet().FirstOrDefaultAsync(x => x.Email.Equals(email));
+    }
+
     protected override DbSet<User> GetDbSet()
     {
         return StroytorgContext.User;

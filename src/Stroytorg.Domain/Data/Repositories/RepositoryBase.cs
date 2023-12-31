@@ -77,6 +77,13 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public virtual async Task AddAsync(TEntity entity)
     {
+        if (entity is Auditable auditableEntity)
+        {
+            var fullName = HttpUserContext.User.Identity?.Name;
+            auditableEntity.CreatedAt = DateTimeOffset.UtcNow;
+            auditableEntity.CreatedBy = !string.IsNullOrEmpty(fullName) ? fullName : "System";
+        }
+
         _ = await this.GetDbSet().AddAsync(entity);
     }
 

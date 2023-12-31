@@ -23,7 +23,7 @@ public class AutoMapperFactory
 
     private static void MapUser(IMapperConfigurationExpression config)
     {
-        _ = config.CreateMap<User, Contracts.Models.User>()
+        _ = config.CreateMap<User, Contracts.Models.User.User>()
                 .ReverseMap();
     }
 }

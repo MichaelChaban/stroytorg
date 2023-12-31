@@ -12,7 +12,7 @@ using Stroytorg.Domain.Data.Entities;
 namespace Stroytorg.Domain.Migrations
 {
     [DbContext(typeof(StroytorgDbContext))]
-    [Migration("20231225153756_InitialCreate")]
+    [Migration("20231231103943_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -47,9 +47,6 @@ namespace Stroytorg.Domain.Migrations
                     b.Property<string>("DeletedBy")
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -99,9 +96,6 @@ namespace Stroytorg.Domain.Migrations
 
                     b.Property<double?>("Height")
                         .HasColumnType("double precision");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsFavorite")
                         .HasColumnType("boolean");
@@ -169,9 +163,6 @@ namespace Stroytorg.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -221,9 +212,6 @@ namespace Stroytorg.Domain.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
 
                     b.Property<int>("MaterialId")
                         .HasColumnType("integer");
@@ -285,13 +273,14 @@ namespace Stroytorg.Domain.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()

@@ -8,15 +8,15 @@ public class Auditable : BaseEntity<int>
     [StringLength(255)]
     public required string CreatedBy { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
 
     [StringLength(255)]
     public string? UpdatedBy { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public DateTimeOffset? UpdatedAt { get; set; }
 
     [StringLength(255)]
     public string? DeletedBy { get; set; }
 
-    public DateTime? DeletedAt { get; set; }
+    public DateTimeOffset? DeletedAt { get; set; }
 }

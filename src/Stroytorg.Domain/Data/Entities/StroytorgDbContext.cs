@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Stroytorg.Domain.Data.Entities.Common;
 using Stroytorg.Domain.Extensions;
-using Stroytorg.Infrastructure.Infrastructure.Common;
+using Stroytorg.Infrastructure.Configuration.Interfaces;
 
 namespace Stroytorg.Domain.Data.Entities;
 
 public class StroytorgDbContext : DbContext, IStroytorgDbContext
 {
-    private readonly IDatabaseConnectionString databaseConnectionString;
+    private readonly IDatabaseConnectionString? databaseConnectionString;
 
     public StroytorgDbContext()
     {
@@ -42,7 +42,7 @@ public class StroytorgDbContext : DbContext, IStroytorgDbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseNpgsql(databaseConnectionString.ConnectionString);
+            optionsBuilder.UseNpgsql(databaseConnectionString?.ConnectionString);
         }
     }
 

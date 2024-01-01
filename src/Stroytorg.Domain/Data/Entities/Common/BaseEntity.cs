@@ -4,6 +4,9 @@ public class  BaseEntity<T> : IEntity, IEntity<T>
 {
     public virtual required T Id { get; set; }
 
+    public bool IsActive { get; set; }
+
+
     object IEntity.Id
     {
         get => this.Id!;

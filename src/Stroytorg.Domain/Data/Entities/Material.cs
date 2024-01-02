@@ -6,6 +6,7 @@ namespace Stroytorg.Domain.Data.Entities;
 public class Material : Auditable
 {
     [Required]
+    [MaxLength(150)]
     public required string Name { get; set; }
 
     [Required]
@@ -14,9 +15,11 @@ public class Material : Auditable
     public int CategoryId { get; set; }
 
     [Required]
+    [Range(0, double.MaxValue)]
     public double Price { get; set; }
 
     [Required]
+    [Range(0, double.MaxValue)]
     public double StockAmount { get; set; }
 
     public double? Height { get; set; }
@@ -27,7 +30,7 @@ public class Material : Auditable
 
     public double? Weigth { get; set; }
 
-    public bool IsFavorite { get; set; }
+    public bool IsFavorite { get; set; } = false;
 
     public virtual Category? Category { get; set; }
 

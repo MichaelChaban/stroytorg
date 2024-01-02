@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.IdentityModel.Tokens;
 using Stroytorg.Application.Extensions;
 using Stroytorg.Application.Services;
 using Stroytorg.Application.Services.Interfaces;
@@ -8,9 +11,10 @@ using Stroytorg.Domain.Data.Entities.Common;
 using Stroytorg.Domain.Data.Repositories;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
-using Stroytorg.Infrastructure.Infrastructure;
-using Stroytorg.Infrastructure.Infrastructure.Common;
+using Stroytorg.Infrastructure.Configuration;
+using Stroytorg.Infrastructure.Configuration.Interfaces;
 using Stroytorg.Infrastructure.Store;
+using System.Text;
 
 namespace Stroytorg.Host.Extensions;
 
@@ -25,21 +29,59 @@ public static class ServiceExtensions
         services.AddRepositories();
     }
 
+    public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.TryAddSingleton<IJwtSettings, JwtSettingsConfig>();
+        var secret = Encoding.UTF8.GetBytes(configuration["JwtSettings:Secret"]!);
+
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateIssuerSigningKey = true,
+                ValidateActor = false,
+                ValidateLifetime = true,
+                IssuerSigningKey = new SymmetricSecurityKey(secret),
+                ClockSkew = TimeSpan.Zero,
+            };
+            options.Events = new JwtBearerEvents()
+            {
+                OnAuthenticationFailed = (context) => { return Task.CompletedTask; },
+            };
+        });
+
+        services.AddAuthorization(c =>
+        {
+            c.DefaultPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).Build();
+        });
+    }
+
     public static void MigrateDatabase(this IApplicationBuilder app)
     {
         var scopeFactory = app.ApplicationServices.GetService<IServiceScopeFactory>();
-        if (scopeFactory != null)
+        if (scopeFactory is null)
         {
-            using (var scope = scopeFactory.CreateScope())
-            {
-                scope.ServiceProvider.GetRequiredService<IStroytorgDbContext>().Migrate();
-            }
+            return;
         }
+
+        using var scope = scopeFactory.CreateScope();
+        scope.ServiceProvider.GetRequiredService<IStroytorgDbContext>().Migrate();
     }
 
     private static void AddMicroservices(this IServiceCollection services)
     {
         services.TryAddScoped<IUserService, UserService>();
+        services.TryAddScoped<IAuthService, AuthService>();
+        services.TryAddScoped<ITokenGeneratorService, TokenGeneratorService>();
     }
 
     private static void AddDb(this IServiceCollection services)

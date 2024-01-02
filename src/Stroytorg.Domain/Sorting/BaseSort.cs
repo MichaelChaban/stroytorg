@@ -6,7 +6,7 @@ namespace Stroytorg.Domain.Sorting;
 public abstract class BaseSort<T> where T : IEntity
 {
     private readonly bool defaultAsc;
-    private Expression<Func<T, object>> defaultSort;
+    private Expression<Func<T, object>>? defaultSort;
 
     protected BaseSort(string propertyName, bool isAscending, bool defaultAsc)
     {

@@ -1,8 +1,11 @@
-﻿using Stroytorg.Contracts.Models;
+﻿using Stroytorg.Contracts.Models.User;
+using Stroytorg.Contracts.ResponseModels;
 
 namespace Stroytorg.Application.Services.Interfaces;
 
 public interface IUserService
 {
-    Task<User> GetByIdAsync(int userId);
+    Task<BusinessResponse<User>> GetByIdAsync(int userId);
+
+    Task<BusinessResponse<User>> CreateAsync(UserRegister user);
 }

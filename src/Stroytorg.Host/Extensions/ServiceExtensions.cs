@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Stroytorg.Application.Extensions;
@@ -42,15 +43,26 @@ public static class ServiceExtensions
         {
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
+                ValidateIssuer = false,
+                ValidateAudience = false,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(secret)
+                ValidateActor = false,
+                ValidateLifetime = true,
+                IssuerSigningKey = new SymmetricSecurityKey(secret),
+                ClockSkew = TimeSpan.Zero,
+            };
+            options.Events = new JwtBearerEvents()
+            {
+                OnAuthenticationFailed = (context) => { return Task.CompletedTask; },
             };
         });
 
-        services.AddAuthorization();
+        services.AddAuthorization(c =>
+        {
+            c.DefaultPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).Build();
+        });
     }
 
     public static void MigrateDatabase(this IApplicationBuilder app)

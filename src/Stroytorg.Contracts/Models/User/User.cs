@@ -1,10 +1,13 @@
 ﻿namespace Stroytorg.Contracts.Models.User;
 
 public record User(
+    int Id,
+    string Email,
     string Password,
     string FirstName,
     string LastName,
-    string Email,
     string PhoneNumber,
-    DateTime? BirthDate,
-    int? Profile);
+    int Profile,
+    string ProfileName,
+    DateTimeOffset BirthDate,
+    ICollection<Order.Order> Orders);

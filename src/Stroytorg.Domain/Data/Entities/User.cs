@@ -1,6 +1,7 @@
 ﻿using Stroytorg.Domain.Data.Entities.Common;
 using Stroytorg.Domain.Data.Enums;
 using Stroytorg.Domain.Extensions;
+using Stroytorg.Infrastructure.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Stroytorg.Domain.Data.Entities;
@@ -9,6 +10,8 @@ public class User : Auditable
 {
     private string password;
 
+    [Required]
+    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$")]
     public required string Password
     {
         get
@@ -36,9 +39,11 @@ public class User : Auditable
     [MaxLength(50)]
     public string? PhoneNumber { get; set; }
 
-    public DateTime BirthDate { get; set; }
+    [Required]
+    [DateRangeControl(yearsRange: 100)]
+    public DateTimeOffset BirthDate { get; set; }
 
-    public UserProfileEnum Profile { get; set; }
+    public UserProfile Profile { get; set; } = UserProfile.Customer;
 
     public virtual ICollection<Order>? Orders { get; set; }
 }

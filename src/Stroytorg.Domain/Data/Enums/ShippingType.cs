@@ -1,6 +1,6 @@
 ﻿namespace Stroytorg.Domain.Data.Enums;
 
-public enum ShippingTypeEnum
+public enum ShippingType
 {
     PickUp = 0,
     DeliveryToAddress = 1,

@@ -1,6 +1,6 @@
 ﻿namespace Stroytorg.Domain.Data.Enums;
 
-public enum UserProfileEnum
+public enum UserProfile
 {
     Customer = 0,
     Employee = 1,

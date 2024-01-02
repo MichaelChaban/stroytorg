@@ -48,7 +48,7 @@ public class AuthService : IAuthService
             JwtToken: tokenGeneratorService.GenerateToken(contractUser));
     }
 
-    public async Task<AuthResponse> RegisterAsync(User user)
+    public async Task<AuthResponse> RegisterAsync(UserRegister user)
     {
         var entityUser = await userRepository.GetByEmailAsync(user.Email);
         if (entityUser is not null)

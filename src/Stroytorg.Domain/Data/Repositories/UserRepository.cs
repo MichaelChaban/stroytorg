@@ -12,6 +12,11 @@ public class UserRepository : RepositoryBase<User, int>, IUserRepository
     {
     }
 
+    public async Task<User?> GetByIdAsync(int userId)
+    {
+        return await GetDbSet().Include(x => x.Orders).FirstOrDefaultAsync(x => x.Id.Equals(userId));
+    }
+
     public async Task<User?> GetByEmailAsync(string email)
     {
         return await GetDbSet().FirstOrDefaultAsync(x => x.Email.Equals(email));

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Stroytorg.Application.Constants;
 using Stroytorg.Application.Services.Interfaces;
 using Stroytorg.Contracts.Models.User;
 using Stroytorg.Contracts.ResponseModels;
@@ -6,6 +8,7 @@ using Stroytorg.Contracts.ResponseModels;
 namespace Stroytorg.Host.Controllers;
 
 [Route("[controller]")]
+[Authorize]
 [ApiController]
 public class UserController : ControllerBase
 {
@@ -17,8 +20,15 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public async Task<BusinessResponse<User>> GetByIdAsync([FromQuery] object request, int id)
+    [Authorize(Roles = UserRole.Admin)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<BusinessResponse<User>>> GetByIdAsync(int id)
     {
-        return await userService.GetByIdAsync(id);
+        var result = await userService.GetByIdAsync(id);
+
+        return result.isSuccess ? Ok(result) : NotFound();
     }
 }

@@ -38,6 +38,6 @@ public class TokenGeneratorService : ITokenGeneratorService
     {
         yield return new Claim(ClaimTypes.Name, context.Email);
 
-        yield return new Claim(ClaimTypes.Role, context.Profile.ToString()!);
+        yield return new Claim(ClaimTypes.Role, context.ProfileName.ToString());
     }
 }

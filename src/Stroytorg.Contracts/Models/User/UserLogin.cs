@@ -4,7 +4,9 @@ namespace Stroytorg.Contracts.Models.User;
 
 public record UserLogin(
     [Required]
+    [MaxLength(150)]
     string Email,
 
     [Required]
+    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$")]
     string Password);

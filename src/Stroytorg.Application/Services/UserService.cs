@@ -21,7 +21,7 @@ public class UserService : IUserService
 
     public async Task<BusinessResponse<User>> GetByIdAsync(int userId)
     {
-        var user = await userRepository.GetAsync(userId);
+        var user = await userRepository.GetByIdAsync(userId);
         if (user is null)
         {
             return new BusinessResponse<User>(
@@ -32,7 +32,7 @@ public class UserService : IUserService
         return new BusinessResponse<User>(Value: autoMapperTypeMapper.Map<User>(user));
     }
 
-    public async Task<BusinessResponse<User>> CreateAsync(User user)
+    public async Task<BusinessResponse<User>> CreateAsync(UserRegister user)
     {
         var entityUser = await userRepository.GetByEmailAsync(user.Email);
         if (entityUser is not null)

@@ -8,7 +8,7 @@ namespace Stroytorg.Application.Extensions;
 public static class UserExtensions
 {
 
-    public static bool ValidateUser(this User user, out BusinessResponse<User>? businessResponse)
+    public static bool ValidateUser(this UserRegister user, out BusinessResponse<User>? businessResponse)
     {
         var phoneUtil = PhoneNumberUtil.GetInstance();
         var utilPhoneNumber = phoneUtil.Parse(user.PhoneNumber, null);

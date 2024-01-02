@@ -17,12 +17,16 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("Register")]
-    public async Task<AuthResponse> Register([FromBody] User user)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<AuthResponse> Register([FromBody] UserRegister user)
     {
         return await authService.RegisterAsync(user);
     }
 
     [HttpPost("Login")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<AuthResponse> Login([FromBody] UserLogin user)
     {
         return await authService.LoginAsync(user);

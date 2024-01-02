@@ -1,6 +1,6 @@
 ﻿namespace Stroytorg.Domain.Data.Enums;
 
-public enum PaymentTypeEnum
+public enum PaymentType
 {
     Cash = 0,
     Card = 1,

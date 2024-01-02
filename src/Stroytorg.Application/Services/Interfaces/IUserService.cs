@@ -7,5 +7,5 @@ public interface IUserService
 {
     Task<BusinessResponse<User>> GetByIdAsync(int userId);
 
-    Task<BusinessResponse<User>> CreateAsync(User user);
+    Task<BusinessResponse<User>> CreateAsync(UserRegister user);
 }

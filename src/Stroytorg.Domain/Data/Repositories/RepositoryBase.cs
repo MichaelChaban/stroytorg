@@ -87,24 +87,48 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         _ = await this.GetDbSet().AddAsync(entity);
     }
 
-    public virtual void UpdateRange(IEnumerable<TEntity> entity)
+    public virtual void UpdateRange(IEnumerable<TEntity> entities)
     {
-        this.GetDbSet().UpdateRange(entity);
+        foreach (var entity in entities)
+        {
+            if (entity is Auditable auditableEntity)
+            {
+                var fullName = HttpUserContext.User.Identity?.Name;
+                auditableEntity.UpdatedAt = DateTimeOffset.UtcNow;
+                auditableEntity.UpdatedBy = !string.IsNullOrEmpty(fullName) ? fullName : "System";
+            }
+        }
+
+        this.GetDbSet().UpdateRange(entities);
     }
 
     public virtual void Update(TEntity entity)
     {
+        if (entity is Auditable auditableEntity)
+        {
+            var fullName = HttpUserContext.User.Identity?.Name;
+            auditableEntity.UpdatedAt = DateTimeOffset.UtcNow;
+            auditableEntity.UpdatedBy = !string.IsNullOrEmpty(fullName) ? fullName : "System";
+        }
+
         _ = this.GetDbSet().Update(entity);
     }
 
     public virtual void Remove(TEntity entity)
     {
-        _ = this.GetDbSet().Remove(entity);
+        entity.IsActive = false;
+
+        Update(entity);
     }
 
-    public virtual void RemoveRange(TEntity[] entity)
+    public virtual void RemoveRange(TEntity[] entities)
     {
-        this.GetDbSet().RemoveRange(entity);
+        foreach (var entity in entities)
+        {
+            entity.IsActive = false;
+        }
+
+        UpdateRange(entities);
     }
 
     protected virtual IQueryable<TEntity> GetQueryable()

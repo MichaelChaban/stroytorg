@@ -1,6 +1,6 @@
 ﻿namespace Stroytorg.Domain.Data.Enums;
 
-public enum OrderStatusEnum
+public enum OrderStatus
 {
     NewOrder = 0,
     BeingPrepared = 1,

@@ -10,4 +10,5 @@ public interface IEntity
 public interface IEntity<T> : IEntity
 {
     new T Id { get; set; }
+    new bool IsActive { get; set; }
 }

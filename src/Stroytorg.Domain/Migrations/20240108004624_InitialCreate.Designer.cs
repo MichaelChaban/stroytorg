@@ -12,7 +12,7 @@ using Stroytorg.Domain.Data.Entities;
 namespace Stroytorg.Domain.Migrations
 {
     [DbContext(typeof(StroytorgDbContext))]
-    [Migration("20240102000933_InitialCreate")]
+    [Migration("20240108004624_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -41,10 +41,10 @@ namespace Stroytorg.Domain.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<DateTimeOffset?>("DeletedAt")
+                    b.Property<DateTimeOffset?>("DeactivatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("DeletedBy")
+                    b.Property<string>("DeactivatedBy")
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
@@ -87,10 +87,10 @@ namespace Stroytorg.Domain.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<DateTimeOffset?>("DeletedAt")
+                    b.Property<DateTimeOffset?>("DeactivatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("DeletedBy")
+                    b.Property<string>("DeactivatedBy")
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
@@ -157,10 +157,10 @@ namespace Stroytorg.Domain.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<DateTimeOffset?>("DeletedAt")
+                    b.Property<DateTimeOffset?>("DeactivatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("DeletedBy")
+                    b.Property<string>("DeactivatedBy")
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
@@ -266,6 +266,9 @@ namespace Stroytorg.Domain.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AuthenticationType")
+                        .HasColumnType("integer");
+
                     b.Property<DateTimeOffset>("BirthDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -277,10 +280,10 @@ namespace Stroytorg.Domain.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<DateTimeOffset?>("DeletedAt")
+                    b.Property<DateTimeOffset?>("DeactivatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("DeletedBy")
+                    b.Property<string>("DeactivatedBy")
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
@@ -294,6 +297,9 @@ namespace Stroytorg.Domain.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("GoogleId")
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
@@ -303,11 +309,9 @@ namespace Stroytorg.Domain.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 

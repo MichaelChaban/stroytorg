@@ -16,7 +16,7 @@ public class Auditable : BaseEntity<int>
     public DateTimeOffset? UpdatedAt { get; set; }
 
     [StringLength(255)]
-    public string? DeletedBy { get; set; }
+    public string? DeactivatedBy { get; set; }
 
-    public DateTimeOffset? DeletedAt { get; set; }
+    public DateTimeOffset? DeactivatedAt { get; set; }
 }

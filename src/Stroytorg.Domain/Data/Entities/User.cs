@@ -8,20 +8,13 @@ namespace Stroytorg.Domain.Data.Entities;
 
 public class User : Auditable
 {
-    private string password;
+    private string? password;
 
-    [Required]
-    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$")]
-    public required string Password
+    [Password]
+    public string? Password
     {
-        get
-        {
-            return password;
-        }
-        set
-        {
-            password = value.HashAndSaltPassword();
-        }
+        get => password;
+        set => password = value is null ? null : value.HashAndSaltPassword();
     }
 
     [Required]
@@ -32,18 +25,24 @@ public class User : Auditable
     [MaxLength(50)]
     public required string LastName { get; set; }
 
+    [Required]
     [MaxLength(150)]
+    [EmailAddress]
     public required string Email { get; set; }
 
-    [Required]
+    [PhoneNumber]
     [MaxLength(50)]
     public string? PhoneNumber { get; set; }
+
+    public string? GoogleId { get; set; }
 
     [Required]
     [DateRangeControl(yearsRange: 100)]
     public DateTimeOffset BirthDate { get; set; }
 
     public UserProfile Profile { get; set; } = UserProfile.Customer;
+
+    public AuthenticationType AuthenticationType { get; set; } = AuthenticationType.Internal;
 
     public virtual ICollection<Order>? Orders { get; set; }
 }

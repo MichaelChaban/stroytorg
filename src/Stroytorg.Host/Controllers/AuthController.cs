@@ -5,7 +5,7 @@ using Stroytorg.Contracts.ResponseModels;
 
 namespace Stroytorg.Host.Controllers;
 
-[Route("[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class AuthController : ControllerBase
 {
@@ -19,16 +19,30 @@ public class AuthController : ControllerBase
     [HttpPost("Register")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<AuthResponse> Register([FromBody] UserRegister user)
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<AuthResponse>> Register([FromBody] UserRegister user)
     {
-        return await authService.RegisterAsync(user);
+        var result = await authService.RegisterAsync(user);
+        return result.IsLoggedIn ? result : Unauthorized();
     }
 
     [HttpPost("Login")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<AuthResponse> Login([FromBody] UserLogin user)
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<AuthResponse>> Login([FromBody] UserLogin user)
     {
-        return await authService.LoginAsync(user);
+        var result = await authService.LoginAsync(user);
+        return result.IsLoggedIn ? result : Unauthorized();
+    }
+
+    [HttpPost("GoogleAuth")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<AuthResponse>> GoogleAuth([FromBody] UserGoogleAuth user)
+    {
+        var result = await authService.AuthGoogleAsync(user);
+        return result.IsLoggedIn ? result : Unauthorized();
     }
 }

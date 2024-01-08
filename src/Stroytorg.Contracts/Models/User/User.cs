@@ -3,11 +3,13 @@
 public record User(
     int Id,
     string Email,
-    string Password,
+    string? Password,
     string FirstName,
     string LastName,
-    string PhoneNumber,
+    string? PhoneNumber,
     int Profile,
     string ProfileName,
+    int AuthenticationType,
+    string AuthenticationTypeName,
     DateTimeOffset BirthDate,
     ICollection<Order.Order> Orders);

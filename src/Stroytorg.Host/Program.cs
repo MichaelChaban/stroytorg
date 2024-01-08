@@ -9,15 +9,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddServices(builder.Configuration);
 
 builder.Services.AddJwt(builder.Configuration);
-
-#if DEBUG
-    builder.Services.AddCors(options => options.AddPolicy(
-        name: "Stroytorg",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().WithExposedHeaders("Content-Disposition");
-        }));
-#endif
+builder.Services.AddCors(options => options.AddPolicy(
+    name: "Stroytorg",
+    policy =>
+    {
+        policy.WithOrigins("http://localhost").AllowAnyMethod().AllowAnyHeader().WithExposedHeaders("Content-Disposition");
+    }));
 
 var app = builder.Build();
 
@@ -29,6 +26,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("Stroytorg");
 
 app.UseAuthorization();
 

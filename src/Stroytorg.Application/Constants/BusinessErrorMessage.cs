@@ -13,4 +13,10 @@ public static class BusinessErrorMessage
     public static string InvalidPhoneNumber { get; } = "Provided phone number is not valid.";
 
     public static string InvalidEmail { get; } = "Provided email address is not valid.";
+
+    public static string UserValidationError { get; } = "There is an error occurred while validating the user.";
+
+    public static string GoogleAuthType { get; } = "User was authenticated with Google.";
+
+    public static string InternalAuthType { get; } = "User was authenticated with an email and a password.";
 }

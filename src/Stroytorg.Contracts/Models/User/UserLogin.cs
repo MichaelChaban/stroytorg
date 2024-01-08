@@ -1,14 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Stroytorg.Infrastructure.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Stroytorg.Contracts.Models.User;
 
 public record UserLogin(
     [Required]
+    [EmailAddress]
     [MaxLength(150)]
     string Email,
 
     [Required]
-    [RegularExpression(
-        @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$",
-        ErrorMessage = "Password didn't pass the needed requirements.")]
+    [Password(ErrorMessage = "Password didn't pass the needed requirements.")]
     string Password);

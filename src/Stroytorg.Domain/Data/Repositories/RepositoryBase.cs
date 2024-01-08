@@ -114,21 +114,43 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         _ = this.GetDbSet().Update(entity);
     }
 
-    public virtual void Remove(TEntity entity)
+    public virtual void Deactivate(TEntity entity)
     {
         entity.IsActive = false;
+        if (entity is Auditable auditableEntity)
+        {
+            var fullName = HttpUserContext.User.Identity?.Name;
+            auditableEntity.DeactivatedAt = DateTimeOffset.UtcNow;
+            auditableEntity.DeactivatedBy = !string.IsNullOrEmpty(fullName) ? fullName : "System";
+        }
 
         Update(entity);
     }
 
-    public virtual void RemoveRange(TEntity[] entities)
+    public virtual void DeactivateRange(TEntity[] entities)
     {
         foreach (var entity in entities)
         {
             entity.IsActive = false;
+            if (entity is Auditable auditableEntity)
+            {
+                var fullName = HttpUserContext.User.Identity?.Name;
+                auditableEntity.DeactivatedAt = DateTimeOffset.UtcNow;
+                auditableEntity.DeactivatedBy = !string.IsNullOrEmpty(fullName) ? fullName : "System";
+            }
         }
 
         UpdateRange(entities);
+    }
+
+    public virtual void Remove(TEntity entity)
+    {
+        _ = this.GetDbSet().Remove(entity);
+    }
+
+    public virtual void RemoveRange(TEntity[] entities)
+    {
+        this.GetDbSet().RemoveRange(entities);
     }
 
     protected virtual IQueryable<TEntity> GetQueryable()

@@ -8,4 +8,6 @@ public interface IAuthService
     Task<AuthResponse> LoginAsync(UserLogin user);
 
     Task<AuthResponse> RegisterAsync(UserRegister user);
+
+    Task<AuthResponse> AuthGoogleAsync(UserGoogleAuth user);
 }

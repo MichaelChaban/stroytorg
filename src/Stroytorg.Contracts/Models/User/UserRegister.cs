@@ -5,13 +5,12 @@ namespace Stroytorg.Contracts.Models.User;
 
 public record UserRegister(
     [Required]
+    [EmailAddress]
     [MaxLength(150)]
     string Email,
 
     [Required]
-    [RegularExpression(
-        @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$",
-        ErrorMessage = "Password didn't pass the needed requirements.")]
+    [Password(ErrorMessage = "Password didn't pass the needed requirements.")]
     string Password,
 
     [Required]
@@ -22,8 +21,11 @@ public record UserRegister(
     [MaxLength(50)]
     string LastName,
 
+    [Required]
     [DateRangeControl(yearsRange: 100)]
     DateTimeOffset BirthDate,
 
+    [Required]
     [MaxLength(50)]
+    [PhoneNumber]
     string PhoneNumber);

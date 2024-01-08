@@ -29,9 +29,14 @@ public class AutoMapperFactory
         _ = config.CreateMap<DB.User, User>()
             .ForCtorParam(nameof(User.Profile), opt => opt.MapFrom(src => (int)src.Profile))
             .ForCtorParam(nameof(User.ProfileName), opt => opt.MapFrom(src => src.Profile.ToString()))
+            .ForCtorParam(nameof(User.AuthenticationType), opt => opt.MapFrom(src => (int)src.AuthenticationType))
+            .ForCtorParam(nameof(User.AuthenticationTypeName), opt => opt.MapFrom(src => src.AuthenticationType.ToString()))
             .ReverseMap();
 
         _ = config.CreateMap<DB.User, UserRegister>()
+                .ReverseMap();
+
+        _ = config.CreateMap<DB.User, UserGoogleAuth>()
                 .ReverseMap();
     }
 

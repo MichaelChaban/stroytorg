@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Stroytorg.Infrastructure.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Stroytorg.Contracts.Models.User;
 
 public record UserEdit(
-    [RegularExpression(
-        @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$",
-        ErrorMessage = "Password didn't pass the needed requirements.")]
+    [Password(ErrorMessage = "Password didn't pass the needed requirements.")]
     string? Password,
 
     [MaxLength(50)]
@@ -15,6 +14,7 @@ public record UserEdit(
     string? LastName,
 
     [MaxLength(50)]
+    [PhoneNumber]
     string? PhoneNumber,
 
     [Range(0, 100)]

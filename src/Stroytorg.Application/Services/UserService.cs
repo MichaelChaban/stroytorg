@@ -25,7 +25,7 @@ public class UserService : IUserService
         {
             return new BusinessResponse<User>(
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingUser,
-                isSuccess: false);
+                IsSuccess: false);
         }
 
         return new BusinessResponse<User>(Value: autoMapperTypeMapper.Map<User>(user));
@@ -38,7 +38,7 @@ public class UserService : IUserService
         {
             return new BusinessResponse<User>(
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingUser,
-                isSuccess: false);
+                IsSuccess: false);
         }
 
         return new BusinessResponse<User>(Value: autoMapperTypeMapper.Map<User>(user));
@@ -51,13 +51,13 @@ public class UserService : IUserService
         {
             return new BusinessResponse<User>(
                 BusinessErrorMessage: BusinessErrorMessage.AlreadyExistingUser,
-                isSuccess: false);
+                IsSuccess: false);
         }
 
         var userToAdd = autoMapperTypeMapper.Map<Domain.Data.Entities.User>(user);
 
         await userRepository.AddAsync(userToAdd);
-        userRepository.UnitOfWork.Commit();
+        await userRepository.UnitOfWork.Commit();
         
         return new BusinessResponse<User>(Value: autoMapperTypeMapper.Map<User>(userToAdd));
     }
@@ -69,13 +69,13 @@ public class UserService : IUserService
         {
             return new BusinessResponse<User>(
                 BusinessErrorMessage: BusinessErrorMessage.AlreadyExistingUser,
-                isSuccess: false);
+                IsSuccess: false);
         }
 
         var userToAdd = autoMapperTypeMapper.Map<Domain.Data.Entities.User>(user);
 
         await userRepository.AddAsync(userToAdd);
-        userRepository.UnitOfWork.Commit();
+        await userRepository.UnitOfWork.Commit();
 
         return new BusinessResponse<User>(Value: autoMapperTypeMapper.Map<User>(userToAdd));
     }

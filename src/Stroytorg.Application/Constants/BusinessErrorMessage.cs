@@ -19,4 +19,8 @@ public static class BusinessErrorMessage
     public static string GoogleAuthType { get; } = "User was authenticated with Google.";
 
     public static string InternalAuthType { get; } = "User was authenticated with an email and a password.";
+
+    public static string NotExistingEntity { get; set; } = "There is no entity was found with the provided id.";
+
+    public static string AlreadyExistingEntity { get; set; } = "There is an already existing in the db.";
 }

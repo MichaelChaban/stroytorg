@@ -2,7 +2,7 @@
 using Stroytorg.Domain.Data.Entities;
 using Stroytorg.Domain.Data.Entities.Common;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
-using Stroytorg.Domain.Sorting;
+using Stroytorg.Domain.Sorting.Common;
 using Stroytorg.Infrastructure.Store;
 using System.Linq.Expressions;
 
@@ -50,7 +50,7 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         var query = this.FilterData(filter);
 
         var sortField = sort?.Field.ToLower();
-        var sortByAsc = sort?.Direction == null || sort.Direction == SortDirection.Asc;
+        var sortByAsc = sort?.Direction == null || sort.Direction == SortDirection.Ascending;
         var entitySort = Activator.CreateInstance(typeof(TSort), sortField, sortByAsc, isAscendingSortByDefault) as TSort;
         query = entitySort!.ApplySort(query);
 

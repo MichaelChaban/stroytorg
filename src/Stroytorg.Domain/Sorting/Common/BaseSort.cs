@@ -1,7 +1,7 @@
 ﻿using Stroytorg.Domain.Data.Entities.Common;
 using System.Linq.Expressions;
 
-namespace Stroytorg.Domain.Sorting;
+namespace Stroytorg.Domain.Sorting.Common;
 
 public abstract class BaseSort<T> where T : IEntity
 {
@@ -10,8 +10,8 @@ public abstract class BaseSort<T> where T : IEntity
 
     protected BaseSort(string propertyName, bool isAscending, bool defaultAsc)
     {
-        this.PropertyName = propertyName;
-        this.IsAscending = isAscending;
+        PropertyName = propertyName;
+        IsAscending = isAscending;
         this.defaultAsc = defaultAsc;
     }
 
@@ -19,9 +19,9 @@ public abstract class BaseSort<T> where T : IEntity
     {
         get
         {
-            return this.defaultSort ?? (x => x.Id);
+            return defaultSort ?? (x => x.Id);
         }
-        set => this.defaultSort = value;
+        set => defaultSort = value;
     }
 
     public string PropertyName { get; set; }
@@ -30,13 +30,13 @@ public abstract class BaseSort<T> where T : IEntity
 
     public virtual IQueryable<T> ApplySort(IQueryable<T> query)
     {
-        if (string.IsNullOrEmpty(this.PropertyName))
+        if (string.IsNullOrEmpty(PropertyName))
         {
-            return this.defaultAsc ? query.OrderBy(this.DefaultSort) : query.OrderByDescending(this.DefaultSort);
+            return defaultAsc ? query.OrderBy(DefaultSort) : query.OrderByDescending(DefaultSort);
         }
 
-        var sortExpression = this.GetSortingExpression(this.PropertyName);
-        if (!this.IsAscending)
+        var sortExpression = GetSortingExpression(PropertyName.ToLower());
+        if (!IsAscending)
         {
             return query.OrderByDescending(sortExpression);
         }

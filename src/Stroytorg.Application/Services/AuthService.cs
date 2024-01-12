@@ -51,7 +51,7 @@ public class AuthService : IAuthService
         }
 
         var contractUserResponse = await userService.CreateAsync(user);
-        if (!contractUserResponse.isSuccess)
+        if (!contractUserResponse.IsSuccess)
         {
             return new AuthResponse(AuthErrorMessage: contractUserResponse.BusinessErrorMessage);
         }
@@ -64,7 +64,7 @@ public class AuthService : IAuthService
     public async Task<AuthResponse> AuthGoogleAsync(UserGoogleAuth user)
     {
         var googleValidationResult = await user.ValidateGoogleUserAsync();
-        if (googleValidationResult is not null && !googleValidationResult.isSuccess)
+        if (googleValidationResult is not null && !googleValidationResult.IsSuccess)
         {
             return new AuthResponse(AuthErrorMessage: googleValidationResult.BusinessErrorMessage);
         }
@@ -78,7 +78,7 @@ public class AuthService : IAuthService
         if (contractUserResponse.Value is null)
         {
             var createdUserResponse = await userService.CreateWithGoogleAsync(user);
-            if (!createdUserResponse.isSuccess)
+            if (!createdUserResponse.IsSuccess)
             {
                 return new AuthResponse(AuthErrorMessage: createdUserResponse.BusinessErrorMessage);
             }

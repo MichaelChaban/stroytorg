@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Stroytorg.Infrastructure\Stroytorg.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
-
 </Project>

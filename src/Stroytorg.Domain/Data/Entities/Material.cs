@@ -28,7 +28,7 @@ public class Material : Auditable
 
     public double? Length { get; set; }
 
-    public double? Weigth { get; set; }
+    public double? Weight { get; set; }
 
     public bool IsFavorite { get; set; } = false;
 

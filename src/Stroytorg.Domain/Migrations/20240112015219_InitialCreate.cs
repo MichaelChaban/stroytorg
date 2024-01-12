@@ -74,7 +74,7 @@ namespace Stroytorg.Domain.Migrations
                     Height = table.Column<double>(type: "double precision", nullable: true),
                     Width = table.Column<double>(type: "double precision", nullable: true),
                     Length = table.Column<double>(type: "double precision", nullable: true),
-                    Weigth = table.Column<double>(type: "double precision", nullable: true),
+                    Weight = table.Column<double>(type: "double precision", nullable: true),
                     IsFavorite = table.Column<bool>(type: "boolean", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedBy = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),

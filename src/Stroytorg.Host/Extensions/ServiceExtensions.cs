@@ -22,11 +22,12 @@ public static class ServiceExtensions
 {
     public static void AddServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHttpContextAccessor();
-        services.AddAutoMapper();
-        services.AddMicroservices();
-        services.AddDb();
-        services.AddRepositories();
+        services
+            .AddHttpContextAccessor()
+            .AddAutoMapper()
+            .AddMicroservices()
+            .AddDb()
+            .AddRepositories();
     }
 
     public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
@@ -77,31 +78,41 @@ public static class ServiceExtensions
         scope.ServiceProvider.GetRequiredService<IStroytorgDbContext>().Migrate();
     }
 
-    private static void AddMicroservices(this IServiceCollection services)
+    private static IServiceCollection AddMicroservices(this IServiceCollection services)
     {
         services.TryAddScoped<IUserService, UserService>();
         services.TryAddScoped<IAuthService, AuthService>();
         services.TryAddScoped<ITokenGeneratorService, TokenGeneratorService>();
+        services.TryAddScoped<ICategoryService, CategoryService>();
+
+        return services;
     }
 
-    private static void AddDb(this IServiceCollection services)
+    private static IServiceCollection AddDb(this IServiceCollection services)
     {
         services.TryAddScoped<IUnitOfWork, StroytorgDbContext>();
         services.AddSingleton<IDatabaseConnectionString, ConnectionStringConfig>();
         services.TryAddScoped<IStroytorgDbContext, StroytorgDbContext>();
+
+        return services;
     }
 
-    private static void AddRepositories(this IServiceCollection services)
+    private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.TryAddScoped<IUserContext, UserContext>();
         services.TryAddScoped<IUserRepository, UserRepository>();
+        services.TryAddScoped<ICategoryRepository, CategoryRepository>();
+
+        return services;
     }
 
-    private static void AddAutoMapper(this IServiceCollection services)
+    private static IServiceCollection AddAutoMapper(this IServiceCollection services)
     {
         services.AddResponseCaching();
         IMapper mapper = AutoMapperFactory.CreateMapper();
         services.TryAddSingleton(mapper);
         services.TryAddScoped<IAutoMapperTypeMapper, AutoMapperTypeMapper>();
+
+        return services;
     }
 }

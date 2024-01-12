@@ -27,7 +27,7 @@ public static class UserExtensions
         {
             businessResponse = new BusinessResponse<User>(
                 BusinessErrorMessage: BusinessErrorMessage.UserValidationError,
-                isSuccess: false);
+                IsSuccess: false);
             return false;
         }
     }
@@ -55,7 +55,7 @@ public static class UserExtensions
             {
                 return new BusinessResponse<User>(
                     BusinessErrorMessage: BusinessErrorMessage.InvalidPhoneNumber,
-                    isSuccess: false);
+                    IsSuccess: false);
             }
 
             return null;
@@ -64,7 +64,7 @@ public static class UserExtensions
         {
             return new BusinessResponse<User>(
                 BusinessErrorMessage: BusinessErrorMessage.UserValidationError,
-                isSuccess: false);
+                IsSuccess: false);
         }
     }
 }

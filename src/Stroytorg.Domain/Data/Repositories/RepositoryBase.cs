@@ -2,7 +2,7 @@
 using Stroytorg.Domain.Data.Entities;
 using Stroytorg.Domain.Data.Entities.Common;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
-using Stroytorg.Domain.Sorting;
+using Stroytorg.Domain.Sorting.Common;
 using Stroytorg.Infrastructure.Store;
 using System.Linq.Expressions;
 
@@ -17,9 +17,9 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         this.HttpUserContext = httpUserContext ?? throw new ArgumentNullException(nameof(httpUserContext));
     }
 
-    public StroytorgDbContext StroytorgContext => (StroytorgDbContext)this.UnitOfWork;
+    public StroytorgDbContext StroytorgContext => (StroytorgDbContext)UnitOfWork;
 
-    public UserContext UserContext => (UserContext)this.HttpUserContext;
+    public UserContext UserContext => (UserContext)HttpUserContext;
 
     public IUserContext HttpUserContext { get; }
 
@@ -27,19 +27,19 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public Task<TEntity> GetAsync(TKey id)
     {
-        var query = this.GetQueryable();
+        var query = GetQueryable();
         return query.FirstOrDefaultAsync(x => x.Id!.Equals(id))!;
     }
 
     public async Task<IEnumerable<TEntity>> GetByIdsAsync(TKey[] ids)
     {
-        var query = this.GetQueryable();
+        var query = GetQueryable();
         return await query.Where(x => ids.Contains(x.Id)).ToListAsync();
     }
 
     public async Task<IEnumerable<TEntity>> GetPagedAsync(int offset, int limit, Expression<Func<TEntity, bool>> filter)
     {
-        var query = this.FilterData(filter);
+        var query = FilterData(filter);
 
         return await query.Skip(offset).Take(limit).ToArrayAsync();
     }
@@ -47,32 +47,32 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
     public async Task<IEnumerable<TEntity>> GetPagedSortAsync<TSort>(int offset, int limit, Expression<Func<TEntity, bool>> filter, SortDefinition sort, bool isAscendingSortByDefault = true)
         where TSort : BaseSort<TEntity>
     {
-        var query = this.FilterData(filter);
+        var query = FilterData(filter);
 
         var sortField = sort?.Field.ToLower();
-        var sortByAsc = sort?.Direction == null || sort.Direction == SortDirection.Asc;
+        var sortByAsc = sort?.Direction == null || sort.Direction == SortDirection.Ascending;
         var entitySort = Activator.CreateInstance(typeof(TSort), sortField, sortByAsc, isAscendingSortByDefault) as TSort;
         query = entitySort!.ApplySort(query);
 
         return await query.Skip(offset).Take(limit).ToArrayAsync();
     }
 
-    public Task<int> GetCountAsync(Expression<Func<TEntity, bool>> filter)
+    public async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> filter)
     {
-        var query = this.FilterData(filter);
+        var query = FilterData(filter);
 
-        return query.CountAsync();
+        return await query.CountAsync();
     }
 
     public async Task<IEnumerable<TEntity>> GetFilteredAsync(Expression<Func<TEntity, bool>> filter)
     {
-        var query = this.FilterData(filter);
+        var query = FilterData(filter);
         return await query.ToArrayAsync();
     }
 
     public async Task<IEnumerable<TEntity>> GetAll()
     {
-        return await this.FilterData(null).ToArrayAsync();
+        return await FilterData(null).ToArrayAsync();
     }
 
     public virtual async Task AddAsync(TEntity entity)
@@ -84,7 +84,7 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
             auditableEntity.CreatedBy = !string.IsNullOrEmpty(fullName) ? fullName : "System";
         }
 
-        _ = await this.GetDbSet().AddAsync(entity);
+        _ = await GetDbSet().AddAsync(entity);
     }
 
     public virtual void UpdateRange(IEnumerable<TEntity> entities)
@@ -99,7 +99,7 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
             }
         }
 
-        this.GetDbSet().UpdateRange(entities);
+        GetDbSet().UpdateRange(entities);
     }
 
     public virtual void Update(TEntity entity)
@@ -111,7 +111,7 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
             auditableEntity.UpdatedBy = !string.IsNullOrEmpty(fullName) ? fullName : "System";
         }
 
-        _ = this.GetDbSet().Update(entity);
+        _ = GetDbSet().Update(entity);
     }
 
     public virtual void Deactivate(TEntity entity)
@@ -145,24 +145,24 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public virtual void Remove(TEntity entity)
     {
-        _ = this.GetDbSet().Remove(entity);
+        _ = GetDbSet().Remove(entity);
     }
 
     public virtual void RemoveRange(TEntity[] entities)
     {
-        this.GetDbSet().RemoveRange(entities);
+        GetDbSet().RemoveRange(entities);
     }
 
     protected virtual IQueryable<TEntity> GetQueryable()
     {
-        return this.GetDbSet();
+        return GetDbSet();
     }
 
     protected abstract DbSet<TEntity> GetDbSet();
 
     protected IQueryable<TEntity> FilterData(Expression<Func<TEntity, bool>>? filter)
     {
-        IQueryable<TEntity> query = this.GetQueryable();
+        IQueryable<TEntity> query = GetQueryable();
         if (filter != null)
         {
             query = query.Where(filter);

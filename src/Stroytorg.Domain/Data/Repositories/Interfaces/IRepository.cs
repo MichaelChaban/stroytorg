@@ -1,5 +1,5 @@
 ﻿using Stroytorg.Domain.Data.Entities.Common;
-using Stroytorg.Domain.Sorting;
+using Stroytorg.Domain.Sorting.Common;
 using Stroytorg.Infrastructure.Store;
 using System.Linq.Expressions;
 

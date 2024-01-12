@@ -29,6 +29,6 @@ public class UserController : ControllerBase
     {
         var result = await userService.GetByIdAsync(id);
 
-        return result.isSuccess ? Ok(result) : NotFound();
+        return result.IsSuccess ? result : NotFound();
     }
 }

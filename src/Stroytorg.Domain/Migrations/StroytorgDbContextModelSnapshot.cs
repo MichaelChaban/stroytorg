@@ -125,7 +125,7 @@ namespace Stroytorg.Domain.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<double?>("Weigth")
+                    b.Property<double?>("Weight")
                         .HasColumnType("double precision");
 
                     b.Property<double?>("Width")

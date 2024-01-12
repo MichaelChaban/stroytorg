@@ -20,32 +20,41 @@ public record Order : Auditable
     public string? ShippingAddress { get; init; }
 
     public Order(
-        string firstName,
-        string lastName,
-        string email,
-        string phoneNumber,
-        int materialsAmount,
-        double totalPrice,
-        int shippingType,
-        string shippingTypeName,
-        int paymentType,
-        string paymentTypeName,
-        int orderStatus,
-        string orderStatusName,
-        int? userId,
-        string? shippingAddress,
-        DateTimeOffset createdAt,
-        string createdBy,
-        DateTimeOffset? updatedAt,
-        string updatedBy,
-        DateTimeOffset? deactivatedAt,
-        string deactivatedBy)
-        : base(createdAt, createdBy, updatedAt, updatedBy, deactivatedAt, deactivatedBy)
+        string FirstName,
+        string LastName,
+        string Email,
+        string PhoneNumber,
+        int MaterialsAmount,
+        double TotalPrice,
+        int ShippingType,
+        string ShippingTypeName,
+        int PaymentType,
+        string PaymentTypeName,
+        int OrderStatus,
+        string OrderStatusName,
+        int? UserId,
+        string? ShippingAddress,
+        DateTimeOffset CreatedAt,
+        string CreatedBy,
+        DateTimeOffset? UpdatedAt,
+        string UpdatedBy,
+        DateTimeOffset? DeactivatedAt,
+        string DeactivatedBy)
+        : base(CreatedAt, CreatedBy, UpdatedAt, UpdatedBy, DeactivatedAt, DeactivatedBy)
     {
-        (FirstName, LastName, Email, PhoneNumber, MaterialsAmount, TotalPrice, ShippingType, ShippingTypeName, PaymentType,
-         PaymentTypeName, OrderStatus, OrderStatusName, UserId, ShippingAddress) = (firstName, lastName, email, phoneNumber,
-                                                                                    materialsAmount, totalPrice, shippingType,
-                                                                                    shippingTypeName, paymentType, paymentTypeName,
-                                                                                    orderStatus, orderStatusName, userId, shippingAddress);
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.PhoneNumber = PhoneNumber;
+        this.MaterialsAmount = MaterialsAmount;
+        this.TotalPrice = TotalPrice;
+        this.ShippingType = ShippingType;
+        this.ShippingTypeName = ShippingTypeName;
+        this.PaymentType = PaymentType;
+        this.PaymentTypeName = PaymentTypeName;
+        this.OrderStatus = OrderStatus;
+        this.OrderStatusName = OrderStatusName;
+        this.UserId = UserId;
+        this.ShippingAddress = ShippingAddress;
     }
 }

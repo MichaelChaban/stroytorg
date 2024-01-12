@@ -35,7 +35,7 @@ public abstract class BaseSort<T> where T : IEntity
             return defaultAsc ? query.OrderBy(DefaultSort) : query.OrderByDescending(DefaultSort);
         }
 
-        var sortExpression = GetSortingExpression(PropertyName);
+        var sortExpression = GetSortingExpression(PropertyName.ToLower());
         if (!IsAscending)
         {
             return query.OrderByDescending(sortExpression);

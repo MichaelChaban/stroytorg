@@ -6,6 +6,8 @@ using DbSpec = Stroytorg.Domain.Specifications;
 using DbSort = Stroytorg.Domain.Sorting;
 using Stroytorg.Contracts.Filters;
 using ContractsSort = Stroytorg.Contracts.Sorting;
+using Stroytorg.Contracts.Models.Category;
+using Stroytorg.Contracts.Models.Material;
 
 namespace Stroytorg.Application.Extensions;
 
@@ -25,6 +27,8 @@ public class AutoMapperFactory
         {
             MapUser(config);
             MapOrder(config);
+            MapCategory(config);
+            MapMaterial(config);
             MapFilters(config);
             MapSoring(config);
         });
@@ -55,6 +59,20 @@ public class AutoMapperFactory
             .ForCtorParam(nameof(Order.PaymentTypeName), opt => opt.MapFrom(src => src.PaymentType.ToString()))
             .ForCtorParam(nameof(Order.OrderStatus), opt => opt.MapFrom(src => (int)src.OrderStatus))
             .ForCtorParam(nameof(Order.OrderStatusName), opt => opt.MapFrom(src => src.OrderStatus.ToString()))
+            .ReverseMap();
+    }
+
+    private static void MapCategory(IMapperConfigurationExpression config)
+    {
+        _ = config.CreateMap<DbData.Category, Category>()
+            .ReverseMap();
+
+        _ = config.CreateMap<CategoryEdit, DbData.Category>();
+    }
+
+    private static void MapMaterial(IMapperConfigurationExpression config)
+    {
+        _ = config.CreateMap<DbData.Material, Material>()
             .ReverseMap();
     }
 

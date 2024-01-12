@@ -20,7 +20,7 @@ public class UserService : IUserService
 
     public async Task<BusinessResponse<User>> GetByIdAsync(int userId)
     {
-        var user = await userRepository.GetByIdAsync(userId);
+        var user = await userRepository.GetAsync(userId);
         if (user is null)
         {
             return new BusinessResponse<User>(

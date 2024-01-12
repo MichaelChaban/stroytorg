@@ -25,7 +25,7 @@ public class CategorySpecification : BaseSpecification, ISpecification<Category>
         if (!string.IsNullOrEmpty(Name))
         {
             specification &= new DirectSpecification<Category>(x =>
-                x.Name.Contains(Name, StringComparison.OrdinalIgnoreCase));
+                x.Name.ToUpper().Contains(Name.ToUpper()));
         }
 
         return specification.SatisfiedBy();

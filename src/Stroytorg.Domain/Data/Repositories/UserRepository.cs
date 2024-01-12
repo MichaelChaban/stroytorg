@@ -12,11 +12,9 @@ public class UserRepository : RepositoryBase<User, int>, IUserRepository
     {
     }
 
-    public async Task<User?> GetByIdAsync(int userId)
+    protected override IQueryable<User> GetQueryable()
     {
-        return await GetDbSet()
-            .Include(x => x.Orders)
-            .FirstOrDefaultAsync(x => x.Id.Equals(userId));
+        return GetDbSet().Include(x => x.Orders).AsQueryable();
     }
 
     public async Task<User?> GetByEmailAsync(string email)

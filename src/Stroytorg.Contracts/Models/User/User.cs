@@ -18,28 +18,37 @@ public record User : Auditable
     public ICollection<Order.Order> Orders { get; init; }
 
     public User(
-        int id,
-        string email,
-        string? password,
-        string firstName,
-        string lastName,
-        string? phoneNumber,
-        int profile,
-        string profileName,
-        int authenticationType,
-        string authenticationTypeName,
-        DateTimeOffset birthDate,
-        ICollection<Order.Order> orders,
-        DateTimeOffset createdAt,
-        string createdBy,
-        DateTimeOffset? updatedAt,
-        string updatedBy,
-        DateTimeOffset? deactivatedAt,
-        string deactivatedBy)
-        : base(createdAt, createdBy, updatedAt, updatedBy, deactivatedAt, deactivatedBy)
+        int Id,
+        string Email,
+        string? Password,
+        string FirstName,
+        string LastName,
+        string? PhoneNumber,
+        int Profile,
+        string ProfileName,
+        int AuthenticationType,
+        string AuthenticationTypeName,
+        DateTimeOffset BirthDate,
+        ICollection<Order.Order> Orders,
+        DateTimeOffset CreatedAt,
+        string CreatedBy,
+        DateTimeOffset? UpdatedAt,
+        string UpdatedBy,
+        DateTimeOffset? DeactivatedAt,
+        string DeactivatedBy)
+        : base(CreatedAt, CreatedBy, UpdatedAt, UpdatedBy, DeactivatedAt, DeactivatedBy)
     {
-        (Id, Email, Password, FirstName, LastName, PhoneNumber, Profile, ProfileName, AuthenticationType, AuthenticationTypeName,
-         BirthDate, Orders) = (id, email, password, firstName, lastName, phoneNumber, profile, profileName, authenticationType,
-                             authenticationTypeName, birthDate, orders);
+        this.Id = Id;
+        this.Email = Email;
+        this.Password = Password;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.PhoneNumber = PhoneNumber;
+        this.Profile = Profile;
+        this.ProfileName = ProfileName;
+        this.AuthenticationType = AuthenticationType;
+        this.AuthenticationTypeName = AuthenticationTypeName;
+        this.BirthDate = BirthDate;
+        this.Orders = Orders;
     }
 }

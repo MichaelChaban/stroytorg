@@ -13,13 +13,13 @@ public class CategorySort : BaseSort<DB.Category>
 
     public override Expression<Func<DB.Category, object>> DefaultSort
     {
-        get => x => x.Name;
+        get => x => x.Id;
     }
 
     protected override Expression<Func<DB.Category, object>> GetSortingExpression(string propertyName) =>
     propertyName switch
     {
-        "id" => x => x.Id,
+        "name" => x => x.Name,
         _ => DefaultSort,
     };
 }

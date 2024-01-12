@@ -41,6 +41,7 @@ public class CategoryController : ControllerBase
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromBody]CategoryEdit category)
     {
         return await categoryService.CreateAsync(category);
@@ -50,6 +51,7 @@ public class CategoryController : ControllerBase
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<int>> UpdateAsync(int id, [FromBody]CategoryEdit category)
     {
@@ -60,6 +62,7 @@ public class CategoryController : ControllerBase
     [HttpDelete("{id}")]
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<int>> RemoveAsync(int id)
     {

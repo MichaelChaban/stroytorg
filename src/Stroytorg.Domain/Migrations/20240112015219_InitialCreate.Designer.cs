@@ -12,7 +12,7 @@ using Stroytorg.Domain.Data.Entities;
 namespace Stroytorg.Domain.Migrations
 {
     [DbContext(typeof(StroytorgDbContext))]
-    [Migration("20240108004624_InitialCreate")]
+    [Migration("20240112015219_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -128,7 +128,7 @@ namespace Stroytorg.Domain.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<double?>("Weigth")
+                    b.Property<double?>("Weight")
                         .HasColumnType("double precision");
 
                     b.Property<double?>("Width")

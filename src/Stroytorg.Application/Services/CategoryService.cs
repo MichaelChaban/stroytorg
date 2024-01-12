@@ -63,13 +63,13 @@ public class CategoryService : ICategoryService
                 BusinessErrorMessage: BusinessErrorMessage.AlreadyExistingEntity);
         }
 
-        categoryEntity = autoMapperTypeMapper.Map<DB.Data.Entities.Category>(category);
+        categoryEntity = autoMapperTypeMapper.Map(category, categoryEntity);
 
-        await categoryRepository.AddAsync(categoryEntity);
+        await categoryRepository.AddAsync(categoryEntity!);
         await categoryRepository.UnitOfWork.Commit();
 
         return new BusinessResponse<int>(
-            Value: categoryEntity.Id);
+            Value: categoryEntity!.Id);
     }
 
     public async Task<BusinessResponse<int>> UpdateAsync(int categoryId, CategoryEdit category)
@@ -82,7 +82,7 @@ public class CategoryService : ICategoryService
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        categoryEntity = autoMapperTypeMapper.Map<DB.Data.Entities.Category>(category);
+        categoryEntity = autoMapperTypeMapper.Map(category, categoryEntity);
 
         categoryRepository.Update(categoryEntity);
         await categoryRepository.UnitOfWork.Commit();

@@ -12,9 +12,14 @@ public class CategoryRepository : RepositoryBase<Category, int>, ICategoryReposi
     {
     }
 
+    protected override IQueryable<Category> GetQueryable()
+    {
+        return GetDbSet().Include(x => x.Materials).AsQueryable();
+    }
+
     public async Task<Category?> GetByNameAsync(string name)
     {
-        return await GetDbSet().FirstOrDefaultAsync(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        return await GetDbSet().FirstOrDefaultAsync(x => x.Name.ToUpper().Equals(name.ToUpper()));
     }
 
     protected override DbSet<Category> GetDbSet()

@@ -10,7 +10,20 @@ public record Category : Auditable
 
     public IEnumerable<Material.Material>? Materials { get; init; }
 
-    public Category(int id, string name, DateTimeOffset createdAt, string createdBy, DateTimeOffset? updatedAt, string updatedBy, DateTimeOffset? deactivatedAt, string deactivatedBy, IEnumerable<Material.Material>? materials)
-        : base(createdAt, createdBy, updatedAt, updatedBy, deactivatedAt, deactivatedBy)
-        => (Id, Name, Materials ) = (id, name, materials);
+    public Category(
+        int Id,
+        string Name,
+        IEnumerable<Material.Material>? Materials,
+        DateTimeOffset CreatedAt,
+        string CreatedBy,
+        DateTimeOffset? UpdatedAt,
+        string UpdatedBy,
+        DateTimeOffset? DeactivatedAt,
+        string DeactivatedBy)
+        : base(CreatedAt, CreatedBy, UpdatedAt, UpdatedBy, DeactivatedAt, DeactivatedBy)
+    {
+        this.Id = Id;
+        this.Name = Name;
+        this.Materials = Materials;
+    }
 }

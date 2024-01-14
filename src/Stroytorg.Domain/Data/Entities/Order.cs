@@ -1,5 +1,6 @@
 ﻿using Stroytorg.Domain.Data.Entities.Common;
 using Stroytorg.Domain.Data.Enums;
+using Stroytorg.Infrastructure.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Stroytorg.Domain.Data.Entities;
@@ -15,10 +16,12 @@ public class Order : Auditable
     public required string LastName { get; set; }
 
     [Required]
+    [EmailAddress]
     [MaxLength(150)]
     public required string Email { get; set; }
 
     [Required]
+    [PhoneNumber]
     [MaxLength(50)]
     public required string PhoneNumber { get; set; }
 

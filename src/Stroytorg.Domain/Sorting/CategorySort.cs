@@ -6,8 +6,8 @@ namespace Stroytorg.Domain.Sorting;
 
 public class CategorySort : BaseSort<DB.Category>
 {
-    public CategorySort(string propertyName, bool isAscending, bool defaultAsc)
-        : base(propertyName, isAscending, defaultAsc)
+    public CategorySort(string propertyName, bool isAscending)
+        : base(propertyName, isAscending)
     {
     }
 

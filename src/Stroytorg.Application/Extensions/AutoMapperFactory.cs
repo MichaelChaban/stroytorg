@@ -74,11 +74,15 @@ public class AutoMapperFactory
     {
         _ = config.CreateMap<DbData.Material, Material>()
             .ReverseMap();
+
+        _ = config.CreateMap<MaterialEdit, DbData.Material>();
+        _ = config.CreateMap<MaterialCreate, DbData.Material>();
     }
 
     private static void MapFilters(IMapperConfigurationExpression config)
     {
         _ = config.CreateMap<CategoryFilter, DbSpec.CategorySpecification>();
+        _ = config.CreateMap<MaterialFilter, DbSpec.MaterialSpecification>();
     }
 
     private static void MapSoring(IMapperConfigurationExpression config)

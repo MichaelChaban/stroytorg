@@ -15,7 +15,10 @@ public class CategorySpecification : BaseSpecification, ISpecification<Category>
     {
         Specification<Category> specification = new TrueSpecification<Category>();
 
-        specification &= new DirectSpecification<Category>(x => (IsActive ?? true) == x.IsActive);
+        if (IsActive.HasValue)
+        {
+            specification &= new DirectSpecification<Category>(x => x.IsActive == IsActive.Value);
+        }
 
         if (Id != 0)
         {

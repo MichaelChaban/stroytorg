@@ -16,7 +16,7 @@ public interface IRepository<TEntity, TKey>
 
     Task<IEnumerable<TEntity>> GetPagedAsync(int offset, int limit, Expression<Func<TEntity, bool>> filter);
 
-    Task<IEnumerable<TEntity>> GetPagedSortAsync<TSort>(int offset, int limit, Expression<Func<TEntity, bool>> filter, SortDefinition sort, bool isAscendingSortByDefault = true)
+    Task<IEnumerable<TEntity>> GetPagedSortAsync<TSort>(int offset, int limit, Expression<Func<TEntity, bool>> filter, SortDefinition sort)
         where TSort : BaseSort<TEntity>;
 
     Task<int> GetCountAsync(Expression<Func<TEntity, bool>> filter);
@@ -34,4 +34,8 @@ public interface IRepository<TEntity, TKey>
     void Remove(TEntity entity);
 
     void RemoveRange(TEntity[] entity);
+
+    void Deactivate(TEntity entity);
+
+    void DeactivateRange(TEntity[] entity);
 }

@@ -101,6 +101,13 @@ public class CategoryService : ICategoryService
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
+        if (categoryEntity.Materials?.Count > 0)
+        {
+            return new BusinessResponse<int>(
+                IsSuccess: false,
+                BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
+        }
+
         categoryRepository.Remove(categoryEntity);
         await categoryRepository.UnitOfWork.Commit();
 

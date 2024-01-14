@@ -3,5 +3,5 @@
 namespace Stroytorg.Contracts.Sorting;
 
 public record SortDefinition(
-    string Field,
+    string? Field,
     SortDirection Direction = SortDirection.Ascending);

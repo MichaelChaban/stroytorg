@@ -84,6 +84,7 @@ public static class ServiceExtensions
         services.TryAddScoped<IAuthService, AuthService>();
         services.TryAddScoped<ITokenGeneratorService, TokenGeneratorService>();
         services.TryAddScoped<ICategoryService, CategoryService>();
+        services.TryAddScoped<IMaterialService, MaterialService>();
 
         return services;
     }
@@ -102,6 +103,7 @@ public static class ServiceExtensions
         services.TryAddScoped<IUserContext, UserContext>();
         services.TryAddScoped<IUserRepository, UserRepository>();
         services.TryAddScoped<ICategoryRepository, CategoryRepository>();
+        services.TryAddScoped<IMaterialRepository, MaterialRepository>();
 
         return services;
     }

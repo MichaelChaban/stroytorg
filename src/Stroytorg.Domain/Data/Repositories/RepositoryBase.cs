@@ -44,14 +44,14 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         return await query.Skip(offset).Take(limit).ToArrayAsync();
     }
 
-    public async Task<IEnumerable<TEntity>> GetPagedSortAsync<TSort>(int offset, int limit, Expression<Func<TEntity, bool>> filter, SortDefinition sort, bool isAscendingSortByDefault = true)
+    public async Task<IEnumerable<TEntity>> GetPagedSortAsync<TSort>(int offset, int limit, Expression<Func<TEntity, bool>> filter, SortDefinition sort)
         where TSort : BaseSort<TEntity>
     {
         var query = FilterData(filter);
 
-        var sortField = sort?.Field.ToLower();
+        var sortField = sort?.Field?.ToLower();
         var sortByAsc = sort?.Direction == null || sort.Direction == SortDirection.Ascending;
-        var entitySort = Activator.CreateInstance(typeof(TSort), sortField, sortByAsc, isAscendingSortByDefault) as TSort;
+        var entitySort = Activator.CreateInstance(typeof(TSort), sortField, sortByAsc) as TSort;
         query = entitySort!.ApplySort(query);
 
         return await query.Skip(offset).Take(limit).ToArrayAsync();

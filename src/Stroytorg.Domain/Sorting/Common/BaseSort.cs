@@ -5,14 +5,12 @@ namespace Stroytorg.Domain.Sorting.Common;
 
 public abstract class BaseSort<T> where T : IEntity
 {
-    private readonly bool defaultAsc;
     private Expression<Func<T, object>>? defaultSort;
 
-    protected BaseSort(string propertyName, bool isAscending, bool defaultAsc)
+    protected BaseSort(string propertyName, bool isAscending)
     {
         PropertyName = propertyName;
         IsAscending = isAscending;
-        this.defaultAsc = defaultAsc;
     }
 
     public virtual Expression<Func<T, object>> DefaultSort
@@ -32,7 +30,7 @@ public abstract class BaseSort<T> where T : IEntity
     {
         if (string.IsNullOrEmpty(PropertyName))
         {
-            return defaultAsc ? query.OrderBy(DefaultSort) : query.OrderByDescending(DefaultSort);
+            return IsAscending ? query.OrderBy(DefaultSort) : query.OrderByDescending(DefaultSort);
         }
 
         var sortExpression = GetSortingExpression(PropertyName.ToLower());

@@ -18,6 +18,7 @@ public record Order : Auditable
     public string OrderStatusName { get; init; }
     public int? UserId { get; init; }
     public string? ShippingAddress { get; init; }
+    public IEnumerable<MaterialMap> Materials { get; init; }
 
     public Order(
         string FirstName,
@@ -34,6 +35,7 @@ public record Order : Auditable
         string OrderStatusName,
         int? UserId,
         string? ShippingAddress,
+        IEnumerable<MaterialMap> Materials,
         DateTimeOffset CreatedAt,
         string CreatedBy,
         DateTimeOffset? UpdatedAt,
@@ -56,5 +58,6 @@ public record Order : Auditable
         this.OrderStatusName = OrderStatusName;
         this.UserId = UserId;
         this.ShippingAddress = ShippingAddress;
+        this.Materials = Materials;
     }
 }

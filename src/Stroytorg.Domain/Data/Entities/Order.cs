@@ -7,6 +7,11 @@ namespace Stroytorg.Domain.Data.Entities;
 
 public class Order : Auditable
 {
+    public Order()
+    {
+        OrderMaterialMap = new List<OrderMaterialMap>();
+    }
+
     [Required]
     [MaxLength(50)]
     public required string FirstName { get; set; }
@@ -46,7 +51,7 @@ public class Order : Auditable
 
     public OrderStatus OrderStatus { get; set; } = OrderStatus.NewOrder;
 
-    public virtual User? User {  get; set; }
+    public virtual User? User { get; set; }
 
-    public virtual ICollection<OrderMaterialMap>? OrderMaterialMap { get; set; }
+    public virtual ICollection<OrderMaterialMap> OrderMaterialMap { get; set; }
 }

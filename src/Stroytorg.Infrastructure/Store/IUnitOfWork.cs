@@ -2,7 +2,7 @@
 
 public interface IUnitOfWork
 {
-    Task Commit();
+    Task CommitAsync();
 
     void Rollback();
 }

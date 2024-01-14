@@ -5,6 +5,11 @@ namespace Stroytorg.Domain.Data.Entities;
 
 public class Material : Auditable
 {
+    public Material()
+    {
+        OrderMaterialMap = new List<OrderMaterialMap>();
+    }
+
     [Required]
     [MinLength(5)]
     [MaxLength(150)]
@@ -40,5 +45,5 @@ public class Material : Auditable
 
     public virtual Category? Category { get; set; }
 
-    public virtual ICollection<OrderMaterialMap>? OrderMaterialMap { get; set; }
+    public virtual ICollection<OrderMaterialMap> OrderMaterialMap { get; set; }
 }

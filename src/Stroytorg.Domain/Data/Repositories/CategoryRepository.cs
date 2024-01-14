@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Stroytorg.Domain.Data.Entities;
 using Stroytorg.Domain.Data.Entities.Common;
+using Stroytorg.Domain.Data.Repositories.Common;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 
 namespace Stroytorg.Domain.Data.Repositories;

@@ -17,6 +17,7 @@ public class OrderService : IOrderService
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper;
     private readonly IMaterialRepository materialRepository;
     private readonly IOrderRepository orderRepository;
+    private readonly IUserRepository userRepository;
 
     public OrderService(
         IAutoMapperTypeMapper autoMapperTypeMapper,
@@ -27,6 +28,7 @@ public class OrderService : IOrderService
         this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
         this.materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
         this.orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+        this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
     }
 
     public async Task<PagedData<Order>> GetPagedAsync(DataRangeRequest<OrderFilter> request)
@@ -59,64 +61,73 @@ public class OrderService : IOrderService
 
     public async Task<BusinessResponse<int>> CreateAsync(OrderCreate order)
     {
-        var materials = await materialRepository.GetByIdsAsync(order.MaterialIds.ToArray());
-        if (materials.Count() != order.MaterialIds.Count)
+        var materials = await materialRepository.GetByIdsAsync(order.MaterialMap.Select(x => x.MaterialId).ToArray());
+        // TODO: Validation of materials properties
+        if (materials is null || materials.Count() != order.MaterialMap.Count)
         {
             return new BusinessResponse<int>(
                 IsSuccess: false,
-                BusinessErrorMessage: BusinessErrorMessage.AlreadyExistingEntity);
+                BusinessErrorMessage: BusinessErrorMessage.NotExistingEntities);
         }
 
-        order = autoMapperTypeMapper.Map(order, materialEntity);
+        var orderEntity = autoMapperTypeMapper.Map<DB.Data.Entities.Order>(order);
 
-        await materialRepository.AddAsync(materialEntity!);
-        await materialRepository.UnitOfWork.Commit();
+        // TODO: implement adding orders to a new user 
+        var user = await userRepository.GetByEmailAsync(order.Email);
+        if (user is not null)
+        {
+            orderEntity.UserId = user.Id;
+        }
+
+        foreach (var material in materials)
+        {
+            material.StockAmount -= orderEntity.OrderMaterialMap.FirstOrDefault(x => x.Id == material.Id)!.TotalMaterialAmount;
+        }
+
+        await orderRepository.AddAsync(orderEntity);
+        await orderRepository.UnitOfWork.CommitAsync();
+
+        materialRepository.UpdateRange(materials);
+        await materialRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
-            Value: materialEntity!.Id);
+            Value: orderEntity!.Id);
     }
 
-    public async Task<BusinessResponse<int>> UpdateAsync(int materialId, MaterialEdit material)
+    public async Task<BusinessResponse<int>> UpdateAsync(int orderId, OrderEdit order)
     {
-        var materialEntity = await materialRepository.GetAsync(materialId);
-        if (materialEntity is null)
+        // Adding validation for updating the order
+        var orderEntity = await orderRepository.GetAsync(orderId);
+        if (orderEntity is null)
         {
             return new BusinessResponse<int>(
                 IsSuccess: false,
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        var category = await categoryRepository.GetAsync(material.CategoryId);
-        if (category is null)
-        {
-            return new BusinessResponse<int>(
-               IsSuccess: false,
-               BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
-        }
+        orderEntity = autoMapperTypeMapper.Map(order, orderEntity);
 
-        materialEntity = autoMapperTypeMapper.Map(material, materialEntity);
-
-        materialRepository.Update(materialEntity);
-        await materialRepository.UnitOfWork.Commit();
+        orderRepository.Update(orderEntity);
+        await orderRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
-            Value: materialEntity.Id);
+            Value: orderEntity.Id);
     }
 
-    public async Task<BusinessResponse<int>> RemoveAsync(int materialId)
+    public async Task<BusinessResponse<int>> RemoveAsync(int orderId)
     {
-        var materialEntity = await materialRepository.GetAsync(materialId);
-        if (materialEntity is null)
+        var orderEntity = await orderRepository.GetAsync(orderId);
+        if (orderEntity is null)
         {
             return new BusinessResponse<int>(
                 IsSuccess: false,
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        materialRepository.Deactivate(materialEntity);
-        await materialRepository.UnitOfWork.Commit();
+        orderRepository.Deactivate(orderEntity);
+        await materialRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
-            Value: materialEntity.Id);
+            Value: orderEntity.Id);
     }
 }

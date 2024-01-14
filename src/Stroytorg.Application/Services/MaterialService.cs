@@ -77,7 +77,7 @@ public class MaterialService : IMaterialService
         materialEntity = autoMapperTypeMapper.Map(material, materialEntity);
 
         await materialRepository.AddAsync(materialEntity!);
-        await materialRepository.UnitOfWork.Commit();
+        await materialRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
             Value: materialEntity!.Id);
@@ -104,7 +104,7 @@ public class MaterialService : IMaterialService
         materialEntity = autoMapperTypeMapper.Map(material, materialEntity);
 
         materialRepository.Update(materialEntity);
-        await materialRepository.UnitOfWork.Commit();
+        await materialRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
             Value: materialEntity.Id);
@@ -121,7 +121,7 @@ public class MaterialService : IMaterialService
         }
 
         materialRepository.Deactivate(materialEntity);
-        await materialRepository.UnitOfWork.Commit();
+        await materialRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
             Value: materialEntity.Id);

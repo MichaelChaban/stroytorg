@@ -57,8 +57,8 @@ public class UserService : IUserService
         var userToAdd = autoMapperTypeMapper.Map<Domain.Data.Entities.User>(user);
 
         await userRepository.AddAsync(userToAdd);
-        await userRepository.UnitOfWork.Commit();
-        
+        await userRepository.UnitOfWork.CommitAsync();
+
         return new BusinessResponse<User>(Value: autoMapperTypeMapper.Map<User>(userToAdd));
     }
 
@@ -75,7 +75,7 @@ public class UserService : IUserService
         var userToAdd = autoMapperTypeMapper.Map<Domain.Data.Entities.User>(user);
 
         await userRepository.AddAsync(userToAdd);
-        await userRepository.UnitOfWork.Commit();
+        await userRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<User>(Value: autoMapperTypeMapper.Map<User>(userToAdd));
     }

@@ -42,7 +42,7 @@ public class CategoryService : ICategoryService
     public async Task<BusinessResponse<Category>> GetByIdAsync(int categoryId)
     {
         var category = await categoryRepository.GetAsync(categoryId);
-        if(category is null)
+        if (category is null)
         {
             return new BusinessResponse<Category>(
                 IsSuccess: false,
@@ -66,7 +66,7 @@ public class CategoryService : ICategoryService
         categoryEntity = autoMapperTypeMapper.Map(category, categoryEntity);
 
         await categoryRepository.AddAsync(categoryEntity!);
-        await categoryRepository.UnitOfWork.Commit();
+        await categoryRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
             Value: categoryEntity!.Id);
@@ -85,7 +85,7 @@ public class CategoryService : ICategoryService
         categoryEntity = autoMapperTypeMapper.Map(category, categoryEntity);
 
         categoryRepository.Update(categoryEntity);
-        await categoryRepository.UnitOfWork.Commit();
+        await categoryRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
             Value: categoryEntity.Id);
@@ -109,7 +109,7 @@ public class CategoryService : ICategoryService
         }
 
         categoryRepository.Remove(categoryEntity);
-        await categoryRepository.UnitOfWork.Commit();
+        await categoryRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
             Value: categoryEntity.Id);

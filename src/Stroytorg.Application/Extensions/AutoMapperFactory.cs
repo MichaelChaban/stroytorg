@@ -13,6 +13,7 @@ namespace Stroytorg.Application.Extensions;
 
 public class AutoMapperFactory
 {
+
     public DbData.StroytorgDbContext? Context { get; private set; }
 
     public static IMapper CreateMapper()
@@ -52,6 +53,9 @@ public class AutoMapperFactory
 
     private static void MapOrder(IMapperConfigurationExpression config)
     {
+        _ = config.CreateMap<DbData.OrderMaterialMap, MaterialMap>()
+            .ForMember(nameof(MaterialMap.Id), opt => opt.Ignore());
+
         _ = config.CreateMap<DbData.Order, Order>()
             .ForCtorParam(nameof(Order.ShippingType), opt => opt.MapFrom(src => (int)src.ShippingType))
             .ForCtorParam(nameof(Order.ShippingTypeName), opt => opt.MapFrom(src => src.ShippingType.ToString()))
@@ -59,7 +63,12 @@ public class AutoMapperFactory
             .ForCtorParam(nameof(Order.PaymentTypeName), opt => opt.MapFrom(src => src.PaymentType.ToString()))
             .ForCtorParam(nameof(Order.OrderStatus), opt => opt.MapFrom(src => (int)src.OrderStatus))
             .ForCtorParam(nameof(Order.OrderStatusName), opt => opt.MapFrom(src => src.OrderStatus.ToString()))
+            .ForCtorParam(nameof(Order.Materials), opt => opt.MapFrom(src => src.OrderMaterialMap))
             .ReverseMap();
+
+        _ = config.CreateMap<OrderCreate, DbData.Order>();
+        _ = config.CreateMap<OrderEdit, DbData.Order>();
+        _ = config.CreateMap<MaterialMapCreate, DbData.OrderMaterialMap>();
     }
 
     private static void MapCategory(IMapperConfigurationExpression config)
@@ -83,6 +92,7 @@ public class AutoMapperFactory
     {
         _ = config.CreateMap<CategoryFilter, DbSpec.CategorySpecification>();
         _ = config.CreateMap<MaterialFilter, DbSpec.MaterialSpecification>();
+        _ = config.CreateMap<OrderFilter, DbSpec.OrderSpecification>();
     }
 
     private static void MapSoring(IMapperConfigurationExpression config)

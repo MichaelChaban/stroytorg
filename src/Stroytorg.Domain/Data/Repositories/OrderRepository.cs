@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Stroytorg.Domain.Data.Entities;
 using Stroytorg.Domain.Data.Entities.Common;
+using Stroytorg.Domain.Data.Repositories.Common;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 
 namespace Stroytorg.Domain.Data.Repositories;
@@ -14,7 +15,10 @@ public class OrderRepository : RepositoryBase<Order, int>, IOrderRepository
 
     protected override IQueryable<Order> GetQueryable()
     {
-        return GetDbSet().Include(x => x.OrderMaterialMap).AsQueryable();
+        return GetDbSet()
+                .Include(x => x.OrderMaterialMap)
+                    .ThenInclude(x => x.Material)
+                .AsQueryable();
     }
 
     protected override DbSet<Order> GetDbSet()

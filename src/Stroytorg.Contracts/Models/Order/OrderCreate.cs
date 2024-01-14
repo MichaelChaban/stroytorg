@@ -38,4 +38,4 @@ public record OrderCreate(
 
     [Required]
     [Range(0, 100)]
-    ICollection<int> MaterialIds);
+    ICollection<MaterialMapCreate> MaterialMap);

@@ -6,15 +6,15 @@ using Stroytorg.Domain.Sorting.Common;
 using Stroytorg.Infrastructure.Store;
 using System.Linq.Expressions;
 
-namespace Stroytorg.Domain.Data.Repositories;
+namespace Stroytorg.Domain.Data.Repositories.Common;
 
 public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
 {
     protected RepositoryBase(IUnitOfWork unitOfWork, IUserContext httpUserContext)
     {
-        this.UnitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-        this.HttpUserContext = httpUserContext ?? throw new ArgumentNullException(nameof(httpUserContext));
+        UnitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        HttpUserContext = httpUserContext ?? throw new ArgumentNullException(nameof(httpUserContext));
     }
 
     public StroytorgDbContext StroytorgContext => (StroytorgDbContext)UnitOfWork;

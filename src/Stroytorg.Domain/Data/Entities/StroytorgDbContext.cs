@@ -28,7 +28,7 @@ public class StroytorgDbContext : DbContext, IStroytorgDbContext
         Database.Migrate();
     }
 
-    public async Task Commit() => await SaveChangesAsync();
+    public async Task CommitAsync() => await SaveChangesAsync();
 
     public void Rollback()
     {

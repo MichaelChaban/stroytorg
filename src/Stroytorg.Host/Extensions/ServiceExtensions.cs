@@ -9,6 +9,7 @@ using Stroytorg.Application.Services.Interfaces;
 using Stroytorg.Domain.Data.Entities;
 using Stroytorg.Domain.Data.Entities.Common;
 using Stroytorg.Domain.Data.Repositories;
+using Stroytorg.Domain.Data.Repositories.Common;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 using Stroytorg.Infrastructure.Configuration;
@@ -85,6 +86,7 @@ public static class ServiceExtensions
         services.TryAddScoped<ITokenGeneratorService, TokenGeneratorService>();
         services.TryAddScoped<ICategoryService, CategoryService>();
         services.TryAddScoped<IMaterialService, MaterialService>();
+        services.TryAddScoped<IOrderService, OrderService>();
 
         return services;
     }
@@ -104,6 +106,7 @@ public static class ServiceExtensions
         services.TryAddScoped<IUserRepository, UserRepository>();
         services.TryAddScoped<ICategoryRepository, CategoryRepository>();
         services.TryAddScoped<IMaterialRepository, MaterialRepository>();
+        services.TryAddScoped<IOrderRepository, OrderRepository>();
 
         return services;
     }

@@ -17,8 +17,11 @@
         "tsConfig": "apps/stroytorg.app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/stroytorg.app/src/favicon.ico",
-          "apps/stroytorg.app/src/assets"
+          {
+            "glob": "**/*",
+            "input": "libs/stroytorg-assets/src/lib/assets",
+            "output": "/assets/"
+          }
         ],
         "styles": ["libs/stroytorg-assets/src/lib/shared-styles.scss"],
         "scripts": []

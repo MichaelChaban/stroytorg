@@ -9,4 +9,9 @@ import { StroytorgButtonComponent } from '@stroytorg/stroytorg-components';
   templateUrl: './stroytorg-home.component.html',
   styleUrl: './stroytorg-home.component.scss',
 })
-export class StroytorgHomeComponent {}
+export class StroytorgHomeComponent {
+
+  showAlert() {
+    alert('Tvoje mama xd');
+  }
+}

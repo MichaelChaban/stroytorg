@@ -5,9 +5,7 @@ namespace Stroytorg.Contracts.Models.Category;
 public record Category : Auditable
 {
     public int Id { get; init; }
-
     public string Name { get; init; }
-
     public IEnumerable<Material.Material>? Materials { get; init; }
 
     public Category(

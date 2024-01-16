@@ -23,6 +23,7 @@ public class OrderController : ControllerBase
     // TODO: Add controller for current user orders getting 
 
     [HttpGet]
+    [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<PagedData<Order>>> GetPagedAsync([FromQuery] DataRangeRequest<OrderFilter> request)

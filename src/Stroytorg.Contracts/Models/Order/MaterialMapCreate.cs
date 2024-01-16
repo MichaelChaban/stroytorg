@@ -7,7 +7,5 @@ public record MaterialMapCreate(
     int MaterialId,
 
     [Required]
-    int OrderId,
-
-    [Required]
+    [Range(0, double.MaxValue)]
     double TotalMaterialAmount);

@@ -30,6 +30,7 @@ public class AutoMapperFactory
             MapOrder(config);
             MapCategory(config);
             MapMaterial(config);
+            MapOrderMaterialMap(config);
             MapFilters(config);
             MapSoring(config);
         });
@@ -53,9 +54,6 @@ public class AutoMapperFactory
 
     private static void MapOrder(IMapperConfigurationExpression config)
     {
-        _ = config.CreateMap<DbData.OrderMaterialMap, MaterialMap>()
-            .ForMember(nameof(MaterialMap.Id), opt => opt.Ignore());
-
         _ = config.CreateMap<DbData.Order, Order>()
             .ForCtorParam(nameof(Order.ShippingType), opt => opt.MapFrom(src => (int)src.ShippingType))
             .ForCtorParam(nameof(Order.ShippingTypeName), opt => opt.MapFrom(src => src.ShippingType.ToString()))
@@ -68,7 +66,6 @@ public class AutoMapperFactory
 
         _ = config.CreateMap<OrderCreate, DbData.Order>();
         _ = config.CreateMap<OrderEdit, DbData.Order>();
-        _ = config.CreateMap<MaterialMapCreate, DbData.OrderMaterialMap>();
     }
 
     private static void MapCategory(IMapperConfigurationExpression config)
@@ -86,6 +83,14 @@ public class AutoMapperFactory
 
         _ = config.CreateMap<MaterialEdit, DbData.Material>();
         _ = config.CreateMap<MaterialCreate, DbData.Material>();
+    }
+
+    private static void MapOrderMaterialMap(IMapperConfigurationExpression config)
+    {
+        _ = config.CreateMap<MaterialMapCreate, DbData.OrderMaterialMap>();
+
+        _ = config.CreateMap<DbData.OrderMaterialMap, MaterialMap>()
+                .ForMember(nameof(MaterialMap.Id), opt => opt.Ignore());
     }
 
     private static void MapFilters(IMapperConfigurationExpression config)

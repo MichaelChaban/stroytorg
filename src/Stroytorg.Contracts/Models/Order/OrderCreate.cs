@@ -23,19 +23,15 @@ public record OrderCreate(
     string PhoneNumber,
 
     [Required]
-    [Range(0, int.MaxValue)]
-    int MaterialsAmount,
-
-    [Required]
-    [Range(0, int.MaxValue)]
-    double TotalPrice,
-
-    [Required]
+    [Range(0, 1)]
     int ShippingType,
 
-    [MaxLength(200)]
+    [Required]
+    [Range(0, 1)]
     int PaymentType,
 
     [Required]
     [Range(0, 100)]
-    ICollection<MaterialMapCreate> MaterialMap);
+    ICollection<MaterialMapCreate> MaterialMap,
+
+    string? ShippingAddress);

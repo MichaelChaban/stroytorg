@@ -1,9 +1,6 @@
 name: Backend CI
 
 on:
-  push:
-    branches:
-      - '*'
   pull_request:
     branches:
       - '*'
@@ -23,12 +20,11 @@ jobs:
 
       - name: Restore dependencies
         run: dotnet restore
-        working-directory: ./Stroytorg.API
+        working-directory: ./src
 
       - name: Build
         run: dotnet build --configuration Release
-        working-directory: ./Stroytorg.API
-
+        working-directory: ./src
       - name: Run tests
         run: dotnet test --configuration Release --no-build
-        working-directory: ./Stroytorg.API
+        working-directory: ./src

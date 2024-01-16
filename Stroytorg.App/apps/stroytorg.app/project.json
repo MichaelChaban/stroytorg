@@ -17,11 +17,16 @@
         "tsConfig": "apps/stroytorg.app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
+<<<<<<<< HEAD:Stroytorg.App/apps/stroytorg.app/project.json
           {
             "glob": "**/*",
             "input": "libs/stroytorg-assets/src/lib/assets",
             "output": "/assets/"
           }
+========
+          "apps/stroytorg.app/src/favicon.ico",
+          "apps/stroytorg.app/src/assets"
+>>>>>>>> 695be4386b74f446baddee294a7dfd40e5d6c0ab:src/Stroytorg.App/apps/stroytorg.app/project.json
         ],
         "styles": ["libs/stroytorg-assets/src/lib/shared-styles.scss"],
         "scripts": []

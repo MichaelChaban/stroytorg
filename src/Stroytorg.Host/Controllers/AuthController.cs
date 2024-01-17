@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Stroytorg.Application.Services.Interfaces;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Stroytorg.Application.Authentication.Commands.GoogleAuthentication;
+using Stroytorg.Application.Authentication.Commands.Register;
+using Stroytorg.Application.Authentication.Queries.Login;
 using Stroytorg.Contracts.Models.User;
 using Stroytorg.Contracts.ResponseModels;
 
@@ -9,11 +12,11 @@ namespace Stroytorg.Host.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private readonly IAuthService authService;
+    private readonly IMediator mediator;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IMediator mediator)
     {
-        this.authService = authService ?? throw new ArgumentNullException(nameof(authService));
+        this.mediator = mediator ?? throw new ArgumentNullException();
     }
 
     [HttpPost("Register")]
@@ -22,8 +25,9 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<AuthResponse>> Register([FromBody] UserRegister user)
     {
-        var result = await authService.RegisterAsync(user);
-        return result.IsLoggedIn ? result : Unauthorized();
+        var command = new RegisterCommand(user.Email, user.Password, user.FirstName, user.LastName, user.BirthDate, user.PhoneNumber);
+        var authResult = await mediator.Send(command);
+        return authResult;
     }
 
     [HttpPost("Login")]
@@ -32,8 +36,9 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<AuthResponse>> Login([FromBody] UserLogin user)
     {
-        var result = await authService.LoginAsync(user);
-        return result.IsLoggedIn ? result : Unauthorized();
+        var query = new LoginQuery(user.Email, user.Password);
+        var result = await mediator.Send(query);
+        return result;
     }
 
     [HttpPost("GoogleAuth")]
@@ -42,7 +47,8 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<AuthResponse>> GoogleAuth([FromBody] UserGoogleAuth user)
     {
-        var result = await authService.AuthGoogleAsync(user);
+        var command = new GoogleAuthCommand(user.Token, user.GoogleId, user.Email, user.FirstName, user.LastName);
+        var result = await mediator.Send(command);
         return result.IsLoggedIn ? result : Unauthorized();
     }
 }

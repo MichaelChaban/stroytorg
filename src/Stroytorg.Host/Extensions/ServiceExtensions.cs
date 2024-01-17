@@ -14,6 +14,7 @@ using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 using Stroytorg.Infrastructure.Configuration;
 using Stroytorg.Infrastructure.Configuration.Interfaces;
 using Stroytorg.Infrastructure.Store;
+using System.Reflection;
 using System.Text;
 
 namespace Stroytorg.Host.Extensions;
@@ -24,6 +25,7 @@ public static class ServiceExtensions
     {
         services
             .AddHttpContextAccessor()
+            .AddMediatR()
             .AddAutoMapper()
             .AddMicroservices()
             .AddDb()
@@ -95,6 +97,12 @@ public static class ServiceExtensions
         services.AddSingleton<IDatabaseConnectionString, ConnectionStringConfig>();
         services.TryAddScoped<IStroytorgDbContext, StroytorgDbContext>();
 
+        return services;
+    }
+
+    private static IServiceCollection AddMediatR(this IServiceCollection services)
+    {
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
         return services;
     }
 

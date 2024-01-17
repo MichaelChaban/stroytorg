@@ -1,5 +1,6 @@
 ﻿using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Order;
+using Stroytorg.Contracts.Models.User;
 using Stroytorg.Contracts.RequestModels;
 using Stroytorg.Contracts.ResponseModels;
 
@@ -16,4 +17,6 @@ public interface IOrderService
     Task<BusinessResponse<int>> CreateAsync(OrderCreate order);
 
     Task<BusinessResponse<int>> UpdateAsync(int orderId, OrderEdit order);
+
+    Task AssignOrderToUserAsync(User user);
 }

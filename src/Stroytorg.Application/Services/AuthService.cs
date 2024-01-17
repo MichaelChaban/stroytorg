@@ -13,15 +13,18 @@ public class AuthService : IAuthService
     private readonly IUserService userService;
     private readonly ITokenGeneratorService tokenGeneratorService;
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper;
+    private readonly IOrderService orderService;
 
     public AuthService(
         IUserService userService,
         ITokenGeneratorService tokenGeneratorService,
-        IAutoMapperTypeMapper autoMapperTypeMapper)
+        IAutoMapperTypeMapper autoMapperTypeMapper,
+        IOrderService orderService)
     {
         this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
         this.tokenGeneratorService = tokenGeneratorService ?? throw new ArgumentNullException(nameof(tokenGeneratorService));
         this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
+        this.orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
     }
 
     public async Task<AuthResponse> LoginAsync(UserLogin user)
@@ -56,6 +59,8 @@ public class AuthService : IAuthService
             return new AuthResponse(AuthErrorMessage: contractUserResponse.BusinessErrorMessage);
         }
 
+        await orderService.AssignOrderToUserAsync(contractUserResponse.Value);
+
         return new AuthResponse(
             IsLoggedIn: true,
             JwtToken: tokenGeneratorService.GenerateToken(contractUserResponse.Value));
@@ -70,26 +75,29 @@ public class AuthService : IAuthService
         }
 
         var contractUserResponse = await userService.GetByEmailAsync(user.Email);
-        if (contractUserResponse.Value is not null && !contractUserResponse.Value.AuthenticationType.ValidateUserAuthType(AuthenticationType.Google, out var businessError))
+        if (contractUserResponse.Value is not null)
         {
-            return new AuthResponse(AuthErrorMessage: businessError!.BusinessErrorMessage);
-        }
-
-        if (contractUserResponse.Value is null)
-        {
-            var createdUserResponse = await userService.CreateWithGoogleAsync(user);
-            if (!createdUserResponse.IsSuccess)
+            if (!contractUserResponse.Value.AuthenticationType.ValidateUserAuthType(AuthenticationType.Google, out var businessError))
             {
-                return new AuthResponse(AuthErrorMessage: createdUserResponse.BusinessErrorMessage);
+                return new AuthResponse(AuthErrorMessage: businessError!.BusinessErrorMessage);
             }
 
+            await orderService.AssignOrderToUserAsync(contractUserResponse.Value);
             return new AuthResponse(
                 IsLoggedIn: true,
-                JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(createdUserResponse.Value)));
+                JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(contractUserResponse.Value)));
         }
+
+        var createdUserResponse = await userService.CreateWithGoogleAsync(user);
+        if (!createdUserResponse.IsSuccess)
+        {
+            return new AuthResponse(AuthErrorMessage: createdUserResponse.BusinessErrorMessage);
+        }
+
+        await orderService.AssignOrderToUserAsync(createdUserResponse.Value);
 
         return new AuthResponse(
             IsLoggedIn: true,
-            JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(contractUserResponse.Value)));
+            JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(createdUserResponse.Value)));
     }
 }

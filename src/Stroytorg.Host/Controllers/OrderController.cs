@@ -20,12 +20,22 @@ public class OrderController : ControllerBase
         this.orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
     }
 
-    // TODO: Add controller for current user orders getting 
+    [HttpGet("PagedUser")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<PagedData<Order>>> GetPagedForUserAsync([FromQuery] DataRangeRequest<OrderFilter> request)
+    {
+        return await orderService.GetPagedForUserAsync(request);
+    }
 
     [HttpGet]
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<PagedData<Order>>> GetPagedAsync([FromQuery] DataRangeRequest<OrderFilter> request)
     {
         return await orderService.GetPagedAsync(request);
@@ -43,6 +53,7 @@ public class OrderController : ControllerBase
     [HttpPost]
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromBody] OrderCreate order)
@@ -54,22 +65,12 @@ public class OrderController : ControllerBase
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<int>> UpdateAsync(int id, [FromBody] OrderEdit order)
     {
         var result = await orderService.UpdateAsync(id, order);
-        return result.IsSuccess ? result.Value : NotFound();
-    }
-
-    [HttpDelete("{id}")]
-    [Authorize(Roles = UserRole.Admin)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<int>> RemoveAsync(int id)
-    {
-        var result = await orderService.RemoveAsync(id);
         return result.IsSuccess ? result.Value : NotFound();
     }
 }

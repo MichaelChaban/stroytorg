@@ -49,7 +49,7 @@ public class OrderSpecification : BaseSpecification, ISpecification<Order>
 
         if (!string.IsNullOrEmpty(Email))
         {
-            specification &= new DirectSpecification<Order>(x => x.Email.ToUpper().Contains(Email.ToUpper()));
+            specification &= new DirectSpecification<Order>(x => x.Email == Email);
         }
 
         if (!string.IsNullOrEmpty(PhoneNumber))

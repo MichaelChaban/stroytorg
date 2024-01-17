@@ -11,7 +11,7 @@ public static class OrderExtensions
 
     public static bool ValidateOrder(this OrderCreate order, IEnumerable<DB.Data.Entities.Material> entityMaterials, out BusinessResponse<int>? businessResponse)
     {
-        if (order.ShippingType == DeliveryToAddress && string.IsNullOrEmpty(order.ShippingAddress))
+        if (order.ShippingType == Contracts.Enums.ShippingType.DeliveryToAddress && string.IsNullOrEmpty(order.ShippingAddress))
         {
             businessResponse = new BusinessResponse<int>(
                 IsSuccess: false,

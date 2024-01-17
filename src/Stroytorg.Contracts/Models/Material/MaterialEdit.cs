@@ -3,18 +3,23 @@
 namespace Stroytorg.Contracts.Models.Material;
 
 public record MaterialEdit(
+    [Required]
     [MinLength(5)]
     [MaxLength(150)]
     string Name,
 
+    [Required]
     [MinLength(20)]
     string Description,
 
+    [Required]
     int CategoryId,
 
+    [Required]
     [Range(0, double.MaxValue)]
     double Price,
 
+    [Required]
     [Range(0, double.MaxValue)]
     double StockAmount,
 

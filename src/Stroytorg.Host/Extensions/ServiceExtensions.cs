@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Stroytorg.Application.Extensions;
+using Stroytorg.Application.Facades;
+using Stroytorg.Application.Facades.Interfaces;
 using Stroytorg.Application.Services;
 using Stroytorg.Application.Services.Interfaces;
 using Stroytorg.Domain.Data.Entities;
@@ -27,8 +29,9 @@ public static class ServiceExtensions
             .AddHttpContextAccessor()
             .AddAutoMapper()
             .AddMicroservices()
-            .AddDb()
-            .AddRepositories();
+            .AddFacades()
+            .AddRepositories()
+            .AddDb();
     }
 
     public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
@@ -79,6 +82,16 @@ public static class ServiceExtensions
         scope.ServiceProvider.GetRequiredService<IStroytorgDbContext>().Migrate();
     }
 
+    private static IServiceCollection AddAutoMapper(this IServiceCollection services)
+    {
+        services.AddResponseCaching();
+        IMapper mapper = AutoMapperFactory.CreateMapper();
+        services.TryAddSingleton(mapper);
+        services.TryAddScoped<IAutoMapperTypeMapper, AutoMapperTypeMapper>();
+
+        return services;
+    }
+
     private static IServiceCollection AddMicroservices(this IServiceCollection services)
     {
         services.TryAddScoped<IUserService, UserService>();
@@ -91,11 +104,9 @@ public static class ServiceExtensions
         return services;
     }
 
-    private static IServiceCollection AddDb(this IServiceCollection services)
+    private static IServiceCollection AddFacades(this IServiceCollection services)
     {
-        services.TryAddScoped<IUnitOfWork, StroytorgDbContext>();
-        services.AddSingleton<IDatabaseConnectionString, ConnectionStringConfig>();
-        services.TryAddScoped<IStroytorgDbContext, StroytorgDbContext>();
+        services.TryAddScoped<IOrderServiceFacade, OrderServiceFacade>();
 
         return services;
     }
@@ -111,12 +122,11 @@ public static class ServiceExtensions
         return services;
     }
 
-    private static IServiceCollection AddAutoMapper(this IServiceCollection services)
+    private static IServiceCollection AddDb(this IServiceCollection services)
     {
-        services.AddResponseCaching();
-        IMapper mapper = AutoMapperFactory.CreateMapper();
-        services.TryAddSingleton(mapper);
-        services.TryAddScoped<IAutoMapperTypeMapper, AutoMapperTypeMapper>();
+        services.TryAddScoped<IUnitOfWork, StroytorgDbContext>();
+        services.AddSingleton<IDatabaseConnectionString, ConnectionStringConfig>();
+        services.TryAddScoped<IStroytorgDbContext, StroytorgDbContext>();
 
         return services;
     }

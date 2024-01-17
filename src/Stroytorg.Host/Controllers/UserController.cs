@@ -8,7 +8,6 @@ using Stroytorg.Contracts.ResponseModels;
 namespace Stroytorg.Host.Controllers;
 
 [Route("api/[controller]")]
-[Authorize]
 [ApiController]
 public class UserController : ControllerBase
 {

@@ -13,9 +13,21 @@ public class OrderRepository : RepositoryBase<Order, int>, IOrderRepository
     {
     }
 
+    public override void Deactivate(Order entity)
+    {
+        entity.IsActive = false;
+        var fullName = HttpUserContext.User.Identity?.Name;
+        entity.DeactivatedAt = DateTimeOffset.UtcNow;
+        entity.DeactivatedBy = !string.IsNullOrEmpty(fullName) ? fullName : "System";
+        entity.OrderStatus = Enums.OrderStatus.Cancelled;
+
+        Update(entity);
+    }
+
     protected override IQueryable<Order> GetQueryable()
     {
         return GetDbSet()
+                .Include(x => x.OrderMaterialMap)
                 .Include(x => x.OrderMaterialMap)
                     .ThenInclude(x => x.Material)
                 .AsQueryable();

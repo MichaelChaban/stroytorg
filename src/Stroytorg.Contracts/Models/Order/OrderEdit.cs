@@ -1,7 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Stroytorg.Contracts.Enums;
+using Stroytorg.Infrastructure.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Stroytorg.Contracts.Models.Order;
 
 public record OrderEdit(
     [Required]
-    int OrderStatus);
+    [EnumValidation(typeof(OrderStatus))]
+    OrderStatus OrderStatus);

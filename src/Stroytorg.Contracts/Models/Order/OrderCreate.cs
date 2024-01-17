@@ -1,4 +1,5 @@
-﻿using Stroytorg.Infrastructure.Attributes;
+﻿using Stroytorg.Contracts.Enums;
+using Stroytorg.Infrastructure.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Stroytorg.Contracts.Models.Order;
@@ -23,12 +24,12 @@ public record OrderCreate(
     string PhoneNumber,
 
     [Required]
-    [Range(0, 1)]
-    int ShippingType,
+    [EnumValidation(typeof(ShippingType))]
+    ShippingType ShippingType,
 
     [Required]
-    [Range(0, 1)]
-    int PaymentType,
+    [EnumValidation(typeof(PaymentType))]
+    PaymentType PaymentType,
 
     [Required]
     [Range(0, 100)]

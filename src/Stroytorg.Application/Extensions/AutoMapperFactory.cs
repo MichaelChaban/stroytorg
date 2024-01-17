@@ -4,10 +4,12 @@ using Stroytorg.Contracts.Models.Order;
 using DbData = Stroytorg.Domain.Data.Entities;
 using DbSpec = Stroytorg.Domain.Specifications;
 using DbSort = Stroytorg.Domain.Sorting;
+using DbEnum = Stroytorg.Domain.Data.Enums;
 using Stroytorg.Contracts.Filters;
 using ContractsSort = Stroytorg.Contracts.Sorting;
 using Stroytorg.Contracts.Models.Category;
 using Stroytorg.Contracts.Models.Material;
+using Stroytorg.Contracts.Enums;
 
 namespace Stroytorg.Application.Extensions;
 
@@ -33,6 +35,7 @@ public class AutoMapperFactory
             MapOrderMaterialMap(config);
             MapFilters(config);
             MapSoring(config);
+            MapEnums(config);
         });
     }
 
@@ -103,5 +106,12 @@ public class AutoMapperFactory
     private static void MapSoring(IMapperConfigurationExpression config)
     {
         _ = config.CreateMap<ContractsSort.SortDefinition, DbSort.Common.SortDefinition>();
+    }
+
+    private static void MapEnums(IMapperConfigurationExpression config)
+    {
+        _ = config.CreateMap<OrderStatus, DbEnum.OrderStatus>();
+        _ = config.CreateMap<PaymentType, DbEnum.PaymentType>();
+        _ = config.CreateMap<ShippingType, DbEnum.ShippingType>();
     }
 }

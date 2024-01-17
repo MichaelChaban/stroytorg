@@ -23,6 +23,7 @@ public class RegisterCommandHandler :
         this.tokenGeneratorService = tokenGeneratorService ?? throw new ArgumentNullException(nameof(tokenGeneratorService));
         this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
     }
+
     public async Task<AuthResponse> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {
         var entityUser = (await userService.GetByEmailAsync(command.Email)).Value;

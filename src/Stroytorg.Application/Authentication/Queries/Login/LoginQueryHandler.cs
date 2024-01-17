@@ -32,6 +32,7 @@ namespace Stroytorg.Application.Authentication.Queries.Login
             {
                 return new AuthResponse(AuthErrorMessage: BusinessErrorMessage.IncorrectPassword);
             }
+
             return new AuthResponse(
                 IsLoggedIn: true,
                 JwtToken: tokenGeneratorService.GenerateToken(contractUser.Value));

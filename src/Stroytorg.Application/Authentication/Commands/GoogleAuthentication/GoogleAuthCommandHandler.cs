@@ -24,6 +24,7 @@ public class GoogleAuthCommandHandler :
         this.tokenGeneratorService = tokenGeneratorService ?? throw new ArgumentNullException(nameof(tokenGeneratorService));
         this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
     }
+
     public async Task<AuthResponse> Handle(GoogleAuthCommand command, CancellationToken cancellationToken)
     {
         var user = autoMapperTypeMapper.Map<GoogleAuthCommand, UserGoogleAuth>(command);
@@ -34,7 +35,8 @@ public class GoogleAuthCommandHandler :
         }
 
         var contractUserResponse = await userService.GetByEmailAsync(command.Email);
-        if (contractUserResponse.Value is not null && !contractUserResponse.Value.AuthenticationType.ValidateUserAuthType(AuthenticationType.Google, out var businessError))
+        if (contractUserResponse.Value is not null && 
+            !contractUserResponse.Value.AuthenticationType.ValidateUserAuthType(AuthenticationType.Google, out var businessError))
         {
             return new AuthResponse(AuthErrorMessage: businessError!.BusinessErrorMessage);
         }
@@ -46,10 +48,12 @@ public class GoogleAuthCommandHandler :
             {
                 return new AuthResponse(AuthErrorMessage: createdUserResponse.BusinessErrorMessage);
             }
+
             return new AuthResponse(
             IsLoggedIn: true,
             JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(createdUserResponse.Value)));
         }
+
         return new AuthResponse(
         IsLoggedIn: true,
             JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(contractUserResponse.Value)));

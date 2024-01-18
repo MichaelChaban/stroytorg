@@ -7,7 +7,7 @@ namespace Stroytorg.Application.Services.Interfaces;
 
 public interface IOrderService
 {
-    Task<PagedData<Order>> GetPagedForUserAsync(DataRangeRequest<OrderFilter> request);
+    Task<PagedData<Order>> GetPagedUserAsync(DataRangeRequest<OrderFilter> request);
 
     Task<PagedData<Order>> GetPagedAsync(DataRangeRequest<OrderFilter> request);
 

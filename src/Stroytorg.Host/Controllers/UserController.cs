@@ -9,14 +9,9 @@ namespace Stroytorg.Host.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserController : ControllerBase
+public class UserController(IUserService userService) : ControllerBase
 {
-    private readonly IUserService userService;
-
-    public UserController(IUserService userService)
-    {
-        this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
-    }
+    private readonly IUserService userService = userService ?? throw new ArgumentNullException(nameof(userService));
 
     [HttpGet("{id:int}")]
     [Authorize(Roles = UserRole.Admin)]
@@ -27,7 +22,6 @@ public class UserController : ControllerBase
     public async Task<ActionResult<BusinessResponse<User>>> GetByIdAsync(int id)
     {
         var result = await userService.GetByIdAsync(id);
-
         return result.IsSuccess ? result : NotFound();
     }
 }

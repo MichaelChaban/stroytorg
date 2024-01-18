@@ -9,14 +9,9 @@ using System.Text;
 
 namespace Stroytorg.Application.Services;
 
-public class TokenGeneratorService : ITokenGeneratorService
+public class TokenGeneratorService(IJwtSettings jwtSettings) : ITokenGeneratorService
 {
-    private readonly IJwtSettings jwtSettings;
-
-    public TokenGeneratorService(IJwtSettings jwtSettings)
-    {
-        this.jwtSettings = jwtSettings ?? throw new ArgumentNullException(nameof(jwtSettings));
-    }
+    private readonly IJwtSettings jwtSettings = jwtSettings ?? throw new ArgumentNullException(nameof(jwtSettings));
 
     public JwtTokenResponse GenerateToken(User user)
     {

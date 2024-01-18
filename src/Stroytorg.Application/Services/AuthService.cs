@@ -8,21 +8,14 @@ using Stroytorg.Contracts.Enums;
 
 namespace Stroytorg.Application.Services;
 
-public class AuthService : IAuthService
+public class AuthService(
+    IUserService userService,
+    ITokenGeneratorService tokenGeneratorService,
+    IAutoMapperTypeMapper autoMapperTypeMapper) : IAuthService
 {
-    private readonly IUserService userService;
-    private readonly ITokenGeneratorService tokenGeneratorService;
-    private readonly IAutoMapperTypeMapper autoMapperTypeMapper;
-
-    public AuthService(
-        IUserService userService,
-        ITokenGeneratorService tokenGeneratorService,
-        IAutoMapperTypeMapper autoMapperTypeMapper)
-    {
-        this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
-        this.tokenGeneratorService = tokenGeneratorService ?? throw new ArgumentNullException(nameof(tokenGeneratorService));
-        this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
-    }
+    private readonly IUserService userService = userService ?? throw new ArgumentNullException(nameof(userService));
+    private readonly ITokenGeneratorService tokenGeneratorService = tokenGeneratorService ?? throw new ArgumentNullException(nameof(tokenGeneratorService));
+    private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
 
     public async Task<AuthResponse> LoginAsync(UserLogin user)
     {

@@ -11,14 +11,9 @@ namespace Stroytorg.Host.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CategoryController : ControllerBase
+public class CategoryController(ICategoryService categoryService) : ControllerBase
 {
-    private readonly ICategoryService categoryService;
-
-    public CategoryController(ICategoryService categoryService)
-    {
-        this.categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
-    }
+    private readonly ICategoryService categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]

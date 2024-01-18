@@ -7,16 +7,10 @@ using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 
 namespace Stroytorg.Application.Services;
 
-public class UserService : IUserService
+public class UserService(IUserRepository userRepository, IAutoMapperTypeMapper autoMapperTypeMapper) : IUserService
 {
-    private readonly IUserRepository userRepository;
-    private readonly IAutoMapperTypeMapper autoMapperTypeMapper;
-
-    public UserService(IUserRepository userRepository, IAutoMapperTypeMapper autoMapperTypeMapper)
-    {
-        this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-        this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
-    }
+    private readonly IUserRepository userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+    private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
 
     public async Task<BusinessResponse<User>> GetByIdAsync(int userId)
     {

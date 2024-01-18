@@ -12,21 +12,14 @@ using Stroytorg.Contracts.Models.Material;
 
 namespace Stroytorg.Application.Services;
 
-public class MaterialService : IMaterialService
+public class MaterialService(
+    IAutoMapperTypeMapper autoMapperTypeMapper,
+    IMaterialRepository materialRepository,
+    ICategoryRepository categoryRepository) : IMaterialService
 {
-    private readonly IAutoMapperTypeMapper autoMapperTypeMapper;
-    private readonly IMaterialRepository materialRepository;
-    private readonly ICategoryRepository categoryRepository;
-
-    public MaterialService(
-        IAutoMapperTypeMapper autoMapperTypeMapper,
-        IMaterialRepository materialRepository,
-        ICategoryRepository categoryRepository)
-    {
-        this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
-        this.materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
-        this.categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
-    }
+    private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
+    private readonly IMaterialRepository materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
+    private readonly ICategoryRepository categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
 
     public async Task<PagedData<Material>> GetPagedAsync(DataRangeRequest<MaterialFilter> request)
     {

@@ -118,6 +118,7 @@ public static class ServiceExtensions
         services.TryAddScoped<ICategoryRepository, CategoryRepository>();
         services.TryAddScoped<IMaterialRepository, MaterialRepository>();
         services.TryAddScoped<IOrderRepository, OrderRepository>();
+        services.TryAddScoped<IOrderMaterialMapRepository, OrderMaterialMapRepository>();
 
         return services;
     }

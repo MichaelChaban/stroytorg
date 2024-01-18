@@ -12,18 +12,12 @@ using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 
 namespace Stroytorg.Application.Services;
 
-public class CategoryService : ICategoryService
+public class CategoryService(
+    IAutoMapperTypeMapper autoMapperTypeMapper,
+    ICategoryRepository categoryRepository) : ICategoryService
 {
-    private readonly IAutoMapperTypeMapper autoMapperTypeMapper;
-    private readonly ICategoryRepository categoryRepository;
-
-    public CategoryService(
-        IAutoMapperTypeMapper autoMapperTypeMapper,
-        ICategoryRepository categoryRepository)
-    {
-        this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
-        this.categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
-    }
+    private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
+    private readonly ICategoryRepository categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
 
     public async Task<PagedData<Category>> GetPagedAsync(DataRangeRequest<CategoryFilter> request)
     {

@@ -14,26 +14,18 @@ using DB = Stroytorg.Domain;
 
 namespace Stroytorg.Application.Services;
 
-public class OrderService : IOrderService
+public class OrderService(
+    IAutoMapperTypeMapper autoMapperTypeMapper,
+    IOrderRepository orderRepository,
+    IMaterialRepository materialRepository,
+    IOrderServiceFacade orderServiceFacade) : IOrderService
 {
-    private readonly IAutoMapperTypeMapper autoMapperTypeMapper;
-    private readonly IOrderRepository orderRepository;
-    private readonly IMaterialRepository materialRepository;
-    private readonly IOrderServiceFacade orderServiceFacade;
+    private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
+    private readonly IOrderRepository orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+    private readonly IMaterialRepository materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
+    private readonly IOrderServiceFacade orderServiceFacade = orderServiceFacade ?? throw new ArgumentNullException(nameof(orderServiceFacade));
 
-    public OrderService(
-        IAutoMapperTypeMapper autoMapperTypeMapper,
-        IOrderRepository orderRepository,
-        IMaterialRepository materialRepository,
-        IOrderServiceFacade orderServiceFacade)
-    {
-        this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
-        this.orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
-        this.materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
-        this.orderServiceFacade = orderServiceFacade ?? throw new ArgumentNullException(nameof(orderServiceFacade));
-    }
-
-    public async Task<PagedData<Order>> GetPagedForUserAsync(DataRangeRequest<OrderFilter> request)
+    public async Task<PagedData<Order>> GetPagedUserAsync(DataRangeRequest<OrderFilter> request)
     {
         var currentUserEmail = orderServiceFacade.GetCurrentUserEmail();
         var specification = autoMapperTypeMapper.Map<OrderSpecification>(request?.Filter! with { Email = currentUserEmail });
@@ -79,7 +71,7 @@ public class OrderService : IOrderService
     public async Task<BusinessResponse<int>> CreateAsync(OrderCreate order)
     {
         var materials = await materialRepository.GetByIdsAsync(order.MaterialMap.Select(x => x.MaterialId).ToArray());
-        if (!order.ValidateOrder(materials, out var businessResponse))
+        if (order.ValidateOrder(materials, out var businessResponse) is false)
         {
             return businessResponse!;
         }

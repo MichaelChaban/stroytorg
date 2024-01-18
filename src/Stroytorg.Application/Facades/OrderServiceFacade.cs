@@ -5,30 +5,21 @@ using DbEnum = Stroytorg.Domain.Data.Enums;
 
 namespace Stroytorg.Application.Facades;
 
-public class OrderServiceFacade : IOrderServiceFacade
+public class OrderServiceFacade(
+    IMaterialRepository materialRepository,
+    IOrderRepository orderRepository,
+    IUserRepository userRepository,
+    IOrderMaterialMapRepository orderMaterialMapRepository,
+    IUserContext userContext) : IOrderServiceFacade
 {
-    private readonly IMaterialRepository materialRepository;
-    private readonly IOrderRepository orderRepository;
-    private readonly IUserRepository userRepository;
-    private readonly IOrderMaterialMapRepository orderMaterialMapRepository;
-    private readonly IUserContext userContext;
+    private readonly IMaterialRepository materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
+    private readonly IOrderRepository orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+    private readonly IUserRepository userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+    private readonly IOrderMaterialMapRepository orderMaterialMapRepository = orderMaterialMapRepository ?? throw new ArgumentNullException(nameof(orderMaterialMapRepository));
+    private readonly IUserContext userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
 
     private const int MaterialsToOrder = -1;
     private const int MaterialsFromOrder = 1;
-
-    public OrderServiceFacade(
-        IMaterialRepository materialRepository,
-        IOrderRepository orderRepository,
-        IUserRepository userRepository,
-        IOrderMaterialMapRepository orderMaterialMapRepository,
-        IUserContext userContext)
-    {
-        this.materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
-        this.orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
-        this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-        this.orderMaterialMapRepository = orderMaterialMapRepository ?? throw new ArgumentNullException(nameof(orderMaterialMapRepository));
-        this.userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
-    }
 
     public async Task CreateOrderAsync(DbEntity.Order order, IEnumerable<DbEntity.Material> materials, IEnumerable<DbEntity.OrderMaterialMap> orderMaterialMaps)
     {

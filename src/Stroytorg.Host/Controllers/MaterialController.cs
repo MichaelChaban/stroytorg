@@ -11,14 +11,9 @@ namespace Stroytorg.Host.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class MaterialController : ControllerBase
+public class MaterialController(IMaterialService materialService) : ControllerBase
 {
-    private readonly IMaterialService materialService;
-
-    public MaterialController(IMaterialService materialService)
-    {
-        this.materialService = materialService ?? throw new ArgumentNullException(nameof(materialService));
-    }
+    private readonly IMaterialService materialService = materialService ?? throw new ArgumentNullException(nameof(materialService));
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]

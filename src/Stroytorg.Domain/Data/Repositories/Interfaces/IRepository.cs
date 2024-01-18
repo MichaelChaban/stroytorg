@@ -10,20 +10,20 @@ public interface IRepository<TEntity, TKey>
 {
     IUnitOfWork UnitOfWork { get; }
 
-    Task<TEntity> GetAsync(TKey id);
+    Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken);
 
-    Task<IEnumerable<TEntity>> GetByIdsAsync(TKey[] ids);
+    Task<IEnumerable<TEntity>> GetByIdsAsync(TKey[] ids, CancellationToken cancellationToken);
 
-    Task<IEnumerable<TEntity>> GetPagedAsync(int offset, int limit, Expression<Func<TEntity, bool>> filter);
+    Task<IEnumerable<TEntity>> GetPagedAsync(int offset, int limit, Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken);
 
-    Task<IEnumerable<TEntity>> GetPagedSortAsync<TSort>(int offset, int limit, Expression<Func<TEntity, bool>> filter, SortDefinition sort)
+    Task<IEnumerable<TEntity>> GetPagedSortAsync<TSort>(int offset, int limit, Expression<Func<TEntity, bool>> filter, SortDefinition sort, CancellationToken cancellationToken)
         where TSort : BaseSort<TEntity>;
 
-    Task<int> GetCountAsync(Expression<Func<TEntity, bool>> filter);
+    Task<int> GetCountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken);
 
-    Task<IEnumerable<TEntity>> GetFilteredAsync(Expression<Func<TEntity, bool>> filter);
+    Task<IEnumerable<TEntity>> GetFilteredAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken);
 
-    Task<IEnumerable<TEntity>> GetAll();
+    Task<IEnumerable<TEntity>> GetAll(CancellationToken cancellationToken);
 
     Task AddAsync(TEntity entity);
 

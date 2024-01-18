@@ -17,9 +17,17 @@ public class UserRepository : RepositoryBase<User, int>, IUserRepository
         return GetDbSet().Include(x => x.Orders).AsQueryable();
     }
 
-    public async Task<User?> GetByEmailAsync(string email)
-    {
-        return await GetDbSet().FirstOrDefaultAsync(x => x.Email.Equals(email));
+    public async Task<User?> GetByEmailAsync(string email, CancellationToken token)
+    { 
+        try
+        {
+            var user = await GetDbSet().FirstOrDefaultAsync(x => x.Email.Equals(email), cancellationToken: token);
+            return user;
+        }
+        catch (OperationCanceledException)
+        {
+            return null;
+        }
     }
 
     protected override DbSet<User> GetDbSet()

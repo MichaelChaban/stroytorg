@@ -8,6 +8,11 @@ using Stroytorg.Contracts.Filters;
 using ContractsSort = Stroytorg.Contracts.Sorting;
 using Stroytorg.Contracts.Models.Category;
 using Stroytorg.Contracts.Models.Material;
+using Stroytorg.Application.Authentication.Commands.Register;
+using Stroytorg.Application.Authentication.Commands.GoogleAuthentication;
+using Stroytorg.Application.Categories.Commands.UpdateCategory;
+using Stroytorg.Application.Materials.Commands.UpdateMaterial;
+using Stroytorg.Application.Materials.Commands.CreateMaterial;
 
 namespace Stroytorg.Application.Extensions;
 
@@ -43,11 +48,20 @@ public class AutoMapperFactory
             .ForCtorParam(nameof(User.AuthenticationTypeName), opt => opt.MapFrom(src => src.AuthenticationType.ToString()))
             .ReverseMap();
 
+        _ = config.CreateMap<DbData.User, RegisterCommand>()
+                .ReverseMap();
+
         _ = config.CreateMap<DbData.User, UserRegister>()
+        .ReverseMap();
+
+        _ = config.CreateMap<UserRegister, RegisterCommand>()
+            .ReverseMap();
+
+        _ = config.CreateMap<DbData.User, GoogleAuthCommand>()
                 .ReverseMap();
 
         _ = config.CreateMap<DbData.User, UserGoogleAuth>()
-                .ReverseMap();
+        .ReverseMap();
     }
 
     private static void MapOrder(IMapperConfigurationExpression config)
@@ -67,7 +81,7 @@ public class AutoMapperFactory
         _ = config.CreateMap<DbData.Category, Category>()
             .ReverseMap();
 
-        _ = config.CreateMap<CategoryEdit, DbData.Category>();
+        _ = config.CreateMap<UpdateCategoryCommand, DbData.Category>();
     }
 
     private static void MapMaterial(IMapperConfigurationExpression config)
@@ -75,8 +89,8 @@ public class AutoMapperFactory
         _ = config.CreateMap<DbData.Material, Material>()
             .ReverseMap();
 
-        _ = config.CreateMap<MaterialEdit, DbData.Material>();
-        _ = config.CreateMap<MaterialCreate, DbData.Material>();
+        _ = config.CreateMap<UpdateMaterialCommand, DbData.Material>();
+        _ = config.CreateMap<CreateMaterialCommand, DbData.Material>();
     }
 
     private static void MapFilters(IMapperConfigurationExpression config)

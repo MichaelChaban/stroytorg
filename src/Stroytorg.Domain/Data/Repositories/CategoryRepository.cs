@@ -17,9 +17,16 @@ public class CategoryRepository : RepositoryBase<Category, int>, ICategoryReposi
         return GetDbSet().Include(x => x.Materials).AsQueryable();
     }
 
-    public async Task<Category?> GetByNameAsync(string name)
+    public async Task<Category?> GetByNameAsync(string name, CancellationToken cancellationToken)
     {
-        return await GetDbSet().FirstOrDefaultAsync(x => x.Name.ToUpper().Equals(name.ToUpper()));
+        try
+        {
+            return await GetDbSet().FirstOrDefaultAsync(x => x.Name.ToUpper().Equals(name.ToUpper()), cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return null;
+        }
     }
 
     protected override DbSet<Category> GetDbSet()

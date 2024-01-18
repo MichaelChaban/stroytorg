@@ -50,12 +50,12 @@ public class GoogleAuthCommandHandler :
             }
 
             return new AuthResponse(
-            IsLoggedIn: true,
-            JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(createdUserResponse.Value)));
+                IsLoggedIn: true,
+                JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(createdUserResponse.Value)));
         }
 
         return new AuthResponse(
-        IsLoggedIn: true,
+            IsLoggedIn: true,
             JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(contractUserResponse.Value)));
     }
 }

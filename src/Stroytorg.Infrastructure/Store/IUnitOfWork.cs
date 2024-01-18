@@ -2,7 +2,7 @@
 
 public interface IUnitOfWork
 {
-    Task Commit();
+    Task Commit(CancellationToken cancellationToken = default);
 
     void Rollback();
 }

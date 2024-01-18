@@ -18,9 +18,9 @@ public class UserService : IUserService
         this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
     }
 
-    public async Task<BusinessResponse<User>> GetByIdAsync(int userId)
+    public async Task<BusinessResponse<User>> GetByIdAsync(int userId, CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetAsync(userId);
+        var user = await userRepository.GetAsync(userId, cancellationToken);
         if (user is null)
         {
             return new BusinessResponse<User>(
@@ -31,9 +31,9 @@ public class UserService : IUserService
         return new BusinessResponse<User>(Value: autoMapperTypeMapper.Map<User>(user));
     }
 
-    public async Task<BusinessResponse<User>> GetByEmailAsync(string email)
+    public async Task<BusinessResponse<User>> GetByEmailAsync(string email, CancellationToken token)
     {
-        var user = await userRepository.GetByEmailAsync(email);
+        var user = await userRepository.GetByEmailAsync(email, token);
         if (user is null)
         {
             return new BusinessResponse<User>(

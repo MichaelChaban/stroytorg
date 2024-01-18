@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Stroytorg.Contracts.Models.User;
 using Stroytorg.Contracts.ResponseModels;
 
 namespace Stroytorg.Application.Authentication.Commands.GoogleAuthentication;

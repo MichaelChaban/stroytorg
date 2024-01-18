@@ -53,5 +53,5 @@ public class Order : Auditable
 
     public virtual User? User { get; set; }
 
-    public virtual ICollection<OrderMaterialMap> OrderMaterialMap { get; set; }
+    public virtual IEnumerable<OrderMaterialMap> OrderMaterialMap { get; set; }
 }

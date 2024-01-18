@@ -28,13 +28,18 @@ public class OrderRepository : RepositoryBase<Order, int>, IOrderRepository
     {
         return GetDbSet()
                 .Include(x => x.OrderMaterialMap)
-                .Include(x => x.OrderMaterialMap)
                     .ThenInclude(x => x.Material)
+                .Include(x => x.OrderMaterialMap)
                 .AsQueryable();
     }
 
     protected override DbSet<Order> GetDbSet()
     {
         return StroytorgContext.Order;
+    }
+
+    public async Task<IEnumerable<Order>> GetOrdersByEmailAsync(string email)
+    {
+        return await GetDbSet().Where(x => x.Email == email).ToListAsync();
     }
 }

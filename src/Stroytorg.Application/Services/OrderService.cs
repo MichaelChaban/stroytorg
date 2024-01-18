@@ -4,6 +4,7 @@ using Stroytorg.Application.Facades.Interfaces;
 using Stroytorg.Application.Services.Interfaces;
 using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Order;
+using Stroytorg.Contracts.Models.User;
 using Stroytorg.Contracts.RequestModels;
 using Stroytorg.Contracts.ResponseModels;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
@@ -103,5 +104,16 @@ public class OrderService(
 
         return new BusinessResponse<int>(
             Value: orderEntity.Id);
+    }
+
+    public async Task AssignOrderToUserAsync(User user)
+    {
+        var orders = await orderRepository.GetOrdersByEmailAsync(user.Email);
+        foreach (var order in orders)
+        {
+            order.UserId = user.Id;
+        }
+        orderRepository.UpdateRange(orders);
+        await orderRepository.UnitOfWork.CommitAsync();
     }
 }

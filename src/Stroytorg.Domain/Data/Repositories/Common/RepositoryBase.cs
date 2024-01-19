@@ -54,7 +54,7 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         var entitySort = Activator.CreateInstance(typeof(TSort), sortField, sortByAsc) as TSort;
         query = entitySort!.ApplySort(query);
 
-        return await query.Skip(offset).Take(limit).ToArrayAsync();
+        return await query.Skip(offset).Take(limit).ToListAsync();
     }
 
     public async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> filter)

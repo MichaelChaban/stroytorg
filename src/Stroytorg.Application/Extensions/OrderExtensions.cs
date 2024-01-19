@@ -7,8 +7,6 @@ namespace Stroytorg.Application.Extensions;
 
 public static class OrderExtensions
 {
-    private const int DeliveryToAddress = 1;
-
     public static bool ValidateOrder(this OrderCreate order, IEnumerable<DB.Data.Entities.Material> entityMaterials, out BusinessResponse<int>? businessResponse)
     {
         if (order.ShippingType == Contracts.Enums.ShippingType.DeliveryToAddress && string.IsNullOrEmpty(order.ShippingAddress))
@@ -19,7 +17,7 @@ public static class OrderExtensions
             return false;
         }
 
-        if (!order.MaterialMap.ValidateOrderMaterials(entityMaterials, out var materialsBusinessResponse))
+        if (order.Materials.ValidateOrderMaterials(entityMaterials, out var materialsBusinessResponse) is false)
         {
             businessResponse = materialsBusinessResponse;
             return false;

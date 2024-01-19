@@ -1,4 +1,5 @@
-﻿using DB = Stroytorg.Domain.Data.Entities;
+﻿using Stroytorg.Contracts.Filters;
+using DB = Stroytorg.Domain.Data.Entities;
 
 namespace Stroytorg.Application.Facades.Interfaces;
 
@@ -9,4 +10,6 @@ public interface IOrderServiceFacade
     Task UpdateOrderMaterialMapAsync(DB.Order order);
 
     string GetCurrentUserEmail();
+
+    OrderFilter GetPagedUserOrdersFilter(OrderFilter? filter);
 }

@@ -35,18 +35,18 @@ public class MaterialService(
             Total: totalItems);
     }
 
-    public async Task<BusinessResponse<Material>> GetByIdAsync(int materialId)
+    public async Task<BusinessResponse<MaterialDetail>> GetByIdAsync(int materialId)
     {
         var material = await materialRepository.GetAsync(materialId);
         if (material is null)
         {
-            return new BusinessResponse<Material>(
+            return new BusinessResponse<MaterialDetail>(
                 IsSuccess: false,
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        return new BusinessResponse<Material>(
-            Value: autoMapperTypeMapper.Map<Material>(material));
+        return new BusinessResponse<MaterialDetail>(
+            Value: autoMapperTypeMapper.Map<MaterialDetail>(material));
     }
 
     public async Task<BusinessResponse<int>> CreateAsync(MaterialCreate material)

@@ -42,7 +42,7 @@ public class OrderController(IOrderService orderService) : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Order>> GetByIdAsync(int id)
+    public async Task<ActionResult<OrderDetail>> GetByIdAsync(int id)
     {
         var result = await orderService.GetByIdAsync(id);
         return result.IsSuccess ? result.Value : NotFound();

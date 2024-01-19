@@ -7,5 +7,5 @@ public record MaterialMapCreate(
     int MaterialId,
 
     [Required]
-    [Range(0, double.MaxValue)]
-    double TotalMaterialAmount);
+    [Range(0, 100000)]
+    decimal TotalMaterialAmount);

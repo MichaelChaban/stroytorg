@@ -15,13 +15,9 @@ public class OrderSpecification : BaseSpecification, ISpecification<Order>
 
     public string? PhoneNumber { get; set; }
 
-    public int? MinMaterialsAmount { get; set; }
+    public decimal? MinTotalPrice { get; set; }
 
-    public int? MaxMaterialsAmount { get; set; }
-
-    public int? MinTotalPrice { get; set; }
-
-    public int? MaxTotalPrice { get; set; }
+    public decimal? MaxTotalPrice { get; set; }
 
     public int? ShippingType { get; set; }
 
@@ -55,16 +51,6 @@ public class OrderSpecification : BaseSpecification, ISpecification<Order>
         if (!string.IsNullOrEmpty(PhoneNumber))
         {
             specification &= new DirectSpecification<Order>(x => x.PhoneNumber.Contains(PhoneNumber));
-        }
-
-        if (MinMaterialsAmount.HasValue)
-        {
-            specification &= new DirectSpecification<Order>(x => x.MaterialsAmount >= MinMaterialsAmount.Value);
-        }
-
-        if (MaxMaterialsAmount.HasValue)
-        {
-            specification &= new DirectSpecification<Order>(x => x.MaterialsAmount <= MaxMaterialsAmount.Value);
         }
 
         if (MinTotalPrice.HasValue)

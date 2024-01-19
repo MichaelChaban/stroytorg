@@ -16,22 +16,22 @@ public record MaterialEdit(
     int CategoryId,
 
     [Required]
-    [Range(0, double.MaxValue)]
-    double Price,
+    [Range(0, 100000)]
+    decimal Price,
 
     [Required]
-    [Range(0, double.MaxValue)]
-    double StockAmount,
+    [Range(0, 100000)]
+    decimal StockAmount,
 
-    [Range(0, double.MaxValue)]
-    double? Height,
+    [Range(0, 100000)]
+    decimal? Height,
 
-    [Range(0, double.MaxValue)]
-    double? Width,
+    [Range(0, 100000)]
+    decimal? Width,
 
-    [Range(0, double.MaxValue)]
-    double? Length,
+    [Range(0, 100000)]
+    decimal? Length,
 
-    [Range(0, double.MaxValue)]
-    double? Weight,
+    [Range(0, 100000)]
+    decimal? Weight,
     bool? IsFavorite);

@@ -9,7 +9,7 @@ public interface IMaterialService
 {
     Task<PagedData<Material>> GetPagedAsync(DataRangeRequest<MaterialFilter> request);
 
-    Task<BusinessResponse<Material>> GetByIdAsync(int materialId);
+    Task<BusinessResponse<MaterialDetail>> GetByIdAsync(int materialId);
 
     Task<BusinessResponse<int>> CreateAsync(MaterialCreate material);
 

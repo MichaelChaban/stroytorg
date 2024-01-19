@@ -12,7 +12,7 @@ public interface IOrderService
 
     Task<PagedData<Order>> GetPagedAsync(DataRangeRequest<OrderFilter> request);
 
-    Task<BusinessResponse<Order>> GetByIdAsync(int orderId);
+    Task<BusinessResponse<OrderDetail>> GetByIdAsync(int orderId);
 
     Task<BusinessResponse<int>> CreateAsync(OrderCreate order);
 

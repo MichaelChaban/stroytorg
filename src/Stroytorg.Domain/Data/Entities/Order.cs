@@ -7,11 +7,6 @@ namespace Stroytorg.Domain.Data.Entities;
 
 public class Order : Auditable
 {
-    public Order()
-    {
-        OrderMaterialMap = new List<OrderMaterialMap>();
-    }
-
     [Required]
     [MaxLength(50)]
     public required string FirstName { get; set; }
@@ -33,16 +28,13 @@ public class Order : Auditable
     public int? UserId { get; set; }
 
     [Required]
-    [Range(0, int.MaxValue)]
-    public int MaterialsAmount { get; set; }
-
-    [Required]
-    [Range(0, int.MaxValue)]
-    public double TotalPrice { get; set; }
+    [Range(0, 100000)]
+    public decimal TotalPrice { get; set; }
 
     [Required]
     public ShippingType ShippingType { get; set; }
 
+    [MinLength(10)]
     [MaxLength(200)]
     public string? ShippingAddress { get; set; }
 
@@ -53,5 +45,5 @@ public class Order : Auditable
 
     public virtual User? User { get; set; }
 
-    public virtual IEnumerable<OrderMaterialMap> OrderMaterialMap { get; set; }
+    public virtual ICollection<OrderMaterialMap>? OrderMaterialMap { get; set; }
 }

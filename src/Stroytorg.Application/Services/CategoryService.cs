@@ -33,18 +33,18 @@ public class CategoryService(
             Total: totalItems);
     }
 
-    public async Task<BusinessResponse<Category>> GetByIdAsync(int categoryId)
+    public async Task<BusinessResponse<CategoryDetail>> GetByIdAsync(int categoryId)
     {
         var category = await categoryRepository.GetAsync(categoryId);
         if (category is null)
         {
-            return new BusinessResponse<Category>(
+            return new BusinessResponse<CategoryDetail>(
                 IsSuccess: false,
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        return new BusinessResponse<Category>(
-            Value: autoMapperTypeMapper.Map<Category>(category));
+        return new BusinessResponse<CategoryDetail>(
+            Value: autoMapperTypeMapper.Map<CategoryDetail>(category));
     }
 
     public async Task<BusinessResponse<int>> CreateAsync(CategoryEdit category)
@@ -95,7 +95,7 @@ public class CategoryService(
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        if (categoryEntity.Materials?.Count > 0)
+        if (categoryEntity.Materials?.Count() > 0)
         {
             return new BusinessResponse<int>(
                 IsSuccess: false,

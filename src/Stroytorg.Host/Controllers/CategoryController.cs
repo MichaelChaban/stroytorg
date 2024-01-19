@@ -26,7 +26,7 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Category>> GetByIdAsync(int id)
+    public async Task<ActionResult<CategoryDetail>> GetByIdAsync(int id)
     {
         var result = await categoryService.GetByIdAsync(id);
         return result.IsSuccess ? result.Value : NotFound();

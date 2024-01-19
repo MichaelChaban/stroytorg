@@ -27,7 +27,7 @@ public class OrderRepository : RepositoryBase<Order, int>, IOrderRepository
     protected override IQueryable<Order> GetQueryable()
     {
         return GetDbSet()
-                .Include(x => x.OrderMaterialMap)
+                .Include(x => x.OrderMaterialMap!)
                     .ThenInclude(x => x.Material)
                 .Include(x => x.OrderMaterialMap)
                 .AsQueryable();

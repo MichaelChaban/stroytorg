@@ -5,11 +5,6 @@ namespace Stroytorg.Domain.Data.Entities;
 
 public class Material : Auditable
 {
-    public Material()
-    {
-        OrderMaterialMap = new List<OrderMaterialMap>();
-    }
-
     [Required]
     [MinLength(5)]
     [MaxLength(150)]
@@ -22,28 +17,28 @@ public class Material : Auditable
     public int CategoryId { get; set; }
 
     [Required]
-    [Range(0, double.MaxValue)]
-    public double Price { get; set; }
+    [Range(0, 100000)]
+    public decimal Price { get; set; }
 
     [Required]
-    [Range(0, double.MaxValue)]
-    public double StockAmount { get; set; }
+    [Range(0, 100000)]
+    public decimal StockAmount { get; set; }
+
+    [Range(0, 100000)]
+    public decimal? Height { get; set; }
 
     [Range(0, double.MaxValue)]
-    public double? Height { get; set; }
+    public decimal? Width { get; set; }
 
-    [Range(0, double.MaxValue)]
-    public double? Width { get; set; }
+    [Range(0, 100000)]
+    public decimal? Length { get; set; }
 
-    [Range(0, double.MaxValue)]
-    public double? Length { get; set; }
-
-    [Range(0, double.MaxValue)]
-    public double? Weight { get; set; }
+    [Range(0, 100000)]
+    public decimal? Weight { get; set; }
 
     public bool IsFavorite { get; set; } = false;
 
     public virtual Category? Category { get; set; }
 
-    public virtual ICollection<OrderMaterialMap> OrderMaterialMap { get; set; }
+    public virtual ICollection<OrderMaterialMap>? OrderMaterialMap { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using Stroytorg.Application.Facades.Interfaces;
+using Stroytorg.Contracts.Filters;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using DbEntity = Stroytorg.Domain.Data.Entities;
 using DbEnum = Stroytorg.Domain.Data.Enums;
@@ -25,23 +26,29 @@ public class OrderServiceFacade(
     {
         order.UserId = await GetExisingUserIdAsync(order.Email);
 
-        await UpdateMaterialsAsync(materials, order);
         await AddOrderAsync(order);
+        await UpdateMaterialsAsync(materials, order, orderMaterialMaps);
         await CreateOrderMaterialMapAsync(orderMaterialMaps, materials, order.Id);
     }
 
+    public OrderFilter GetPagedUserOrdersFilter(OrderFilter? filter)
+    {
+        return filter is null
+            ? new OrderFilter(null, GetCurrentUserEmail(), null, null, null, null, null)
+            : filter with { Email = GetCurrentUserEmail() };
+    }
 
     public async Task UpdateOrderMaterialMapAsync(DbEntity.Order order)
     {
         if (order.OrderStatus is DbEnum.OrderStatus.Completed)
         {
-            orderMaterialMapRepository.DeactivateRange(order.OrderMaterialMap.ToArray());
+            orderMaterialMapRepository.DeactivateRange(order.OrderMaterialMap!.ToArray());
         }
         else if (order.OrderStatus is DbEnum.OrderStatus.Cancelled)
         {
-            orderMaterialMapRepository.DeactivateRange(order.OrderMaterialMap.ToArray());
-            var materials = order.OrderMaterialMap.Select(x => x.Material).ToList();
-            await UpdateMaterialsAsync(materials!, order);
+            orderMaterialMapRepository.DeactivateRange(order.OrderMaterialMap!.ToArray());
+            var materials = order.OrderMaterialMap!.Select(x => x.Material).ToList();
+            await UpdateMaterialsAsync(materials!, order, order.OrderMaterialMap);
         }
         await orderMaterialMapRepository.UnitOfWork.CommitAsync();
     }
@@ -56,17 +63,18 @@ public class OrderServiceFacade(
         await orderRepository.UnitOfWork.CommitAsync();
     }
 
-    private async Task UpdateMaterialsAsync(IEnumerable<DbEntity.Material> materials, DbEntity.Order order)
+    private async Task UpdateMaterialsAsync(IEnumerable<DbEntity.Material> materials, DbEntity.Order order, IEnumerable<DbEntity.OrderMaterialMap> orderMaterialMaps)
     {
-        var coefficient = MaterialsToOrder;
+        var coefficient = 0;
         switch (order.OrderStatus)
         {
+            case DbEnum.OrderStatus.NewOrder: coefficient = MaterialsToOrder; break;
             case DbEnum.OrderStatus.Cancelled: coefficient = MaterialsFromOrder; break;
-            default: coefficient = 0; break;
+            default: break;
         }
         foreach (var material in materials)
         {
-            material.StockAmount += order.OrderMaterialMap.FirstOrDefault(x => x.Id == material.Id)!.TotalMaterialAmount * coefficient;
+            material.StockAmount += orderMaterialMaps.FirstOrDefault(x => x.MaterialId == material.Id)!.TotalMaterialAmount * coefficient;
         }
 
         materialRepository.UpdateRange(materials);
@@ -80,7 +88,6 @@ public class OrderServiceFacade(
             var material = materials.FirstOrDefault(x => x.Id == orderMaterialMap.MaterialId)!;
             orderMaterialMap.UnitPrice = material.Price;
             orderMaterialMap.OrderId = orderId;
-            orderMaterialMap.TotalMaterialWeight = material.Weight.HasValue ? material.Weight.Value * orderMaterialMap.TotalMaterialAmount : null;
         }
 
         orderMaterialMapRepository.UpdateRange(orderMaterialMaps);

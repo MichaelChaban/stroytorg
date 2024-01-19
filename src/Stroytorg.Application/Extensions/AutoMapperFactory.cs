@@ -5,8 +5,8 @@ using DbData = Stroytorg.Domain.Data.Entities;
 using DbSpec = Stroytorg.Domain.Specifications;
 using DbSort = Stroytorg.Domain.Sorting;
 using DbEnum = Stroytorg.Domain.Data.Enums;
-using Stroytorg.Contracts.Filters;
 using ContractsSort = Stroytorg.Contracts.Sorting;
+using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Category;
 using Stroytorg.Contracts.Models.Material;
 using Stroytorg.Contracts.Enums;
@@ -42,47 +42,48 @@ public class AutoMapperFactory
     private static void MapUser(IMapperConfigurationExpression config)
     {
         _ = config.CreateMap<DbData.User, User>()
-            .ForCtorParam(nameof(User.Profile), opt => opt.MapFrom(src => (int)src.Profile))
             .ForCtorParam(nameof(User.ProfileName), opt => opt.MapFrom(src => src.Profile.ToString()))
-            .ForCtorParam(nameof(User.AuthenticationType), opt => opt.MapFrom(src => (int)src.AuthenticationType))
-            .ForCtorParam(nameof(User.AuthenticationTypeName), opt => opt.MapFrom(src => src.AuthenticationType.ToString()))
-            .ReverseMap();
+            .ForCtorParam(nameof(User.AuthenticationTypeName), opt => opt.MapFrom(src => src.AuthenticationType.ToString()));
 
-        _ = config.CreateMap<DbData.User, UserRegister>()
-                .ReverseMap();
+        _ = config.CreateMap<DbData.User, UserDetail>()
+            .ForCtorParam(nameof(UserDetail.ProfileName), opt => opt.MapFrom(src => src.Profile.ToString()))
+            .ForCtorParam(nameof(UserDetail.AuthenticationTypeName), opt => opt.MapFrom(src => src.AuthenticationType.ToString()));
 
-        _ = config.CreateMap<DbData.User, UserGoogleAuth>()
-                .ReverseMap();
+        _ = config.CreateMap<UserRegister, DbData.User>();
+
+        _ = config.CreateMap<UserGoogleAuth, DbData.User>();
     }
 
     private static void MapOrder(IMapperConfigurationExpression config)
     {
         _ = config.CreateMap<DbData.Order, Order>()
-            .ForCtorParam(nameof(Order.ShippingType), opt => opt.MapFrom(src => (int)src.ShippingType))
             .ForCtorParam(nameof(Order.ShippingTypeName), opt => opt.MapFrom(src => src.ShippingType.ToString()))
-            .ForCtorParam(nameof(Order.PaymentType), opt => opt.MapFrom(src => (int)src.PaymentType))
             .ForCtorParam(nameof(Order.PaymentTypeName), opt => opt.MapFrom(src => src.PaymentType.ToString()))
-            .ForCtorParam(nameof(Order.OrderStatus), opt => opt.MapFrom(src => (int)src.OrderStatus))
-            .ForCtorParam(nameof(Order.OrderStatusName), opt => opt.MapFrom(src => src.OrderStatus.ToString()))
-            .ForCtorParam(nameof(Order.Materials), opt => opt.MapFrom(src => src.OrderMaterialMap))
-            .ReverseMap();
+            .ForCtorParam(nameof(Order.OrderStatusName), opt => opt.MapFrom(src => src.OrderStatus.ToString()));
 
-        _ = config.CreateMap<OrderCreate, DbData.Order>();
+        _ = config.CreateMap<DbData.Order, OrderDetail>()
+            .ForCtorParam(nameof(OrderDetail.ShippingTypeName), opt => opt.MapFrom(src => src.ShippingType.ToString()))
+            .ForCtorParam(nameof(OrderDetail.PaymentTypeName), opt => opt.MapFrom(src => src.PaymentType.ToString()))
+            .ForCtorParam(nameof(OrderDetail.OrderStatusName), opt => opt.MapFrom(src => src.OrderStatus.ToString()))
+            .ForCtorParam(nameof(OrderDetail.Materials), opt => opt.MapFrom(src => src.OrderMaterialMap));
+
+        _ = config.CreateMap<OrderCreate, DbData.Order>()
+            .ForMember(nameof(DbData.Order.OrderMaterialMap), opt => opt.Ignore());
         _ = config.CreateMap<OrderEdit, DbData.Order>();
     }
 
     private static void MapCategory(IMapperConfigurationExpression config)
     {
-        _ = config.CreateMap<DbData.Category, Category>()
-            .ReverseMap();
+        _ = config.CreateMap<DbData.Category, Category>();
+        _ = config.CreateMap<DbData.Category, CategoryDetail>();
 
         _ = config.CreateMap<CategoryEdit, DbData.Category>();
     }
 
     private static void MapMaterial(IMapperConfigurationExpression config)
     {
-        _ = config.CreateMap<DbData.Material, Material>()
-            .ReverseMap();
+        _ = config.CreateMap<DbData.Material, Material>();
+        _ = config.CreateMap<DbData.Material, MaterialDetail>();
 
         _ = config.CreateMap<MaterialEdit, DbData.Material>();
         _ = config.CreateMap<MaterialCreate, DbData.Material>();
@@ -93,7 +94,7 @@ public class AutoMapperFactory
         _ = config.CreateMap<MaterialMapCreate, DbData.OrderMaterialMap>();
 
         _ = config.CreateMap<DbData.OrderMaterialMap, MaterialMap>()
-                .ForMember(nameof(MaterialMap.Id), opt => opt.Ignore());
+                .ForMember(nameof(MaterialMap.Id), opt => opt.MapFrom(src => src.MaterialId));
     }
 
     private static void MapFilters(IMapperConfigurationExpression config)
@@ -110,8 +111,11 @@ public class AutoMapperFactory
 
     private static void MapEnums(IMapperConfigurationExpression config)
     {
-        _ = config.CreateMap<OrderStatus, DbEnum.OrderStatus>();
-        _ = config.CreateMap<PaymentType, DbEnum.PaymentType>();
-        _ = config.CreateMap<ShippingType, DbEnum.ShippingType>();
+        _ = config.CreateMap<OrderStatus, DbEnum.OrderStatus>()
+            .ReverseMap();
+        _ = config.CreateMap<PaymentType, DbEnum.PaymentType>()
+            .ReverseMap();
+        _ = config.CreateMap<ShippingType, DbEnum.ShippingType>()
+            .ReverseMap();
     }
 }

@@ -23,7 +23,6 @@ public class OrderSort : BaseSort<DB.Order>
         "lastname" => x => x.LastName,
         "email" => x => x.Email,
         "userid" => x => x.UserId.HasValue ? x.UserId.Value : x.UserId.HasValue,
-        "materialsamount" => x => x.MaterialsAmount,
         "totalprice" => x => x.TotalPrice,
         "shippingtype" => x => x.ShippingType,
         "shippingaddress" => x => !string.IsNullOrEmpty(x.ShippingAddress) ? x.ShippingAddress : !string.IsNullOrEmpty(x.ShippingAddress),

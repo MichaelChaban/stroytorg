@@ -26,7 +26,7 @@ public class MaterialController(IMaterialService materialService) : ControllerBa
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Material>> GetByIdAsync(int id)
+    public async Task<ActionResult<MaterialDetail>> GetByIdAsync(int id)
     {
         var result = await materialService.GetByIdAsync(id);
         return result.IsSuccess ? result.Value : NotFound();

@@ -27,4 +27,6 @@ public static class BusinessErrorMessage
     public static string NotExistingEntities { get; } = "There are no existing entities the db.";
 
     public static string NoInformationProvided { get; } = "There is some information was not provided.";
+
+    public static string AlreadyInActiveEntity { get; } = "This entity is already inactive.";
 }

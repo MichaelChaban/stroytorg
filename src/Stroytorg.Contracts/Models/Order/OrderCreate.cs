@@ -32,7 +32,6 @@ public record OrderCreate(
     PaymentType PaymentType,
 
     [Required]
-    [Range(0, 100)]
-    ICollection<MaterialMapCreate> MaterialMap,
+    IEnumerable<MaterialMapCreate> Materials,
 
     string? ShippingAddress);

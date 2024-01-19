@@ -12,6 +12,7 @@ using Stroytorg.Domain.Sorting;
 using Stroytorg.Domain.Specifications;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 using DB = Stroytorg.Domain;
+using DbEnum = Stroytorg.Domain.Data.Enums;
 
 namespace Stroytorg.Application.Services;
 
@@ -28,8 +29,7 @@ public class OrderService(
 
     public async Task<PagedData<Order>> GetPagedUserAsync(DataRangeRequest<OrderFilter> request)
     {
-        var currentUserEmail = orderServiceFacade.GetCurrentUserEmail();
-        var specification = autoMapperTypeMapper.Map<OrderSpecification>(request?.Filter! with { Email = currentUserEmail });
+        var specification = autoMapperTypeMapper.Map<OrderSpecification>(orderServiceFacade.GetPagedUserOrdersFilter(request!.Filter));
         var filter = specification?.SatisfiedBy();
 
         var totalItems = await orderRepository.GetCountAsync(filter!);
@@ -55,30 +55,30 @@ public class OrderService(
             Total: totalItems);
     }
 
-    public async Task<BusinessResponse<Order>> GetByIdAsync(int orderId)
+    public async Task<BusinessResponse<OrderDetail>> GetByIdAsync(int orderId)
     {
         var order = await orderRepository.GetAsync(orderId);
         if (order is null)
         {
-            return new BusinessResponse<Order>(
+            return new BusinessResponse<OrderDetail>(
                 IsSuccess: false,
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        return new BusinessResponse<Order>(
-            Value: autoMapperTypeMapper.Map<Order>(order));
+        return new BusinessResponse<OrderDetail>(
+            Value: autoMapperTypeMapper.Map<OrderDetail>(order));
     }
 
     public async Task<BusinessResponse<int>> CreateAsync(OrderCreate order)
     {
-        var materials = await materialRepository.GetByIdsAsync(order.MaterialMap.Select(x => x.MaterialId).ToArray());
+        var materials = await materialRepository.GetByIdsAsync(order.Materials.Select(x => x.MaterialId).ToArray());
         if (order.ValidateOrder(materials, out var businessResponse) is false)
         {
             return businessResponse!;
         }
 
         var orderEntity = autoMapperTypeMapper.Map<DB.Data.Entities.Order>(order);
-        var orderMaterialMaps = autoMapperTypeMapper.Map<DB.Data.Entities.OrderMaterialMap>(order.MaterialMap);
+        var orderMaterialMaps = autoMapperTypeMapper.Map<DB.Data.Entities.OrderMaterialMap>(order.Materials);
 
         await orderServiceFacade.CreateOrderAsync(orderEntity, materials, orderMaterialMaps);
 
@@ -95,9 +95,18 @@ public class OrderService(
                 IsSuccess: false,
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
+        else if (orderEntity.IsActive is false)
+        {
+            return new BusinessResponse<int>(
+                IsSuccess: false,
+                BusinessErrorMessage: BusinessErrorMessage.AlreadyInActiveEntity);
+        }
 
         orderEntity = autoMapperTypeMapper.Map(order, orderEntity);
-        await orderServiceFacade.UpdateOrderMaterialMapAsync(orderEntity);
+        if (orderEntity.OrderStatus is not (DbEnum.OrderStatus.BeingPrepared or DbEnum.OrderStatus.OutForDelivery))
+        {
+            await orderServiceFacade.UpdateOrderMaterialMapAsync(orderEntity);
+        }
 
         orderRepository.Update(orderEntity);
         await orderRepository.UnitOfWork.CommitAsync();

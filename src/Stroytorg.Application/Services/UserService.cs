@@ -12,9 +12,9 @@ public class UserService(IUserRepository userRepository, IAutoMapperTypeMapper a
     private readonly IUserRepository userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
 
-    public async Task<BusinessResponse<UserDetail>> GetByIdAsync(int userId)
+    public async Task<BusinessResponse<UserDetail>> GetByIdAsync(int userId, CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetAsync(userId);
+        var user = await userRepository.GetAsync(userId, cancellationToken);
         if (user is null)
         {
             return new BusinessResponse<UserDetail>(
@@ -25,9 +25,9 @@ public class UserService(IUserRepository userRepository, IAutoMapperTypeMapper a
         return new BusinessResponse<UserDetail>(Value: autoMapperTypeMapper.Map<UserDetail>(user));
     }
 
-    public async Task<BusinessResponse<User>> GetByEmailAsync(string email)
+    public async Task<BusinessResponse<User>> GetByEmailAsync(string email, CancellationToken token)
     {
-        var user = await userRepository.GetByEmailAsync(email);
+        var user = await userRepository.GetByEmailAsync(email, token);
         if (user is null)
         {
             return new BusinessResponse<User>(

@@ -19,9 +19,10 @@ public class UserController(IUserService userService) : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BusinessResponse<UserDetail>>> GetByIdAsync(int id)
+    public async Task<ActionResult<BusinessResponse<UserDetail>>> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
-        var result = await userService.GetByIdAsync(id);
-        return result.IsSuccess ? result : NotFound();
+        var result = await userService.GetByIdAsync(id, cancellationToken);
+
+        return result.IsSuccess ? result : NotFound(result);
     }
 }

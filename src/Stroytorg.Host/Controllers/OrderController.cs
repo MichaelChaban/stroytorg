@@ -6,6 +6,7 @@ using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Order;
 using Stroytorg.Contracts.RequestModels;
 using Stroytorg.Contracts.ResponseModels;
+using System.Threading;
 
 namespace Stroytorg.Host.Controllers;
 
@@ -20,9 +21,9 @@ public class OrderController(IOrderService orderService) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<ActionResult<PagedData<Order>>> GetPagedUserAsync([FromQuery] DataRangeRequest<OrderFilter> request)
+    public async Task<ActionResult<PagedData<Order>>> GetPagedUserAsync([FromQuery] DataRangeRequest<OrderFilter> request, CancellationToken cancellationToken)
     {
-        return await orderService.GetPagedUserAsync(request);
+        return await orderService.GetPagedUserAsync(request, cancellationToken);
     }
 
     [HttpGet]
@@ -31,9 +32,9 @@ public class OrderController(IOrderService orderService) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<PagedData<Order>>> GetPagedAsync([FromQuery] DataRangeRequest<OrderFilter> request)
+    public async Task<ActionResult<PagedData<Order>>> GetPagedAsync([FromQuery] DataRangeRequest<OrderFilter> request, CancellationToken cancellationToken)
     {
-        return await orderService.GetPagedAsync(request);
+        return await orderService.GetPagedAsync(request, cancellationToken);
     }
 
     [HttpGet("{id}")]
@@ -42,18 +43,18 @@ public class OrderController(IOrderService orderService) : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<OrderDetail>> GetByIdAsync(int id)
+    public async Task<ActionResult<OrderDetail>> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
-        var result = await orderService.GetByIdAsync(id);
+        var result = await orderService.GetByIdAsync(id, cancellationToken);
         return result.IsSuccess ? result.Value : NotFound();
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromBody] OrderCreate order)
+    public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromBody] OrderCreate order, CancellationToken cancellationToken)
     {
-        return await orderService.CreateAsync(order);
+        return await orderService.CreateAsync(order, cancellationToken);
     }
 
     [HttpPut("{id}")]
@@ -63,9 +64,9 @@ public class OrderController(IOrderService orderService) : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<int>> UpdateAsync(int id, [FromBody] OrderEdit order)
+    public async Task<ActionResult<int>> UpdateAsync(int id, [FromBody] OrderEdit order, CancellationToken cancellationToken)
     {
-        var result = await orderService.UpdateAsync(id, order);
+        var result = await orderService.UpdateAsync(id, order, cancellationToken);
         return result.IsSuccess ? result.Value : NotFound();
     }
 }

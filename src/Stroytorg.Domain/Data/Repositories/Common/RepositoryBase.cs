@@ -5,6 +5,7 @@ using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Domain.Sorting.Common;
 using Stroytorg.Infrastructure.Store;
 using System.Linq.Expressions;
+using System.Threading;
 
 namespace Stroytorg.Domain.Data.Repositories.Common;
 
@@ -25,54 +26,102 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public IUnitOfWork UnitOfWork { get; }
 
-    public Task<TEntity> GetAsync(TKey id)
+    public Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken)
     {
         var query = GetQueryable();
-        return query.FirstOrDefaultAsync(x => x.Id!.Equals(id))!;
+        try
+        {
+            return query.FirstOrDefaultAsync(x => x.Id!.Equals(id), cancellationToken)!;
+        }
+        catch (OperationCanceledException)
+        {
+            return null!;
+        }
     }
 
-    public async Task<IEnumerable<TEntity>> GetByIdsAsync(TKey[] ids)
+    public async Task<IEnumerable<TEntity>> GetByIdsAsync(TKey[] ids, CancellationToken cancellationToken)
     {
         var query = GetQueryable();
-        return await query.Where(x => ids.Contains(x.Id)).ToListAsync();
+        try
+        {
+            return await query.Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return Enumerable.Empty<TEntity>();
+        }
     }
 
-    public async Task<IEnumerable<TEntity>> GetPagedAsync(int offset, int limit, Expression<Func<TEntity, bool>> filter)
+    public async Task<IEnumerable<TEntity>> GetPagedAsync(int offset, int limit, Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken)
     {
         var query = FilterData(filter);
-
-        return await query.Skip(offset).Take(limit).ToArrayAsync();
+        try
+        {
+            return await query.Skip(offset).Take(limit).ToArrayAsync(cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return Enumerable.Empty<TEntity>();
+        }
     }
 
-    public async Task<IEnumerable<TEntity>> GetPagedSortAsync<TSort>(int offset, int limit, Expression<Func<TEntity, bool>> filter, SortDefinition sort)
+    public async Task<IEnumerable<TEntity>> GetPagedSortAsync<TSort>(int offset, int limit, Expression<Func<TEntity, bool>> filter, SortDefinition sort, CancellationToken cancellationToken)
         where TSort : BaseSort<TEntity>
     {
-        var query = FilterData(filter);
+        try
+        {
+            var query = FilterData(filter);
 
-        var sortField = sort?.Field?.ToLower();
-        var sortByAsc = sort?.Direction == null || sort.Direction == SortDirection.Ascending;
-        var entitySort = Activator.CreateInstance(typeof(TSort), sortField, sortByAsc) as TSort;
-        query = entitySort!.ApplySort(query);
+            var sortField = sort?.Field?.ToLower();
+            var sortByAsc = sort?.Direction == null || sort.Direction == SortDirection.Ascending;
+            var entitySort = Activator.CreateInstance(typeof(TSort), sortField, sortByAsc) as TSort;
+            query = entitySort!.ApplySort(query);
 
-        return await query.Skip(offset).Take(limit).ToListAsync();
+            return await query.Skip(offset).Take(limit).ToArrayAsync(cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return Enumerable.Empty<TEntity>();
+        }
     }
 
-    public async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> filter)
+    public async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken)
     {
         var query = FilterData(filter);
-
-        return await query.CountAsync();
+        try
+        {
+            var result = await query.CountAsync(cancellationToken);
+            return result;
+        }
+        catch (OperationCanceledException)
+        {
+            return -1;
+        }
     }
 
-    public async Task<IEnumerable<TEntity>> GetFilteredAsync(Expression<Func<TEntity, bool>> filter)
+    public async Task<IEnumerable<TEntity>> GetFilteredAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken)
     {
         var query = FilterData(filter);
-        return await query.ToArrayAsync();
+        try
+        {
+            return await query.ToArrayAsync(cancellationToken);
+        }
+        catch (Exception)
+        {
+            return Enumerable.Empty<TEntity>();
+        }
     }
 
-    public async Task<IEnumerable<TEntity>> GetAll()
+    public async Task<IEnumerable<TEntity>> GetAll(CancellationToken cancellationToken)
     {
-        return await FilterData(null).ToArrayAsync();
+        try
+        {
+            return await FilterData(null).ToArrayAsync(cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return Enumerable.Empty<TEntity>();
+        }
     }
 
     public virtual async Task AddAsync(TEntity entity)

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
+using Stroytorg.Application.Authentication.Queries.Login;
 using Stroytorg.Application.Extensions;
 using Stroytorg.Application.Facades;
 using Stroytorg.Application.Facades.Interfaces;
@@ -27,6 +28,7 @@ public static class ServiceExtensions
     {
         services
             .AddHttpContextAccessor()
+            .AddMediatR()
             .AddAutoMapper()
             .AddMicroservices()
             .AddFacades()
@@ -95,10 +97,7 @@ public static class ServiceExtensions
     private static IServiceCollection AddMicroservices(this IServiceCollection services)
     {
         services.TryAddScoped<IUserService, UserService>();
-        services.TryAddScoped<IAuthService, AuthService>();
         services.TryAddScoped<ITokenGeneratorService, TokenGeneratorService>();
-        services.TryAddScoped<ICategoryService, CategoryService>();
-        services.TryAddScoped<IMaterialService, MaterialService>();
         services.TryAddScoped<IOrderService, OrderService>();
 
         return services;
@@ -128,6 +127,15 @@ public static class ServiceExtensions
         services.TryAddScoped<IUnitOfWork, StroytorgDbContext>();
         services.AddSingleton<IDatabaseConnectionString, ConnectionStringConfig>();
         services.TryAddScoped<IStroytorgDbContext, StroytorgDbContext>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddMediatR(this IServiceCollection services)
+    {
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(
+            typeof(LoginQuery).Assembly
+            ));
 
         return services;
     }

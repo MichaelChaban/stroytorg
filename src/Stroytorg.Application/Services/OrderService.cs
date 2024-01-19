@@ -27,13 +27,13 @@ public class OrderService(
     private readonly IMaterialRepository materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
     private readonly IOrderServiceFacade orderServiceFacade = orderServiceFacade ?? throw new ArgumentNullException(nameof(orderServiceFacade));
 
-    public async Task<PagedData<Order>> GetPagedUserAsync(DataRangeRequest<OrderFilter> request)
+    public async Task<PagedData<Order>> GetPagedUserAsync(DataRangeRequest<OrderFilter> request, CancellationToken cancellationToken)
     {
         var specification = autoMapperTypeMapper.Map<OrderSpecification>(orderServiceFacade.GetPagedUserOrdersFilter(request!.Filter));
         var filter = specification?.SatisfiedBy();
 
-        var totalItems = await orderRepository.GetCountAsync(filter!);
-        var items = await orderRepository.GetPagedSortAsync<OrderSort>(request!.Offset, request.Limit, filter!, autoMapperTypeMapper.Map<DB.Sorting.Common.SortDefinition>(request.Sort));
+        var totalItems = await orderRepository.GetCountAsync(filter!, cancellationToken);
+        var items = await orderRepository.GetPagedSortAsync<OrderSort>(request!.Offset, request.Limit, filter!, autoMapperTypeMapper.Map<DB.Sorting.Common.SortDefinition>(request.Sort), cancellationToken);
 
         var mappedItems = autoMapperTypeMapper.Map<Order>(items);
         return new PagedData<Order>(
@@ -41,13 +41,13 @@ public class OrderService(
             Total: totalItems);
     }
 
-    public async Task<PagedData<Order>> GetPagedAsync(DataRangeRequest<OrderFilter> request)
+    public async Task<PagedData<Order>> GetPagedAsync(DataRangeRequest<OrderFilter> request, CancellationToken cancellationToken)
     {
         var specification = autoMapperTypeMapper.Map<OrderSpecification>(request?.Filter!);
         var filter = specification?.SatisfiedBy();
 
-        var totalItems = await orderRepository.GetCountAsync(filter!);
-        var items = await orderRepository.GetPagedSortAsync<OrderSort>(request!.Offset, request.Limit, filter!, autoMapperTypeMapper.Map<DB.Sorting.Common.SortDefinition>(request.Sort));
+        var totalItems = await orderRepository.GetCountAsync(filter!, cancellationToken);
+        var items = await orderRepository.GetPagedSortAsync<OrderSort>(request!.Offset, request.Limit, filter!, autoMapperTypeMapper.Map<DB.Sorting.Common.SortDefinition>(request.Sort), cancellationToken);
 
         var mappedItems = autoMapperTypeMapper.Map<Order>(items);
         return new PagedData<Order>(
@@ -55,9 +55,9 @@ public class OrderService(
             Total: totalItems);
     }
 
-    public async Task<BusinessResponse<OrderDetail>> GetByIdAsync(int orderId)
+    public async Task<BusinessResponse<OrderDetail>> GetByIdAsync(int orderId, CancellationToken cancellationToken)
     {
-        var order = await orderRepository.GetAsync(orderId);
+        var order = await orderRepository.GetAsync(orderId, cancellationToken);
         if (order is null)
         {
             return new BusinessResponse<OrderDetail>(
@@ -69,9 +69,9 @@ public class OrderService(
             Value: autoMapperTypeMapper.Map<OrderDetail>(order));
     }
 
-    public async Task<BusinessResponse<int>> CreateAsync(OrderCreate order)
+    public async Task<BusinessResponse<int>> CreateAsync(OrderCreate order, CancellationToken cancellationToken)
     {
-        var materials = await materialRepository.GetByIdsAsync(order.Materials.Select(x => x.MaterialId).ToArray());
+        var materials = await materialRepository.GetByIdsAsync(order.Materials.Select(x => x.MaterialId).ToArray(), cancellationToken);
         if (order.ValidateOrder(materials, out var businessResponse) is false)
         {
             return businessResponse!;
@@ -86,9 +86,9 @@ public class OrderService(
             Value: orderEntity!.Id);
     }
 
-    public async Task<BusinessResponse<int>> UpdateAsync(int orderId, OrderEdit order)
+    public async Task<BusinessResponse<int>> UpdateAsync(int orderId, OrderEdit order, CancellationToken cancellationToken)
     {
-        var orderEntity = await orderRepository.GetAsync(orderId);
+        var orderEntity = await orderRepository.GetAsync(orderId, cancellationToken);
         if (orderEntity is null)
         {
             return new BusinessResponse<int>(
@@ -115,7 +115,7 @@ public class OrderService(
             Value: orderEntity.Id);
     }
 
-    public async Task AssignOrderToUserAsync(User user)
+    public async Task AssignOrderToUserAsync(User user, CancellationToken cancellationToken)
     {
         var orders = await orderRepository.GetOrdersByEmailAsync(user.Email);
         foreach (var order in orders)

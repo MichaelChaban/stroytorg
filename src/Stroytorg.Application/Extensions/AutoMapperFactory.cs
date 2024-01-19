@@ -13,6 +13,7 @@ using Stroytorg.Application.Authentication.Commands.GoogleAuthentication;
 using Stroytorg.Application.Categories.Commands.UpdateCategory;
 using Stroytorg.Application.Materials.Commands.UpdateMaterial;
 using Stroytorg.Application.Materials.Commands.CreateMaterial;
+using Stroytorg.Application.Categories.Commands.CreateCategory;
 
 namespace Stroytorg.Application.Extensions;
 
@@ -85,6 +86,10 @@ public class AutoMapperFactory
             .ReverseMap();
 
         _ = config.CreateMap<DbData.Category, UpdateCategoryCommand>()
+            .ForCtorParam(nameof(UpdateCategoryCommand.CategoryId), opt => opt.MapFrom(src => src.Id))
+            .ReverseMap();
+
+        _ = config.CreateMap<DbData.Category, CreateCategoryCommand>()
             .ReverseMap();
     }
 
@@ -93,8 +98,14 @@ public class AutoMapperFactory
         _ = config.CreateMap<DbData.Material, Material>()
             .ReverseMap();
 
-        _ = config.CreateMap<UpdateMaterialCommand, DbData.Material>();
-        _ = config.CreateMap<CreateMaterialCommand, DbData.Material>();
+        _ = config.CreateMap<DbData.Material, MaterialEdit>()
+            .ReverseMap();
+
+        _ = config.CreateMap<DbData.Material, UpdateMaterialCommand>()
+            .ReverseMap();
+
+        _ = config.CreateMap<CreateMaterialCommand, DbData.Material>()
+            .ReverseMap();
     }
 
     private static void MapFilters(IMapperConfigurationExpression config)

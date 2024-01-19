@@ -45,7 +45,7 @@ public class MaterialController(ISender mediatR) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromBody] MaterialCreate material, CancellationToken cancellationToken)
+    public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromQuery] MaterialCreate material, CancellationToken cancellationToken)
     {
         var command = new CreateMaterialCommand(
             material.Name, material.Description, material.CategoryId,

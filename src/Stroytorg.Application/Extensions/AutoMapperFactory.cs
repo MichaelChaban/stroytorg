@@ -49,19 +49,19 @@ public class AutoMapperFactory
             .ReverseMap();
 
         _ = config.CreateMap<DbData.User, RegisterCommand>()
-                .ReverseMap();
+            .ReverseMap();
 
         _ = config.CreateMap<DbData.User, UserRegister>()
-        .ReverseMap();
+            .ReverseMap();
 
         _ = config.CreateMap<UserRegister, RegisterCommand>()
             .ReverseMap();
 
         _ = config.CreateMap<DbData.User, GoogleAuthCommand>()
-                .ReverseMap();
+            .ReverseMap();
 
         _ = config.CreateMap<DbData.User, UserGoogleAuth>()
-        .ReverseMap();
+            .ReverseMap();
     }
 
     private static void MapOrder(IMapperConfigurationExpression config)
@@ -81,7 +81,11 @@ public class AutoMapperFactory
         _ = config.CreateMap<DbData.Category, Category>()
             .ReverseMap();
 
-        _ = config.CreateMap<UpdateCategoryCommand, DbData.Category>();
+        _ = config.CreateMap<DbData.Category, CategoryEdit>()
+            .ReverseMap();
+
+        _ = config.CreateMap<DbData.Category, UpdateCategoryCommand>()
+            .ReverseMap();
     }
 
     private static void MapMaterial(IMapperConfigurationExpression config)

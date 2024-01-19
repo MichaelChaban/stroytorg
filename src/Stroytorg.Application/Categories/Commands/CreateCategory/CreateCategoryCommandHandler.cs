@@ -17,6 +17,7 @@ public class CreateCategoryCommandHandler(
     public async Task<BusinessResponse<int>> Handle(CreateCategoryCommand command, CancellationToken cancellationToken)
     {
         var categoryEntity = await categoryRepository.GetByNameAsync(command.Name, cancellationToken);
+        await Task.Delay(5000);
         if (categoryEntity is not null || cancellationToken.IsCancellationRequested)
         {
             return new BusinessResponse<int>(

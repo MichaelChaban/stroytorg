@@ -11,36 +11,32 @@ using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Material;
 using Stroytorg.Contracts.RequestModels;
 using Stroytorg.Contracts.ResponseModels;
+using System.Threading;
 
 namespace Stroytorg.Host.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class MaterialController : ControllerBase
+public class MaterialController(ISender mediatR) : ControllerBase
 {
-    private readonly ISender mediatR;
-
-    public MaterialController(ISender mediatR)
-    {
-        this.mediatR = mediatR ?? throw new ArgumentNullException(nameof(mediatR));
-    }
+    private readonly ISender mediatR = mediatR ?? throw new ArgumentNullException(nameof(mediatR));
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PagedData<Material>>> GetPagedAsync([FromQuery] DataRangeRequest<MaterialFilter> request)
+    public async Task<ActionResult<PagedData<Material>>> GetPagedAsync([FromQuery] DataRangeRequest<MaterialFilter> request, CancellationToken cancellationToken)
     {
         var query = new GetPagedMaterialQuery<MaterialFilter>(request!.Filter, request!.Sort, request.Offset, request.Limit);
-        return await mediatR.Send(query);
+        return await mediatR.Send(query, cancellationToken);
     }
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Material>> GetByIdAsync(int id)
+    public async Task<ActionResult<Material>> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         var query = new GetMaterialQuery(id);
-        var result = await mediatR.Send(query);
+        var result = await mediatR.Send(query, cancellationToken);
         return result.IsSuccess ? result.Value : NotFound();
     }
 
@@ -49,7 +45,7 @@ public class MaterialController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromBody] MaterialCreate material)
+    public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromBody] MaterialCreate material, CancellationToken cancellationToken)
     {
         var command = new CreateMaterialCommand(
             material.Name, material.Description, material.CategoryId,
@@ -57,7 +53,7 @@ public class MaterialController : ControllerBase
             material.Width, material.Length, material.Weight
             );
 
-        return await mediatR.Send(command);
+        return await mediatR.Send(command, cancellationToken);
     }
 
     [HttpPut("{id}")]
@@ -66,7 +62,7 @@ public class MaterialController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<int>> UpdateAsync(int id, [FromBody] MaterialEdit material)
+    public async Task<ActionResult<int>> UpdateAsync(int id, [FromBody] MaterialEdit material, CancellationToken cancellationToken)
     {
         var command = new UpdateMaterialCommand(
             id, material.Name, material.Description,
@@ -75,7 +71,7 @@ public class MaterialController : ControllerBase
             material.Weight, material.IsFavorite
             );
 
-        var result = await mediatR.Send(command);
+        var result = await mediatR.Send(command, cancellationToken);
 
         return result.IsSuccess ? result.Value : NotFound();
     }
@@ -85,10 +81,10 @@ public class MaterialController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<int>> RemoveAsync(int id)
+    public async Task<ActionResult<int>> RemoveAsync(int id, CancellationToken cancellationToken)
     {
         var command = new DeleteMaterialCommand(id);
-        var result = await mediatR.Send(command);
+        var result = await mediatR.Send(command, cancellationToken);
         return result.IsSuccess ? result.Value : NotFound();
     }
 }

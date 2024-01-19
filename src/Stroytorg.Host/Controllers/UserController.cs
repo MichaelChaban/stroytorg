@@ -10,14 +10,9 @@ namespace Stroytorg.Host.Controllers;
 [Route("api/[controller]")]
 [Authorize]
 [ApiController]
-public class UserController : ControllerBase
+public class UserController(IUserService userService) : ControllerBase
 {
-    private readonly IUserService userService;
-
-    public UserController(IUserService userService)
-    {
-        this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
-    }
+    private readonly IUserService userService = userService ?? throw new ArgumentNullException(nameof(userService));
 
     [HttpGet("{id:int}")]
     [Authorize(Roles = UserRole.Admin)]
@@ -25,10 +20,10 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BusinessResponse<User>>> GetByIdAsync(int id)
+    public async Task<ActionResult<BusinessResponse<User>>> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
-        var result = await userService.GetByIdAsync(id);
+        var result = await userService.GetByIdAsync(id, cancellationToken);
 
-        return result.IsSuccess ? result : NotFound();
+        return result.IsSuccess ? result : NotFound(result);
     }
 }

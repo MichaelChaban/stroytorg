@@ -12,18 +12,12 @@ using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 
 namespace Stroytorg.Application.Services;
 
-public class CategoryService : ICategoryService
+public class CategoryService(
+    IAutoMapperTypeMapper autoMapperTypeMapper,
+    ICategoryRepository categoryRepository) : ICategoryService
 {
-    private readonly IAutoMapperTypeMapper autoMapperTypeMapper;
-    private readonly ICategoryRepository categoryRepository;
-
-    public CategoryService(
-        IAutoMapperTypeMapper autoMapperTypeMapper,
-        ICategoryRepository categoryRepository)
-    {
-        this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
-        this.categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
-    }
+    private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
+    private readonly ICategoryRepository categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
 
     public async Task<PagedData<Category>> GetPagedAsync(DataRangeRequest<CategoryFilter> request)
     {
@@ -39,18 +33,18 @@ public class CategoryService : ICategoryService
             Total: totalItems);
     }
 
-    public async Task<BusinessResponse<Category>> GetByIdAsync(int categoryId)
+    public async Task<BusinessResponse<CategoryDetail>> GetByIdAsync(int categoryId)
     {
         var category = await categoryRepository.GetAsync(categoryId);
-        if(category is null)
+        if (category is null)
         {
-            return new BusinessResponse<Category>(
+            return new BusinessResponse<CategoryDetail>(
                 IsSuccess: false,
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        return new BusinessResponse<Category>(
-            Value: autoMapperTypeMapper.Map<Category>(category));
+        return new BusinessResponse<CategoryDetail>(
+            Value: autoMapperTypeMapper.Map<CategoryDetail>(category));
     }
 
     public async Task<BusinessResponse<int>> CreateAsync(CategoryEdit category)
@@ -66,7 +60,7 @@ public class CategoryService : ICategoryService
         categoryEntity = autoMapperTypeMapper.Map(category, categoryEntity);
 
         await categoryRepository.AddAsync(categoryEntity!);
-        await categoryRepository.UnitOfWork.Commit();
+        await categoryRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
             Value: categoryEntity!.Id);
@@ -85,7 +79,7 @@ public class CategoryService : ICategoryService
         categoryEntity = autoMapperTypeMapper.Map(category, categoryEntity);
 
         categoryRepository.Update(categoryEntity);
-        await categoryRepository.UnitOfWork.Commit();
+        await categoryRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
             Value: categoryEntity.Id);
@@ -101,7 +95,7 @@ public class CategoryService : ICategoryService
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        if (categoryEntity.Materials?.Count > 0)
+        if (categoryEntity.Materials?.Count() > 0)
         {
             return new BusinessResponse<int>(
                 IsSuccess: false,
@@ -109,7 +103,7 @@ public class CategoryService : ICategoryService
         }
 
         categoryRepository.Remove(categoryEntity);
-        await categoryRepository.UnitOfWork.Commit();
+        await categoryRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
             Value: categoryEntity.Id);

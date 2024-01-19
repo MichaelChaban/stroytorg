@@ -9,7 +9,7 @@ public interface ICategoryService
 {
     Task<PagedData<Category>> GetPagedAsync(DataRangeRequest<CategoryFilter> request);
 
-    Task<BusinessResponse<Category>> GetByIdAsync(int categoryId);
+    Task<BusinessResponse<CategoryDetail>> GetByIdAsync(int categoryId);
 
     Task<BusinessResponse<int>> CreateAsync(CategoryEdit category);
 

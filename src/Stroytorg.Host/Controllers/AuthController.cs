@@ -7,14 +7,9 @@ namespace Stroytorg.Host.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthController : ControllerBase
+public class AuthController(IAuthService authService) : ControllerBase
 {
-    private readonly IAuthService authService;
-
-    public AuthController(IAuthService authService)
-    {
-        this.authService = authService ?? throw new ArgumentNullException(nameof(authService));
-    }
+    private readonly IAuthService authService = authService ?? throw new ArgumentNullException(nameof(authService));
 
     [HttpPost("Register")]
     [ProducesResponseType(StatusCodes.Status200OK)]

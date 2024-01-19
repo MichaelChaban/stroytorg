@@ -15,14 +15,14 @@ public class CategorySpecification : BaseSpecification, ISpecification<Category>
     {
         Specification<Category> specification = new TrueSpecification<Category>();
 
+        if (Id != 0)
+        {
+            specification &= new DirectSpecification<Category>(x => x.Id == Id);
+        }
+
         if (IsActive.HasValue)
         {
             specification &= new DirectSpecification<Category>(x => x.IsActive == IsActive.Value);
-        }
-
-        if (Id != 0)
-        {
-            specification &= new DirectSpecification<Category>(x => x.Id == this.Id);
         }
 
         if (!string.IsNullOrEmpty(Name))

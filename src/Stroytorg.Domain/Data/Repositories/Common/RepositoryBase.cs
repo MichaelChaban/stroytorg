@@ -6,15 +6,15 @@ using Stroytorg.Domain.Sorting.Common;
 using Stroytorg.Infrastructure.Store;
 using System.Linq.Expressions;
 
-namespace Stroytorg.Domain.Data.Repositories;
+namespace Stroytorg.Domain.Data.Repositories.Common;
 
 public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
 {
     protected RepositoryBase(IUnitOfWork unitOfWork, IUserContext httpUserContext)
     {
-        this.UnitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-        this.HttpUserContext = httpUserContext ?? throw new ArgumentNullException(nameof(httpUserContext));
+        UnitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        HttpUserContext = httpUserContext ?? throw new ArgumentNullException(nameof(httpUserContext));
     }
 
     public StroytorgDbContext StroytorgContext => (StroytorgDbContext)UnitOfWork;
@@ -54,7 +54,7 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         var entitySort = Activator.CreateInstance(typeof(TSort), sortField, sortByAsc) as TSort;
         query = entitySort!.ApplySort(query);
 
-        return await query.Skip(offset).Take(limit).ToArrayAsync();
+        return await query.Skip(offset).Take(limit).ToListAsync();
     }
 
     public async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> filter)

@@ -12,21 +12,14 @@ using Stroytorg.Contracts.Models.Material;
 
 namespace Stroytorg.Application.Services;
 
-public class MaterialService : IMaterialService
+public class MaterialService(
+    IAutoMapperTypeMapper autoMapperTypeMapper,
+    IMaterialRepository materialRepository,
+    ICategoryRepository categoryRepository) : IMaterialService
 {
-    private readonly IAutoMapperTypeMapper autoMapperTypeMapper;
-    private readonly IMaterialRepository materialRepository;
-    private readonly ICategoryRepository categoryRepository;
-
-    public MaterialService(
-        IAutoMapperTypeMapper autoMapperTypeMapper,
-        IMaterialRepository materialRepository,
-        ICategoryRepository categoryRepository)
-    {
-        this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
-        this.materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
-        this.categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
-    }
+    private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
+    private readonly IMaterialRepository materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
+    private readonly ICategoryRepository categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
 
     public async Task<PagedData<Material>> GetPagedAsync(DataRangeRequest<MaterialFilter> request)
     {
@@ -42,18 +35,18 @@ public class MaterialService : IMaterialService
             Total: totalItems);
     }
 
-    public async Task<BusinessResponse<Material>> GetByIdAsync(int materialId)
+    public async Task<BusinessResponse<MaterialDetail>> GetByIdAsync(int materialId)
     {
         var material = await materialRepository.GetAsync(materialId);
         if (material is null)
         {
-            return new BusinessResponse<Material>(
+            return new BusinessResponse<MaterialDetail>(
                 IsSuccess: false,
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        return new BusinessResponse<Material>(
-            Value: autoMapperTypeMapper.Map<Material>(material));
+        return new BusinessResponse<MaterialDetail>(
+            Value: autoMapperTypeMapper.Map<MaterialDetail>(material));
     }
 
     public async Task<BusinessResponse<int>> CreateAsync(MaterialCreate material)
@@ -77,7 +70,7 @@ public class MaterialService : IMaterialService
         materialEntity = autoMapperTypeMapper.Map(material, materialEntity);
 
         await materialRepository.AddAsync(materialEntity!);
-        await materialRepository.UnitOfWork.Commit();
+        await materialRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
             Value: materialEntity!.Id);
@@ -104,7 +97,7 @@ public class MaterialService : IMaterialService
         materialEntity = autoMapperTypeMapper.Map(material, materialEntity);
 
         materialRepository.Update(materialEntity);
-        await materialRepository.UnitOfWork.Commit();
+        await materialRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
             Value: materialEntity.Id);
@@ -121,7 +114,7 @@ public class MaterialService : IMaterialService
         }
 
         materialRepository.Deactivate(materialEntity);
-        await materialRepository.UnitOfWork.Commit();
+        await materialRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
             Value: materialEntity.Id);

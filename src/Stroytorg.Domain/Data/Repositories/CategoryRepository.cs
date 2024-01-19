@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Stroytorg.Domain.Data.Entities;
 using Stroytorg.Domain.Data.Entities.Common;
+using Stroytorg.Domain.Data.Repositories.Common;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 
 namespace Stroytorg.Domain.Data.Repositories;
@@ -14,7 +15,9 @@ public class CategoryRepository : RepositoryBase<Category, int>, ICategoryReposi
 
     protected override IQueryable<Category> GetQueryable()
     {
-        return GetDbSet().Include(x => x.Materials).AsQueryable();
+        return GetDbSet()
+                .Include(x => x.Materials)
+                .AsQueryable();
     }
 
     public async Task<Category?> GetByNameAsync(string name)

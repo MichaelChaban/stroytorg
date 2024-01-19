@@ -12,7 +12,7 @@ using Stroytorg.Domain.Data.Entities;
 namespace Stroytorg.Domain.Migrations
 {
     [DbContext(typeof(StroytorgDbContext))]
-    [Migration("20240112015219_InitialCreate")]
+    [Migration("20240119035010_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -98,8 +98,8 @@ namespace Stroytorg.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<double?>("Height")
-                        .HasColumnType("double precision");
+                    b.Property<decimal?>("Height")
+                        .HasColumnType("numeric");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -107,19 +107,19 @@ namespace Stroytorg.Domain.Migrations
                     b.Property<bool>("IsFavorite")
                         .HasColumnType("boolean");
 
-                    b.Property<double?>("Length")
-                        .HasColumnType("double precision");
+                    b.Property<decimal?>("Length")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("double precision");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
-                    b.Property<double>("StockAmount")
-                        .HasColumnType("double precision");
+                    b.Property<decimal>("StockAmount")
+                        .HasColumnType("numeric");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -128,11 +128,11 @@ namespace Stroytorg.Domain.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<double?>("Weight")
-                        .HasColumnType("double precision");
+                    b.Property<decimal?>("Weight")
+                        .HasColumnType("numeric");
 
-                    b.Property<double?>("Width")
-                        .HasColumnType("double precision");
+                    b.Property<decimal?>("Width")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
@@ -182,9 +182,6 @@ namespace Stroytorg.Domain.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<int>("MaterialsAmount")
-                        .HasColumnType("integer");
-
                     b.Property<int>("OrderStatus")
                         .HasColumnType("integer");
 
@@ -203,8 +200,8 @@ namespace Stroytorg.Domain.Migrations
                     b.Property<int>("ShippingType")
                         .HasColumnType("integer");
 
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("double precision");
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -240,14 +237,14 @@ namespace Stroytorg.Domain.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("integer");
 
-                    b.Property<double?>("TotalMaterialAmount")
-                        .HasColumnType("double precision");
+                    b.Property<decimal>("TotalMaterialAmount")
+                        .HasColumnType("numeric");
 
-                    b.Property<double?>("TotalMaterialWeight")
-                        .HasColumnType("double precision");
+                    b.Property<decimal?>("TotalMaterialWeight")
+                        .HasColumnType("numeric");
 
-                    b.Property<double?>("UnitPrice")
-                        .HasColumnType("double precision");
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 

@@ -13,31 +13,31 @@ public class MaterialSpecification : BaseSpecification, ISpecification<Material>
 
     public int? CategoryId { get; set; }
 
-    public double? MinPrice { get; set; }
+    public decimal? MinPrice { get; set; }
 
-    public double? MaxPrice { get; set; }
+    public decimal? MaxPrice { get; set; }
 
-    public double? MinStockAmount { get; set; }
+    public decimal? MinStockAmount { get; set; }
 
-    public double? MaxStockAmount { get; set; }
+    public decimal? MaxStockAmount { get; set; }
 
     public bool? IsFavorite { get; set; }
 
-    public double? MinHeight { get; set; }
+    public decimal? MinHeight { get; set; }
 
-    public double? MaxHeight { get; set; }
+    public decimal? MaxHeight { get; set; }
 
-    public double? MinWidth { get; set; }
+    public decimal? MinWidth { get; set; }
 
-    public double? MaxWidth { get; set; }
+    public decimal? MaxWidth { get; set; }
 
-    public double? MinLength { get; set; }
+    public decimal? MinLength { get; set; }
 
-    public double? MaxLength { get; set; }
+    public decimal? MaxLength { get; set; }
 
-    public double? MinWeight { get; set; }
+    public decimal? MinWeight { get; set; }
 
-    public double? MaxWeight { get; set; }
+    public decimal? MaxWeight { get; set; }
 
     public Expression<Func<Material, bool>> SatisfiedBy()
     {

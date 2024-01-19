@@ -2,7 +2,7 @@
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using System.Security.Principal;
 
-namespace Stroytorg.Domain.Data.Repositories;
+namespace Stroytorg.Domain.Data.Repositories.Common;
 
 public class UserContext : IUserContext
 {
@@ -17,15 +17,15 @@ public class UserContext : IUserContext
     {
         get
         {
-            return this.contextAccessor.HttpContext?.User!;
+            return contextAccessor.HttpContext?.User!;
         }
     }
 
     public string? GetToken()
     {
-        if (this.contextAccessor.HttpContext.Request.Headers.ContainsKey("Authorization"))
+        if (contextAccessor.HttpContext.Request.Headers.ContainsKey("Authorization"))
         {
-            var authHeader = this.contextAccessor.HttpContext.Request.Headers["Authorization"];
+            var authHeader = contextAccessor.HttpContext.Request.Headers["Authorization"];
             string val = authHeader.First()!;
 
             if (val == null)

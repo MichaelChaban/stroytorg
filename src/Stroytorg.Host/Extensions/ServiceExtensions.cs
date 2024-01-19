@@ -5,11 +5,14 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Stroytorg.Application.Authentication.Queries.Login;
 using Stroytorg.Application.Extensions;
+using Stroytorg.Application.Facades;
+using Stroytorg.Application.Facades.Interfaces;
 using Stroytorg.Application.Services;
 using Stroytorg.Application.Services.Interfaces;
 using Stroytorg.Domain.Data.Entities;
 using Stroytorg.Domain.Data.Entities.Common;
 using Stroytorg.Domain.Data.Repositories;
+using Stroytorg.Domain.Data.Repositories.Common;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 using Stroytorg.Infrastructure.Configuration;
@@ -28,8 +31,9 @@ public static class ServiceExtensions
             .AddMediatR()
             .AddAutoMapper()
             .AddMicroservices()
-            .AddDb()
-            .AddRepositories();
+            .AddFacades()
+            .AddRepositories()
+            .AddDb();
     }
 
     public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
@@ -80,10 +84,40 @@ public static class ServiceExtensions
         scope.ServiceProvider.GetRequiredService<IStroytorgDbContext>().Migrate();
     }
 
+    private static IServiceCollection AddAutoMapper(this IServiceCollection services)
+    {
+        services.AddResponseCaching();
+        IMapper mapper = AutoMapperFactory.CreateMapper();
+        services.TryAddSingleton(mapper);
+        services.TryAddScoped<IAutoMapperTypeMapper, AutoMapperTypeMapper>();
+
+        return services;
+    }
+
     private static IServiceCollection AddMicroservices(this IServiceCollection services)
     {
         services.TryAddScoped<IUserService, UserService>();
         services.TryAddScoped<ITokenGeneratorService, TokenGeneratorService>();
+        services.TryAddScoped<IOrderService, OrderService>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddFacades(this IServiceCollection services)
+    {
+        services.TryAddScoped<IOrderServiceFacade, OrderServiceFacade>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.TryAddScoped<IUserContext, UserContext>();
+        services.TryAddScoped<IUserRepository, UserRepository>();
+        services.TryAddScoped<ICategoryRepository, CategoryRepository>();
+        services.TryAddScoped<IMaterialRepository, MaterialRepository>();
+        services.TryAddScoped<IOrderRepository, OrderRepository>();
+        services.TryAddScoped<IOrderMaterialMapRepository, OrderMaterialMapRepository>();
 
         return services;
     }
@@ -102,26 +136,6 @@ public static class ServiceExtensions
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(
             typeof(LoginQuery).Assembly
             ));
-
-        return services;
-    }
-
-    private static IServiceCollection AddRepositories(this IServiceCollection services)
-    {
-        services.TryAddScoped<IUserContext, UserContext>();
-        services.TryAddScoped<IUserRepository, UserRepository>();
-        services.TryAddScoped<ICategoryRepository, CategoryRepository>();
-        services.TryAddScoped<IMaterialRepository, MaterialRepository>();
-
-        return services;
-    }
-
-    private static IServiceCollection AddAutoMapper(this IServiceCollection services)
-    {
-        services.AddResponseCaching();
-        IMapper mapper = AutoMapperFactory.CreateMapper();
-        services.TryAddSingleton(mapper);
-        services.TryAddScoped<IAutoMapperTypeMapper, AutoMapperTypeMapper>();
 
         return services;
     }

@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Stroytorg.Application.Constants;
 using Stroytorg.Contracts.ResponseModels;
-using Stroytorg.Domain.Data.Repositories;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 
@@ -10,8 +9,7 @@ namespace Stroytorg.Application.Materials.Commands.UpdateMaterial;
 public class UpdateCategoryCommandHandler(
     IAutoMapperTypeMapper autoMapperTypeMapper,
     IMaterialRepository materialRepository,
-    ICategoryRepository categoryRepository
-    ) :
+    ICategoryRepository categoryRepository) :
     IRequestHandler<UpdateMaterialCommand, BusinessResponse<int>>
 {
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
@@ -26,8 +24,7 @@ public class UpdateCategoryCommandHandler(
             return new BusinessResponse<int>(
                 IsSuccess: false,
                 BusinessErrorMessage: cancellationToken.IsCancellationRequested ?
-                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity
-                );
+                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity);
         }
 
         var category = await categoryRepository.GetAsync(command.CategoryId, cancellationToken);
@@ -36,17 +33,15 @@ public class UpdateCategoryCommandHandler(
             return new BusinessResponse<int>(
                 IsSuccess: false,
                 BusinessErrorMessage: cancellationToken.IsCancellationRequested ?
-                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity
-                );
+                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity);
         }
 
         materialEntity = autoMapperTypeMapper.Map(command, materialEntity);
 
         materialRepository.Update(materialEntity);
-        await materialRepository.UnitOfWork.Commit(cancellationToken);
+        await materialRepository.UnitOfWork.CommitAsync(cancellationToken);
 
         return new BusinessResponse<int>(
-            Value: materialEntity.Id
-            );
+            Value: materialEntity.Id);
     }
 }

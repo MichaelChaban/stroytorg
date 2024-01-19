@@ -7,15 +7,15 @@ using Stroytorg.Infrastructure.Store;
 using System.Linq.Expressions;
 using System.Threading;
 
-namespace Stroytorg.Domain.Data.Repositories;
+namespace Stroytorg.Domain.Data.Repositories.Common;
 
 public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
 {
     protected RepositoryBase(IUnitOfWork unitOfWork, IUserContext httpUserContext)
     {
-        this.UnitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-        this.HttpUserContext = httpUserContext ?? throw new ArgumentNullException(nameof(httpUserContext));
+        UnitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        HttpUserContext = httpUserContext ?? throw new ArgumentNullException(nameof(httpUserContext));
     }
 
     public StroytorgDbContext StroytorgContext => (StroytorgDbContext)UnitOfWork;
@@ -68,15 +68,15 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
     public async Task<IEnumerable<TEntity>> GetPagedSortAsync<TSort>(int offset, int limit, Expression<Func<TEntity, bool>> filter, SortDefinition sort, CancellationToken cancellationToken)
         where TSort : BaseSort<TEntity>
     {
-        var query = FilterData(filter);
-
-        var sortField = sort?.Field?.ToLower();
-        var sortByAsc = sort?.Direction == null || sort.Direction == SortDirection.Ascending;
-        var entitySort = Activator.CreateInstance(typeof(TSort), sortField, sortByAsc) as TSort;
-        query = entitySort!.ApplySort(query);
-
         try
         {
+            var query = FilterData(filter);
+
+            var sortField = sort?.Field?.ToLower();
+            var sortByAsc = sort?.Direction == null || sort.Direction == SortDirection.Ascending;
+            var entitySort = Activator.CreateInstance(typeof(TSort), sortField, sortByAsc) as TSort;
+            query = entitySort!.ApplySort(query);
+
             return await query.Skip(offset).Take(limit).ToArrayAsync(cancellationToken);
         }
         catch (OperationCanceledException)

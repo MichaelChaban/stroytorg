@@ -19,23 +19,20 @@ public class DeleteCategoryCommandHandler(
             return new BusinessResponse<int>(
                 IsSuccess: false,
                 BusinessErrorMessage: cancellationToken.IsCancellationRequested ?
-                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity
-                );
+                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity);
         }
 
         if (categoryEntity.Materials?.Count > 0)
         {
             return new BusinessResponse<int>(
                 IsSuccess: false,
-                BusinessErrorMessage: BusinessErrorMessage.UnableToDeleteEntity
-                );
+                BusinessErrorMessage: BusinessErrorMessage.UnableToDeleteEntity);
         }
 
         categoryRepository.Remove(categoryEntity);
-        await categoryRepository.UnitOfWork.Commit();
+        await categoryRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
-            Value: categoryEntity.Id
-            );
+            Value: categoryEntity.Id);
     }
 }

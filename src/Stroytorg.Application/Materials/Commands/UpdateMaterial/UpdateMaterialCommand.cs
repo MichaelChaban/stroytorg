@@ -8,11 +8,11 @@ public record UpdateMaterialCommand(
     string Name,
     string Description,
     int CategoryId,
-    double Price,
-    double StockAmount,
-    double? Height,
-    double? Width,
-    double? Length,
-    double? Weight,
+    decimal Price,
+    decimal StockAmount,
+    decimal? Height,
+    decimal? Width,
+    decimal? Length,
+    decimal? Weight,
     bool? IsFavorite
     ) : IRequest<BusinessResponse<int>>;

@@ -6,4 +6,4 @@ namespace Stroytorg.Application.Materials.Queries.GetMaterial;
 
 public record GetMaterialQuery(
         int MaterialId
-    ) : IRequest<BusinessResponse<Material>>;
+    ) : IRequest<BusinessResponse<MaterialDetail>>;

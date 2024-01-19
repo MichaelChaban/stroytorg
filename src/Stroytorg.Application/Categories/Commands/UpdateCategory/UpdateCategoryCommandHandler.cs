@@ -20,19 +20,17 @@ public class UpdateCategoryCommandHandler(
         if (categoryEntity is null)
         {
             return new BusinessResponse<int>(
-            IsSuccess: false,
+                IsSuccess: false,
                 BusinessErrorMessage: cancellationToken.IsCancellationRequested ?
-                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity
-                );
+                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity);
         }
 
         categoryEntity = autoMapperTypeMapper.Map(command, categoryEntity);
 
         categoryRepository.Update(categoryEntity);
-        await categoryRepository.UnitOfWork.Commit();
+        await categoryRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
-            Value: categoryEntity.Id
-            );
+            Value: categoryEntity.Id);
     }
 }

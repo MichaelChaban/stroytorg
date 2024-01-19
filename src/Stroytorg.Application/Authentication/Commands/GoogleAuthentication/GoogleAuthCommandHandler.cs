@@ -8,22 +8,17 @@ using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 
 namespace Stroytorg.Application.Authentication.Commands.GoogleAuthentication;
 
-public class GoogleAuthCommandHandler :
+public class GoogleAuthCommandHandler(
+    IUserService userService,
+    ITokenGeneratorService tokenGeneratorService,
+    IAutoMapperTypeMapper autoMapperTypeMapper,
+    IOrderService orderService) :
     IRequestHandler<GoogleAuthCommand, AuthResponse>
 {
-    private readonly IUserService userService;
-    private readonly ITokenGeneratorService tokenGeneratorService;
-    private readonly IAutoMapperTypeMapper autoMapperTypeMapper;
-
-    public GoogleAuthCommandHandler(
-        IUserService userService,
-        ITokenGeneratorService tokenGeneratorService,
-        IAutoMapperTypeMapper autoMapperTypeMapper)
-    {
-        this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
-        this.tokenGeneratorService = tokenGeneratorService ?? throw new ArgumentNullException(nameof(tokenGeneratorService));
-        this.autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
-    }
+    private readonly IUserService userService = userService ?? throw new ArgumentNullException(nameof(userService));
+    private readonly ITokenGeneratorService tokenGeneratorService = tokenGeneratorService ?? throw new ArgumentNullException(nameof(tokenGeneratorService));
+    private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
+    private readonly IOrderService orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
 
     public async Task<AuthResponse> Handle(GoogleAuthCommand command, CancellationToken cancellationToken)
     {
@@ -35,27 +30,29 @@ public class GoogleAuthCommandHandler :
         }
 
         var contractUserResponse = await userService.GetByEmailAsync(command.Email);
-        if (contractUserResponse.Value is not null && 
-            !contractUserResponse.Value.AuthenticationType.ValidateUserAuthType(AuthenticationType.Google, out var businessError))
+        if (contractUserResponse.Value is not null)
         {
-            return new AuthResponse(AuthErrorMessage: businessError!.BusinessErrorMessage);
-        }
-
-        if (contractUserResponse.Value is null)
-        {
-            var createdUserResponse = await userService.CreateWithGoogleAsync(user);
-            if (!createdUserResponse.IsSuccess)
+            if (contractUserResponse.Value.AuthenticationType.ValidateUserAuthType(AuthenticationType.Google, out var businessError) is false)
             {
-                return new AuthResponse(AuthErrorMessage: createdUserResponse.BusinessErrorMessage);
+                return new AuthResponse(AuthErrorMessage: businessError!.BusinessErrorMessage);
             }
 
+            await orderService.AssignOrderToUserAsync(contractUserResponse.Value, cancellationToken);
             return new AuthResponse(
                 IsLoggedIn: true,
-                JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(createdUserResponse.Value)));
+                JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(contractUserResponse.Value)));
         }
+
+        var createdUserResponse = await userService.CreateWithGoogleAsync(user);
+        if (!createdUserResponse.IsSuccess)
+        {
+            return new AuthResponse(AuthErrorMessage: createdUserResponse.BusinessErrorMessage);
+        }
+
+        await orderService.AssignOrderToUserAsync(createdUserResponse.Value, cancellationToken);
 
         return new AuthResponse(
             IsLoggedIn: true,
-            JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(contractUserResponse.Value)));
+            JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(createdUserResponse.Value)));
     }
 }

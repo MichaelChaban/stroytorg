@@ -22,7 +22,7 @@ public class DeleteMaterialCommandHandler(
         }
 
         materialRepository.Deactivate(materialEntity);
-        await materialRepository.UnitOfWork.Commit(cancellationToken);
+        await materialRepository.UnitOfWork.CommitAsync(cancellationToken);
 
         return new BusinessResponse<int>(
             Value: materialEntity.Id);

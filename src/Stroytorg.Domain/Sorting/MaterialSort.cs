@@ -24,9 +24,9 @@ public class MaterialSort : BaseSort<DB.Material>
         "length" => x => x.Length.HasValue ? x.Length.Value : x.Length.HasValue,
         "width" => x => x.Width.HasValue ? x.Width.Value : x.Width.HasValue,
         "height" => x => x.Height.HasValue ? x.Height.Value : x.Height.HasValue,
-        "createdDate" => x => x.CreatedAt,
-        "updatedDate" => x => x.UpdatedAt.HasValue ? x.UpdatedAt.Value : x.UpdatedAt.HasValue,
-        "deactivatedDate" => x => x.DeactivatedAt.HasValue ? x.DeactivatedAt.Value : x.DeactivatedAt.HasValue,
+        "createddate" => x => x.CreatedAt,
+        "updateddate" => x => x.UpdatedAt.HasValue ? x.UpdatedAt.Value : x.UpdatedAt.HasValue,
+        "deactivateddate" => x => x.DeactivatedAt.HasValue ? x.DeactivatedAt.Value : x.DeactivatedAt.HasValue,
         _ => DefaultSort,
     };
 }

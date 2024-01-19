@@ -34,7 +34,7 @@ public class CategoryController(ISender mediatR) : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Category>> GetByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<CategoryDetail>> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         var query = new GetCategoryQuery(id);
         var result = await mediatR.Send(query, cancellationToken);
@@ -45,6 +45,7 @@ public class CategoryController(ISender mediatR) : ControllerBase
     [HttpPost]
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromQuery] CategoryEdit category, CancellationToken cancellationToken)
@@ -59,6 +60,7 @@ public class CategoryController(ISender mediatR) : ControllerBase
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<int>> UpdateAsync(int id, [FromBody]CategoryEdit category, CancellationToken cancellationToken)
@@ -72,6 +74,7 @@ public class CategoryController(ISender mediatR) : ControllerBase
     [HttpDelete("{id}")]
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<int>> RemoveAsync(int id, CancellationToken cancellationToken)

@@ -10,5 +10,4 @@ public record UserLogin(
     string Email,
 
     [Required]
-    [Password(ErrorMessage = "Password didn't pass the needed requirements.")]
     string Password);

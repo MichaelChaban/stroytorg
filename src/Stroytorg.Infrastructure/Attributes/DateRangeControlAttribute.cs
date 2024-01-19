@@ -2,7 +2,7 @@
 
 namespace Stroytorg.Infrastructure.Attributes;
 
-[AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
 public class DateRangeControlAttribute : ValidationAttribute
 {
     public int YearsRange { get; }

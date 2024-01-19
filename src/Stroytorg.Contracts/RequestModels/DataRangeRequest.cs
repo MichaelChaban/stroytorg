@@ -10,5 +10,5 @@ public record DataRangeRequest<TFilter>(
     [Range(0, 500)]
     int Offset = 0,
 
-    [Range(0, int.MaxValue)]
+    [Range(0, 100000)]
     int Limit = 50);

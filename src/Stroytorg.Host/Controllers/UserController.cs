@@ -8,7 +8,6 @@ using Stroytorg.Contracts.ResponseModels;
 namespace Stroytorg.Host.Controllers;
 
 [Route("api/[controller]")]
-[Authorize]
 [ApiController]
 public class UserController(IUserService userService) : ControllerBase
 {
@@ -20,7 +19,7 @@ public class UserController(IUserService userService) : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BusinessResponse<User>>> GetByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<BusinessResponse<UserDetail>>> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         var result = await userService.GetByIdAsync(id, cancellationToken);
 

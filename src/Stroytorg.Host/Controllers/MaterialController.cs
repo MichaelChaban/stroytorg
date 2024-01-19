@@ -11,7 +11,6 @@ using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Material;
 using Stroytorg.Contracts.RequestModels;
 using Stroytorg.Contracts.ResponseModels;
-using System.Threading;
 
 namespace Stroytorg.Host.Controllers;
 
@@ -33,7 +32,7 @@ public class MaterialController(ISender mediatR) : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<Material>> GetByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<MaterialDetail>> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         var query = new GetMaterialQuery(id);
         var result = await mediatR.Send(query, cancellationToken);
@@ -44,14 +43,14 @@ public class MaterialController(ISender mediatR) : ControllerBase
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromQuery] MaterialCreate material, CancellationToken cancellationToken)
     {
         var command = new CreateMaterialCommand(
             material.Name, material.Description, material.CategoryId,
             material.Price, material.StockAmount, material.Height,
-            material.Width, material.Length, material.Weight
-            );
+            material.Width, material.Length, material.Weight);
 
         return await mediatR.Send(command, cancellationToken);
     }
@@ -60,6 +59,7 @@ public class MaterialController(ISender mediatR) : ControllerBase
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<int>> UpdateAsync(int id, [FromBody] MaterialEdit material, CancellationToken cancellationToken)
@@ -79,6 +79,7 @@ public class MaterialController(ISender mediatR) : ControllerBase
     [HttpDelete("{id}")]
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<int>> RemoveAsync(int id, CancellationToken cancellationToken)

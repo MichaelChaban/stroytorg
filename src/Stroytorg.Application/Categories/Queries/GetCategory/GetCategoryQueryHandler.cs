@@ -10,22 +10,22 @@ namespace Stroytorg.Application.Categories.Queries.GetCategory;
 public class GetCategoryQueryHandler(
     IAutoMapperTypeMapper autoMapperTypeMapper,
     ICategoryRepository categoryRepository) :
-    IRequestHandler<GetCategoryQuery, BusinessResponse<Category>>
+    IRequestHandler<GetCategoryQuery, BusinessResponse<CategoryDetail>>
 {
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
     private readonly ICategoryRepository categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
 
-    public async Task<BusinessResponse<Category>> Handle(GetCategoryQuery query, CancellationToken cancellationToken)
+    public async Task<BusinessResponse<CategoryDetail>> Handle(GetCategoryQuery query, CancellationToken cancellationToken)
     {
         var category = await categoryRepository.GetAsync(query.CategoryId, cancellationToken);
         if (category is null)
         {
-            return new BusinessResponse<Category>(
+            return new BusinessResponse<CategoryDetail>(
             IsSuccess: false,
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        return new BusinessResponse<Category>(
-            Value: autoMapperTypeMapper.Map<Category>(category));
+        return new BusinessResponse<CategoryDetail>(
+            Value: autoMapperTypeMapper.Map<CategoryDetail>(category));
     }
 }

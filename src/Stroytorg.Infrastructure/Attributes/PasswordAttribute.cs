@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Stroytorg.Infrastructure.Attributes;
 
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
 public class PasswordAttribute : ValidationAttribute
 {
     private readonly string PasswordRegex = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$";

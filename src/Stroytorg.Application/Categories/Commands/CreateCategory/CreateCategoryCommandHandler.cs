@@ -29,10 +29,9 @@ public class CreateCategoryCommandHandler(
         categoryEntity = autoMapperTypeMapper.Map(command, categoryEntity);
 
         await categoryRepository.AddAsync(categoryEntity!);
-        await categoryRepository.UnitOfWork.Commit();
+        await categoryRepository.UnitOfWork.CommitAsync();
 
         return new BusinessResponse<int>(
-            Value: categoryEntity!.Id
-            );
+            Value: categoryEntity!.Id);
     }
 }

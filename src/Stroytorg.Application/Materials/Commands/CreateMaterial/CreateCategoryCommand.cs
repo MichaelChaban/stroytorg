@@ -7,10 +7,10 @@ public record CreateMaterialCommand(
     string Name,
     string Description,
     int CategoryId,
-    double Price,
-    double StockAmount,
-    double? Height,
-    double? Width,
-    double? Length,
-    double? Weight
-    ) : IRequest<BusinessResponse<int>>;
+    decimal Price,
+    decimal StockAmount,
+    decimal? Height,
+    decimal? Width,
+    decimal? Length,
+    decimal? Weight) :
+    IRequest<BusinessResponse<int>>;

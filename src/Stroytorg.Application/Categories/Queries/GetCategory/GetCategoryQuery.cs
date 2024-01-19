@@ -6,4 +6,4 @@ namespace Stroytorg.Application.Categories.Queries.GetCategory;
 
 public record GetCategoryQuery(
         int CategoryId
-    ) : IRequest<BusinessResponse<Category>>;
+    ) : IRequest<BusinessResponse<CategoryDetail>>;

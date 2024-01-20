@@ -2,11 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stroytorg.Application.Constants;
-using Stroytorg.Application.Materials.Commands.CreateMaterial;
-using Stroytorg.Application.Materials.Commands.DeleteMaterial;
-using Stroytorg.Application.Materials.Commands.UpdateMaterial;
-using Stroytorg.Application.Materials.Queries.GetMaterial;
-using Stroytorg.Application.Materials.Queries.GetPagedMaterial;
+using Stroytorg.Application.Features.Materials.Commands;
+using Stroytorg.Application.Features.Materials.Queries;
 using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Material;
 using Stroytorg.Contracts.RequestModels;

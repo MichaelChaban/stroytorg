@@ -1,17 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Stroytorg.Application.Categories.Commands.CreateCategory;
-using Stroytorg.Application.Categories.Commands.DeleteCategory;
-using Stroytorg.Application.Categories.Commands.UpdateCategory;
-using Stroytorg.Application.Categories.Queries.GetCategory;
-using Stroytorg.Application.Categories.Queries.GetPagedCategory;
 using Stroytorg.Application.Constants;
+using Stroytorg.Application.Features.Categories.Commands;
+using Stroytorg.Application.Features.Categories.Queries;
 using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Category;
 using Stroytorg.Contracts.RequestModels;
 using Stroytorg.Contracts.ResponseModels;
-using System.Threading;
 
 namespace Stroytorg.Host.Controllers;
 

@@ -1,9 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Stroytorg.Application.Authentication.Commands.GoogleAuthentication;
-using Stroytorg.Application.Authentication.Commands.Register;
-using Stroytorg.Application.Authentication.Queries.Login;
 using Stroytorg.Application.Constants;
+using Stroytorg.Application.Features.Authentication.Commands;
+using Stroytorg.Application.Features.Authentication.Queries;
 using Stroytorg.Contracts.Models.User;
 using Stroytorg.Contracts.ResponseModels;
 

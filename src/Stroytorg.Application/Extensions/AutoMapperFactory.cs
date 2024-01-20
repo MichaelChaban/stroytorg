@@ -9,13 +9,10 @@ using ContractsSort = Stroytorg.Contracts.Sorting;
 using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Category;
 using Stroytorg.Contracts.Models.Material;
-using Stroytorg.Application.Authentication.Commands.Register;
-using Stroytorg.Application.Authentication.Commands.GoogleAuthentication;
-using Stroytorg.Application.Categories.Commands.UpdateCategory;
-using Stroytorg.Application.Materials.Commands.UpdateMaterial;
-using Stroytorg.Application.Materials.Commands.CreateMaterial;
-using Stroytorg.Application.Categories.Commands.CreateCategory;
 using Stroytorg.Contracts.Enums;
+using Stroytorg.Application.Features.Materials.Commands;
+using Stroytorg.Application.Features.Authentication.Commands;
+using Stroytorg.Application.Features.Categories.Commands;
 
 namespace Stroytorg.Application.Extensions;
 

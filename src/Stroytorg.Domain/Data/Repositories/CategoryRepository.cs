@@ -22,14 +22,7 @@ public class CategoryRepository : RepositoryBase<Category, int>, ICategoryReposi
 
     public async Task<Category?> GetByNameAsync(string name, CancellationToken cancellationToken)
     {
-        try
-        {
-            return await GetDbSet().FirstOrDefaultAsync(x => x.Name.ToUpper().Equals(name.ToUpper()), cancellationToken);
-        }
-        catch (OperationCanceledException)
-        {
-            return null;
-        }
+        return await GetDbSet().FirstOrDefaultAsync(x => x.Name.ToLower().Equals(name.ToLower()), cancellationToken);
     }
 
     protected override DbSet<Category> GetDbSet()

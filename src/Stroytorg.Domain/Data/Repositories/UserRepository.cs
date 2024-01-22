@@ -19,16 +19,8 @@ public class UserRepository : RepositoryBase<User, int>, IUserRepository
     }
 
     public async Task<User?> GetByEmailAsync(string email, CancellationToken token)
-    { 
-        try
-        {
-            var user = await GetDbSet().FirstOrDefaultAsync(x => x.Email.Equals(email), cancellationToken: token);
-            return user;
-        }
-        catch (OperationCanceledException)
-        {
-            return null;
-        }
+    {
+        return await GetDbSet().FirstOrDefaultAsync(x => x.Email.Equals(email), cancellationToken: token);
     }
 
     protected override DbSet<User> GetDbSet()

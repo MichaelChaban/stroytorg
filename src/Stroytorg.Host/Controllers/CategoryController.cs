@@ -1,17 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Stroytorg.Application.Categories.Commands.CreateCategory;
-using Stroytorg.Application.Categories.Commands.DeleteCategory;
-using Stroytorg.Application.Categories.Commands.UpdateCategory;
-using Stroytorg.Application.Categories.Queries.GetCategory;
-using Stroytorg.Application.Categories.Queries.GetPagedCategory;
 using Stroytorg.Application.Constants;
+using Stroytorg.Application.Features.Categories.Commands;
+using Stroytorg.Application.Features.Categories.Queries;
 using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Category;
 using Stroytorg.Contracts.RequestModels;
 using Stroytorg.Contracts.ResponseModels;
-using System.Threading;
 
 namespace Stroytorg.Host.Controllers;
 
@@ -39,7 +35,7 @@ public class CategoryController(ISender mediatR) : ControllerBase
         var query = new GetCategoryQuery(id);
         var result = await mediatR.Send(query, cancellationToken);
 
-        return result.IsSuccess ? result.Value : NotFound(result);
+        return result.IsSuccess ? Ok(result.Value) : NotFound(result);
     }
 
     [HttpPost]
@@ -48,12 +44,12 @@ public class CategoryController(ISender mediatR) : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromQuery] CategoryEdit category, CancellationToken cancellationToken)
+    public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromBody] CategoryEdit category, CancellationToken cancellationToken)
     {
-
-        var command = new CreateCategoryCommand(category.Name);
+        var command = new CreateCategoryCommand(category);
         var result = await mediatR.Send(command, cancellationToken);
-        return result.IsSuccess ? StatusCode(201, result) : Conflict(result);
+
+        return result.IsSuccess ? Ok(result) : Conflict(result);
     }
 
     [HttpPut("{id}")]
@@ -65,10 +61,10 @@ public class CategoryController(ISender mediatR) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<int>> UpdateAsync(int id, [FromBody]CategoryEdit category, CancellationToken cancellationToken)
     {
-        var command = new UpdateCategoryCommand(id, category.Name);
+        var command = new UpdateCategoryCommand(id, category);
         var result = await mediatR.Send(command, cancellationToken);
 
-        return result.IsSuccess ? result.Value : NotFound();
+        return result.IsSuccess ? Ok(result.Value) : NotFound();
     }
 
     [HttpDelete("{id}")]
@@ -82,6 +78,6 @@ public class CategoryController(ISender mediatR) : ControllerBase
         var command = new DeleteCategoryCommand(id);
         var result = await mediatR.Send(command, cancellationToken);
 
-        return result.IsSuccess ? result.Value : NotFound();
+        return result.IsSuccess ? Ok(result.Value) : NotFound();
     }
 }

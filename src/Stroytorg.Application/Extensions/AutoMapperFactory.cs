@@ -9,12 +9,6 @@ using ContractsSort = Stroytorg.Contracts.Sorting;
 using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Category;
 using Stroytorg.Contracts.Models.Material;
-using Stroytorg.Application.Authentication.Commands.Register;
-using Stroytorg.Application.Authentication.Commands.GoogleAuthentication;
-using Stroytorg.Application.Categories.Commands.UpdateCategory;
-using Stroytorg.Application.Materials.Commands.UpdateMaterial;
-using Stroytorg.Application.Materials.Commands.CreateMaterial;
-using Stroytorg.Application.Categories.Commands.CreateCategory;
 using Stroytorg.Contracts.Enums;
 
 namespace Stroytorg.Application.Extensions;
@@ -51,21 +45,6 @@ public class AutoMapperFactory
             .ForCtorParam(nameof(User.ProfileName), opt => opt.MapFrom(src => src.Profile.ToString()))
             .ForCtorParam(nameof(User.AuthenticationTypeName), opt => opt.MapFrom(src => src.AuthenticationType.ToString()));
 
-        _ = config.CreateMap<DbData.User, RegisterCommand>()
-            .ReverseMap();
-
-        _ = config.CreateMap<DbData.User, UserRegister>()
-            .ReverseMap();
-
-        _ = config.CreateMap<UserRegister, RegisterCommand>()
-            .ReverseMap();
-
-        _ = config.CreateMap<DbData.User, GoogleAuthCommand>()
-            .ReverseMap();
-
-        _ = config.CreateMap<DbData.User, UserGoogleAuth>()
-            .ReverseMap();
-
         _ = config.CreateMap<DbData.User, UserDetail>()
             .ForCtorParam(nameof(UserDetail.ProfileName), opt => opt.MapFrom(src => src.Profile.ToString()))
             .ForCtorParam(nameof(UserDetail.AuthenticationTypeName), opt => opt.MapFrom(src => src.AuthenticationType.ToString()));
@@ -90,6 +69,7 @@ public class AutoMapperFactory
 
         _ = config.CreateMap<OrderCreate, DbData.Order>()
             .ForMember(nameof(DbData.Order.OrderMaterialMap), opt => opt.Ignore());
+
         _ = config.CreateMap<OrderEdit, DbData.Order>();
     }
 
@@ -98,15 +78,7 @@ public class AutoMapperFactory
         _ = config.CreateMap<DbData.Category, Category>();
         _ = config.CreateMap<DbData.Category, CategoryDetail>();
 
-        _ = config.CreateMap<DbData.Category, CategoryEdit>()
-            .ReverseMap();
-
-        _ = config.CreateMap<DbData.Category, UpdateCategoryCommand>()
-            .ForCtorParam(nameof(UpdateCategoryCommand.CategoryId), opt => opt.MapFrom(src => src.Id))
-            .ReverseMap();
-
-        _ = config.CreateMap<DbData.Category, CreateCategoryCommand>()
-            .ReverseMap();
+        _ = config.CreateMap<CategoryEdit, DbData.Category>();
     }
 
     private static void MapMaterial(IMapperConfigurationExpression config)
@@ -114,14 +86,7 @@ public class AutoMapperFactory
         _ = config.CreateMap<DbData.Material, Material>();
         _ = config.CreateMap<DbData.Material, MaterialDetail>();
 
-        _ = config.CreateMap<DbData.Material, MaterialEdit>()
-            .ReverseMap();
-
-        _ = config.CreateMap<DbData.Material, UpdateMaterialCommand>()
-            .ReverseMap();
-
-        _ = config.CreateMap<CreateMaterialCommand, DbData.Material>()
-            .ReverseMap();
+        _ = config.CreateMap<MaterialEdit, DbData.Material>();
     }
 
     private static void MapOrderMaterialMap(IMapperConfigurationExpression config)

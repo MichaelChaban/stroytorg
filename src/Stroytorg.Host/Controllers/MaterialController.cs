@@ -2,11 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stroytorg.Application.Constants;
-using Stroytorg.Application.Materials.Commands.CreateMaterial;
-using Stroytorg.Application.Materials.Commands.DeleteMaterial;
-using Stroytorg.Application.Materials.Commands.UpdateMaterial;
-using Stroytorg.Application.Materials.Queries.GetMaterial;
-using Stroytorg.Application.Materials.Queries.GetPagedMaterial;
+using Stroytorg.Application.Features.Materials.Commands;
+using Stroytorg.Application.Features.Materials.Queries;
 using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Material;
 using Stroytorg.Contracts.RequestModels;
@@ -45,12 +42,9 @@ public class MaterialController(ISender mediatR) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromQuery] MaterialCreate material, CancellationToken cancellationToken)
+    public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromBody] MaterialEdit material, CancellationToken cancellationToken)
     {
-        var command = new CreateMaterialCommand(
-            material.Name, material.Description, material.CategoryId,
-            material.Price, material.StockAmount, material.Height,
-            material.Width, material.Length, material.Weight);
+        var command = new CreateMaterialCommand(material);
 
         return await mediatR.Send(command, cancellationToken);
     }
@@ -64,13 +58,7 @@ public class MaterialController(ISender mediatR) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<int>> UpdateAsync(int id, [FromBody] MaterialEdit material, CancellationToken cancellationToken)
     {
-        var command = new UpdateMaterialCommand(
-            id, material.Name, material.Description,
-            material.CategoryId, material.Price, material.StockAmount,
-            material.Height, material.Width, material.Length,
-            material.Weight, material.IsFavorite
-            );
-
+        var command = new UpdateMaterialCommand(id, material);
         var result = await mediatR.Send(command, cancellationToken);
 
         return result.IsSuccess ? result.Value : NotFound();

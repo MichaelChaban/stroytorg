@@ -21,8 +21,6 @@ public class MaterialSpecification : BaseSpecification, ISpecification<Material>
 
     public decimal? MaxStockAmount { get; set; }
 
-    public bool? IsFavorite { get; set; }
-
     public decimal? MinHeight { get; set; }
 
     public decimal? MaxHeight { get; set; }
@@ -61,7 +59,7 @@ public class MaterialSpecification : BaseSpecification, ISpecification<Material>
         if (!string.IsNullOrEmpty(Name))
         {
             specification &= new DirectSpecification<Material>(x =>
-                x.Name.ToUpper().Contains(Name.ToUpper()));
+                x.Name.ToLower().Contains(Name.ToLower()));
         }
 
         if (CategoryId.HasValue)
@@ -87,11 +85,6 @@ public class MaterialSpecification : BaseSpecification, ISpecification<Material>
         if (MaxStockAmount.HasValue)
         {
             specification &= new DirectSpecification<Material>(x => x.StockAmount <= MaxStockAmount);
-        }
-
-        if (IsFavorite.HasValue)
-        {
-            specification &= new DirectSpecification<Material>(x => x.IsFavorite == IsFavorite);
         }
 
         if (MinHeight.HasValue)

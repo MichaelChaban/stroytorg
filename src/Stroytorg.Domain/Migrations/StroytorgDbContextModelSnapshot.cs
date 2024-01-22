@@ -101,9 +101,6 @@ namespace Stroytorg.Domain.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsFavorite")
-                        .HasColumnType("boolean");
-
                     b.Property<decimal?>("Length")
                         .HasColumnType("numeric");
 

@@ -1,17 +1,18 @@
 ﻿using Stroytorg.Application.Facades.Interfaces;
 using Stroytorg.Contracts.Filters;
+using Stroytorg.Contracts.Models.User;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using DbEntity = Stroytorg.Domain.Data.Entities;
 using DbEnum = Stroytorg.Domain.Data.Enums;
 
 namespace Stroytorg.Application.Facades;
 
-public class OrderServiceFacade(
+public class OrderFacade(
     IMaterialRepository materialRepository,
     IOrderRepository orderRepository,
     IUserRepository userRepository,
     IOrderMaterialMapRepository orderMaterialMapRepository,
-    IUserContext userContext) : IOrderServiceFacade
+    IUserContext userContext) : IOrderFacade
 {
     private readonly IMaterialRepository materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
     private readonly IOrderRepository orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
@@ -48,13 +49,24 @@ public class OrderServiceFacade(
         {
             orderMaterialMapRepository.DeactivateRange(order.OrderMaterialMap!.ToArray());
             var materials = order.OrderMaterialMap!.Select(x => x.Material).ToList();
-            await UpdateMaterialsAsync(materials!, order, order.OrderMaterialMap);
+            await UpdateMaterialsAsync(materials!, order, order.OrderMaterialMap!);
         }
         await orderMaterialMapRepository.UnitOfWork.CommitAsync();
     }
     public string GetCurrentUserEmail()
     {
         return userContext.User.Identity?.Name ?? "uknown@example.com";
+    }
+
+    public async Task AssignOrderToUserAsync(User user)
+    {
+        var orders = await orderRepository.GetOrdersByEmailAsync(user.Email);
+        foreach (var order in orders)
+        {
+            order.UserId = user.Id;
+        }
+        orderRepository.UpdateRange(orders);
+        await orderRepository.UnitOfWork.CommitAsync();
     }
 
     private async Task AddOrderAsync(DbEntity.Order order)

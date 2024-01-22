@@ -1,9 +1,10 @@
 ﻿using Stroytorg.Contracts.Filters;
+using Stroytorg.Contracts.Models.User;
 using DB = Stroytorg.Domain.Data.Entities;
 
 namespace Stroytorg.Application.Facades.Interfaces;
 
-public interface IOrderServiceFacade
+public interface IOrderFacade
 {
     Task CreateOrderAsync(DB.Order order, IEnumerable<DB.Material> materials, IEnumerable<DB.OrderMaterialMap> orderMaterialMaps);
 
@@ -12,4 +13,6 @@ public interface IOrderServiceFacade
     string GetCurrentUserEmail();
 
     OrderFilter GetPagedUserOrdersFilter(OrderFilter? filter);
+
+    Task AssignOrderToUserAsync(User user);
 }

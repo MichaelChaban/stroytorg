@@ -98,14 +98,13 @@ public static class ServiceExtensions
     {
         services.TryAddScoped<IUserService, UserService>();
         services.TryAddScoped<ITokenGeneratorService, TokenGeneratorService>();
-        services.TryAddScoped<IOrderService, OrderService>();
 
         return services;
     }
 
     private static IServiceCollection AddFacades(this IServiceCollection services)
     {
-        services.TryAddScoped<IOrderServiceFacade, OrderServiceFacade>();
+        services.TryAddScoped<IOrderFacade, OrderFacade>();
 
         return services;
     }
@@ -134,8 +133,7 @@ public static class ServiceExtensions
     private static IServiceCollection AddMediatR(this IServiceCollection services)
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(
-            typeof(LoginQuery).Assembly
-            ));
+            typeof(LoginQuery).Assembly));
 
         return services;
     }

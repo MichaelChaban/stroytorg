@@ -13,8 +13,7 @@ namespace Stroytorg.Application.Features.Materials.QueryHandlers;
 
 public class GetPagedMaterialQueryHandler(
     IAutoMapperTypeMapper autoMapperTypeMapper,
-    IMaterialRepository materialRepository
-    ) :
+    IMaterialRepository materialRepository) :
     IRequestHandler<GetPagedMaterialQuery<MaterialFilter>, PagedData<Material>>
 {
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
@@ -31,7 +30,6 @@ public class GetPagedMaterialQueryHandler(
 
         return new PagedData<Material>(
             Data: mappedItems,
-            Total: totalItems
-            );
+            Total: totalItems);
     }
 }

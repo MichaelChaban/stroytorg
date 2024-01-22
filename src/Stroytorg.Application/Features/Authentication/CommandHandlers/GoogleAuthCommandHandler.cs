@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Stroytorg.Application.Extensions;
+using Stroytorg.Application.Facades.Interfaces;
 using Stroytorg.Application.Features.Authentication.Commands;
 using Stroytorg.Application.Services.Interfaces;
 using Stroytorg.Contracts.Enums;
@@ -13,13 +14,13 @@ public class GoogleAuthCommandHandler(
     IUserService userService,
     ITokenGeneratorService tokenGeneratorService,
     IAutoMapperTypeMapper autoMapperTypeMapper,
-    IOrderService orderService) :
+    IOrderFacade orderFacade) :
     IRequestHandler<GoogleAuthCommand, AuthResponse>
 {
     private readonly IUserService userService = userService ?? throw new ArgumentNullException(nameof(userService));
     private readonly ITokenGeneratorService tokenGeneratorService = tokenGeneratorService ?? throw new ArgumentNullException(nameof(tokenGeneratorService));
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
-    private readonly IOrderService orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
+    private readonly IOrderFacade orderFacade = orderFacade ?? throw new ArgumentNullException(nameof(orderFacade));
 
     public async Task<AuthResponse> Handle(GoogleAuthCommand command, CancellationToken cancellationToken)
     {
@@ -38,7 +39,7 @@ public class GoogleAuthCommandHandler(
                 return new AuthResponse(AuthErrorMessage: businessError!.BusinessErrorMessage);
             }
 
-            await orderService.AssignOrderToUserAsync(contractUserResponse.Value, cancellationToken);
+            await orderFacade.AssignOrderToUserAsync(contractUserResponse.Value);
             return new AuthResponse(
                 IsLoggedIn: true,
                 JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(contractUserResponse.Value)));
@@ -50,7 +51,7 @@ public class GoogleAuthCommandHandler(
             return new AuthResponse(AuthErrorMessage: createdUserResponse.BusinessErrorMessage);
         }
 
-        await orderService.AssignOrderToUserAsync(createdUserResponse.Value, cancellationToken);
+        await orderFacade.AssignOrderToUserAsync(createdUserResponse.Value);
 
         return new AuthResponse(
             IsLoggedIn: true,

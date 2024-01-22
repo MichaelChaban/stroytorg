@@ -13,8 +13,7 @@ namespace Stroytorg.Application.Features.Categories.QueryHandlers;
 
 public class GetPagedCategoryQueryHandler(
     IAutoMapperTypeMapper autoMapperTypeMapper,
-    ICategoryRepository categoryRepository
-    ) :
+    ICategoryRepository categoryRepository) :
     IRequestHandler<GetPagedCategoryQuery<CategoryFilter>, PagedData<Category>>
 {
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
@@ -31,7 +30,6 @@ public class GetPagedCategoryQueryHandler(
 
         return new PagedData<Category>(
             Data: mappedItems,
-            Total: totalItems
-            );
+            Total: totalItems);
     }
 }

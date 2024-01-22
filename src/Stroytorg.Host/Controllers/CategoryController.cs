@@ -46,7 +46,6 @@ public class CategoryController(ISender mediatR) : ControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromQuery] CategoryEdit category, CancellationToken cancellationToken)
     {
-
         var command = new CreateCategoryCommand(category.Name);
         var result = await mediatR.Send(command, cancellationToken);
         return result.IsSuccess ? StatusCode(201, result) : Conflict(result);

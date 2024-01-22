@@ -12,5 +12,4 @@ public record CreateMaterialCommand(
     decimal? Height,
     decimal? Width,
     decimal? Length,
-    decimal? Weight) :
-    IRequest<BusinessResponse<int>>;
+    decimal? Weight) : IRequest<BusinessResponse<int>>;

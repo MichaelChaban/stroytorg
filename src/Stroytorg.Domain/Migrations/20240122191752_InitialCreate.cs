@@ -75,7 +75,6 @@ namespace Stroytorg.Domain.Migrations
                     Width = table.Column<decimal>(type: "numeric", nullable: true),
                     Length = table.Column<decimal>(type: "numeric", nullable: true),
                     Weight = table.Column<decimal>(type: "numeric", nullable: true),
-                    IsFavorite = table.Column<bool>(type: "boolean", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedBy = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),

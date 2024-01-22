@@ -9,7 +9,6 @@ public record MaterialDetail : Auditable
     public int CategoryId { get; init; }
     public decimal Price { get; init; }
     public decimal StockAmount { get; init; }
-    public bool IsFavorite { get; init; }
     public decimal? Height { get; init; }
     public decimal? Width { get; init; }
     public decimal? Length { get; init; }
@@ -21,7 +20,6 @@ public record MaterialDetail : Auditable
         int CategoryId,
         decimal Price,
         decimal StockAmount,
-        bool IsFavorite,
         decimal? Height,
         decimal? Width,
         decimal? Length,
@@ -41,7 +39,6 @@ public record MaterialDetail : Auditable
         this.CategoryId = CategoryId;
         this.Price = Price;
         this.StockAmount = StockAmount;
-        this.IsFavorite = IsFavorite;
         this.Height = Height;
         this.Width = Width;
         this.Length = Length;

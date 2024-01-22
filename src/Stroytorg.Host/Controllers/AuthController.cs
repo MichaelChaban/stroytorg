@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Stroytorg.Application.Constants;
 using Stroytorg.Application.Features.Authentication.Commands;
 using Stroytorg.Application.Features.Authentication.Queries;
 using Stroytorg.Contracts.Models.User;
@@ -20,14 +19,10 @@ public class AuthController(ISender mediatR) : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<AuthResponse>> Register([FromBody] UserRegister user)
     {
-        var command = new RegisterCommand(user.Email, user.Password, user.FirstName, user.LastName, user.BirthDate, user.PhoneNumber);
-        var authResult = await mediatR.Send(command);
+        var command = new RegisterCommand(user);
+        var result = await mediatR.Send(command);
 
-        return !string.IsNullOrEmpty(authResult.AuthErrorMessage)
-        ? (authResult.AuthErrorMessage == BusinessErrorMessage.AlreadyExistingUser.ToString()
-            ? Conflict(authResult)
-            : StatusCode(500, authResult))
-            : StatusCode(201, authResult);
+        return result.IsLoggedIn ? Ok(result) : Unauthorized(result);
     }
 
     [HttpPost("Login")]
@@ -36,10 +31,10 @@ public class AuthController(ISender mediatR) : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<AuthResponse>> Login([FromBody] UserLogin user)
     {
-        var query = new LoginQuery(user.Email, user.Password);
+        var query = new LoginQuery(user);
         var result = await mediatR.Send(query);
 
-        return !string.IsNullOrEmpty(result.AuthErrorMessage) ? Unauthorized(result) : Ok(result);
+        return result.IsLoggedIn ? Ok(result) : Unauthorized(result);
     }
 
     [HttpPost("GoogleAuth")]
@@ -48,9 +43,9 @@ public class AuthController(ISender mediatR) : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<AuthResponse>> GoogleAuth([FromBody] UserGoogleAuth user)
     {
-        var command = new GoogleAuthCommand(user.Token, user.GoogleId, user.Email, user.FirstName, user.LastName);
+        var command = new GoogleAuthCommand(user);
         var result = await mediatR.Send(command);
 
-        return result.IsLoggedIn ? result : Unauthorized();
+        return result.IsLoggedIn ? Ok(result) : Unauthorized(result);
     }
 }

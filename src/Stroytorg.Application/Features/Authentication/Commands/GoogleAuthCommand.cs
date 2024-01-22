@@ -1,12 +1,8 @@
 ﻿using MediatR;
+using Stroytorg.Contracts.Models.User;
 using Stroytorg.Contracts.ResponseModels;
 
 namespace Stroytorg.Application.Features.Authentication.Commands;
 
 public record GoogleAuthCommand(
-    string Token,
-    string GoogleId,
-    string Email,
-    string FirstName,
-    string LastName
-    ) : IRequest<AuthResponse>;
+    UserGoogleAuth User) : IRequest<AuthResponse>;

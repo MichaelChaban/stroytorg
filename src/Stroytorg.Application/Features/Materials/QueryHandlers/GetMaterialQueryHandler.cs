@@ -23,8 +23,7 @@ public class GetMaterialQueryHandler(
         {
             return new BusinessResponse<MaterialDetail>(
                 IsSuccess: false,
-                BusinessErrorMessage: cancellationToken.IsCancellationRequested ?
-                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity);
+                BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
         return new BusinessResponse<MaterialDetail>(

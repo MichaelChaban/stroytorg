@@ -96,7 +96,6 @@ public static class ServiceExtensions
 
     private static IServiceCollection AddMicroservices(this IServiceCollection services)
     {
-        services.TryAddScoped<IUserService, UserService>();
         services.TryAddScoped<ITokenGeneratorService, TokenGeneratorService>();
 
         return services;

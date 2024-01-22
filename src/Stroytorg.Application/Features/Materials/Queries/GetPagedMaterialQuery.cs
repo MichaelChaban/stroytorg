@@ -15,6 +15,5 @@ public record GetPagedMaterialQuery<TFilter>(
     int Offset = 0,
 
     [Range(0, int.MaxValue)]
-    int Limit = 50
-    ) : IRequest<PagedData<Material>>
+    int Limit = 50) : IRequest<PagedData<Material>>
     where TFilter : MaterialFilter;

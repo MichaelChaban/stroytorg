@@ -33,5 +33,4 @@ public record MaterialEdit(
     decimal? Length,
 
     [Range(0, 100000)]
-    decimal? Weight,
-    bool? IsFavorite);
+    decimal? Weight);

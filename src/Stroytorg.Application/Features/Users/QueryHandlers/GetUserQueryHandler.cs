@@ -8,8 +8,10 @@ using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 
 namespace Stroytorg.Application.Features.Users.QueryHandlers;
 
-public class GetUserQueryHandler(IUserRepository userRepository, IAutoMapperTypeMapper autoMapperTypeMapper)
-    : IRequestHandler<GetUserQuery, BusinessResponse<UserDetail>>
+public class GetUserQueryHandler(
+    IUserRepository userRepository,
+    IAutoMapperTypeMapper autoMapperTypeMapper) :
+    IRequestHandler<GetUserQuery, BusinessResponse<UserDetail>>
 {
     private readonly IUserRepository userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));

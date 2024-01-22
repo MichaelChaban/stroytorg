@@ -22,7 +22,7 @@ public class GetCategoryQueryHandler(
         if (category is null)
         {
             return new BusinessResponse<CategoryDetail>(
-            IsSuccess: false,
+                IsSuccess: false,
                 BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 

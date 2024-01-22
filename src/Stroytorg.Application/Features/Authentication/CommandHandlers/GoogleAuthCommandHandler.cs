@@ -2,6 +2,8 @@
 using Stroytorg.Application.Extensions;
 using Stroytorg.Application.Facades.Interfaces;
 using Stroytorg.Application.Features.Authentication.Commands;
+using Stroytorg.Application.Features.Users.Commands;
+using Stroytorg.Application.Features.Users.Queries;
 using Stroytorg.Application.Services.Interfaces;
 using Stroytorg.Contracts.Enums;
 using Stroytorg.Contracts.Models.User;
@@ -11,48 +13,46 @@ using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 namespace Stroytorg.Application.Features.Authentication.CommandHandlers;
 
 public class GoogleAuthCommandHandler(
-    IUserService userService,
     ITokenGeneratorService tokenGeneratorService,
     IAutoMapperTypeMapper autoMapperTypeMapper,
-    IOrderFacade orderFacade) :
+    IOrderFacade orderFacade,
+    ISender mediatR) :
     IRequestHandler<GoogleAuthCommand, AuthResponse>
 {
-    private readonly IUserService userService = userService ?? throw new ArgumentNullException(nameof(userService));
     private readonly ITokenGeneratorService tokenGeneratorService = tokenGeneratorService ?? throw new ArgumentNullException(nameof(tokenGeneratorService));
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
     private readonly IOrderFacade orderFacade = orderFacade ?? throw new ArgumentNullException(nameof(orderFacade));
+    private readonly ISender mediatR = mediatR ?? throw new ArgumentNullException(nameof(mediatR));
 
     public async Task<AuthResponse> Handle(GoogleAuthCommand command, CancellationToken cancellationToken)
     {
-        var user = autoMapperTypeMapper.Map<GoogleAuthCommand, UserGoogleAuth>(command);
-        var googleValidationResult = await user.ValidateGoogleUserAsync();
-        if (googleValidationResult is not null && !googleValidationResult.IsSuccess)
+        var googleValidationResult = await command.User.ValidateGoogleUserAsync();
+        if (googleValidationResult is not null && googleValidationResult.IsSuccess is false)
         {
             return new AuthResponse(AuthErrorMessage: googleValidationResult.BusinessErrorMessage);
         }
 
-        var contractUserResponse = await userService.GetByEmailAsync(command.Email);
-        if (contractUserResponse.Value is not null)
+        var contractUserResponse = (await mediatR.Send(new GetUserByEmailQuery(command.User.Email), cancellationToken)).Value;
+        if (contractUserResponse is not null)
         {
-            if (contractUserResponse.Value.AuthenticationType.ValidateUserAuthType(AuthenticationType.Google, out var businessError) is false)
+            if (contractUserResponse.AuthenticationType.ValidateUserAuthType(AuthenticationType.Google, out var businessError) is false)
             {
                 return new AuthResponse(AuthErrorMessage: businessError!.BusinessErrorMessage);
             }
 
-            await orderFacade.AssignOrderToUserAsync(contractUserResponse.Value);
+            await orderFacade.AssignOrderToUserAsync(contractUserResponse);
             return new AuthResponse(
                 IsLoggedIn: true,
-                JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(contractUserResponse.Value)));
+                JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(contractUserResponse)));
         }
 
-        var createdUserResponse = await userService.CreateWithGoogleAsync(user);
-        if (!createdUserResponse.IsSuccess)
+        var createdUserResponse = await mediatR.Send(new CreateUserWithGoogleCommand(command.User), cancellationToken);
+        if (createdUserResponse.IsSuccess is false)
         {
             return new AuthResponse(AuthErrorMessage: createdUserResponse.BusinessErrorMessage);
         }
 
         await orderFacade.AssignOrderToUserAsync(createdUserResponse.Value);
-
         return new AuthResponse(
             IsLoggedIn: true,
             JwtToken: tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(createdUserResponse.Value)));

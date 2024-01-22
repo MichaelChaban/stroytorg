@@ -5,5 +5,4 @@ using Stroytorg.Contracts.ResponseModels;
 namespace Stroytorg.Application.Features.Users.Queries;
 
 public record GetUserQuery(
-    int UserId
-    ) : IRequest<BusinessResponse<UserDetail>>;
+    int UserId) : IRequest<BusinessResponse<UserDetail>>;

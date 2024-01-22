@@ -19,8 +19,7 @@ public class DeleteCategoryCommandHandler(
         {
             return new BusinessResponse<int>(
                 IsSuccess: false,
-                BusinessErrorMessage: cancellationToken.IsCancellationRequested ?
-                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity);
+                BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
         if (categoryEntity.Materials?.Count > 0)
@@ -31,7 +30,7 @@ public class DeleteCategoryCommandHandler(
         }
 
         categoryRepository.Remove(categoryEntity);
-        await categoryRepository.UnitOfWork.CommitAsync();
+        await categoryRepository.UnitOfWork.CommitAsync(cancellationToken);
 
         return new BusinessResponse<int>(
             Value: categoryEntity.Id);

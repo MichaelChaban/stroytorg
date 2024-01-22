@@ -17,20 +17,18 @@ public class CreateCategoryCommandHandler(
 
     public async Task<BusinessResponse<int>> Handle(CreateCategoryCommand command, CancellationToken cancellationToken)
     {
-        var categoryEntity = await categoryRepository.GetByNameAsync(command.Name, cancellationToken);
-        if (categoryEntity is not null || cancellationToken.IsCancellationRequested)
+        var categoryEntity = await categoryRepository.GetByNameAsync(command.Category.Name, cancellationToken);
+        if (categoryEntity is not null)
         {
             return new BusinessResponse<int>(
-            IsSuccess: false,
-                BusinessErrorMessage: cancellationToken.IsCancellationRequested ?
-                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.AlreadyExistingEntity
-                );
+                IsSuccess: false,
+                BusinessErrorMessage: BusinessErrorMessage.AlreadyExistingEntity);
         }
 
-        categoryEntity = autoMapperTypeMapper.Map(command, categoryEntity);
+        categoryEntity = autoMapperTypeMapper.Map(command.Category, categoryEntity);
 
         await categoryRepository.AddAsync(categoryEntity!);
-        await categoryRepository.UnitOfWork.CommitAsync();
+        await categoryRepository.UnitOfWork.CommitAsync(cancellationToken);
 
         return new BusinessResponse<int>(
             Value: categoryEntity!.Id);

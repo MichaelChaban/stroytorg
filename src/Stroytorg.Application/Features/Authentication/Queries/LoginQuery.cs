@@ -1,9 +1,8 @@
 ﻿using MediatR;
+using Stroytorg.Contracts.Models.User;
 using Stroytorg.Contracts.ResponseModels;
 
 namespace Stroytorg.Application.Features.Authentication.Queries;
 
 public record LoginQuery(
-    string Email,
-    string Password
-    ) : IRequest<AuthResponse>;
+    UserLogin User) : IRequest<AuthResponse>;

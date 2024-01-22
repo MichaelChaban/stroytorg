@@ -12,7 +12,7 @@ using Stroytorg.Domain.Data.Entities;
 namespace Stroytorg.Domain.Migrations
 {
     [DbContext(typeof(StroytorgDbContext))]
-    [Migration("20240119035010_InitialCreate")]
+    [Migration("20240122191752_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -102,9 +102,6 @@ namespace Stroytorg.Domain.Migrations
                         .HasColumnType("numeric");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsFavorite")
                         .HasColumnType("boolean");
 
                     b.Property<decimal?>("Length")

@@ -17,7 +17,7 @@ public class OrderController(ISender mediatR) : ControllerBase
 {
     private readonly ISender mediatR = mediatR ?? throw new ArgumentNullException(nameof(mediatR));
 
-    [HttpGet("PagedUserOrders")]
+    [HttpGet("UserPaged")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -53,7 +53,7 @@ public class OrderController(ISender mediatR) : ControllerBase
         var query = new GetOrderQuery(id);
         var result = await mediatR.Send(query, cancellationToken);
 
-        return result.IsSuccess ? result.Value : NotFound(result);
+        return result.IsSuccess ? Ok(result.Value) : NotFound(result);
     }
 
     [HttpPost]
@@ -63,7 +63,7 @@ public class OrderController(ISender mediatR) : ControllerBase
     {
         var command = new CreateOrderCommand(order);
         var result = await mediatR.Send(command, cancellationToken);
-        return result.IsSuccess ? StatusCode(201, result) : Conflict(result);
+        return result.IsSuccess ? Ok(result) : Conflict(result);
     }
 
     [HttpPut("{id}")]
@@ -78,6 +78,6 @@ public class OrderController(ISender mediatR) : ControllerBase
         var command = new UpdateOrderCommand(id, order);
         var result = await mediatR.Send(command, cancellationToken);
 
-        return result.IsSuccess ? result.Value : NotFound();
+        return result.IsSuccess ? Ok(result.Value) : NotFound();
     }
 }

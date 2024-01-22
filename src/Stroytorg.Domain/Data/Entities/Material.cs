@@ -36,8 +36,6 @@ public class Material : Auditable
     [Range(0, 100000)]
     public decimal? Weight { get; set; }
 
-    public bool IsFavorite { get; set; } = false;
-
     public virtual Category? Category { get; set; }
 
     public virtual ICollection<OrderMaterialMap>? OrderMaterialMap { get; set; }

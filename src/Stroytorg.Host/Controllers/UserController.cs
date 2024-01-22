@@ -25,6 +25,6 @@ public class UserController(ISender mediatR) : ControllerBase
         var query = new GetUserQuery(id);
         var result = await mediatR.Send(query, cancellationToken);
 
-        return result.IsSuccess ? result : NotFound(result);
+        return result.IsSuccess ? Ok(result) : NotFound(result);
     }
 }

@@ -24,20 +24,18 @@ public class UpdateCategoryCommandHandler(
         {
             return new BusinessResponse<int>(
                 IsSuccess: false,
-                BusinessErrorMessage: cancellationToken.IsCancellationRequested ?
-                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity);
+                BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        var category = await categoryRepository.GetAsync(command.CategoryId, cancellationToken);
+        var category = await categoryRepository.GetAsync(command.Material.CategoryId, cancellationToken);
         if (category is null)
         {
             return new BusinessResponse<int>(
                 IsSuccess: false,
-                BusinessErrorMessage: cancellationToken.IsCancellationRequested ?
-                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity);
+                BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        materialEntity = autoMapperTypeMapper.Map(command, materialEntity);
+        materialEntity = autoMapperTypeMapper.Map(command.Material, materialEntity);
 
         materialRepository.Update(materialEntity);
         await materialRepository.UnitOfWork.CommitAsync(cancellationToken);

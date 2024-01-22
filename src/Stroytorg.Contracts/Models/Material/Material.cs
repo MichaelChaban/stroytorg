@@ -7,7 +7,6 @@ public record Material(
     int CategoryId,
     decimal Price,
     decimal StockAmount,
-    bool IsFavorite,
     decimal? Height,
     decimal? Width,
     decimal? Length,

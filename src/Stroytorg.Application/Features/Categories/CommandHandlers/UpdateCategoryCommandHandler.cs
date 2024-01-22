@@ -22,14 +22,13 @@ public class UpdateCategoryCommandHandler(
         {
             return new BusinessResponse<int>(
                 IsSuccess: false,
-                BusinessErrorMessage: cancellationToken.IsCancellationRequested ?
-                BusinessErrorMessage.OperationCancelled : BusinessErrorMessage.NotExistingEntity);
+                BusinessErrorMessage: BusinessErrorMessage.NotExistingEntity);
         }
 
-        categoryEntity = autoMapperTypeMapper.Map(command, categoryEntity);
+        categoryEntity = autoMapperTypeMapper.Map(command.Category, categoryEntity);
 
         categoryRepository.Update(categoryEntity);
-        await categoryRepository.UnitOfWork.CommitAsync();
+        await categoryRepository.UnitOfWork.CommitAsync(cancellationToken);
 
         return new BusinessResponse<int>(
             Value: categoryEntity.Id);

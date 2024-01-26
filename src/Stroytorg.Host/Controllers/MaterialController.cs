@@ -2,12 +2,16 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stroytorg.Application.Constants;
-using Stroytorg.Application.Features.Materials.Commands;
-using Stroytorg.Application.Features.Materials.Queries;
+using Stroytorg.Application.Features.Materials.CreateMaterial;
+using Stroytorg.Application.Features.Materials.DeleteMaterial;
+using Stroytorg.Application.Features.Materials.GetMaterial;
+using Stroytorg.Application.Features.Materials.GetPagedMaterial;
+using Stroytorg.Application.Features.Materials.UpdateMaterial;
 using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Material;
 using Stroytorg.Contracts.RequestModels;
 using Stroytorg.Contracts.ResponseModels;
+using Stroytorg.Infrastructure.Validations.Common;
 
 namespace Stroytorg.Host.Controllers;
 
@@ -33,7 +37,7 @@ public class MaterialController(ISender mediatR) : ControllerBase
     {
         var query = new GetMaterialQuery(id);
         var result = await mediatR.Send(query, cancellationToken);
-        return result.IsSuccess ? result.Value : NotFound();
+        return result.IsSuccess ? Ok(result.Value) : StatusCode(500, result.Error);
     }
 
     [HttpPost]
@@ -42,11 +46,12 @@ public class MaterialController(ISender mediatR) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<BusinessResponse<int>>> CreateAsync([FromBody] MaterialEdit material, CancellationToken cancellationToken)
+    public async Task<ActionResult<BusinessResult<int>>> CreateAsync([FromBody] MaterialEdit material, CancellationToken cancellationToken)
     {
-        var command = new CreateMaterialCommand(material);
-
-        return await mediatR.Send(command, cancellationToken);
+        var command = new CreateMaterialCommand(material.Name, material.Description, material.CategoryId,
+            material.Price, material.StockAmount, material.Height, material.Weight, material.Length, material.Weight);
+        var result = await mediatR.Send(command, cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : StatusCode(500, result.Error);
     }
 
     [HttpPut("{id}")]
@@ -58,10 +63,10 @@ public class MaterialController(ISender mediatR) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<int>> UpdateAsync(int id, [FromBody] MaterialEdit material, CancellationToken cancellationToken)
     {
-        var command = new UpdateMaterialCommand(id, material);
+        var command = new UpdateMaterialCommand(id, material.Name, material.Description, material.CategoryId,
+            material.Price, material.StockAmount, material.Height, material.Weight, material.Length, material.Weight);
         var result = await mediatR.Send(command, cancellationToken);
-
-        return result.IsSuccess ? result.Value : NotFound();
+        return result.IsSuccess ? Ok(result.Value) : StatusCode(500, result.Error);
     }
 
     [HttpDelete("{id}")]
@@ -74,6 +79,6 @@ public class MaterialController(ISender mediatR) : ControllerBase
     {
         var command = new DeleteMaterialCommand(id);
         var result = await mediatR.Send(command, cancellationToken);
-        return result.IsSuccess ? result.Value : NotFound();
+        return result.IsSuccess ? Ok(result.Value) : StatusCode(500, result.Error);
     }
 }

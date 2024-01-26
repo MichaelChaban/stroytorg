@@ -25,6 +25,11 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public IUnitOfWork UnitOfWork { get; }
 
+    public Task<bool> ExistsAsync(TKey id, CancellationToken cancellationToken)
+    {
+        return GetDbSet().AnyAsync(entity => entity.Id!.Equals(id), cancellationToken);
+    }
+
     public Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken)
     {
         var query = GetQueryable();

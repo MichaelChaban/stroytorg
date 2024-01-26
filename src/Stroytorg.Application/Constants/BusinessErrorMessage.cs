@@ -2,31 +2,37 @@
 
 public static class BusinessErrorMessage
 {
-    public static string NotExistingUser { get; } = "There is no user was found with the provided credentials.";
+    public static string GoogleAuthTypeError { get; } = "User was authenticated with Google.";
 
-    public static string AlreadyExistingUser { get; } = "There is an already existing user with the provided credentials.";
+    public static string InternalAuthTypeError { get; } = "User was authenticated with an email and a password.";
 
-    public static string IncorrectPassword { get; } = "Provided password is not correct.";
+    public static string InvalidGoogleUserToken { get; } = "Invalid google user token";
 
-    public static string InvalidPhoneNumber { get; } = "Provided phone number is not valid.";
+    public static string InvalidEmailFormat { get; } = "Invalid email format";
 
-    public static string UserValidationError { get; } = "There is an error occurred while validating the user.";
+    public static string InvalidPassword { get; } = "Invalid password";
 
-    public static string GoogleAuthType { get; } = "User was authenticated with Google.";
+    public static string InvalidShippingInformation { get; } = "Invalid shipping information";
 
-    public static string InternalAuthType { get; } = "User was authenticated with an email and a password.";
+    public static string InvalidMaterialsQuantity { get; } = "Bigger quantity was provided to order";
 
-    public static string NotExistingEntity { get; } = "There is no entity was found with the provided id.";
+    public static string ExistingUserWithEmail { get; } = "Already existing user with the provided email";
 
-    public static string AlreadyExistingEntity { get; } = "There is an already existing in the db.";
+    public static string NotExistingUserWithEmail { get; } = "No user was found with the provided email";
 
-    public static string OperationCancelled { get; } = "Operation was cancelled.";
+    public static string NotExistingUserWithId { get; } = "No user was found with the provided id";
 
-    public static string UnableToDeleteEntity { get; } = "Unable to Delete Entity";
+    public static string ExistingCategoryWithName { get; } = "Already existing category with the provided name";
 
-    public static string NotExistingEntities { get; } = "There are no existing entities the db.";
+    public static string NotExistingCategoryWithId { get; } = "No category was found with the provided id";
 
-    public static string NoInformationProvided { get; } = "There is some information was not provided.";
+    public static string ExistingMaterialsWithCategoryId { get; } = "There are existing materials with the provided category id";
 
-    public static string AlreadyInActiveEntity { get; } = "This entity is already inactive.";
+    public static string ExistingMaterialsWithName { get; } = "Already existing material with the provided name";
+
+    public static string NotExistingMaterialWithId { get; } = "No material was found with the provided id";
+
+    public static string NotExistingOrderWithId { get; } = "No order was found with the provided id";
+
+    public static string NotActiveOrderWithId { get; } = "The order is already inactive";
 }

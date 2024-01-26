@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stroytorg.Application.Constants;
-using Stroytorg.Application.Features.Users.Queries;
+using Stroytorg.Application.Features.Users.GetUser;
 using Stroytorg.Contracts.Models.User;
-using Stroytorg.Contracts.ResponseModels;
+using Stroytorg.Infrastructure.Validations.Common;
 
 namespace Stroytorg.Host.Controllers;
 
@@ -20,11 +20,10 @@ public class UserController(ISender mediatR) : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BusinessResponse<UserDetail>>> GetByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<BusinessResult<UserDetail>>> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         var query = new GetUserQuery(id);
         var result = await mediatR.Send(query, cancellationToken);
-
-        return result.IsSuccess ? Ok(result) : NotFound(result);
+        return result.IsSuccess ? Ok(result.Value) : StatusCode(500, result.Error);
     }
 }

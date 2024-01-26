@@ -6,23 +6,25 @@ using Stroytorg.Domain.Data.Repositories.Interfaces;
 
 namespace Stroytorg.Domain.Data.Repositories;
 
-public class CategoryRepository : RepositoryBase<Category, int>, ICategoryRepository
+public class CategoryRepository(
+    IStroytorgDbContext context,
+    IUserContext httpUserContext)
+    : RepositoryBase<Category, int>(context, httpUserContext), ICategoryRepository
 {
-    public CategoryRepository(IStroytorgDbContext context, IUserContext httpUserContext)
-            : base(context, httpUserContext)
+    public async Task<Category?> GetByNameAsync(string name, CancellationToken cancellationToken)
     {
+        return await GetDbSet().FirstOrDefaultAsync(category => category.Name.ToLower().Equals(name.ToLower()), cancellationToken);
+    }
+    public async Task<bool> ExistsWithNameAsync(string name, CancellationToken cancellationToken)
+    {
+        return await GetDbSet().AnyAsync(category => category.Name.ToLower().Equals(name.ToLower()), cancellationToken);
     }
 
     protected override IQueryable<Category> GetQueryable()
     {
         return GetDbSet()
-                .Include(x => x.Materials)
+                .Include(category => category.Materials)
                 .AsQueryable();
-    }
-
-    public async Task<Category?> GetByNameAsync(string name, CancellationToken cancellationToken)
-    {
-        return await GetDbSet().FirstOrDefaultAsync(x => x.Name.ToLower().Equals(name.ToLower()), cancellationToken);
     }
 
     protected override DbSet<Category> GetDbSet()

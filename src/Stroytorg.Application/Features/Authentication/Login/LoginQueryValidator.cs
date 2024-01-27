@@ -15,10 +15,13 @@ internal class LoginQueryValidator : AbstractValidator<LoginQuery>
 
         RuleFor(user => user.Email)
             .MustAsync(UserExistsWithEmail)
+            .WithErrorCode(nameof(LoginQuery.Email))
             .WithMessage(BusinessErrorMessage.NotExistingUserWithEmail);
 
         RuleFor(user => user)
             .MustAsync(HasValidPassword)
+            .WhenAsync(async (user, validationContext, cancellationToken) => await UserExistsWithEmail(user.Email, cancellationToken))
+            .WithErrorCode(nameof(LoginQuery.Password))
             .WithMessage(BusinessErrorMessage.InvalidPassword);
     }
 

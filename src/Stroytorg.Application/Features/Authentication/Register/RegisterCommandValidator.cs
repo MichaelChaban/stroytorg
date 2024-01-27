@@ -14,11 +14,12 @@ internal class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 
         RuleFor(user => user.Email)
             .MustAsync(UserWithEmailNotExistsAsync)
+            .WithErrorCode(nameof(RegisterCommand.Email))
             .WithMessage(BusinessErrorMessage.ExistingUserWithEmail);
     }
 
     private async Task<bool> UserWithEmailNotExistsAsync(string email, CancellationToken cancellationToken)
     {
-        return !await this.userRepository.ExistsWithEmailAsync(email, cancellationToken);
+        return !await userRepository.ExistsWithEmailAsync(email, cancellationToken);
     }
 }

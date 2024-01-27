@@ -14,6 +14,7 @@ internal class GetCategoryQueryValidator : AbstractValidator<GetCategoryQuery>
 
         RuleFor(category => category.CategoryId)
             .MustAsync(CategoryWithIdExistsAsync)
+            .WithErrorCode(nameof(GetCategoryQuery.CategoryId))
             .WithMessage(BusinessErrorMessage.NotExistingCategoryWithId);
     }
 

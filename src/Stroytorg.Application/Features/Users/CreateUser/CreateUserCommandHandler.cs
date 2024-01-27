@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Contracts.Models.User;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
@@ -9,7 +9,7 @@ namespace Stroytorg.Application.Features.Users.CreateUser;
 public class CreateUserCommandHandler(
     IUserRepository userRepository,
     IAutoMapperTypeMapper autoMapperTypeMapper)
-    : IRequestHandler<CreateUserCommand, BusinessResult<User>>
+    : ICommandHandler<CreateUserCommand, User>
 {
     private readonly IUserRepository userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
@@ -19,8 +19,10 @@ public class CreateUserCommandHandler(
         var userToAdd = autoMapperTypeMapper.Map<Domain.Data.Entities.User>(command);
 
         await userRepository.AddAsync(userToAdd);
-        await userRepository.UnitOfWork.CommitAsync();
+        await userRepository.UnitOfWork.CommitAsync(cancellationToken);
 
-        return BusinessResult.Success(autoMapperTypeMapper.Map<User>(userToAdd));
+        var contractPerson = autoMapperTypeMapper.Map<User>(userToAdd);
+
+        return BusinessResult.Success(contractPerson);
     }
 }

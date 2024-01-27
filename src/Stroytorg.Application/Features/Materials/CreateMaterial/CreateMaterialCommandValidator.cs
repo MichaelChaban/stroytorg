@@ -18,10 +18,12 @@ internal class CreateMaterialCommandValidator : AbstractValidator<CreateMaterial
 
         RuleFor(material => material.Name)
             .MustAsync(MaterialWithNameNotExistsAsync)
+            .WithErrorCode(nameof(CreateMaterialCommand.Name))
             .WithMessage(BusinessErrorMessage.ExistingMaterialsWithName);
 
         RuleFor(material => material.CategoryId)
             .MustAsync(CategoryWithIdExistsAsync)
+            .WithErrorCode(nameof(CreateMaterialCommand.CategoryId))
             .WithMessage(BusinessErrorMessage.NotExistingCategoryWithId);
     }
 

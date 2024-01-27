@@ -14,6 +14,7 @@ public record GetPagedCategoryQuery<TFilter>(
     [Range(0, 500)]
     int Offset = 0,
 
-    [Range(0, int.MaxValue)]
-    int Limit = 50) : IRequest<PagedData<Category>>
+    [Range(0, 1000000)]
+    int Limit = 50)
+    : IRequest<PagedData<Category>>
     where TFilter : CategoryFilter;

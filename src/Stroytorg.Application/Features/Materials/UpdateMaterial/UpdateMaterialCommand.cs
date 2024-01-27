@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Stroytorg.Infrastructure.Validations.Common;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 
 namespace Stroytorg.Application.Features.Materials.UpdateMaterial;
 
@@ -14,4 +13,4 @@ public record UpdateMaterialCommand(
     decimal? Width,
     decimal? Length,
     decimal? Weight)
-    : IRequest<BusinessResult<int>>;
+    : ICommand<int>;

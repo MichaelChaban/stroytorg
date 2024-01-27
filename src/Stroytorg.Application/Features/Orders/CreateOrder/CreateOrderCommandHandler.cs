@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Application.Facades.Interfaces;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
@@ -10,8 +10,8 @@ namespace Stroytorg.Application.Features.Orders.CreateOrder;
 public class CreateOrderCommandHandler(
     IAutoMapperTypeMapper autoMapperTypeMapper,
     IMaterialRepository materialRepository,
-    IOrderFacade orderFacade) :
-    IRequestHandler<CreateOrderCommand, BusinessResult<int>>
+    IOrderFacade orderFacade)
+    : ICommandHandler<CreateOrderCommand, int>
 {
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
     private readonly IMaterialRepository materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));

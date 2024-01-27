@@ -18,16 +18,28 @@ internal class UpdateMaterialCommandValidator : AbstractValidator<UpdateMaterial
 
         RuleFor(material => material.MaterialId)
             .MustAsync(MaterialWithIdExistsAsync)
+            .WithErrorCode(nameof(UpdateMaterialCommand.MaterialId))
             .WithMessage(BusinessErrorMessage.NotExistingMaterialWithId);
+
+        RuleFor(material => material.Name)
+            .MustAsync(MaterialWithNameNotExistsAsync)
+            .WithErrorCode(nameof(UpdateMaterialCommand.Name))
+            .WithMessage(BusinessErrorMessage.ExistingMaterialsWithName);
 
         RuleFor(material => material.CategoryId)
             .MustAsync(CategoryWithIdExistsAsync)
+            .WithErrorCode(nameof(UpdateMaterialCommand.CategoryId))
             .WithMessage(BusinessErrorMessage.NotExistingCategoryWithId);
     }
 
     private async Task<bool> MaterialWithIdExistsAsync(int id, CancellationToken cancellationToken)
     {
         return await materialRepository.ExistsAsync(id, cancellationToken);
+    }
+
+    private async Task<bool> MaterialWithNameNotExistsAsync(string name, CancellationToken cancellationToken)
+    {
+        return !await materialRepository.ExistsWithNameAsync(name, cancellationToken);
     }
 
     private async Task<bool> CategoryWithIdExistsAsync(int id, CancellationToken cancellationToken)

@@ -14,6 +14,7 @@ internal class DeleteMaterialCommandValidator : AbstractValidator<DeleteMaterial
 
         RuleFor(material => material.MaterialId)
             .MustAsync(MaterialWithIdExistsAsync)
+            .WithErrorCode(nameof(DeleteMaterialCommand.MaterialId))
             .WithMessage(BusinessErrorMessage.NotExistingMaterialWithId);
     }
 

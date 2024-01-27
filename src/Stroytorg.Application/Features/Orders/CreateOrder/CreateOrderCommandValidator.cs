@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using Stroytorg.Application.Constants;
 using Stroytorg.Contracts.Models.Order;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
@@ -9,30 +10,54 @@ namespace Stroytorg.Application.Features.Orders.CreateOrder;
 internal class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
 {
     private readonly IMaterialRepository materialRepository;
-
+    
     public CreateOrderCommandValidator(IMaterialRepository materialRepository)
     {
         this.materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
 
+        RuleForEach(order => order.Materials)
+            .CustomAsync(CheckMaterialExistanceStockQuantityAsync);
+
         RuleFor(order => order.ShippingAddress)
             .NotEmpty()
             .When(order => order.ShippingType == Contracts.Enums.ShippingType.DeliveryToAddress)
+            .WithErrorCode(nameof(CreateOrderCommand.ShippingAddress))
             .WithMessage(BusinessErrorMessage.InvalidShippingInformation);
-
-        RuleForEach(order => order.Materials)
-            .MustAsync(CheckMaterialExistanceStockQuantityAsync);
     }
 
-    private async Task<bool> CheckMaterialExistanceStockQuantityAsync(MaterialMapCreate material, CancellationToken cancellationToken)
+    private async Task<bool> CheckMaterialExistanceStockQuantityAsync(MaterialMapCreate material, ValidationContext<CreateOrderCommand> context, CancellationToken cancellationToken)
     {
         var entityMaterial = await materialRepository.GetAsync(material.MaterialId, cancellationToken);
+        
+        if (entityMaterial is null)
+        {
+            context.AddFailure(
+                new ValidationFailure()
+                {
+                    PropertyName = nameof(MaterialMapCreate.MaterialId),
+                    ErrorCode = nameof(MaterialMapCreate.MaterialId),
+                    ErrorMessage = $"{BusinessErrorMessage.NotExistingMaterialWithId} {material.MaterialId}"
+                });
+            return false;
+        }
 
-        return entityMaterial is not null
-            && MaterialStockQuantityValidAsync(entityMaterial, material);
+        return MaterialStockQuantityValid(entityMaterial, material, context);
     }
 
-    private static bool MaterialStockQuantityValidAsync(DB.Material entityMaterial, MaterialMapCreate material)
+    private static bool MaterialStockQuantityValid(DB.Material entityMaterial, MaterialMapCreate material, ValidationContext<CreateOrderCommand> context)
     {
-        return material.TotalMaterialAmount > entityMaterial.StockAmount;
+        if (material.TotalMaterialAmount > entityMaterial.StockAmount)
+        {
+            context.AddFailure(
+                new ValidationFailure()
+                {
+                    PropertyName = nameof(MaterialMapCreate.TotalMaterialAmount),
+                    ErrorCode = $"{nameof(MaterialMapCreate.TotalMaterialAmount)}: {nameof(MaterialMapCreate.MaterialId)} {material.MaterialId}",
+                    ErrorMessage = string.Format(BusinessErrorMessage.InvalidOrderMaterialAmount, material.MaterialId)
+        });
+            return false;
+        }
+
+        return true;
     }
 }

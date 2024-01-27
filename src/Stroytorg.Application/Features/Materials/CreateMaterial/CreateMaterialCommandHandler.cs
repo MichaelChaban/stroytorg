@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 using Stroytorg.Infrastructure.Validations.Common;
@@ -7,8 +7,8 @@ namespace Stroytorg.Application.Features.Materials.CreateMaterial;
 
 public class CreateMaterialCommandHandler(
     IAutoMapperTypeMapper autoMapperTypeMapper,
-    IMaterialRepository materialRepository) :
-    IRequestHandler<CreateMaterialCommand, BusinessResult<int>>
+    IMaterialRepository materialRepository)
+    : ICommandHandler<CreateMaterialCommand, int>
 {
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
     private readonly IMaterialRepository materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));

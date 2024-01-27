@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Contracts.Models.User;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
@@ -9,7 +9,7 @@ namespace Stroytorg.Application.Features.Users.GetUserByEmail;
 public class GetUserByEmailQueryHandler(
     IUserRepository userRepository,
     IAutoMapperTypeMapper autoMapperTypeMapper)
-    : IRequestHandler<GetUserByEmailQuery, BusinessResult<User>>
+    : IQueryHandler<GetUserByEmailQuery, User>
 {
     private readonly IUserRepository userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));

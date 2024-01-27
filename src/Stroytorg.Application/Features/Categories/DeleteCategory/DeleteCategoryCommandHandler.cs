@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.Validations.Common;
 
@@ -6,7 +6,7 @@ namespace Stroytorg.Application.Features.Categories.DeleteCategory;
 
 public class DeleteCategoryCommandHandler(
     ICategoryRepository categoryRepository) :
-    IRequestHandler<DeleteCategoryCommand, BusinessResult<int>>
+    ICommandHandler<DeleteCategoryCommand, int>
 {
     private readonly ICategoryRepository categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
 

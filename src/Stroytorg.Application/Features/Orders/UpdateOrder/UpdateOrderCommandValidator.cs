@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Stroytorg.Application.Constants;
+using Stroytorg.Contracts.Models.Order;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 
 namespace Stroytorg.Application.Features.Orders.UpdateOrder;
@@ -14,10 +15,13 @@ internal class UpdateOrderCommandValidator : AbstractValidator<UpdateOrderComman
 
         RuleFor(order => order.OrderId)
             .MustAsync(OrderWithIdExistsAsync)
+            .WithErrorCode(nameof(UpdateOrderCommand.OrderId))
             .WithMessage(BusinessErrorMessage.NotExistingOrderWithId);
 
-        RuleFor(order => order.OrderId)
-            .MustAsync(OrderIsActiveAsync)
+        RuleFor(order => order)
+            .MustAsync((order, cancellation) => OrderIsActiveAsync(order.OrderId, cancellation))
+            .WhenAsync((order, cancellation) => OrderWithIdExistsAsync(order.OrderId, cancellation))
+            .WithErrorCode(nameof(OrderDetail.IsActive))
             .WithMessage(BusinessErrorMessage.NotActiveOrderWithId);
     }
 

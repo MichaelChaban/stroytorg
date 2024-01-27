@@ -14,6 +14,7 @@ internal class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 
         RuleFor(user => user.Email)
             .MustAsync(UserWithEmailNotExistsAsync)
+            .WithErrorCode(nameof(CreateUserCommand.Email))
             .WithMessage(BusinessErrorMessage.ExistingUserWithEmail);
     }
 

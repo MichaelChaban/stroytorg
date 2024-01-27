@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Contracts.Models.Order;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
@@ -8,8 +8,8 @@ namespace Stroytorg.Application.Features.Orders.GetOrder;
 
 public class GetOrderQueryHandler(
     IAutoMapperTypeMapper autoMapperTypeMapper,
-    IOrderRepository orderRepository) :
-    IRequestHandler<GetOrderQuery, BusinessResult<OrderDetail>>
+    IOrderRepository orderRepository)
+    : IQueryHandler<GetOrderQuery, OrderDetail>
 {
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
     private readonly IOrderRepository orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));

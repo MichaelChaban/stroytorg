@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Contracts.Models.Material;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
@@ -9,7 +9,7 @@ namespace Stroytorg.Application.Features.Materials.GetMaterial;
 public class GetMaterialQueryHandler(
     IAutoMapperTypeMapper autoMapperTypeMapper,
     IMaterialRepository materialRepository)
-    : IRequestHandler<GetMaterialQuery, BusinessResult<MaterialDetail>>
+    : IQueryHandler<GetMaterialQuery, MaterialDetail>
 {
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
     private readonly IMaterialRepository materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));

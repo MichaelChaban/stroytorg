@@ -14,10 +14,12 @@ internal class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategory
 
         RuleFor(category => category.CategoryId)
             .MustAsync(CategoryWithIdExistsAsync)
+            .WithErrorCode(nameof(UpdateCategoryCommand.CategoryId))
             .WithMessage(BusinessErrorMessage.NotExistingCategoryWithId);
 
         RuleFor(category => category.Name)
             .MustAsync(CategoryWithNameNotExistsAsync)
+            .WithErrorCode(nameof(UpdateCategoryCommand.Name))
             .WithMessage(BusinessErrorMessage.ExistingCategoryWithName);
     }
 

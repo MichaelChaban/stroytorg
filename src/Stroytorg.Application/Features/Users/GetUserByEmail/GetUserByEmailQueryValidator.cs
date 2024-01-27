@@ -15,6 +15,7 @@ internal class GetUserByEmailQueryValidator : AbstractValidator<CreateUserWithGo
 
         RuleFor(user => user.Email)
             .MustAsync(UserWithEmailExistsAsync)
+            .WithErrorCode(nameof(CreateUserWithGoogleCommand.Email))
             .WithMessage(BusinessErrorMessage.NotExistingUserWithEmail);
     }
 

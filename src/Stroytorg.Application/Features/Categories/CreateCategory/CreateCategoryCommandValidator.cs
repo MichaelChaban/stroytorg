@@ -14,6 +14,7 @@ internal class CreateCategoryCommandValidator : AbstractValidator<CreateCategory
 
         RuleFor(category => category.Name)
             .MustAsync(CategoryWithNameNotExistsAsync)
+            .WithErrorCode(nameof(CreateCategoryCommand.Name))
             .WithMessage(BusinessErrorMessage.ExistingCategoryWithName);
     }
 

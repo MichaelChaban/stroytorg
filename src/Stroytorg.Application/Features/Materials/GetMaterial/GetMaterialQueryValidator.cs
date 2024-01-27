@@ -14,6 +14,7 @@ internal class GetMaterialQueryValidator : AbstractValidator<GetMaterialQuery>
 
         RuleFor(material => material.MaterialId)
             .MustAsync(MaterialWithIdExistsAsync)
+            .WithErrorCode(nameof(GetMaterialQuery.MaterialId))
             .WithMessage(BusinessErrorMessage.NotExistingMaterialWithId);
     }
 

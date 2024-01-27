@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Stroytorg.Infrastructure.Validations.Common;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 
 namespace Stroytorg.Application.Features.Materials.CreateMaterial;
 
@@ -13,4 +12,4 @@ public record CreateMaterialCommand(
     decimal? Width,
     decimal? Length,
     decimal? Weight)
-    : IRequest<BusinessResult<int>>;
+    : ICommand<int>;

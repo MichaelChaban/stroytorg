@@ -1,8 +1,7 @@
-﻿using MediatR;
-using Stroytorg.Infrastructure.Validations.Common;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 
 namespace Stroytorg.Application.Features.Categories.CreateCategory;
 
 public record CreateCategoryCommand(
     string Name)
-    : IRequest<BusinessResult<int>>;
+    : ICommand<int>;

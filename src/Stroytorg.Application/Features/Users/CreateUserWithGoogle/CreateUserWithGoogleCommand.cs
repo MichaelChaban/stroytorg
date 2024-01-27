@@ -1,6 +1,5 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Contracts.Models.User;
-using Stroytorg.Infrastructure.Validations.Common;
 
 namespace Stroytorg.Application.Features.Users.CreateUserWithGoogle;
 
@@ -10,4 +9,4 @@ public record CreateUserWithGoogleCommand(
     string Email,
     string FirstName,
     string LastName)
-    : IRequest<BusinessResult<User>>;
+    : ICommand<User>;

@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Contracts.Models.Category;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
@@ -8,8 +8,8 @@ namespace Stroytorg.Application.Features.Categories.GetCategory;
 
 public class GetCategoryQueryHandler(
     IAutoMapperTypeMapper autoMapperTypeMapper,
-    ICategoryRepository categoryRepository) :
-    IRequestHandler<GetCategoryQuery, BusinessResult<CategoryDetail>>
+    ICategoryRepository categoryRepository)
+    : IQueryHandler<GetCategoryQuery, CategoryDetail>
 {
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
     private readonly ICategoryRepository categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));

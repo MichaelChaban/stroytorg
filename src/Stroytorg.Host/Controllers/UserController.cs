@@ -4,26 +4,25 @@ using Microsoft.AspNetCore.Mvc;
 using Stroytorg.Application.Constants;
 using Stroytorg.Application.Features.Users.GetUser;
 using Stroytorg.Contracts.Models.User;
-using Stroytorg.Infrastructure.Validations.Common;
+using Stroytorg.Host.Abstractions;
 
 namespace Stroytorg.Host.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserController(ISender mediatR) : ControllerBase
+public class UserController(ISender mediatR) : ApiController(mediatR)
 {
-    private readonly ISender mediatR = mediatR ?? throw new ArgumentNullException(nameof(mediatR));
-
     [HttpGet("{id:int}")]
     [Authorize(Roles = UserRole.Admin)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BusinessResult<UserDetail>>> GetByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         var query = new GetUserQuery(id);
         var result = await mediatR.Send(query, cancellationToken);
-        return result.IsSuccess ? Ok(result.Value) : StatusCode(500, result.Error);
+
+        return HandleResult<UserDetail>(result);
     }
 }

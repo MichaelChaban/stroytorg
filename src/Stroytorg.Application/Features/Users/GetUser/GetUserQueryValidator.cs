@@ -14,6 +14,7 @@ internal class GetUserQueryValidator : AbstractValidator<GetUserQuery>
 
         RuleFor(user => user.UserId)
             .MustAsync(UserWithIdExistsAsync)
+            .WithErrorCode(nameof(GetUserQuery.UserId))
             .WithMessage(BusinessErrorMessage.NotExistingUserWithId);
     }
 

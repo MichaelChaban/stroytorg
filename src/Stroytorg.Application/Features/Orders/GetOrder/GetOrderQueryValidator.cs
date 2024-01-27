@@ -13,6 +13,7 @@ internal class GetOrderQueryValidator : AbstractValidator<GetOrderQuery>
 
         RuleFor(order => order.OrderId)
             .MustAsync(OrderWithIdExistsAsync)
+            .WithErrorCode(nameof(GetOrderQuery.OrderId))
             .WithMessage(BusinessErrorMessage.NotExistingOrderWithId);
     }
 

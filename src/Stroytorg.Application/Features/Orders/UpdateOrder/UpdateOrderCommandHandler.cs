@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Application.Facades.Interfaces;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
@@ -10,8 +10,8 @@ namespace Stroytorg.Application.Features.Orders.UpdateOrder;
 public class UpdateOrderCommandHandler(
     IAutoMapperTypeMapper autoMapperTypeMapper,
     IOrderRepository orderRepository,
-    IOrderFacade orderFacade) :
-    IRequestHandler<UpdateOrderCommand, BusinessResult<int>>
+    IOrderFacade orderFacade)
+    : ICommandHandler<UpdateOrderCommand, int>
 {
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
     private readonly IOrderRepository orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
@@ -27,7 +27,15 @@ public class UpdateOrderCommandHandler(
             await orderFacade.UpdateOrderMaterialMapAsync(orderEntity);
         }
 
-        orderRepository.Update(orderEntity);
+        if(orderEntity.OrderStatus is DbEnum.OrderStatus.Completed or DbEnum.OrderStatus.Cancelled)
+        {
+            orderRepository.Deactivate(orderEntity);
+        }
+        else
+        {
+            orderRepository.Update(orderEntity);
+        }
+
         await orderRepository.UnitOfWork.CommitAsync(cancellationToken);
 
         return BusinessResult.Success(orderEntity.Id);

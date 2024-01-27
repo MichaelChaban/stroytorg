@@ -18,6 +18,7 @@ using Stroytorg.Application.Features.Materials.UpdateMaterial;
 using Stroytorg.Application.Features.Orders.CreateOrder;
 using Stroytorg.Application.Features.Orders.UpdateOrder;
 using Stroytorg.Application.Features.Users.CreateUserWithGoogle;
+using Stroytorg.Application.Features.Users.CreateUser;
 
 namespace Stroytorg.Application.Extensions;
 
@@ -65,6 +66,8 @@ public class AutoMapperFactory
         _ = config.CreateMap<RegisterCommand, UserRegister>();
 
         _ = config.CreateMap<CreateUserWithGoogleCommand, DbData.User>();
+
+        _ = config.CreateMap<CreateUserCommand, DbData.User>();
     }
 
     private static void MapOrder(IMapperConfigurationExpression config)

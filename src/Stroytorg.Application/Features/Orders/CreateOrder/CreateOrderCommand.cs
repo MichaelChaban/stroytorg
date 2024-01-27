@@ -1,7 +1,6 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Contracts.Enums;
 using Stroytorg.Contracts.Models.Order;
-using Stroytorg.Infrastructure.Validations.Common;
 
 namespace Stroytorg.Application.Features.Orders.CreateOrder;
 
@@ -14,4 +13,4 @@ public record CreateOrderCommand(
     PaymentType PaymentType,
     IEnumerable<MaterialMapCreate> Materials,
     string? ShippingAddress)
-    : IRequest<BusinessResult<int>>;
+    : ICommand<int>;

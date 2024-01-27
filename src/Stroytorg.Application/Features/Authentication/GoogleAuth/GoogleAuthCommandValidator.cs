@@ -10,10 +10,12 @@ internal class GoogleAuthCommandValidator : AbstractValidator<GoogleAuthCommand>
     {
         RuleFor(user => user.Email)
             .Equal(user => new System.Net.Mail.MailAddress(user.Email).Address)
+            .WithErrorCode(nameof(GoogleAuthCommand.Email))
             .WithMessage(BusinessErrorMessage.InvalidEmailFormat);
 
         RuleFor(user => user.Token)
             .MustAsync(ValidateGoogleUserAsync)
+            .WithErrorCode(nameof(GoogleAuthCommand.Token))
             .WithMessage(BusinessErrorMessage.InvalidGoogleUserToken);
     }
 

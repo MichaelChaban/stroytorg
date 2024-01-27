@@ -18,10 +18,12 @@ internal class DeleteCategoryCommandValidator : AbstractValidator<DeleteCategory
 
         RuleFor(category => category.CategoryId)
             .MustAsync(CategoryWithIdExistsAsync)
+            .WithErrorCode(nameof(DeleteCategoryCommand.CategoryId))
             .WithMessage(BusinessErrorMessage.NotExistingCategoryWithId);
 
         RuleFor(category => category.CategoryId)
             .MustAsync(CategoryMaterialsNotExistAsync)
+            .WithErrorCode(nameof(DeleteCategoryCommand.CategoryId))
             .WithMessage(BusinessErrorMessage.ExistingMaterialsWithCategoryId);
     }
 

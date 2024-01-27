@@ -9,30 +9,33 @@ public class ValidationPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
     where TResponse : BusinessResult
 {
-    private readonly IEnumerable<IValidator<TRequest>> _validators;
+    private readonly IEnumerable<IValidator<TRequest>> validators;
 
     public ValidationPipelineBehavior(IEnumerable<IValidator<TRequest>> validators) =>
-        _validators = validators;
+        this.validators = validators;
 
     public async Task<TResponse> Handle(
         TRequest request,
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        if (!_validators.Any())
+        if (!validators.Any())
         {
             return await next();
         }
 
-        Error[] errors = _validators
-            .Select(validator => validator.Validate(request))
-            .SelectMany(validationResult => validationResult.Errors)
-            .Where(validationFailure => validationFailure is not null)
-            .Select(failure => new Error(
-                failure.PropertyName,
-                failure.ErrorMessage))
+        var errors = (await Task.WhenAll(validators
+            .Select(async validator =>
+            {
+                var validationResult = await validator.ValidateAsync(request);
+                return validationResult.Errors
+                    .Where(validationFailure => validationFailure is not null)
+                    .Select(failure => new Error(failure.ErrorCode, failure.ErrorMessage));
+            })))
+            .SelectMany(validationFailures => validationFailures)
             .Distinct()
             .ToArray();
+
 
         if (errors.Any())
         {
@@ -45,6 +48,9 @@ public class ValidationPipelineBehavior<TRequest, TResponse>
     private static TResult CreateValidationResult<TResult>(Error[] errors)
         where TResult : BusinessResult
     {
+        var tResultType = typeof(TResult);
+        var businessReult = typeof(BusinessResult);
+
         if (typeof(TResult) == typeof(BusinessResult))
         {
             return (ValidationResult.WithErrors(errors) as TResult)!;

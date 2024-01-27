@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Contracts.ResponseModels;
 
 namespace Stroytorg.Application.Features.Authentication.GoogleAuth;
@@ -9,4 +9,4 @@ public record GoogleAuthCommand(
     string Email,
     string FirstName,
     string LastName)
-    : IRequest<AuthResponse>;
+    : ICommand<JwtTokenResponse>;

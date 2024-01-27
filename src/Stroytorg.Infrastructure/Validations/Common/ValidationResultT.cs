@@ -2,15 +2,10 @@
 
 namespace Stroytorg.Infrastructure.Validations.Common;
 
-public class ValidationResult<TValue> : BusinessResult<TValue>, IValidationResult
+public class ValidationResult<TValue>(Error[] errors) 
+    : BusinessResult<TValue>(false, IValidationResult.ValidationError, default), IValidationResult
 {
-    public ValidationResult(Error[] errors)
-    : base(false, IValidationResult.ValidationError, default)
-    {
-        Errors = errors;
-    }
+    public Error[] Errors { get; } = errors;
 
-    public Error[] Errors { get; }
-
-    public static ValidationResult<TValue> WithError(Error[] errors) => new(errors);
+    public static ValidationResult<TValue> WithErrors(Error[] errors) => new(errors);
 }

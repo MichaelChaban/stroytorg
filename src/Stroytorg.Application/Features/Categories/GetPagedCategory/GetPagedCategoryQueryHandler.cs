@@ -27,8 +27,6 @@ public class GetPagedCategoryQueryHandler(
         var items = await categoryRepository.GetPagedSortAsync<CategorySort>(request!.Offset, request.Limit, filter!, autoMapperTypeMapper.Map<SortDefinition>(request.Sort), cancellationToken);
         var mappedItems = autoMapperTypeMapper.Map<Category>(items);
 
-        return new PagedData<Category>(
-            Data: mappedItems,
-            Total: totalItems);
+        return new PagedData<Category>(Data: mappedItems, Total: totalItems);
     }
 }

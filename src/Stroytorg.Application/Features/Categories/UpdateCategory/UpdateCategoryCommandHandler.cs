@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿using Stroytorg.Application.Abstractions.Interfaces;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 using Stroytorg.Infrastructure.Validations.Common;
@@ -7,8 +7,8 @@ namespace Stroytorg.Application.Features.Categories.UpdateCategory;
 
 public class UpdateCategoryCommandHandler(
     IAutoMapperTypeMapper autoMapperTypeMapper,
-    ICategoryRepository categoryRepository) :
-    IRequestHandler<UpdateCategoryCommand, BusinessResult<int>>
+    ICategoryRepository categoryRepository)
+    : ICommandHandler<UpdateCategoryCommand, int>
 {
     private readonly IAutoMapperTypeMapper autoMapperTypeMapper = autoMapperTypeMapper ?? throw new ArgumentNullException(nameof(autoMapperTypeMapper));
     private readonly ICategoryRepository categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));

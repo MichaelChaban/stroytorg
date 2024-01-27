@@ -39,7 +39,8 @@ public class GoogleAuthCommandHandler(
             return BusinessResult.Success(tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(contractUserResponse)));
         }
 
-        var createdUserResponse = await CreateUserWithGoogle(command, cancellationToken);
+        var createdUserResponse = await mediatR.Send(new CreateUserWithGoogleCommand(command.Token,command.GoogleId,command.Email,
+                command.FirstName,command.LastName), cancellationToken);
         if (createdUserResponse.IsFailure)
         {
             return BusinessResult.Failure<JwtTokenResponse>(createdUserResponse.Error!);
@@ -48,17 +49,5 @@ public class GoogleAuthCommandHandler(
         await orderFacade.AssignOrderToUserAsync(createdUserResponse.Value);
 
         return BusinessResult.Success(tokenGeneratorService.GenerateToken(autoMapperTypeMapper.Map<User>(createdUserResponse.Value)));
-    }
-
-    private async Task<BusinessResult<User>> CreateUserWithGoogle(GoogleAuthCommand command, CancellationToken cancellationToken)
-    {
-        return await mediatR.Send(
-            new CreateUserWithGoogleCommand(
-                command.Token,
-                command.GoogleId,
-                command.Email,
-                command.FirstName,
-                command.LastName),
-            cancellationToken);
     }
 }

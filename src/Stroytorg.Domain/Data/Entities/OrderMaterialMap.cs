@@ -9,13 +9,13 @@ public class OrderMaterialMap : BaseEntity<int>
     public int OrderId { get; set; }
 
     [Required]
-    public int MaterialId{ get; set; }
+    public int MaterialId { get; set; }
 
-    public double? TotalMaterialAmount { get; set; }
+    public decimal TotalMaterialAmount { get; set; }
 
-    public double? TotalMaterialWeight { get; set; }
+    public decimal UnitPrice { get; set; }
 
-    public double? UnitPrice { get; set; }
+    public decimal? TotalMaterialWeight { get; set; }
 
     public virtual Order? Order { get; set; }
 

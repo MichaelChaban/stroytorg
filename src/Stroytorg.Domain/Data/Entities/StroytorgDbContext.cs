@@ -28,7 +28,17 @@ public class StroytorgDbContext : DbContext, IStroytorgDbContext
         Database.Migrate();
     }
 
-    public async Task Commit() => await SaveChangesAsync();
+    public async Task CommitAsync(CancellationToken cancellationToken)
+    {
+        try 
+        { 
+            await SaveChangesAsync(cancellationToken); 
+        }
+        catch (Exception) 
+        {
+            Rollback();
+        }
+    }
 
     public void Rollback()
     {
@@ -57,7 +67,7 @@ public class StroytorgDbContext : DbContext, IStroytorgDbContext
 
     public virtual DbSet<Material> Material { get; set; }
 
-    public virtual DbSet<OrderMaterialMap> Order { get; set; }
+    public virtual DbSet<Order> Order { get; set; }
 
     public virtual DbSet<OrderMaterialMap> OrderMaterialMap { get; set; }
 }

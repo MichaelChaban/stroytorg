@@ -17,26 +17,24 @@ public class Material : Auditable
     public int CategoryId { get; set; }
 
     [Required]
-    [Range(0, double.MaxValue)]
-    public double Price { get; set; }
+    [Range(0, 100000)]
+    public decimal Price { get; set; }
 
     [Required]
-    [Range(0, double.MaxValue)]
-    public double StockAmount { get; set; }
+    [Range(0, 100000)]
+    public decimal StockAmount { get; set; }
+
+    [Range(0, 100000)]
+    public decimal? Height { get; set; }
 
     [Range(0, double.MaxValue)]
-    public double? Height { get; set; }
+    public decimal? Width { get; set; }
 
-    [Range(0, double.MaxValue)]
-    public double? Width { get; set; }
+    [Range(0, 100000)]
+    public decimal? Length { get; set; }
 
-    [Range(0, double.MaxValue)]
-    public double? Length { get; set; }
-
-    [Range(0, double.MaxValue)]
-    public double? Weight { get; set; }
-
-    public bool IsFavorite { get; set; } = false;
+    [Range(0, 100000)]
+    public decimal? Weight { get; set; }
 
     public virtual Category? Category { get; set; }
 

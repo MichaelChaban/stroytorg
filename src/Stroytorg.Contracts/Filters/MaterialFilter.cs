@@ -8,7 +8,6 @@ public record MaterialFilter(
     double? MaxPrice,
     double? MinStockAmount,
     double? MaxStockAmount,
-    bool? IsFavorite,
     double? MinHeight,
     double? MaxHeight,
     double? MinWidth,

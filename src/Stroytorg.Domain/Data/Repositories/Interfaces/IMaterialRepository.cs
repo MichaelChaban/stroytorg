@@ -4,5 +4,5 @@ namespace Stroytorg.Domain.Data.Repositories.Interfaces;
 
 public interface IMaterialRepository : IRepository<Material, int>
 {
-    Task<Material?> GetByNameAsync(string name);
+    Task<Material?> GetByNameAsync(string name, CancellationToken cancellationToken);
 }

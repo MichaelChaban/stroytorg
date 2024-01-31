@@ -10,6 +10,8 @@ public interface IRepository<TEntity, TKey>
 {
     IUnitOfWork UnitOfWork { get; }
 
+    Task<bool> ExistsAsync(TKey id, CancellationToken cancellationToken);
+
     Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken);
 
     Task<IEnumerable<TEntity>> GetByIdsAsync(TKey[] ids, CancellationToken cancellationToken);

@@ -26,7 +26,7 @@ public class TokenGeneratorService(IJwtSettings jwtSettings) : ITokenGeneratorSe
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
-        return new JwtTokenResponse(Token: tokenHandler.WriteToken(token));
+        return new JwtTokenResponse(tokenHandler.WriteToken(token));
     }
 
     private IEnumerable<Claim> GetClaims(User context)

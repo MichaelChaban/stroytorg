@@ -6,13 +6,11 @@ using Stroytorg.Domain.Data.Repositories.Interfaces;
 
 namespace Stroytorg.Domain.Data.Repositories;
 
-public class OrderRepository : RepositoryBase<Order, int>, IOrderRepository
+public class OrderRepository(
+    IStroytorgDbContext context,
+    IUserContext httpUserContext)
+    : RepositoryBase<Order, int>(context, httpUserContext), IOrderRepository
 {
-    public OrderRepository(IStroytorgDbContext context, IUserContext httpUserContext)
-            : base(context, httpUserContext)
-    {
-    }
-
     public override void Deactivate(Order entity)
     {
         entity.IsActive = false;
@@ -22,6 +20,11 @@ public class OrderRepository : RepositoryBase<Order, int>, IOrderRepository
         entity.OrderStatus = Enums.OrderStatus.Cancelled;
 
         Update(entity);
+    }
+
+    public async Task<IEnumerable<Order>> GetOrdersByEmailAsync(string email)
+    {
+        return await GetDbSet().Where(x => x.Email == email).ToListAsync();
     }
 
     protected override IQueryable<Order> GetQueryable()
@@ -36,10 +39,5 @@ public class OrderRepository : RepositoryBase<Order, int>, IOrderRepository
     protected override DbSet<Order> GetDbSet()
     {
         return StroytorgContext.Order;
-    }
-
-    public async Task<IEnumerable<Order>> GetOrdersByEmailAsync(string email)
-    {
-        return await GetDbSet().Where(x => x.Email == email).ToListAsync();
     }
 }

@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
+using Stroytorg.Application;
+using Stroytorg.Application.Behaviors;
 using Stroytorg.Application.Extensions;
 using Stroytorg.Application.Facades;
 using Stroytorg.Application.Facades.Interfaces;
-using Stroytorg.Application.Features.Authentication.Queries;
 using Stroytorg.Application.Services;
 using Stroytorg.Application.Services.Interfaces;
 using Stroytorg.Domain.Data.Entities;
@@ -14,6 +17,7 @@ using Stroytorg.Domain.Data.Entities.Common;
 using Stroytorg.Domain.Data.Repositories;
 using Stroytorg.Domain.Data.Repositories.Common;
 using Stroytorg.Domain.Data.Repositories.Interfaces;
+using Stroytorg.Host.Middlewares;
 using Stroytorg.Infrastructure.AutoMapperTypeMapper;
 using Stroytorg.Infrastructure.Configuration;
 using Stroytorg.Infrastructure.Configuration.Interfaces;
@@ -28,7 +32,9 @@ public static class ServiceExtensions
     {
         services
             .AddHttpContextAccessor()
+            .AddMiddlewares()
             .AddMediatR()
+            .AddValidators()
             .AddAutoMapper()
             .AddMicroservices()
             .AddFacades()
@@ -131,8 +137,22 @@ public static class ServiceExtensions
 
     private static IServiceCollection AddMediatR(this IServiceCollection services)
     {
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(
-            typeof(LoginQuery).Assembly));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(AssemblyReference.Assembly));
+
+        return services;
+    }
+
+    private static IServiceCollection AddValidators(this IServiceCollection services)
+    {
+        services.TryAddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+        services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
+        return services;
+    }
+
+    private static IServiceCollection AddMiddlewares(this IServiceCollection services)
+    {
+        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddProblemDetails();
 
         return services;
     }

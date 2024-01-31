@@ -10,6 +10,15 @@ using Stroytorg.Contracts.Filters;
 using Stroytorg.Contracts.Models.Category;
 using Stroytorg.Contracts.Models.Material;
 using Stroytorg.Contracts.Enums;
+using Stroytorg.Application.Features.Authentication.Register;
+using Stroytorg.Application.Features.Categories.CreateCategory;
+using Stroytorg.Application.Features.Categories.UpdateCategory;
+using Stroytorg.Application.Features.Materials.CreateMaterial;
+using Stroytorg.Application.Features.Materials.UpdateMaterial;
+using Stroytorg.Application.Features.Orders.CreateOrder;
+using Stroytorg.Application.Features.Orders.UpdateOrder;
+using Stroytorg.Application.Features.Users.CreateUserWithGoogle;
+using Stroytorg.Application.Features.Users.CreateUser;
 
 namespace Stroytorg.Application.Extensions;
 
@@ -52,6 +61,13 @@ public class AutoMapperFactory
         _ = config.CreateMap<UserRegister, DbData.User>();
 
         _ = config.CreateMap<UserGoogleAuth, DbData.User>();
+
+        _ = config.CreateMap<RegisterCommand, DbData.User>();
+        _ = config.CreateMap<RegisterCommand, UserRegister>();
+
+        _ = config.CreateMap<CreateUserWithGoogleCommand, DbData.User>();
+
+        _ = config.CreateMap<CreateUserCommand, DbData.User>();
     }
 
     private static void MapOrder(IMapperConfigurationExpression config)
@@ -71,6 +87,10 @@ public class AutoMapperFactory
             .ForMember(nameof(DbData.Order.OrderMaterialMap), opt => opt.Ignore());
 
         _ = config.CreateMap<OrderEdit, DbData.Order>();
+
+        _ = config.CreateMap<CreateOrderCommand, DbData.Order>();
+
+        _ = config.CreateMap<UpdateOrderCommand, DbData.Order>();
     }
 
     private static void MapCategory(IMapperConfigurationExpression config)
@@ -79,6 +99,10 @@ public class AutoMapperFactory
         _ = config.CreateMap<DbData.Category, CategoryDetail>();
 
         _ = config.CreateMap<CategoryEdit, DbData.Category>();
+
+        _ = config.CreateMap<CreateCategoryCommand, DbData.Category>();
+
+        _ = config.CreateMap<UpdateCategoryCommand, DbData.Category>();
     }
 
     private static void MapMaterial(IMapperConfigurationExpression config)
@@ -87,6 +111,10 @@ public class AutoMapperFactory
         _ = config.CreateMap<DbData.Material, MaterialDetail>();
 
         _ = config.CreateMap<MaterialEdit, DbData.Material>();
+
+        _ = config.CreateMap<CreateMaterialCommand, DbData.Material>();
+
+        _ = config.CreateMap<UpdateMaterialCommand, DbData.Material>();
     }
 
     private static void MapOrderMaterialMap(IMapperConfigurationExpression config)

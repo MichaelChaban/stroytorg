@@ -20,12 +20,13 @@ var app = builder.Build();
 
 app.MigrateDatabase();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler();
 
 app.UseCors("Stroytorg");
 

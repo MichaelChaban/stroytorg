@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpParams, HttpResponse } from '@angular/common/http';
-import * as moment from 'moment';
 
 export function requestParamsToHttpParams<T>(
   requestParams: RequestParams<T>,
@@ -56,11 +55,11 @@ function getSort(
 }
 
 function transformData(data: any) {
-  if (data) {
-    if (moment.isMoment(data)) {
-      data = moment(data).toDate().toISOString();
-    }
-  }
+  // if (data) {
+  //   if (moment.isMoment(data)) {
+  //     data = moment(data).toDate().toISOString();
+  //   }
+  // }
   return data;
 }
 

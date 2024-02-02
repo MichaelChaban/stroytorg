@@ -1,1 +1,125 @@
-<p>stroytorg-table works!</p>
+<div class="gov-table-cover" style="position: relative">
+  <table
+    class="gov-table gov-sortable-table gov-js-sortable-table gov-table--mobile-block"
+    style="overflow: auto"
+  >
+    <thead>
+      <tr>
+        @if(multipleSelect){
+        <th>
+          <!-- <div style="display: flex; align-items: start">
+              <komix-gov-checkbox id="checkAll-checkbox" style="padding-bottom: 1rem !important"
+                (valueChange)="checkAllCheckBoxes($event)"></komix-gov-checkbox>
+            </div> -->
+        </th>
+        } @if(autoIndex){
+        <th>
+          <span
+            style="color: #2362a2"
+            onmouseover="this.style.cursor='default'"
+            role="button"
+            tabindex="0"
+            >#</span
+          >
+        </th>
+        } @for(column of tableColumns; track $index){
+        <th>
+          <span
+            style="color: #2362a2; width: max-content !important"
+            onmouseover="this.style.cursor='pointer'"
+            [class.gov-sortable-table__trigger]="column.sortDirection"
+            class="gov-sortable-table__trigger--{{
+              column.sortDirection
+            }} flex-wrap d-inline-flex"
+            (click)="sort(column)"
+            role="button"
+            tabindex="0"
+            >{{ column.headerGetter(column.headerName, $index) }}</span
+          >
+        </th>
+        }
+      </tr>
+    </thead>
+    <tbody class="gov-table__body">
+      @for(row of tableRows; track $index){
+      <tr
+        [ngClass]="{ 'marked-row': row.marked, 'row-border': row.focused }"
+        [attr.row-index]="getIndex($index)"
+      >
+        @if(multipleSelect){
+        <td>
+          <span style="display: flex; align-items: end; padding-top: 0.3rem">
+            <stroytorg-checkbox
+              [id]="'cb-' + $index"
+              [attr.index]="getIndex($index)"
+              style="padding-bottom: 1.5rem !important"
+              [checked]="row.selected"
+              [forceDisableFormControl]="true"
+              (valueChange)="checkboxChecked($event, row.row)"
+            ></stroytorg-checkbox>
+          </span>
+        </td>
+        } @if(autoIndex){
+        <td>
+          <span style="display: flex; align-items: end">
+            <span>{{ getIndex($index) }}</span>
+          </span>
+        </td>
+        } @for(cd of tableColumns; track cd.configuration.id){
+        <td>
+          @if(isMobileBlock | async){
+          <h6>
+            {{ cd.headerGetter(cd.headerName, $index) }}
+          </h6>
+          }
+          <div [class]="cd.columnClass!">
+            @if(cd.template){
+            <span
+              *ngTemplateOutlet="
+                cd.template;
+              "
+            ></span>
+            } @else{
+            <span
+              [queryParams]="cd.queryParams ? cd.queryParams : undefined"
+              [routerLink]="cd.routerLink ? cd.routerLink(row.row) : undefined"
+              [innerHTML]="cd.valueGetter(row.row, $index)"
+            ></span>
+            }
+          </div>
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+    @if(loading){
+    <div class="sg-loaders__item sg-loaders__item--block loader">
+      <div class="gov-loader gov-loader--block">
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+      </div>
+    </div>
+    }
+  </table>
+</div>
+<div style="display: flex; align-items: center">
+  <span style="float: left; padding-left: 16px; color: #686868"
+    >Celkem nalezeno záznamů: {{ total ? total : 0 }}</span
+  >
+  @if(showPaginator){
+  <stroytorg-paginator
+    style="float: right; margin-left: auto"
+    [rows]="pageSize"
+    [totalRecords]="total"
+    [currentPage]="currentPage"
+    (pageChanged)="pageChanged($event)"
+  >
+  </stroytorg-paginator>
+  }
+</div>

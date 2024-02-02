@@ -1,3 +1,19 @@
-<button>
-    {{title}}
+<button
+  class="gov-button gov-button--{{ type }} gov-button--{{ size }}"
+  [disabled]="disabled"
+  [type]="buttonType"
+>
+  <div class="custom-icon">
+    <div id="title" [class.titlePadding]="icon && title">
+      @if(icon){
+        <img
+        [class.custom-icon-no-title]="icon && !title"
+        [class.button-icon]="icon && title"
+        [src]="'--assets--' + '/icons/' + icon + '.svg'"
+      />
+      }
+      
+      {{ title }}
+    </div>
+  </div>
 </button>

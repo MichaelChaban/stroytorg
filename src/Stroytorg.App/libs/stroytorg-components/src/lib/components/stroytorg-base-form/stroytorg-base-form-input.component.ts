@@ -12,7 +12,8 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { StroytorgBaseInputControls } from './stroytorg-base-form-input-control.component';
+import { StroytorgBaseInputControls } from './stroytorg-base-form-input-controls';
+
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
 

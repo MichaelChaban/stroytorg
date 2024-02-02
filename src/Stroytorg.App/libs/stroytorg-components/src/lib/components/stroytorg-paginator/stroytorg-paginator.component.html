@@ -1,0 +1,24 @@
+<div class="gov-pagination">
+  <div class="gov-pagination__holder" style="justify-content: right">
+    <a
+      [class.gov-pagination__item--disabled]="isFirstPage()"
+      (click)="prevPage()"
+      class="gov-pagination__item gov-pagination__item--arrow-left"
+      aria-label="Předchozí"
+    ></a>
+    @for(page of getPageArray(); track page.page){ @if(page.visible){
+    <a
+      class="gov-pagination__item"
+      [class.gov-pagination__item--active]="activePage(page.page)"
+      (click)="pageChange($event)"
+      >{{ page.page }}</a
+    >
+    } }
+    <a
+      [class.gov-pagination__item--disabled]="isLastPage()"
+      (click)="nextPage()"
+      class="gov-pagination__item gov-pagination__item--arrow-right"
+      aria-label="Následující"
+    ></a>
+  </div>
+</div>

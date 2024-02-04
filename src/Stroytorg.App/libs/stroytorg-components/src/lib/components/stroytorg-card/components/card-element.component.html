@@ -7,7 +7,7 @@
       {{ element.title | keyOrFn : cardData }}
     </h1>
     } @if (element?.content) {
-    <div class="content-container" [ngClass]="{ 'show-all': showContent }">
+    <div class="card-content-container" [ngClass]="{ 'show-all': showContent }">
       {{ element.content | keyOrFn : cardData }}
     </div>
     <p class="text-end">

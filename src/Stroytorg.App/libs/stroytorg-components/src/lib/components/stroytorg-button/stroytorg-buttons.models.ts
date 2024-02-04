@@ -8,9 +8,11 @@ export enum ButtonSize {
 }
 
 export enum ButtonType {
-  default = '',
-  primary = 'primary',
-  outlined = 'primary-outlined',
+  DEFAULT = 'default-button',
+  PRIMARY = 'primary-button',
+  OUTLINED = 'outlined-button',
+  WARNING = 'warning-button',
+  DANGER = 'danger-button'
 }
 
 export interface ButtonDefinition{

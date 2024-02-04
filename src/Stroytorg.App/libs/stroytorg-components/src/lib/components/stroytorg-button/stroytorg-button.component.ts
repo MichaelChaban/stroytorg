@@ -14,26 +14,45 @@ import {
   TooltipDefinition,
 } from './stroytorg-buttons.models';
 import { RouterModule } from '@angular/router';
-import { Icon } from '@stroytorg/shared';
+import { Icon, UnsubscribeControlComponent } from '@stroytorg/shared';
 import { ButtonTooltipDirective } from './directives/button-tooltip.directive';
 import { MatIconModule } from '@angular/material/icon';
+import { ButtonEnterPressedDirective } from './directives/button-enter-pressed.directive';
+import { Subject, debounceTime, takeUntil } from 'rxjs';
 // import { APP_CONFIG_ASSETS_BASE_URL } from "@stroytorg/shared";
 
 @Component({
   selector: 'stroytorg-button',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonTooltipDirective, MatIconModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ButtonTooltipDirective,
+    MatIconModule,
+    ButtonEnterPressedDirective,
+  ],
   templateUrl: './stroytorg-button.component.html',
   styleUrls: ['./stroytorg-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
   encapsulation: ViewEncapsulation.None,
 })
-export class StroytorgButtonComponent {
+export class StroytorgButtonComponent extends UnsubscribeControlComponent {
+  private readonly clickSubject = new Subject();
+
+  constructor() {
+    super();
+    this.clickSubject
+      .pipe(takeUntil(this.destroyed$), debounceTime(500))
+      .subscribe(() => {
+        this.clickFn.emit();
+      });
+  }
+
   @Input()
   routerLink?: string;
 
   @Input()
-  queryParams?: { [key: string]: any };
+  queryParams?: { [key: string]: unknown };
 
   @Input()
   size = ButtonSize.normal as string;
@@ -42,7 +61,10 @@ export class StroytorgButtonComponent {
   disabled!: boolean;
 
   @Input()
-  type? = ButtonType.default as string;
+  rounded = false as boolean;
+
+  @Input()
+  type? = ButtonType.DEFAULT as string;
 
   @Input()
   title?: string;
@@ -56,10 +78,11 @@ export class StroytorgButtonComponent {
   @Input()
   tooltip?: TooltipDefinition;
 
-  @Output() clicked = new EventEmitter<void>();
+  @Output() clickFn = new EventEmitter<void>();
 
-  @HostListener('click')
-  clickedListen() {
-    this.clicked.emit();
+  @HostListener('click', ['$event'])
+  @HostListener('keydown.enter', ['$event'])
+  handleEvent(event: Event): void {
+    this.clickSubject.next(event);
   }
 }

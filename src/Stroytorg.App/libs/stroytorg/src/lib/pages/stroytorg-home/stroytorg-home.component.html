@@ -35,6 +35,12 @@
         </section>
         <img src="https://picsum.photos/300/400">
         </div>
-        <stroytorg-button title="See Categories"></stroytorg-button>
+        <stroytorg-button title="See Categories" [tooltip]="tooltip" [icon]="icon" [type]="buttonType.DEFAULT" (clickFn)="someFunction()"></stroytorg-button>
+        <stroytorg-button title="See Categories" [tooltip]="tooltip" [icon]="icon" [type]="buttonType.PRIMARY"></stroytorg-button>
+        <stroytorg-button title="See Categories" [tooltip]="tooltip" [icon]="icon" [type]="buttonType.OUTLINED"></stroytorg-button>
+        <stroytorg-button title="See Categories" [tooltip]="tooltip" [icon]="icon" [type]="buttonType.WARNING"></stroytorg-button>
+        <stroytorg-button title="See Categories" [tooltip]="tooltip" [icon]="icon" [type]="buttonType.DANGER"></stroytorg-button>
+        <stroytorg-button [tooltip]="tooltip"[rounded]="true"  [icon]="icon" [type]="buttonType.DANGER"></stroytorg-button>
+        <stroytorg-button title="See Categories" [tooltip]="tooltip" [type]="buttonType.DANGER"></stroytorg-button>
     </div>
 </div>

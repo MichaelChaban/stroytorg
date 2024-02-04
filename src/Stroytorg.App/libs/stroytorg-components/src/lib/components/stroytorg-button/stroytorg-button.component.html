@@ -1,18 +1,18 @@
 @if (title || icon) {
 <button
-  class="button d-inline-flex align-items-center gov-button gov-button--{{
-    type
-  }} gov-button--{{ size }}"
+  class="button d-inline-flex align-items-center {{ type }} {{ size }}"
+  enterPress
   [tooltip]="tooltip"
   [class.icon-label-button]="icon && title"
   [class.icon-button]="icon && !title"
+  [class.button-rounded]="rounded"
   [disabled]="disabled"
   [type]="buttonType"
   [routerLink]="routerLink"
   [queryParams]="queryParams"
 >
   @if(icon){
-  <mat-icon [class.me-2]="title">
+  <mat-icon [class.mr-2]="title">
     {{ icon }}
   </mat-icon>
   } @if(title){

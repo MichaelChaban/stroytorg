@@ -1,19 +1,24 @@
+@if (title || icon) {
 <button
-  class="gov-button gov-button--{{ type }} gov-button--{{ size }}"
+  class="button d-inline-flex align-items-center gov-button gov-button--{{
+    type
+  }} gov-button--{{ size }}"
+  [tooltip]="tooltip"
+  [class.icon-label-button]="icon && title"
+  [class.icon-button]="icon && !title"
   [disabled]="disabled"
   [type]="buttonType"
+  [routerLink]="routerLink"
+  [queryParams]="queryParams"
 >
-  <div class="custom-icon">
-    <div id="title" [class.titlePadding]="icon && title">
-      @if(icon){
-        <img
-        [class.custom-icon-no-title]="icon && !title"
-        [class.button-icon]="icon && title"
-        [src]="'--assets--' + '/icons/' + icon + '.svg'"
-      />
-      }
-      
-      {{ title }}
-    </div>
-  </div>
+  @if(icon){
+  <mat-icon [class.me-2]="title">
+    {{ icon }}
+  </mat-icon>
+  } @if(title){
+  <span [class.m-auto]="!icon">
+    {{ title }}
+  </span>
+  }
 </button>
+}

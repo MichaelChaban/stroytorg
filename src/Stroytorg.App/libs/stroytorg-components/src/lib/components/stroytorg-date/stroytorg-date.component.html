@@ -1,1 +1,24 @@
-<p>stroytorg-date works!</p>
+<div class="gov-form-control default-behaviour-unset gov-form-control--{{size}}"
+  [class.gov-form-control--error]="ngControl?.invalid">
+  <input 
+    class="gov-form-control__input" 
+    type="date" 
+    [disabled]="disabled" 
+    [value]="ngControl?.value"
+    [formControl]="formControl" 
+    [class.not-empty]="true" />
+
+  <label class="gov-form-control__label">
+    {{ label }}
+  </label>
+  <ng-container *ngIf="(ngControl && !ngControl.invalid) && hint">
+    <span class="gov-form-control__message">
+      {{ hint }}
+    </span>
+  </ng-container>
+  <ng-container *ngIf="ngControl && ngControl.invalid">
+    <span class="gov-form-control__message">
+      {{ ngControl.errors | error }}
+    </span>
+  </ng-container>
+</div>

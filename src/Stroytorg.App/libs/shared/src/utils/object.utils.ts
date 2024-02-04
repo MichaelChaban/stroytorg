@@ -199,5 +199,13 @@ export class ObjectUtils {
   
     return true;
   }
+
+  static getPropertyByPath<T>(item: T, path: string) {
+    if (this.isObject(item)) {
+      return path ? item[path as keyof T] : item;
+    } else {
+      return item;
+    }
+  }
   
 }

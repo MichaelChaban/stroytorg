@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GovButtonComponent } from './stroytorg-button.component';
+import { StroytorgButtonComponent } from './stroytorg-button.component';
 
-describe('GovButtonComponent', () => {
-  let component: GovButtonComponent;
-  let fixture: ComponentFixture<GovButtonComponent>;
+describe('StroytorgButtonComponent', () => {
+  let component: StroytorgButtonComponent;
+  let fixture: ComponentFixture<StroytorgButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GovButtonComponent],
+      imports: [StroytorgButtonComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(GovButtonComponent);
+    fixture = TestBed.createComponent(StroytorgButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

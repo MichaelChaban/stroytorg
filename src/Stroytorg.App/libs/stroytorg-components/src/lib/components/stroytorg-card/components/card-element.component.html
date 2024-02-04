@@ -1,0 +1,38 @@
+@if(cardDefinition && cardData){ @for(element of cardDefinition; track $index){
+<div class="w-100">
+  @if(element?.title || element?.content || element?.actions){
+  <div class="default-p {{ element?.classes }}">
+    @if(element?.title){
+    <h1 class="fw-bold fs-5 mt-3">
+      {{ element.title | keyOrFn : cardData }}
+    </h1>
+    } @if (element?.content) {
+    <div class="content-container" [ngClass]="{ 'show-all': showContent }">
+      {{ element.content | keyOrFn : cardData }}
+    </div>
+    <p class="text-end">
+      <small class="show-more-less" (click)="showContent = !showContent">
+        {{ showContent ? 'менше' : 'більше' }}
+      </small>
+    </p>
+    } @if(element?.actions){
+    <div class="mt-1" *ngFor="let action of element.actions">
+      <stroytorg-button
+        [type]="action?.buttonType"
+        [title]="action?.title"
+        [tooltip]="action?.tooltip"
+        [icon]="action?.icon"
+        [queryParams]="isSet(action?.queryParams)"
+        [routerLink]="isSet(action?.routerLink)"
+        (clicked)="action?.onClick(cardData)"
+      ></stroytorg-button>
+    </div>
+    }
+  </div>
+  } @if(element?.imageName){
+  <div class="imageClass" [style.--imageName]="element?.imageName"></div>
+  } @if(element?.template){
+  <ng-template [ngTemplateOutlet]="element.template!"></ng-template>
+  }
+</div>
+} }

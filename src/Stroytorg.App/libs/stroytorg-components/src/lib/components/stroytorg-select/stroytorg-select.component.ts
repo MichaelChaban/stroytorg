@@ -1,11 +1,164 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  ViewEncapsulation,
+  OnChanges,
+  SimpleChanges,
+  Optional,
+  Self,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  ControlValueAccessor,
+  NgControl,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  CompareWithFn,
+  SelectSize,
+  SelectableItem,
+  compareWithId,
+} from './stroytorg-select.models';
+import { ErrorPipe, ObjectUtils } from '@stroytorg/shared';
+import {
+  StroytorgBaseInputControls,
+  StroytorgBaseFormInputComponent,
+} from '../stroytorg-base-form';
 
 @Component({
   selector: 'stroytorg-select',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ErrorPipe, ReactiveFormsModule],
   templateUrl: './stroytorg-select.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./stroytorg-select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
+  encapsulation: ViewEncapsulation.None,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    {
+      provide: StroytorgBaseInputControls,
+      useExisting: StroytorgSelectComponent,
+    },
+  ],
 })
-export class StroytorgSelectComponent {}
+export class StroytorgSelectComponent<T>
+  extends StroytorgBaseFormInputComponent
+  implements ControlValueAccessor, OnChanges
+{
+  @Input()
+  itemLabel!: string;
+
+  @Input()
+  itemValue!: string;
+
+  @Input()
+  size = SelectSize.xlarge as string;
+
+  @Input()
+  compareWith!: CompareWithFn;
+
+  @Input()
+  items!: T[];
+
+  @Output() valueChange = new EventEmitter<string>();
+
+  protected _options!: SelectableItem<T>[];
+
+  constructor(@Optional() @Self() ngControl: NgControl) {
+    super(ngControl);
+  }
+
+  ngOnChanges(_changes: SimpleChanges): void {
+    if (_changes['items'] && this.items) {
+      const options = this.createOptions(this.items);
+      this._options = this.setOptionSelection(
+        options,
+        this.ngControl?.value,
+        undefined
+      );
+    }
+    this.compareWith = compareWithId;
+  }
+
+  selectionChange(event: any) {
+    const selectedIndex = Number.parseInt(event.target.value);
+    this._options = this.setOptionSelection(
+      this._options,
+      undefined,
+      selectedIndex
+    );
+
+    if (this.itemValue) {
+      const optionValue: any = this._options[selectedIndex].value;
+      const value = optionValue?.[this.itemValue as string] ?? optionValue;
+      this.formControl.setValue(value);
+    } else {
+      this.formControl.setValue(this._options[selectedIndex].value);
+    }
+
+    /*const selectedIndex = Number.parseInt(event.target.value);
+    if (this.formControl.value !== event.target.value) {
+      this._options = this.setOptionSelection(
+        this._options,
+        undefined,
+        selectedIndex
+      );
+      if (this.itemValue) {
+        const optionValue: any = this._options[selectedIndex].value;
+        const value = optionValue?.[this.itemValue as string] ?? optionValue;
+        this.formControl.setValue(value);
+      }
+      this.formControl.setValue(this._options[selectedIndex].value);
+    }*/
+    /*
+    const selectedIndex = Number.parseInt(event.target.value);
+    if (this.formControl.value !== event.target.value) {
+      this._options = this.setOptionSelection(
+        this._options,
+        undefined,
+        selectedIndex
+      );
+      if (this.itemValue) {
+        const optionValue: any = this._options[selectedIndex].value;
+        const value = optionValue?.[this.itemValue as string] ?? optionValue;
+        this.formControl.setValue(value);
+      }
+      this.formControl.setValue(this._options[selectedIndex].value);
+    }
+*/
+  }
+
+  private getOptionValue(item: T) {
+    return ObjectUtils.getPropertyByPath(item, this.itemValue);
+  }
+
+  private getOptionLabel(item: T) {
+    return ObjectUtils.getPropertyByPath(item, this.itemLabel);
+  }
+
+  private createOptions(items: T[]) {
+    return (items ?? []).map(
+      (x) =>
+        ({
+          label: this.getOptionLabel(x),
+          value: this.getOptionValue(x),
+          selected: false,
+        } as SelectableItem<T>)
+    );
+  }
+
+  private setOptionSelection(
+    options: SelectableItem<T>[],
+    value?: T,
+    selectedIndex?: number
+  ) {
+    return (options ?? []).map((x, index) => {
+      const selected = index === selectedIndex || ObjectUtils.objectsEqual(x.value, value);
+      return x.selected === selected ? x : { ...x, selected };
+    });
+  }
+}

@@ -1,0 +1,104 @@
+//////////////////////
+/// CARD CONTAINER ///
+//////////////////////
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4em;
+}
+
+
+
+////////////
+/// CARD ///
+////////////
+.card {
+    width: 100%;
+    min-width: 10em;
+    max-width: 18em;
+    border: none;
+    padding-bottom: 0.7em;
+    transition: 0.2s;
+}
+
+.card:hover {
+    box-shadow: 0 3px 15px #adadad80;
+}
+
+.card {
+    min-width: 10em;
+    max-width: 18em;
+    border: none;
+    padding-bottom: 0.7em;
+    transition: 0.2s;
+}
+
+
+
+///////////////////////
+/// CONTENT IN CARD ///
+///////////////////////
+.content-container {
+    display: -webkit-box;
+    min-height: 4.5em;
+    max-height: 5em;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+
+
+/////////////////////////////////////
+/// BUTTON 'SHOW_ALL'/'SHOW_LESS' ///
+/////////////////////////////////////
+.show-all {
+    -webkit-line-clamp: unset;
+    max-height: unset;
+    overflow: unset;
+}
+
+.show-more-less {
+    color: #ff7e47;
+    text-decoration: underline dotted;
+    transition: 0.2s;
+}
+
+.show-more-less:hover {
+    cursor: pointer;
+}
+
+
+
+/////////////////////
+/// IMAGE IN CARD ///
+/////////////////////
+.imageClass {
+    width: 100%;
+    height: 10.2em;
+    border-radius: 0.5em 0.5em 0 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+
+///////////////////////
+/// DEFAULT PADDING ///
+///////////////////////
+.default-p {
+    padding: 0.3em 1em;
+}
+
+
+
+////////////////////////////////
+/// DISPLAY FLEX FOR ELEMENT ///
+////////////////////////////////
+.display-flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}

@@ -1,1 +1,11 @@
-<p>stroytorg-card works!</p>
+@if(data && cardDefinition){
+<div class="cards-container">
+  @for (row of data; track $index) {
+  <stroytorg-card-element
+    class="card"
+    [cardDefinition]="cardDefinition"
+    [cardData]="row"
+  ></stroytorg-card-element>
+  }
+</div>
+}

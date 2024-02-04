@@ -1,0 +1,115 @@
+//////////////
+/// BUTTON ///
+//////////////
+.button {
+    border-radius: 5px;
+    padding: 0.75em 2em;
+    font-weight: 500;
+    font-size: 15px;
+    transition: 0.2s;
+    width: var(--button-width);
+  }
+  
+  
+  
+  //////////////////////////////
+  /// DEFAULT BUTTON PALETTE ///
+  //////////////////////////////
+  .default-button {
+    background-color: #ff7e47;
+    color: #ffffff;
+    border: none;
+  }
+  
+  .default-button:hover {
+    background-color: #f3a280;
+    cursor: pointer;
+  }
+  
+  .default-button:active {
+    background-color: #db4b0f;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
+  }
+  
+  
+  
+  //////////////////////////////
+  /// PRIMARY BUTTON PALETTE ///
+  //////////////////////////////
+  .primary-button {
+    background-color: transparent;
+    color: #ff7e47;
+    border: 2px solid #ff7e47;
+  }
+  
+  .primary-button:hover {
+    background-color: #fff1eb;
+    cursor: pointer;
+  }
+  
+  .primary-button:active {
+    background-color: #fadacd;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  
+  //////////////////////////////
+  /// WARNING BUTTON PALETTE ///
+  //////////////////////////////
+  .warning-button {
+    background-color: #d10202;
+    color: #ffffff;
+    border: none;
+  }
+  
+  .warning-button:hover {
+    background-color: #ff5252;
+    cursor: pointer;
+  }
+  
+  .warning-button:active {
+    background-color: #a70000;
+    box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.7);
+  }
+  
+  
+  
+  //////////////////////////////////
+  /// BUTTON WITH LABEL AND ICON ///
+  //////////////////////////////////
+  .icon-label-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 1rem !important;
+    padding-right: 2rem !important;
+  }
+  
+  
+  
+  /////////////////////////////
+  /// BUTTON ONLY WITH ICON ///
+  /////////////////////////////
+  .icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75em !important;
+  }
+  
+  
+  
+  ///////////////
+  /// TOOLTIP ///
+  ///////////////
+  .tooltip {
+    position: absolute;
+    background-color: rgb(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 2;
+  }

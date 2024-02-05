@@ -1,1 +1,74 @@
-<p>stroytorg-input works!</p>
+<div *ngIf="formControl" class="display-flex align-items-center gap-1">
+  <div class="stroytorg-text-input-container {{ size }}">
+    @if(type === 'singleline'){
+    <input
+      floatingHint
+      class="stroytorg-text-input"
+      title=""
+      [class.stroytorg-text-input-invalid]="formControl.errors && formControl.touched"
+      [formControl]="formControl"
+      [readOnly]="readonly"
+      [disabled]="disabled"
+      [required]="isRequired()"
+    />
+    } @else if(type === 'multiline'){
+    <textarea
+      floatingHint
+      class="stroytorg-text-input"
+      title=""
+      [class.stroytorg-text-input-invalid]="formControl.errors && formControl.touched"
+      [formControl]="formControl"
+      [readOnly]="readonly"
+      [disabled]="disabled"
+      [required]="isRequired()"
+    ></textarea>
+    } @if(hint){
+    <label [class.active]="formControl?.value" id="stroytorg-floating-hint">{{
+      hint
+    }}</label>
+    }
+  </div>
+</div>
+
+<!-- <div
+  class="gov-form-control"
+  [ngClass]="size !== 'x-large' ? 'gov-form-control--' + size : ''"
+  [class.gov-form-control--classic]="size !== 'x-large'"
+  [class.gov-form-control--error]="ngControl && ngControl.invalid"
+  [class.gov-form-control--success]="
+    ngControl && !ngControl.invalid && ngControl.control?.validator
+  "
+  [class.not-empty]="true"
+>
+  <input
+    *ngIf=""
+    type="text"
+    class="gov-form-control__input"
+    [disabled]="disabled"
+    [value]="ngControl?.value"
+    [formControl]="formControl"
+    id="{{ id }}"
+    [placeholder]="placeholder"
+  />
+  <textarea
+    *ngIf="type === 'multiline'"
+    type="text"
+    class="gov-form-control__input"
+    [disabled]="disabled"
+    [value]="ngControl?.value"
+    [formControl]="formControl"
+    id="{{ id }}"
+    [placeholder]="placeholder"
+  ></textarea>
+  <label class="gov-form-control__label" for="{{ id }}">
+    {{ label }}
+  </label>
+
+  <span
+    class="gov-form-control__message"
+    *ngIf="ngControl && ngControl.invalid"
+    >{{ ngControl.errors | error }}</span
+  >
+  <span class="gov-form-control__message" *ngIf="hint">{{ hint }}</span>
+  <span class="gov-form-control__validation-mark"></span>
+</div> -->

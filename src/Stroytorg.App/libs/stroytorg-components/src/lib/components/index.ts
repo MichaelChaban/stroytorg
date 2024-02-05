@@ -1,6 +1,6 @@
 export * from './stroytorg-base-form';
 export * from './stroytorg-button';
-// export * from './stroytorg-card';
+export * from './stroytorg-card';
 export * from './stroytorg-checkbox';
 export * from './stroytorg-date';
 export * from './stroytorg-date-time';
@@ -8,4 +8,4 @@ export * from './stroytorg-navbar';
 export * from './stroytorg-paginator';
 export * from './stroytorg-select';
 export * from './stroytorg-table';
-// export * from './stroytorg-text-input';
+export * from './stroytorg-text-input';

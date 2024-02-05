@@ -1,0 +1,77 @@
+/////////////////////
+/// INPUT ///
+/////////////////////
+
+.stroytorg-text-input {
+    width: 100%;
+    padding: 0.3em 0.5em;
+    border: 0.25px solid #ccc;
+    border-radius: 0.3em;
+    outline: none;
+    transition: 0.2s;
+
+    &:focus:not(:read-only, [readonly]),
+    &:active:not(:read-only, [readonly]) {
+        border-color: #ffffff;
+        box-shadow: #f78858 0px 0px 0px 2px;
+    }
+
+    &:read-only,
+    &[readonly] {
+        opacity: 0.6;
+        cursor: not-allowed !important;
+    }
+}
+
+/////////////////////
+/// INVALID INPUT ///
+/////////////////////
+
+.stroytorg-text-input-invalid:not(:read-only, &[readonly]) {
+    border-color: #ffffff;
+    box-shadow: #f50808 0px 0px 0px 2px;
+}
+
+/////////////////////
+/// FLOATING HINT ///
+/////////////////////
+
+.stroytorg-text-input-container {
+    width: 100%;
+    position: relative;
+}
+
+#stroytorg-floating-hint {
+    font-size: 16px;
+    color: #afbdcf;
+    padding: 0.3em 0.5em;
+    position: absolute;
+    top: -0.17em;
+    left: 0.03em;
+    transition: 0.2s ease all;
+    pointer-events: none;
+
+    &.active:not(.stroytorg-text-input:read-only, .stroytorg-text-input[readonly])  {
+        font-size: 12px;
+        color: #f78858;
+        top: -1.15em;
+        left: 1em;
+        background: #ffffff;
+        padding: 0 0.3em;
+        border: 1px solid #f78858;
+        border-radius: 3px;
+    }
+
+    &.active:is(.stroytorg-text-input:read-only, .stroytorg-text-input[readonly]) {
+        font-size: 12px;
+        top: -1.15em;
+        left: 1em;
+        background: #ffffff;
+        padding: 0 0.3em;
+        border-radius: 3px;
+        color: #afbdcf;
+        border: 1px solid #afbdcf;
+        opacity: 0.6;
+        cursor: not-allowed !important;
+    }
+}

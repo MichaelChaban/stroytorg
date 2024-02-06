@@ -1,17 +1,18 @@
-@import "../common-styles/variables.scss";
+@import "../common-styles/index.scss";
 
-.stroytorg-text-input {
+.stroytorg-select {
     @extend %input-common;
     border: 0.25px solid $color-grey;
+    cursor: text !important;
 
-    &:focus:not(:read-only, [readonly]),
-    &:active:not(:read-only, [readonly]) {
+    &:focus:not(:disabled, [disabled]),
+    &:active:not(:disabled, [disabled]) {
         border-color: $color-white;
         box-shadow: $color-orange 0px 0px 0px 2px;
     }
 
-    &:read-only,
-    &[readonly] {
+    &:disabled,
+    &[disabled] {
         opacity: 0.6;
         cursor: not-allowed !important;
     }
@@ -22,17 +23,17 @@
     }
 }
 
-.stroytorg-text-input-invalid:not(.stroytorg-text-input:read-only, .stroytorg-text-input[readonly]) {
+.stroytorg-select-invalid:not(.stroytorg-select:disabled, .stroytorg-select[disabled]) {
     @extend %input-common;
     border-color: $color-white;
     box-shadow: $color-red 0px 0px 0px 2px;
 }
 
-.stroytorg-text-input-container {
+.stroytorg-select-container {
     position: relative;
 
-    &:has(.stroytorg-text-input:read-only),
-    &:has(.stroytorg-text-input[readonly]) {
+    &:has(.stroytorg-select:disabled),
+    &:has(.stroytorg-select[disabled]) {
         #stroytorg-floating-hint {
             font-size: $floating-hint-font-size;
             color: $color-orange;
@@ -67,14 +68,5 @@
         border-radius: 3px;
         color: $color-orange;
         border: 1px solid $color-orange;
-    }
-}
-
-.stroytorg-text-input-error-message-container{
-    padding: $error-message-padding;
-
-    &>li{
-        font-size: $errpr-message-font-size;
-        color: $color-red;
     }
 }

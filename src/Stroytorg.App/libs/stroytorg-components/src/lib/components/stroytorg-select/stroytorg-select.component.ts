@@ -28,11 +28,12 @@ import {
   StroytorgBaseInputControls,
   StroytorgBaseFormInputComponent,
 } from '../stroytorg-base-form';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'stroytorg-select',
   standalone: true,
-  imports: [CommonModule, ErrorPipe, ReactiveFormsModule],
+  imports: [CommonModule, ErrorPipe, ReactiveFormsModule, NgSelectModule],
   templateUrl: './stroytorg-select.component.html',
   styleUrls: ['./stroytorg-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
@@ -50,13 +51,13 @@ export class StroytorgSelectComponent<T>
   implements ControlValueAccessor, OnChanges
 {
   @Input()
-  itemLabel!: string;
+  bindLabel!: string;
 
   @Input()
-  itemValue!: string;
+  bindValue!: string;
 
   @Input()
-  size = SelectSize.xlarge as string;
+  size = SelectSize.DEFAULT as string;
 
   @Input()
   compareWith!: CompareWithFn;
@@ -66,10 +67,20 @@ export class StroytorgSelectComponent<T>
 
   @Output() valueChange = new EventEmitter<string>();
 
+  filter?: string = '';
+
   protected _options!: SelectableItem<T>[];
 
   constructor(@Optional() @Self() ngControl: NgControl) {
     super(ngControl);
+  }
+
+  get filteredOptions(){
+    if(this.filter){
+      return this._options.filter(x => x.label.toLowerCase().includes(this.filter!.toLowerCase()));
+    }
+
+    return this._options;
   }
 
   ngOnChanges(_changes: SimpleChanges): void {
@@ -85,6 +96,9 @@ export class StroytorgSelectComponent<T>
   }
 
   selectionChange(event: any) {
+    if (!event || !event.target) {
+      return;
+    }
     const selectedIndex = Number.parseInt(event.target.value);
     this._options = this.setOptionSelection(
       this._options,
@@ -92,9 +106,9 @@ export class StroytorgSelectComponent<T>
       selectedIndex
     );
 
-    if (this.itemValue) {
+    if (this.bindValue) {
       const optionValue: any = this._options[selectedIndex].value;
-      const value = optionValue?.[this.itemValue as string] ?? optionValue;
+      const value = optionValue?.[this.bindValue as string] ?? optionValue;
       this.formControl.setValue(value);
     } else {
       this.formControl.setValue(this._options[selectedIndex].value);
@@ -107,9 +121,9 @@ export class StroytorgSelectComponent<T>
         undefined,
         selectedIndex
       );
-      if (this.itemValue) {
+      if (this.bindValue) {
         const optionValue: any = this._options[selectedIndex].value;
-        const value = optionValue?.[this.itemValue as string] ?? optionValue;
+        const value = optionValue?.[this.bindValue as string] ?? optionValue;
         this.formControl.setValue(value);
       }
       this.formControl.setValue(this._options[selectedIndex].value);
@@ -122,9 +136,9 @@ export class StroytorgSelectComponent<T>
         undefined,
         selectedIndex
       );
-      if (this.itemValue) {
+      if (this.bindValue) {
         const optionValue: any = this._options[selectedIndex].value;
-        const value = optionValue?.[this.itemValue as string] ?? optionValue;
+        const value = optionValue?.[this.bindValue as string] ?? optionValue;
         this.formControl.setValue(value);
       }
       this.formControl.setValue(this._options[selectedIndex].value);
@@ -132,12 +146,20 @@ export class StroytorgSelectComponent<T>
 */
   }
 
+  inputSearch(event: any) {
+    if (!event || !event.target) {
+      return;
+    }
+
+    this.filter = event.target.value;
+  }
+
   private getOptionValue(item: T) {
-    return ObjectUtils.getPropertyByPath(item, this.itemValue);
+    return ObjectUtils.getPropertyByPath(item, this.bindValue);
   }
 
   private getOptionLabel(item: T) {
-    return ObjectUtils.getPropertyByPath(item, this.itemLabel);
+    return ObjectUtils.getPropertyByPath(item, this.bindLabel);
   }
 
   private createOptions(items: T[]) {
@@ -157,7 +179,8 @@ export class StroytorgSelectComponent<T>
     selectedIndex?: number
   ) {
     return (options ?? []).map((x, index) => {
-      const selected = index === selectedIndex || ObjectUtils.objectsEqual(x.value, value);
+      const selected =
+        index === selectedIndex || ObjectUtils.objectsEqual(x.value, value);
       return x.selected === selected ? x : { ...x, selected };
     });
   }

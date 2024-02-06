@@ -1,0 +1,88 @@
+// Stroytorg color palette variables
+$color-white: #ffffff;
+$color-grey: #afabab;
+$color-orange: #ff7e47;
+$color-dark-orange: #ee6124;
+$color-darker-orange: #db4b0f;
+$color-light-orange: #f8ad8c;
+$color-yellow: #ffd800;
+$color-dark-yellow: #ecc900;
+$color-darker-yellow: #d4b101;
+$color-light-yellow: #fdec8c;
+$color-red: #ec0202;
+$color-dark-red: #cc0000;
+$color-darker-red: #990000;
+$color-light-red: #fd8989;
+$color-black: #000000;
+$color-black-700: rgba(0, 0, 0, 0.7);
+$color-green: #009b00;
+
+// Stroytorg text-input variables
+$input-padding: 0.3em 0.5em;
+$hint-padding: 0 0.3em;
+$error-message-padding: 0 1em;
+$input-border-radius: 0.3em;
+$floating-hint-font-size: 14px;
+$errpr-message-font-size: 14px;
+$floating-hint-position-top: -1.15em;
+$floating-hint-position-left: 1em;
+
+%input-common {
+    width: 100%;
+    padding: $input-padding;
+    border-radius: $input-border-radius;
+    outline: none;
+    transition: 0.2s;
+}
+
+
+//Stroytorg button functions
+@mixin buttonBase {
+    border-radius: 5px;
+    padding: 0.75em 2em;
+    font-weight: 500;
+    font-size: 15px;
+    transition: 0.1s ease-out;
+    width: var(--button-width);
+    border: none;
+
+    &:disabled,
+    &[disabled] {
+        opacity: 0.6;
+        cursor: not-allowed !important;
+    }
+
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+
+@mixin buttonPalette($bgColor, $color, $hoverColor, $activeColor, $shadowColor) {
+    background-color: $bgColor;
+    color: $color;
+
+    &:hover:enabled,
+    &:focus:enabled {
+        background-color: $hoverColor;
+        cursor: pointer;
+    }
+
+    &:active:enabled,
+    &.enter-pressed {
+        background-color: $activeColor;
+        box-shadow: $shadowColor 0px 0px 0px 3px;
+    }
+
+    &:active:not(:focus),
+    &.enter-pressed:not(:focus) {
+        background-color: $bgColor;
+    }
+}
+
+@mixin buttonWithIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75em !important;
+}

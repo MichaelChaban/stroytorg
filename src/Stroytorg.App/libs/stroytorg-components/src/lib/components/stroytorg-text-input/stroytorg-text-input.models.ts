@@ -1,10 +1,11 @@
 export enum InputSize {
-    DEFAULT = 'classic',
-    LARGE = 'large',
-    XLARGE = 'x-large',
-  }
-  
-  export enum InputType {
-    MULTILINE = 'multiline',
-    SINGLELINE = 'singleline',
-  }
+  DEFAULT = 'default-width',
+  LARGE = 'large-width',
+  XLARGE = 'x-large-width',
+  FULL = 'full-width',
+}
+
+export enum InputType {
+  MULTILINE = 'multiline',
+  SINGLELINE = 'singleline',
+}

@@ -56,7 +56,6 @@ export class ButtonTooltipDirective implements OnInit, OnDestroy {
     if (!this.tooltip) {
       return null;
     }
-    this.resetTimeout();
     this.removeTooltipWithDelay();
     return this.createTooltip();
   }
@@ -99,9 +98,9 @@ export class ButtonTooltipDirective implements OnInit, OnDestroy {
       this.tooltipTimeout = setTimeout(() => {
         if (this.tooltipElement) {
           this.renderer.removeChild(document.body, this.tooltipElement);
+          this.resetTimeout();
         }
       }, this.TRANSITION_DURATION);
-      (this.tooltipElement as unknown) = null;
     }
   }
 

@@ -1,206 +1,61 @@
-//////////////////////////////
-/// BUTTON ///
-//////////////////////////////
+@import '../common-styles/index.scss';
+
 .button {
-  border-radius: 5px;
-  padding: 0.75em 2em;
-  font-weight: 500;
-  font-size: 15px;
-  transition: 0.1s ease-out;
-  width: var(--button-width);
+  @include buttonBase;
   background: linear-gradient(to bottom, var(--button-bg-bottom), var(--button-bg-top));
-  border: none;
-
-  &:disabled,
-  &[disabled] {
-    opacity: 0.6;
-    cursor: not-allowed !important;
-  }
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
 }
 
-
-
-//////////////////////////////
-/// DEFAULT BUTTON PALETTE ///
-//////////////////////////////
 .default-button {
-  background-color: #ffffff;
-  color: #afabab;
-
-  &:hover:enabled,
-  &:focus:enabled {
-    background-color: #f7f7f7;
-    cursor: pointer;
-  }
-
-  &:active:enabled,
-  &.enter-pressed {
-    background-color: #ebebeb;
-    box-shadow: #afabab 0px 0px 0px 3px;
-  }
-
-  &:active:not(:focus),
-  &.enter-pressed:not(:focus) {
-    background-color: #ffffff;
-  }
+  @include buttonPalette($color-white, $color-grey, #f7f7f7, #ebebeb, $color-grey);
 }
 
-
-
-//////////////////////////////
-/// PRIMARY BUTTON PALETTE ///
-//////////////////////////////
 .primary-button {
-  background-color: #ff7e47;
-  color: #ffffff;
-
-  &:hover:enabled,
-  &:focus:enabled {
-    background-color: #ee6124;
-    cursor: pointer;
-  }
-
-  &:active:enabled,
-  &.enter-pressed {
-    background-color: #db4b0f;
-    box-shadow: #f8ad8c 0px 0px 0px 3px;
-  }
-
-  &:active:not(:focus),
-  &.enter-pressed:not(:focus) {
-    background-color: #ff7e47;
-  }
+  @include buttonPalette($color-orange, $color-white, $color-dark-orange, $color-darker-orange, $color-light-orange);
 }
 
-
-//////////////////////////////
-/// OUTLINED BUTTON PALETTE ///
-//////////////////////////////
 .outlined-button {
-  background-color: #ffffff;
-  color: #ff7e47;
-  border: 2px solid #ff7e47;
-
-  &:hover:enabled,
-  &:focus:enabled {
-    background-color: #fff2f2;
-    cursor: pointer;
-  }
+  @include buttonPalette($color-white, $color-orange, #fff2f2, #fff2f2, $color-light-orange);
+  border: 2px solid $color-orange;
 
   &:active:enabled,
   &.enter-pressed {
-    background-color: #fff2f2;
-    box-shadow: #f8ad8c 0px 0px 0px 3px;
-    border-color: #f8ad8c;
+    border-color: $color-light-orange;
   }
 
   &:active:not(:focus),
   &.enter-pressed:not(:focus) {
-    background-color: #ffffff;
-    border: 2px solid #ff7e47;
+    border: 2px solid $color-orange;
   }
 }
 
-
-
-//////////////////////////////
-/// WARNING BUTTON PALETTE ///
-//////////////////////////////
 .warning-button {
-  background-color: #ffd800;
-  color: #ffffff;
-
-  &:hover:enabled,
-  &:focus:enabled {
-    background-color: #ecc900;
-    cursor: pointer;
-  }
-
-  &:active:enabled,
-  &.enter-pressed {
-    background-color: #d4b101;
-    box-shadow: #fdec8c 0px 0px 0px 3px;
-  }
-
-  &:active:not(:focus),
-  &.enter-pressed:not(:focus) {
-    background-color: #ffd800;
-  }
+  @include buttonPalette($color-yellow, $color-white, $color-dark-yellow, $color-darker-yellow, $color-light-yellow);
 }
 
-
-
-//////////////////////////////
-/// DANGER BUTTON PALETTE ///
-//////////////////////////////
 .danger-button {
-  background-color: #ec0202;
-  color: #ffffff;
-
-  &:hover:enabled,
-  &:focus:enabled {
-    background-color: #cc0000;
-    cursor: pointer;
-  }
-
-  &:active:enabled,
-  &.enter-pressed {
-    background-color: #990000;
-    box-shadow: #fd8989 0px 0px 0px 3px;
-  }
-
-  &:active:not(:focus),
-  &.enter-pressed:not(:focus) {
-    background-color: #ec0202;
-  }
+  @include buttonPalette($color-red, $color-white, $color-dark-red, $color-darker-red, $color-light-red);
 }
 
-
-
-//////////////////////////////////
-/// BUTTON WITH LABEL AND ICON ///
-//////////////////////////////////
 .icon-label-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include buttonWithIcon;
   padding-left: 1rem !important;
   padding-right: 2rem !important;
 }
 
-
-
-/////////////////////////////
-/// BUTTON ONLY WITH ICON ///
-/////////////////////////////
 .icon-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75em !important;
+  @include buttonWithIcon;
 }
 
-
-
-///////////////
-/// TOOLTIP ///
-///////////////
 .tooltip {
   position: absolute;
-  background-color: rgb(0, 0, 0, 0.7);
-  color: #fff;
+  background-color: $color-black-700;
+  color: $color-white;
   text-align: center;
   padding: 5px;
   border-radius: 4px;
   font-size: 12px;
   z-index: 2;
 }
-
 
 .button-rounded {
   border-radius: 100% !important;

@@ -1,27 +1,28 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
-import { getFirstError } from './error.models';
 import { ErrorCodesFns } from './error.codes';
-
-const EMPTY = '';
 
 @Pipe({
   name: 'error',
   standalone: true,
 })
 export class ErrorPipe implements PipeTransform {
-  transform(errors: ValidationErrors | undefined | null): string {
+  transform(errors: ValidationErrors | undefined | null): string[] {
+    const errorMessages: string[] = [];
+
     if (!errors) {
-      return EMPTY;
+      return errorMessages;
     }
-    const error = getFirstError(errors);
-    if (error) {
-      const errorFn = ErrorCodesFns[error.key];
+
+    for (const errorKey in errors) {
+      const errorFn = ErrorCodesFns[errorKey];
       if (!errorFn) {
-        return 'Uknown error';
+        errorMessages.push('Unknown error');
+      } else {
+        errorMessages.push(ErrorCodesFns[errorKey](errors[errorKey]));
       }
-      return ErrorCodesFns[error.key](error.value);
     }
-    return EMPTY;
+
+    return errorMessages;
   }
 }

@@ -1,9 +1,8 @@
-export type SelectSize = 'default' | 'large' | 'xlarge';
-
-export const SelectSize = {
-  default: 'classic' as SelectSize,
-  large: 'large' as SelectSize,
-  xlarge: 'x-large' as SelectSize,
+export enum SelectSize {
+  DEFAULT = 'default-width',
+  LARGE = 'large-width',
+  XLARGE = 'x-large-width',
+  FULL = 'full-width',
 };
 
 export type CompareWithFn = (o1: any, o2: any) => boolean;

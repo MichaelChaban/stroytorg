@@ -1,38 +1,37 @@
-<div
-  class="gov-form-control"
-  [ngClass]="(size !== 'xlarge') ? 'gov-form-control--'+ size : ''"
-  [class.gov-form-control--classic]="size !== 'xlarge'"
-  [class.gov-form-control--error]="ngControl?.invalid"
-  [class.gov-form-control--success]="!ngControl?.invalid && ngControl"
-  [class.not-empty]="true"
->
-  <div class="gov-select gov-js-select">
+@if(formControl){
+<div class="display-flex align-items-center gap-1">
+  <div class="stroytorg-select-container {{ size }}">
     <select
-      id="456456-46623-8965"
-      [disabled]="disabled"
-      [required]="required"
-      [value]="ngControl?.value"
-      [class.placeholder-color]="!ngControl?.value"
+      floatingHint
+      class="stroytorg-select"
+      [class.stroytorg-select-invalid]="
+        formControl.errors && formControl.touched
+      "
+      [value]="formControl.value"
       (change)="selectionChange($event)"
-      >
-      <option [value]="undefined" hidden selected>Vybrat</option>
-      <option
-        *ngFor="let item of _options; let index = index;"
-        value="{{index}}"
-        [selected]="item.selected"
-      >
+      (input)="inputSearch($event)"
+      title=""
+      [formControl]="formControl"
+    >
+      <option [value]="undefined" selected>{{ hint }}</option>
+      @for (item of filteredOptions; track $index) {
+      <option [value]="$index" [selected]="item.selected">
         {{ item.label }}
       </option>
+      }
     </select>
-    <label class="gov-form-control__label" for="456456-46623-8965">
-      {{ label }}
-    </label>
   </div>
-  <span class="gov-form-control__message" *ngIf="ngControl?.invalid">{{
-    ngControl.errors | error
-  }}</span>
-  <span class="gov-form-control__message" *ngIf="!ngControl?.invalid && hint">{{
+  @if(formControl && formControl.errors && formControl.touched && !readonly){
+  <ul class="stroytorg-select-error-message-container">
+    @for(error of (formControl.errors | error); track $index){
+    <li>{{ error }}</li>
+    }
+  </ul>
+  } @if(hint){
+  <label [class.active]="formControl.value" id="stroytorg-floating-hint">{{
     hint
-  }}</span>
-  <span class="gov-form-control__validation-mark" tabindex="-1"> </span>
+  }}</label
+  >}
 </div>
+
+}

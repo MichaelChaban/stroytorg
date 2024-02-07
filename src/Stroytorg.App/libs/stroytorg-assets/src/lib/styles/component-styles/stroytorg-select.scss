@@ -27,6 +27,10 @@
     @extend %input-common;
     border-color: $color-white;
     box-shadow: $color-red 0px 0px 0px 2px;
+
+    #stroytorg-floating-hint.active {
+        color: $color-red;
+    }
 }
 
 .stroytorg-select-container {
@@ -41,32 +45,9 @@
             left: $floating-hint-position-left;
             background: $color-white;
             padding: 0 $hint-padding;
-            border: 1px solid $color-grey;
             border-radius: 3px;
             opacity: 0.6;
             cursor: not-allowed !important;
         }
-    }
-}
-
-#stroytorg-floating-hint {
-    font-size: 16px;
-    color: $color-grey;
-    padding: $input-padding;
-    position: absolute;
-    top: -0.17em;
-    left: 0.03em;
-    transition: 0.2s ease all;
-    pointer-events: none;
-
-    &.active {
-        font-size: $floating-hint-font-size;
-        top: $floating-hint-position-top;
-        left: $floating-hint-position-left;
-        background: $color-white;
-        padding: $hint-padding;
-        border-radius: 3px;
-        color: $color-orange;
-        border: 1px solid $color-orange;
     }
 }

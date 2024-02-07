@@ -16,7 +16,7 @@
         cursor: not-allowed !important;
     }
 
-    &:is(textarea){
+    &:is(textarea) {
         width: 100%;
         resize: vertical;
     }
@@ -40,10 +40,21 @@
             left: $floating-hint-position-left;
             background: $color-white;
             padding: 0 $hint-padding;
-            border: 1px solid $color-grey;
-            border-radius: 3px;
             opacity: 0.6;
             cursor: not-allowed !important;
+        }
+    }
+
+
+    &:has(.stroytorg-text-input:active:enabled, .stroytorg-text-input:focus:enabled) {
+        #stroytorg-floating-hint.active {
+            color: $color-orange;
+        }
+    }
+
+    &:has(.stroytorg-text-input-invalid) {
+        #stroytorg-floating-hint.active {
+            color: $color-red;
         }
     }
 }
@@ -64,16 +75,13 @@
         left: $floating-hint-position-left;
         background: $color-white;
         padding: $hint-padding;
-        border-radius: 3px;
-        color: $color-orange;
-        border: 1px solid $color-orange;
     }
 }
 
-.stroytorg-text-input-error-message-container{
+.stroytorg-text-input-error-message-container {
     padding: $error-message-padding;
 
-    &>li{
+    &>li {
         font-size: $errpr-message-font-size;
         color: $color-red;
     }

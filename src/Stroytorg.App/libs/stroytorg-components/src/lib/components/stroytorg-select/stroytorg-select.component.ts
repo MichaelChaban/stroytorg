@@ -3,13 +3,10 @@ import {
   Input,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy,
-  ViewEncapsulation,
   OnChanges,
   SimpleChanges,
   Optional,
   Self,
-  CUSTOM_ELEMENTS_SCHEMA,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -36,9 +33,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
   imports: [CommonModule, ErrorPipe, ReactiveFormsModule, NgSelectModule],
   templateUrl: './stroytorg-select.component.html',
   styleUrls: ['./stroytorg-select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
-  encapsulation: ViewEncapsulation.None,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     {
       provide: StroytorgBaseInputControls,
@@ -51,10 +45,10 @@ export class StroytorgSelectComponent<T>
   implements ControlValueAccessor, OnChanges
 {
   @Input()
-  bindLabel!: string;
+  bindLabel: string = 'label';
 
   @Input()
-  bindValue!: string;
+  bindValue: string = 'value';
 
   @Input()
   size = SelectSize.DEFAULT as string;
@@ -75,14 +69,6 @@ export class StroytorgSelectComponent<T>
     super(ngControl);
   }
 
-  get filteredOptions(){
-    if(this.filter){
-      return this._options.filter(x => x.label.toLowerCase().includes(this.filter!.toLowerCase()));
-    }
-
-    return this._options;
-  }
-
   ngOnChanges(_changes: SimpleChanges): void {
     if (_changes['items'] && this.items) {
       const options = this.createOptions(this.items);
@@ -99,6 +85,7 @@ export class StroytorgSelectComponent<T>
     if (!event || !event.target) {
       return;
     }
+
     const selectedIndex = Number.parseInt(event.target.value);
     this._options = this.setOptionSelection(
       this._options,
@@ -107,51 +94,13 @@ export class StroytorgSelectComponent<T>
     );
 
     if (this.bindValue) {
+      console.log(selectedIndex);
       const optionValue: any = this._options[selectedIndex].value;
       const value = optionValue?.[this.bindValue as string] ?? optionValue;
       this.formControl.setValue(value);
     } else {
       this.formControl.setValue(this._options[selectedIndex].value);
     }
-
-    /*const selectedIndex = Number.parseInt(event.target.value);
-    if (this.formControl.value !== event.target.value) {
-      this._options = this.setOptionSelection(
-        this._options,
-        undefined,
-        selectedIndex
-      );
-      if (this.bindValue) {
-        const optionValue: any = this._options[selectedIndex].value;
-        const value = optionValue?.[this.bindValue as string] ?? optionValue;
-        this.formControl.setValue(value);
-      }
-      this.formControl.setValue(this._options[selectedIndex].value);
-    }*/
-    /*
-    const selectedIndex = Number.parseInt(event.target.value);
-    if (this.formControl.value !== event.target.value) {
-      this._options = this.setOptionSelection(
-        this._options,
-        undefined,
-        selectedIndex
-      );
-      if (this.bindValue) {
-        const optionValue: any = this._options[selectedIndex].value;
-        const value = optionValue?.[this.bindValue as string] ?? optionValue;
-        this.formControl.setValue(value);
-      }
-      this.formControl.setValue(this._options[selectedIndex].value);
-    }
-*/
-  }
-
-  inputSearch(event: any) {
-    if (!event || !event.target) {
-      return;
-    }
-
-    this.filter = event.target.value;
   }
 
   private getOptionValue(item: T) {

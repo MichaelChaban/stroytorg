@@ -23,20 +23,20 @@ export class StroytorgHomeComponent {
 
   items = [
     {
-      id: 1,
-      value: 'item 1'
+      value: 1,
+      label: 'item 1'
     },
     {
-      id: 2,
-      value: 'item 2'
+      value: 2,
+      label: 'item 2'
     },
     {
-      id: 3,
-      value: 'item 3'
+      value: 3,
+      label: 'item 3'
     },
     {
-      id: 4,
-      value: 'item 4'
+      value: 4,
+      label: 'item 4'
     },
   ]
 

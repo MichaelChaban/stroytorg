@@ -3,7 +3,7 @@
 .stroytorg-select {
     @extend %input-common;
     border: 0.25px solid $color-grey;
-    cursor: text !important;
+    cursor: auto;
 
     &:focus:not(:disabled, [disabled]),
     &:active:not(:disabled, [disabled]) {

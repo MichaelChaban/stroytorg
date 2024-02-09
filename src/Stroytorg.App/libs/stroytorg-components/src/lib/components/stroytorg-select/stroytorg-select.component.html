@@ -1,25 +1,19 @@
 @if(formControl){
 <div class="display-flex align-items-center gap-1">
   <div class="stroytorg-select-container {{ size }}">
-    <select
+    <ng-select
       floatingHint
       class="stroytorg-select"
+      [items]="_options"
+      [bindLabel]="bindLabel"
+      [bindValue]="bindValue"
       [class.stroytorg-select-invalid]="
         formControl.errors && formControl.touched
       "
-      [value]="formControl.value"
       (change)="selectionChange($event)"
-      (input)="inputSearch($event)"
       title=""
       [formControl]="formControl"
-    >
-      <option [value]="undefined" selected>{{ hint }}</option>
-      @for (item of filteredOptions; track $index) {
-      <option [value]="$index" [selected]="item.selected">
-        {{ item.label }}
-      </option>
-      }
-    </select>
+    />
   </div>
   @if(formControl && formControl.errors && formControl.touched && !readonly){
   <ul class="stroytorg-select-error-message-container">
@@ -33,5 +27,4 @@
   }}</label
   >}
 </div>
-
 }

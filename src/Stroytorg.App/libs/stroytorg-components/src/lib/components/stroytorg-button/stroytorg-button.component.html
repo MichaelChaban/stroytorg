@@ -12,11 +12,11 @@
   [queryParams]="queryParams"
 >
   @if(icon){
-  <mat-icon [class.mr-2]="title">
+  <mat-icon [ngClass]="{ 'mr-2': title }">
     {{ icon }}
   </mat-icon>
   } @if(title){
-  <span [class.m-auto]="!icon">
+  <span [ngClass]="{ 'm-auto': !icon }">
     {{ title }}
   </span>
   }

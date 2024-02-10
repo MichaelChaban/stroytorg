@@ -1,0 +1,32 @@
+.stroytorg-floating-hint-disabled {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+}
+
+.stroytorg-floating-hint {
+    font-size: 16px;
+    color: $color-grey;
+    padding: $input-padding;
+    position: absolute;
+    top: -0.05em;
+    left: 0.03em;
+    transition: 0.2s ease all;
+    pointer-events: none;
+
+    &.active {
+        font-size: $floating-hint-font-size;
+        top: $floating-hint-position-top;
+        left: $floating-hint-position-left;
+        background: $color-white;
+        padding: $hint-padding;
+    }
+}
+
+.stroytorg-floating-hint-active {
+    font-size: $floating-hint-font-size;
+    top: $floating-hint-position-top;
+    left: $floating-hint-position-left;
+    background: $color-white;
+    padding: $hint-padding;
+    color: $color-orange;
+}

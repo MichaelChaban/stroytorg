@@ -1,4 +1,5 @@
-@import "../common-styles/variables.scss";
+@import "../common-styles/index.scss";
+@import './floating-hint.scss';
 
 .stroytorg-text-input {
     @extend %input-common;
@@ -13,7 +14,8 @@
     &:read-only,
     &[readonly] {
         opacity: 0.6;
-        cursor: not-allowed !important;
+        cursor: auto !important;
+        background-color: $color-grey-100;
     }
 
     &:is(textarea) {
@@ -33,52 +35,27 @@
 
     &:has(.stroytorg-text-input:read-only),
     &:has(.stroytorg-text-input[readonly]) {
-        #stroytorg-floating-hint {
-            font-size: $floating-hint-font-size;
-            color: $color-orange;
-            top: $floating-hint-position-top;
-            left: $floating-hint-position-left;
-            background: $color-white;
-            padding: 0 $hint-padding;
-            opacity: 0.6;
-            cursor: not-allowed !important;
+        .stroytorg-floating-hint {
+            @extend .stroytorg-floating-hint-disabled;
         }
     }
 
 
     &:has(.stroytorg-text-input:active:enabled, .stroytorg-text-input:focus:enabled) {
-        #stroytorg-floating-hint.active {
-            color: $color-orange;
+        .stroytorg-floating-hint.active {
+            @extend .stroytorg-floating-hint-active;
         }
     }
 
     &:has(.stroytorg-text-input-invalid) {
-        #stroytorg-floating-hint.active {
-            color: $color-red;
+        .stroytorg-floating-hint {
+            @extend .stroytorg-floating-hint-active;
+            color: $color-red !important;
         }
     }
 }
 
-#stroytorg-floating-hint {
-    font-size: 16px;
-    color: $color-grey;
-    padding: $input-padding;
-    position: absolute;
-    top: -0.17em;
-    left: 0.03em;
-    transition: 0.2s ease all;
-    pointer-events: none;
-
-    &.active {
-        font-size: $floating-hint-font-size;
-        top: $floating-hint-position-top;
-        left: $floating-hint-position-left;
-        background: $color-white;
-        padding: $hint-padding;
-    }
-}
-
-.stroytorg-text-input-error-message-container {
+.stroytorg-error-message-container {
     padding: $error-message-padding;
 
     &>li {

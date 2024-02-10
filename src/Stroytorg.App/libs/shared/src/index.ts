@@ -4,3 +4,4 @@ export * from './pipes';
 export * from './models';
 export * from './detail-state-helpers';
 export * from './enums';
+export * from './directives';

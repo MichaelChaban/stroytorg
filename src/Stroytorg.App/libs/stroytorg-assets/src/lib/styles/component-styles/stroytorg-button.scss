@@ -6,7 +6,7 @@
 }
 
 .default-button {
-  @include buttonPalette($color-white, $color-grey, #f7f7f7, #ebebeb, $color-grey);
+  @include buttonPalette($color-white, $color-dark-grey, #f7f7f7, #ebebeb, $color-grey);
 }
 
 .primary-button {

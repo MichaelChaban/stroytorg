@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { StroytorgBaseFormInputComponent } from '../stroytorg-base-form';
 import { InputSize, InputType } from './stroytorg-text-input.models';
-import { ErrorPipe } from '@stroytorg/shared';
-import { FloatingHintDirective } from './directives/floating-hint.directive';
+import { ErrorPipe, FloatingHintDirective } from '@stroytorg/shared';
 
 @Component({
   selector: 'stroytorg-text-input',

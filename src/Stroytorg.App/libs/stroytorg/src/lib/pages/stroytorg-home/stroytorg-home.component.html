@@ -35,6 +35,11 @@
         </section>
         <img src="https://picsum.photos/300/400">
         </div>
+        <form [formGroup]="formGroup">
+            <stroytorg-select [readonly]="true" [bindValue]="'value'" [multiple]="true" [bindLabel]="'label'" [items]="items" formControlName="select" [hint]="'dasdasda'"></stroytorg-select>
+
+            <stroytorg-text-input [readonly]="true" formControlName="textInput" [hint]="'dasdasda'"></stroytorg-text-input>
+        </form>
         <stroytorg-button title="See Categories" [tooltip]="tooltip" [icon]="icon" [type]="buttonType.DEFAULT" (clickFn)="someFunction()"></stroytorg-button>
         <stroytorg-button title="See Categories" [tooltip]="tooltip" [icon]="icon" [type]="buttonType.PRIMARY"></stroytorg-button>
         <stroytorg-button title="See Categories" [tooltip]="tooltip" [icon]="icon" [type]="buttonType.OUTLINED"></stroytorg-button>
@@ -47,9 +52,6 @@
         <br>
         <br>
         <br>
-        <form [formGroup]="formGroup">
-            <stroytorg-text-input [readonly]="false" formControlName="textInput" [hint]="'dasdasda'"></stroytorg-text-input>
-            <stroytorg-select [bindValue]="'value'" [bindLabel]="'label'" [items]="items" formControlName="select" [hint]="'dasdasda'"></stroytorg-select>
-        </form>
+
     </div>
 </div>

@@ -45,8 +45,8 @@ export class StroytorgHomeComponent {
   }
 
   formGroup = new FormGroup({
-    textInput: new FormControl(null, [Validators.required, Validators.minLength(3)]),
-    select: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+    textInput: new FormControl(null),
+    select: new FormControl(null),
   });
 
 }

@@ -117,7 +117,7 @@ export class ButtonTooltipDirective implements OnInit, OnDestroy {
 
     switch (this.tooltip!.tooltipPosition) {
       case 'above':
-        tooltipPositionTop = hostPosition.top - tooltipDimensions.height - 18;
+        tooltipPositionTop = hostPosition.top - tooltipDimensions.height - 8;
         tooltipPositionLeft =
           hostPosition.left +
           (hostPosition.width - tooltipDimensions.width) / 2;
@@ -126,25 +126,25 @@ export class ButtonTooltipDirective implements OnInit, OnDestroy {
         tooltipPositionTop =
           hostPosition.top +
           (hostPosition.height - tooltipDimensions.height) / 2;
-        tooltipPositionLeft = hostPosition.left - tooltipDimensions.width - 18;
+        tooltipPositionLeft = hostPosition.left - tooltipDimensions.width - 8;
         if (tooltipPositionLeft < 0) {
           this.tooltip!.tooltipPosition = 'right';
-          tooltipPositionLeft = hostPosition.left + hostPosition.width + 18;
+          tooltipPositionLeft = hostPosition.left + hostPosition.width + 8;
         }
         break;
       case 'right':
         tooltipPositionTop =
           hostPosition.top +
           (hostPosition.height - tooltipDimensions.height) / 2;
-        tooltipPositionLeft = hostPosition.left + hostPosition.width + 18;
+        tooltipPositionLeft = hostPosition.left + hostPosition.width + 8;
         if (tooltipPositionLeft + tooltipDimensions.width > window.innerWidth) {
           this.tooltip!.tooltipPosition = 'left';
           tooltipPositionLeft =
-            hostPosition.left - tooltipDimensions.width - 18;
+            hostPosition.left - tooltipDimensions.width - 8;
         }
         break;
       case 'below':
-        tooltipPositionTop = hostPosition.top + hostPosition.height + 18;
+        tooltipPositionTop = hostPosition.top + hostPosition.height + 8;
         tooltipPositionLeft =
           hostPosition.left +
           (hostPosition.width - tooltipDimensions.width) / 2;

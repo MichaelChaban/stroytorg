@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 .mr-2{
     margin-right: 0.6rem;
 }
@@ -20,4 +22,29 @@
 .full-width {
     max-width: 100%;
     min-width: 100%;
+}
+
+.ng-value {
+    background-color:$color-lighter-orange !important;
+    transition: $default-transition;
+
+    &>.ng-value-icon:hover{
+        background-color: $color-light-orange !important;
+    }
+}
+
+.ng-option {
+    transition: $default-transition;
+
+    &.ng-option-marked{
+        background-color:$color-lighter-orange-700 !important;
+    }
+
+    &.ng-option-selected{
+        background-color: $color-light-orange-500 !important;
+    }
+}
+
+.ng-select.ng-select-opened .ng-select-container{
+    z-index: 0 !important;
 }

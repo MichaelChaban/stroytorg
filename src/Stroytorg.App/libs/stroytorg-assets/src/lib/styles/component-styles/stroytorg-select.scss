@@ -1,53 +1,50 @@
 @import "../common-styles/index.scss";
+@import './floating-hint.scss';
 
 .stroytorg-select {
-    @extend %input-common;
-    border: 0.25px solid $color-grey;
-    cursor: auto;
+    resize: vertical;
 
-    &:focus:not(:disabled, [disabled]),
-    &:active:not(:disabled, [disabled]) {
-        border-color: $color-white;
-        box-shadow: $color-orange 0px 0px 0px 2px;
+    &:active:enabled>div,
+    &.ng-select-focused>div {
+        border-color: $color-white !important;
+        box-shadow: $color-orange 0px 0px 0px 2px !important;
+        
+        .stroytorg-floating-hint {
+            @extend .stroytorg-floating-hint-active;
+        }
     }
 
-    &:disabled,
-    &[disabled] {
-        opacity: 0.6;
-        cursor: not-allowed !important;
-    }
-
-    &:is(textarea){
-        width: 100%;
-        resize: vertical;
+    &>div {
+        transition: $default-transition;
     }
 }
 
-.stroytorg-select-invalid:not(.stroytorg-select:disabled, .stroytorg-select[disabled]) {
-    @extend %input-common;
-    border-color: $color-white;
-    box-shadow: $color-red 0px 0px 0px 2px;
 
-    #stroytorg-floating-hint.active {
-        color: $color-red;
-    }
+
+.stroytorg-select-invalid:not(:has(.ng-select-disabled))>div {
+    border-color: $color-white !important;
+    box-shadow: $color-red 0px 0px 0px 2px !important;
 }
 
 .stroytorg-select-container {
     position: relative;
 
-    &:has(.stroytorg-select:disabled),
-    &:has(.stroytorg-select[disabled]) {
-        #stroytorg-floating-hint {
-            font-size: $floating-hint-font-size;
-            color: $color-orange;
-            top: $floating-hint-position-top;
-            left: $floating-hint-position-left;
-            background: $color-white;
-            padding: 0 $hint-padding;
-            border-radius: 3px;
-            opacity: 0.6;
-            cursor: not-allowed !important;
+    &:has(.stroytorg-select.ng-select-disabled) {
+        .stroytorg-floating-hint {
+            @extend .stroytorg-floating-hint-disabled;
+        }
+    }
+
+    &:has(.stroytorg-select-invalid:not(.stroytorg-select.ng-select-disabled)) {
+        .stroytorg-floating-hint {
+            @extend .stroytorg-floating-hint-active;
+            color: $color-red;
+        }
+    }
+
+    &:has(.stroytorg-select.ng-select-focused) {
+        .stroytorg-floating-hint {
+            @extend .stroytorg-floating-hint-active;
         }
     }
 }

@@ -20,7 +20,11 @@ import {
   SelectableItem,
   compareWithId,
 } from './stroytorg-select.models';
-import { ErrorPipe, ObjectUtils } from '@stroytorg/shared';
+import {
+  ErrorPipe,
+  FloatingHintDirective,
+  ObjectUtils,
+} from '@stroytorg/shared';
 import {
   StroytorgBaseInputControls,
   StroytorgBaseFormInputComponent,
@@ -30,7 +34,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
 @Component({
   selector: 'stroytorg-select',
   standalone: true,
-  imports: [CommonModule, ErrorPipe, ReactiveFormsModule, NgSelectModule],
+  imports: [
+    CommonModule,
+    ErrorPipe,
+    ReactiveFormsModule,
+    NgSelectModule,
+    FloatingHintDirective,
+  ],
   templateUrl: './stroytorg-select.component.html',
   styleUrls: ['./stroytorg-select.component.scss'],
   providers: [
@@ -59,9 +69,10 @@ export class StroytorgSelectComponent<T>
   @Input()
   items!: T[];
 
-  @Output() valueChange = new EventEmitter<string>();
+  @Input()
+  multiple: boolean = false;
 
-  filter?: string = '';
+  @Output() valueChange = new EventEmitter<string>();
 
   protected _options!: SelectableItem<T>[];
 
@@ -81,27 +92,26 @@ export class StroytorgSelectComponent<T>
     this.compareWith = compareWithId;
   }
 
-  selectionChange(event: any) {
-    if (!event || !event.target) {
-      return;
-    }
+  // selectionChange(event: any) {
+  //   if (!event || !event.target) {
+  //     return;
+  //   }
 
-    const selectedIndex = Number.parseInt(event.target.value);
-    this._options = this.setOptionSelection(
-      this._options,
-      undefined,
-      selectedIndex
-    );
+  //   const selectedIndex = Number.parseInt(event.target.value);
+  //   this._options = this.setOptionSelection(
+  //     this._options,
+  //     undefined,
+  //     selectedIndex
+  //   );
 
-    if (this.bindValue) {
-      console.log(selectedIndex);
-      const optionValue: any = this._options[selectedIndex].value;
-      const value = optionValue?.[this.bindValue as string] ?? optionValue;
-      this.formControl.setValue(value);
-    } else {
-      this.formControl.setValue(this._options[selectedIndex].value);
-    }
-  }
+  //   if (this.bindValue) {
+  //     const optionValue: any = this._options[selectedIndex].value;
+  //     const value = optionValue?.[this.bindValue as string] ?? optionValue;
+  //     this.formControl.setValue(value);
+  //   } else {
+  //     this.formControl.setValue(this._options[selectedIndex].value);
+  //   }
+  // }
 
   private getOptionValue(item: T) {
     return ObjectUtils.getPropertyByPath(item, this.bindValue);

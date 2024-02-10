@@ -4,27 +4,33 @@
     <ng-select
       floatingHint
       class="stroytorg-select"
+      [class.stroytorg-select-invalid]="
+        formControl.invalid && formControl.touched
+      "
       [items]="_options"
       [bindLabel]="bindLabel"
       [bindValue]="bindValue"
-      [class.stroytorg-select-invalid]="
-        formControl.errors && formControl.touched
-      "
-      (change)="selectionChange($event)"
-      title=""
+      [multiple]="multiple"
+      [readonly]="readonly"
       [formControl]="formControl"
+      title=""
     />
-  </div>
-  @if(formControl && formControl.errors && formControl.touched && !readonly){
-  <ul class="stroytorg-select-error-message-container">
-    @for(error of (formControl.errors | error); track $index){
-    <li>{{ error }}</li>
+    @if(hint){
+    <label
+      [class.active]="
+        (!readonly && formControl.value) ||
+        (formControl.invalid && formControl.touched)
+      "
+      class="stroytorg-floating-hint"
+      >{{ hint }}</label
+    >} @if(formControl && formControl.invalid && formControl.touched &&
+    !readonly){
+    <ul class="stroytorg-error-message-container">
+      @for(error of (formControl.errors | error); track $index){
+      <li>{{ error }}</li>
+      }
+    </ul>
     }
-  </ul>
-  } @if(hint){
-  <label [class.active]="formControl.value" id="stroytorg-floating-hint">{{
-    hint
-  }}</label
-  >}
+  </div>
 </div>
 }

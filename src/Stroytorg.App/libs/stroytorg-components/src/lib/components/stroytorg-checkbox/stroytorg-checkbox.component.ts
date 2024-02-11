@@ -15,7 +15,10 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { ErrorPipe } from '@stroytorg/shared';
-import { StroytorgBaseInputControls, StroytorgBaseFormInputComponent } from '../stroytorg-base-form';
+import {
+  StroytorgBaseInputControls,
+  StroytorgBaseFormInputComponent,
+} from '../stroytorg-base-form';
 
 @Component({
   selector: 'stroytorg-checkbox',
@@ -37,10 +40,16 @@ export class StroytorgCheckboxComponent
   implements ControlValueAccessor
 {
   @Input()
-  checked = this.ngControl?.value ?? false;
+  checked = this.ngControl?.value;
 
   @Input()
-  forceDisableFormControl = false;
+  title?: string;
+
+
+  get isChecked(){
+    this.checked = this.ngControl?.value;
+    return this.ngControl?.value;
+  }
 
   @Output() valueChange = new EventEmitter<boolean>();
 
@@ -49,12 +58,22 @@ export class StroytorgCheckboxComponent
   }
 
   toggle(): void {
-    if (!this.disabled) {
-      this.checked = !this.checked;
-      if (this.formControl) {
-        this.formControl.setValue(this.checked);
+    if (this.ngControl?.disabled) {
+      return;
+    }
+    this.checked = !this.checked;
+    this.valueChange.emit(this.checked);
+    if (!this.formControl) {
+      return;
+    }
+
+    this.formControl.markAsTouched();
+    this.formControl.setValue(this.checked);
+    if (this.isRequired()) {
+      if (this.checked) {
+        return this.formControl.setErrors(null);
       }
-      this.valueChange.emit(this.checked);
+      return this.formControl.setErrors({ required: true });
     }
   }
 }

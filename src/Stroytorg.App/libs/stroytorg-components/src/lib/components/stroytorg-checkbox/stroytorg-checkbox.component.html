@@ -1,31 +1,30 @@
-<div
-  class="gov-form-control gov-form-control--custom"
-  [class.gov-form-control--error]="ngControl && ngControl.invalid"
-  (click)="toggle()"
->
-  @if(formControl && !forceDisableFormControl){
-  <input
-    class="gov-form-control__checkbox"
-    type="checkbox"
-    [formControl]="formControl"
-    [disabled]="disabled"
-    [value]="checked"
-    [checked]="checked"
-  />
-  } @if(forceDisableFormControl || !formControl){
-  <input
-    class="gov-form-control__checkbox"
-    type="checkbox"
-    [disabled]="disabled"
-    [value]="true"
-    [checked]="checked"
-  />
-  }
-
-  <span class="gov-form-control__indicator"></span>
-  @if(ngControl && ngControl.invalid){
-  <span class="gov-form-control__message">{{ ngControl.errors | error }}</span>
-  }
-
-  <span class="gov-form-control__validation-mark" tabindex="-1"> </span>
+<div class="stroytorg-checkbox-container">
+  @if(formControl){
+  <div class="display-flex align-items-center justify-content-start">
+    <label class="stroytorg-checkbox">
+      <input
+        type="checkbox"
+        [disabled]="readonly"
+        [checked]="isChecked"
+        (change)="toggle()"
+      />
+      <span
+        class="checkmark"
+        [class.stroytorg-checkbox-invalid]="
+          formControl.invalid && formControl.touched
+        "
+        [class.checked]="isChecked && readonly"
+      ></span>
+    </label>
+    @if(title){
+    <span class="stroytorg-checkbox-title">{{ title }}</span>
+    }
+  </div>
+  @if(formControl.invalid && formControl.touched && !disabled){
+  <ul class="stroytorg-error-message-container">
+    @for(error of (formControl.errors | error); track $index){
+    <li>{{ error }}</li>
+    }
+  </ul>
+  }}
 </div>

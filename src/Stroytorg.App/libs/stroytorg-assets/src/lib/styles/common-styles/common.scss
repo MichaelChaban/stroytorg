@@ -4,6 +4,32 @@
     margin-right: 0.6rem;
 }
 
+.ml-1{
+    margin-left: 0.3rem;
+}
+
+.ml-2{
+    margin-left: 0.6rem;
+}
+
+.h-fit-content{
+    height: fit-content !important;
+} 
+
+.no-min-width {
+    min-width: unset !important;
+}
+
+.x-small-width {
+    max-width: 5.6rem;
+    min-width: 5.6rem;
+}
+
+.small-width {
+    max-width: 8rem;
+    min-width: 8rem;
+}
+
 .default-width {
     max-width: 10rem;
     min-width: 10rem;
@@ -47,4 +73,25 @@
 
 .ng-select.ng-select-opened .ng-select-container{
     z-index: 0 !important;
+}
+
+.ng-select.ng-select-disabled{
+    .ng-value{
+        background-color: $color-grey-300 !important;
+    }
+}
+
+.ng-select.ng-select-single{
+    .ng-value{
+        background-color: transparent !important;
+    }
+}
+
+.stroytorg-error-message-container {
+    padding: $error-message-padding;
+
+    &>li {
+        font-size: $errpr-message-font-size;
+        color: $color-red;
+    }
 }

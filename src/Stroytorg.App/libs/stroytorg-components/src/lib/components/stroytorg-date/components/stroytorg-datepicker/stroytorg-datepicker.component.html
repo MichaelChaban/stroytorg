@@ -1,0 +1,85 @@
+<div class="stroytorg-datepicker-container">
+  <div class="stroytorg-datepicker-container-header">
+    <h4 class="m-1">Select Date</h4>
+    <h5 class="m-1">
+      {{
+        (viewFacade.selectedDate
+          ? viewFacade.selectedDate
+          : viewFacade.todayDate
+        ).weekDayFullName
+      }},
+      {{
+        (viewFacade.selectedDate
+          ? viewFacade.selectedDate
+          : viewFacade.todayDate
+        ).monthName
+      }}
+      {{
+        (viewFacade.selectedDate
+          ? viewFacade.selectedDate
+          : viewFacade.todayDate
+        ).monthDayNumber + 1
+      }}
+    </h5>
+    <h6 class="m-1">
+      {{
+        (viewFacade.selectedDate
+          ? viewFacade.selectedDate
+          : viewFacade.todayDate
+        ).year
+      }}
+    </h6>
+  </div>
+  <div class="stroytorg-datepicker-container-body">
+    <div>
+      <div class="stroytorg-date-picker-button-container">
+        <stroytorg-button
+          class="stroytorg-date-picker-button"
+          [icon]="viewFacade.previosMonthIcon"
+          (clickFn)="previousMonth()"
+        ></stroytorg-button>
+        <span class="text-center">{{ viewFacade.monthHeader }}</span>
+        <stroytorg-button
+          class="stroytorg-date-picker-button"
+          [icon]="viewFacade.nextMonthIcon"
+          (clickFn)="nextMonth()"
+        ></stroytorg-button>
+      </div>
+    </div>
+    <div
+      class="mt-2 stroytorg-month-year-selector-container"
+      [formGroup]="viewFacade.formGroup"
+    >
+      <stroytorg-select
+        formControlName="month"
+        [items]="viewFacade.monthOptions"
+        [size]="viewFacade.selectSize.SMALL"
+        [clearable]="false"
+      ></stroytorg-select>
+      <stroytorg-select
+        formControlName="year"
+        [items]="viewFacade.yearOptions"
+        [bindLabel]="'value'"
+        [size]="viewFacade.selectSize.XSMALL"
+        [clearable]="false"
+      ></stroytorg-select>
+    </div>
+    <div class="mt-2 d-flex stroytorg-day-header">
+      @for (weekDay of viewFacade.weekDaysName; track $index) {
+      <div>{{ weekDay }}</div>
+      }
+    </div>
+    <hr class="m-2"/>
+    <div class="stroytorg-days-container">
+      @for (date of viewFacade.monthDates; track $index) {
+      <stroytorg-button
+        class="stroytorg-date-picker-button {{ date.classNames }}"
+        [class.today]="date.isToday"
+        [class.selected-date]="date.isSelected"
+        [title]="(date.monthDayNumber + 1).toString()"
+        (clickFn)="selectDate(date)"
+      ></stroytorg-button>
+      }
+    </div>
+  </div>
+</div>

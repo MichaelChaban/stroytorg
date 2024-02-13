@@ -25,7 +25,6 @@ import {
   standalone: true,
   imports: [CommonModule, ErrorPipe, ReactiveFormsModule],
   templateUrl: './stroytorg-checkbox.component.html',
-  styleUrls: ['./stroytorg-checkbox.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   providers: [

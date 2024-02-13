@@ -1,5 +1,7 @@
 @if(formControl){
-<div class="display-flex align-items-center gap-1">
+<div
+  class="d-flex justify-content-center align-items-center align-items-center gap-1"
+>
   <div class="stroytorg-text-input-container {{ size }}">
     @if(type === 'singleline'){
     <input
@@ -11,7 +13,6 @@
       "
       [formControl]="formControl"
       [readOnly]="readonly"
-      [required]="isRequired()"
     />
     } @else if(type === 'multiline'){
     <textarea
@@ -27,12 +28,11 @@
       [required]="isRequired()"
     ></textarea>
     } @if(hint){
-    <label
-      class="stroytorg-floating-hint"
-      >{{ hint }}</label
-    >
-    } @if(formControl && formControl.invalid && formControl.touched &&
-    !readonly){
+    <label class="stroytorg-floating-hint" [class.active]="formControl.value">{{
+      hint
+    }}</label>
+    } @if(formControl && formControl.invalid && formControl.touched && !readonly
+    && showErrors){
     <ul class="stroytorg-error-message-container">
       @for(error of (formControl.errors | error); track $index){
       <li>{{ error }}</li>
@@ -41,5 +41,4 @@
     }
   </div>
 </div>
-
 }

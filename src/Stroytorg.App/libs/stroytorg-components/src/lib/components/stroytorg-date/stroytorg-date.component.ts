@@ -1,33 +1,44 @@
 import {
-  CUSTOM_ELEMENTS_SCHEMA,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Optional,
   Output,
   Self,
+  SimpleChanges,
   ViewEncapsulation,
   inject,
 } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { DateSize } from './stroytorg-date.models';
-import { NgControl, ReactiveFormsModule } from '@angular/forms';
-import { ErrorPipe } from '@stroytorg/shared';
+import {
+  ControlValueAccessor,
+  NgControl,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { ErrorPipe, FloatingHintDirective } from '@stroytorg/shared';
 import {
   StroytorgBaseInputControls,
   StroytorgBaseFormInputComponent,
 } from '../stroytorg-base-form';
+import { StroytorgDatePickerComponent } from './components';
 
 @Component({
   selector: 'stroytorg-date',
   standalone: true,
-  imports: [CommonModule, ErrorPipe, DatePipe, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ErrorPipe,
+    DatePipe,
+    ReactiveFormsModule,
+    FloatingHintDirective,
+    StroytorgDatePickerComponent,
+  ],
   templateUrl: './stroytorg-date.component.html',
-  styleUrls: ['./stroytorg-date.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     {
       provide: StroytorgBaseInputControls,
@@ -38,9 +49,12 @@ import {
     },
   ],
 })
-export class StroytorgDateComponent extends StroytorgBaseFormInputComponent {
+export class StroytorgDateComponent
+  extends StroytorgBaseFormInputComponent
+  implements ControlValueAccessor
+{
   @Input()
-  size = DateSize.large as string;
+  size = DateSize.DEFAULT as string;
 
   @Output()
   valueChange = new EventEmitter<string>();
@@ -51,6 +65,10 @@ export class StroytorgDateComponent extends StroytorgBaseFormInputComponent {
     super(ngControl);
   }
 
+  get formattedValue() {
+    return this.formatDate(this.formControl?.value);
+  }
+
   protected formatDate(dateString: string): string | null {
     if (!dateString) {
       return null;
@@ -58,5 +76,15 @@ export class StroytorgDateComponent extends StroytorgBaseFormInputComponent {
 
     const date = new Date(dateString);
     return date ? this.datePipe?.transform(date, 'yyyy-MM-dd') : dateString;
+  }
+
+  selectDate(date: Date): void {
+    if (this.formControl && !this.readonly) {
+      this.formControl.setValue(this.formatDate(date?.toISOString()));
+    }
+  }
+
+  getInitialDate() {
+    return this.formControl?.value ? new Date(this.formControl?.value) : null;
   }
 }

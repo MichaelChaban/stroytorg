@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Optional, Output, Self, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
-import { StroytorgBaseFormInputComponent } from '../stroytorg-base-form';
+import { StroytorgBaseFormInputComponent, StroytorgBaseInputControls } from '../stroytorg-base-form';
 import { InputSize, InputType } from './stroytorg-text-input.models';
 import { ErrorPipe, FloatingHintDirective } from '@stroytorg/shared';
 
@@ -11,6 +11,13 @@ import { ErrorPipe, FloatingHintDirective } from '@stroytorg/shared';
   imports: [CommonModule, ErrorPipe, ReactiveFormsModule, FloatingHintDirective],
   templateUrl: './stroytorg-text-input.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
+  providers: [
+    {
+      provide: StroytorgBaseInputControls,
+      useExisting: StroytorgTextInputComponent,
+    },
+  ],
 })
 export class StroytorgTextInputComponent
   extends StroytorgBaseFormInputComponent

@@ -61,6 +61,9 @@ export class StroytorgBaseFormInputComponent
   disabled!: boolean;
 
   @Input()
+  showErrors: boolean = false;
+
+  @Input()
   placeholder!: string;
 
   onChange: any = noop;

@@ -32,7 +32,6 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
     ButtonEnterPressedDirective,
   ],
   templateUrl: './stroytorg-button.component.html',
-  styleUrls: ['./stroytorg-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
   encapsulation: ViewEncapsulation.None,
 })
@@ -42,7 +41,7 @@ export class StroytorgButtonComponent extends UnsubscribeControlComponent {
   constructor() {
     super();
     this.clickSubject
-      .pipe(takeUntil(this.destroyed$), debounceTime(500))
+      .pipe(takeUntil(this.destroyed$), debounceTime(100))
       .subscribe(() => {
         this.clickFn.emit();
       });

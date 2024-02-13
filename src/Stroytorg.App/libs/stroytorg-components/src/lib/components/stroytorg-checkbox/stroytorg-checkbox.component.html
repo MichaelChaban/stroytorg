@@ -1,6 +1,6 @@
 <div class="stroytorg-checkbox-container">
   @if(formControl){
-  <div class="display-flex align-items-center justify-content-start">
+  <div class="d-flex justify-content-center align-items-center align-items-center justify-content-start">
     <label class="stroytorg-checkbox">
       <input
         type="checkbox"
@@ -17,10 +17,10 @@
       ></span>
     </label>
     @if(title){
-    <span class="stroytorg-checkbox-title">{{ title }}</span>
+    <span class="ml-1 stroytorg-checkbox-title">{{ title }}</span>
     }
   </div>
-  @if(formControl.invalid && formControl.touched && !disabled){
+  @if(formControl.invalid && formControl.touched && !disabled && showErrors){
   <ul class="stroytorg-error-message-container">
     @for(error of (formControl.errors | error); track $index){
     <li>{{ error }}</li>

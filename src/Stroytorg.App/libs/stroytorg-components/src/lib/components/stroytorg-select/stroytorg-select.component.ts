@@ -22,8 +22,7 @@ import {
 } from './stroytorg-select.models';
 import {
   ErrorPipe,
-  FloatingHintDirective,
-  ObjectUtils,
+  FloatingHintDirective
 } from '@stroytorg/shared';
 import {
   StroytorgBaseInputControls,
@@ -42,7 +41,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FloatingHintDirective,
   ],
   templateUrl: './stroytorg-select.component.html',
-  styleUrls: ['./stroytorg-select.component.scss'],
   providers: [
     {
       provide: StroytorgBaseInputControls,
@@ -52,7 +50,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 })
 export class StroytorgSelectComponent<T>
   extends StroytorgBaseFormInputComponent
-  implements ControlValueAccessor, OnChanges
+  implements ControlValueAccessor
 {
   @Input()
   bindLabel: string = 'label';
@@ -72,75 +70,12 @@ export class StroytorgSelectComponent<T>
   @Input()
   multiple: boolean = false;
 
-  @Output() valueChange = new EventEmitter<string>();
+  @Input()
+  clearable: boolean = true;
 
-  protected _options!: SelectableItem<T>[];
+  @Output() valueChange = new EventEmitter<string>();
 
   constructor(@Optional() @Self() ngControl: NgControl) {
     super(ngControl);
-  }
-
-  ngOnChanges(_changes: SimpleChanges): void {
-    if (_changes['items'] && this.items) {
-      const options = this.createOptions(this.items);
-      this._options = this.setOptionSelection(
-        options,
-        this.ngControl?.value,
-        undefined
-      );
-    }
-    this.compareWith = compareWithId;
-  }
-
-  // selectionChange(event: any) {
-  //   if (!event || !event.target) {
-  //     return;
-  //   }
-
-  //   const selectedIndex = Number.parseInt(event.target.value);
-  //   this._options = this.setOptionSelection(
-  //     this._options,
-  //     undefined,
-  //     selectedIndex
-  //   );
-
-  //   if (this.bindValue) {
-  //     const optionValue: any = this._options[selectedIndex].value;
-  //     const value = optionValue?.[this.bindValue as string] ?? optionValue;
-  //     this.formControl.setValue(value);
-  //   } else {
-  //     this.formControl.setValue(this._options[selectedIndex].value);
-  //   }
-  // }
-
-  private getOptionValue(item: T) {
-    return ObjectUtils.getPropertyByPath(item, this.bindValue);
-  }
-
-  private getOptionLabel(item: T) {
-    return ObjectUtils.getPropertyByPath(item, this.bindLabel);
-  }
-
-  private createOptions(items: T[]) {
-    return (items ?? []).map(
-      (x) =>
-        ({
-          label: this.getOptionLabel(x),
-          value: this.getOptionValue(x),
-          selected: false,
-        } as SelectableItem<T>)
-    );
-  }
-
-  private setOptionSelection(
-    options: SelectableItem<T>[],
-    value?: T,
-    selectedIndex?: number
-  ) {
-    return (options ?? []).map((x, index) => {
-      const selected =
-        index === selectedIndex || ObjectUtils.objectsEqual(x.value, value);
-      return x.selected === selected ? x : { ...x, selected };
-    });
   }
 }

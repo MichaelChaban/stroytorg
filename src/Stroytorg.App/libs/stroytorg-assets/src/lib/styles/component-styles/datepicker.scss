@@ -1,0 +1,98 @@
+.stroytorg-datepicker-container {
+  display: none;
+  position: absolute;
+  top: 2.5em;
+  left: 0;
+  width: 16.5em;
+  min-width: 8em;
+  max-width: 80dvw;
+  box-shadow: 0px 0px 4px 1px $color-grey-500;
+  border-radius: 5px;
+  border-radius: 1em;
+  animation: fadeInOut $default-transition ease-in-out forwards;
+  cursor: pointer;
+
+  &:active,
+  &:focus,
+  &:hover {
+    display: block !important;
+  }
+}
+
+.stroytorg-datepicker-container-header {
+  background-color: $color-darker-orange;
+  color: $color-white-900;
+  border-radius: 0.8em 0.8em 0 0;
+  padding: 0.75em 1.5em;
+}
+
+.stroytorg-datepicker-container-body {
+  padding: 0.5em 1em;
+}
+
+.stroytorg-month-year-selector-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.stroytorg-days-container {
+  display: grid;
+  grid-template-columns: repeat(7, 2rem);
+  justify-content: center;
+}
+
+.stroytorg-day-header div {
+  width: 2em;
+  gap: 0.25em;
+  text-align: center;
+}
+
+.stroytorg-date-picker-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.stroytorg-date-picker-button > button {
+  padding: 0.2em !important;
+  width: 2em;
+  text-align: center;
+  color: $color-light-black !important;
+
+  &:focus,
+  :active {
+    box-shadow: none !important;
+  }
+}
+
+.today {
+  & > button {
+    background-color: $color-light-red-300;
+
+    & > span {
+      color: $color-red;
+    }
+  }
+}
+
+.selected-date {
+  & > button {
+    background-color: $color-grey-300;
+  }
+}
+
+.not-current-month {
+  & > button > span {
+    color: $color-grey-500;
+  }
+}
+
+.year-selector {
+  min-width: 10em;
+  min-height: 30em;
+  z-index: 10;
+  position: relative;
+}

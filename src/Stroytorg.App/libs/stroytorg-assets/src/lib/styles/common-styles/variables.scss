@@ -1,29 +1,41 @@
 // Stroytorg color palette variables
+$color-white-800: rgb(255, 255, 255, 0.8);
+$color-white-900: rgb(255, 255, 255, 0.9);
 $color-white: #ffffff;
+
+$color-green: #009b00;
+
+$color-light-yellow: #fdec8c;
+$color-yellow: #ffd800;
+$color-dark-yellow: #ecc900;
+$color-darker-yellow: #d4b101;
+
+$color-lighter-orange-400: rgb(253, 224, 211, 0.4);
+$color-lighter-orange-700: rgba(253, 224, 211, 0.7);
+$color-lighter-orange: rgb(253, 224, 211);
+$color-light-orange-500: rgb(248, 173, 140, 0.5);
+$color-light-orange: #f8ad8c;
+$color-orange: #ff7e47;
+$color-dark-orange: #ee6124;
+$color-darker-orange: #db4b0f;
+
+$color-light-red-300: rgb(253, 137, 137, 0.3);
+$color-light-red-500: rgb(253, 137, 137, 0.5);
+$color-light-red: #fd8989;
+$color-red: #ec0202;
+$color-dark-red: #cc0000;
+$color-darker-red: #990000;
+
 $color-grey-100: rgb(175, 171, 171, 0.1);
+$color-grey-300: rgb(175, 171, 171, 0.3);
 $color-grey-500: rgb(175, 171, 171, 0.5);
 $color-grey-800: rgb(175, 171, 171, 0.8);
 $color-grey: #afabab;
 $color-dark-grey: #333333;
-$color-orange: #ff7e47;
-$color-dark-orange: #ee6124;
-$color-darker-orange: #db4b0f;
-$color-light-orange: #f8ad8c;
-$color-light-orange-500: rgb(248, 173, 140, 0.5);
-$color-lighter-orange:rgb(253, 224, 211);
-$color-lighter-orange-700: rgba(253, 224, 211, 0.7);
-$color-lighter-orange-400: rgb(253, 224, 211, 0.4);
-$color-yellow: #ffd800;
-$color-dark-yellow: #ecc900;
-$color-darker-yellow: #d4b101;
-$color-light-yellow: #fdec8c;
-$color-red: #ec0202;
-$color-dark-red: #cc0000;
-$color-darker-red: #990000;
-$color-light-red: #fd8989;
-$color-black: #000000;
+
+$color-light-black: #333333;
 $color-black-700: rgba(0, 0, 0, 0.7);
-$color-green: #009b00;
+$color-black: #000000;
 
 // Stroytorg text-input variables
 $input-padding: 0.3em 0.5em;
@@ -37,62 +49,84 @@ $floating-hint-position-left: 1em;
 $default-transition: 0.1s;
 
 %input-common {
-    width: 100%;
-    color: $color-dark-grey;
-    padding: $input-padding;
-    border-radius: $input-border-radius;
-    outline: none;
-    transition: $default-transition;
+  width: 100%;
+  color: $color-dark-grey;
+  padding: $input-padding;
+  border-radius: $input-border-radius;
+  outline: none;
+  transition: $default-transition;
 }
-
 
 //Stroytorg button functions
 @mixin buttonBase {
-    border-radius: 5px;
-    padding: 0.75em 2em;
-    font-weight: 500;
-    font-size: 15px;
-    transition: $default-transition;
-    width: var(--button-width);
-    border: none;
+  border-radius: 5px;
+  padding: 0.75em 2em;
+  font-weight: 500;
+  font-size: 15px;
+  transition: $default-transition;
+  width: var(--button-width);
+  border: none;
 
-    &:disabled,
-    &[disabled] {
-        opacity: 0.6;
-        cursor: not-allowed !important;
-    }
+  &:disabled,
+  &[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+  }
 
-    &:active,
-    &:focus {
-        outline: none;
-    }
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
-@mixin buttonPalette($bgColor, $color, $hoverColor, $activeColor, $shadowColor) {
+@mixin buttonPalette(
+  $bgColor,
+  $color,
+  $hoverColor,
+  $activeColor,
+  $shadowColor
+) {
+  background-color: $bgColor;
+  color: $color;
+
+  &:hover:enabled,
+  &:focus:enabled {
+    background-color: $hoverColor;
+    cursor: pointer;
+  }
+
+  &:active:enabled,
+  &.enter-pressed {
+    background-color: $activeColor;
+    box-shadow: $shadowColor 0px 0px 0px 3px;
+  }
+
+  &:active:not(:focus),
+  &.enter-pressed:not(:focus) {
     background-color: $bgColor;
-    color: $color;
-
-    &:hover:enabled,
-    &:focus:enabled {
-        background-color: $hoverColor;
-        cursor: pointer;
-    }
-
-    &:active:enabled,
-    &.enter-pressed {
-        background-color: $activeColor;
-        box-shadow: $shadowColor 0px 0px 0px 3px;
-    }
-
-    &:active:not(:focus),
-    &.enter-pressed:not(:focus) {
-        background-color: $bgColor;
-    }
+  }
 }
 
 @mixin buttonWithIcon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.75em !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75em !important;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  50% {
+    opacity: 0.5;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
 }

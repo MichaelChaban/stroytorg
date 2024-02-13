@@ -8,6 +8,7 @@ import {
   StroytorgSelectComponent,
   StroytorgCheckboxComponent,
   StroytorgDateComponent,
+  StroytorgTimeComponent,
 } from '@stroytorg/stroytorg-components';
 import { Icon } from '@stroytorg/shared';
 import {
@@ -27,7 +28,8 @@ import {
     ReactiveFormsModule,
     StroytorgSelectComponent,
     StroytorgCheckboxComponent,
-    StroytorgDateComponent
+    StroytorgDateComponent,
+    StroytorgTimeComponent
   ],
   templateUrl: './stroytorg-home.component.html',
   styleUrl: './stroytorg-home.component.scss'
@@ -69,5 +71,6 @@ export class StroytorgHomeComponent {
     textInput: new FormControl(null, [Validators.required]),
     checkbox: new FormControl(null, [Validators.required]),
     date: new FormControl(null, [Validators.required]),
+    time: new FormControl(null, [Validators.required]),
   });
 }

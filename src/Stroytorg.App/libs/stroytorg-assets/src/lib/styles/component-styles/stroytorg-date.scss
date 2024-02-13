@@ -2,10 +2,6 @@
   @extend %input-common;
   border: 0.25px solid $color-grey;
 
-  &::-webkit-datetime-edit {
-    color: transparent;
-  }
-
   &::-webkit-calendar-picker-indicator {
     display: none;
   }
@@ -30,7 +26,6 @@
 
   &:read-only,
   &[readonly] {
-    opacity: 0.6;
     cursor: auto !important;
     background-color: $color-grey-100;
   }

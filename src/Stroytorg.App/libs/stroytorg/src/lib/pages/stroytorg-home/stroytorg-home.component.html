@@ -1,78 +1,86 @@
 <div class="page-container">
-    <div class="mt-3 d-flex justify-content-center align-items-center align-items-center">
-        <stroytorg-button
-        title="See Categories"
-        [tooltip]="tooltip"
-        [icon]="icon"
-        [type]="buttonType.DEFAULT"
-        [disabled]="true"
-        (clickFn)="someFunction()"
-      ></stroytorg-button>
-      <stroytorg-button
-        title="See Categories"
-        [tooltip]="tooltip"
-        [icon]="icon"
-        [type]="buttonType.PRIMARY"
-      ></stroytorg-button>
-      <stroytorg-button
-        title="See Categories"
-        [tooltip]="tooltip"
-        [icon]="icon"
-        [type]="buttonType.OUTLINED"
-      ></stroytorg-button>
-      <stroytorg-button
-        title="See Categories"
-        [tooltip]="tooltip"
-        [icon]="icon"
-        [type]="buttonType.WARNING"
-      ></stroytorg-button>
-      <stroytorg-button
-        title="See Categories"
-        [tooltip]="tooltip"
-        [icon]="icon"
-        [type]="buttonType.DANGER"
-      ></stroytorg-button>
-      <stroytorg-button
-        [tooltip]="tooltip"
-        [rounded]="true"
-        [icon]="icon"
-        [type]="buttonType.DANGER"
-      ></stroytorg-button>
-      <stroytorg-button
-        title="See Categories"
-        [tooltip]="tooltip"
-        [type]="buttonType.DANGER"
-      ></stroytorg-button>
-    </div>
-    
-    <div class="mt-4">
-        <form [formGroup]="formGroup" class="d-flex justify-content-center align-items-center align-items-center">
-            <stroytorg-select
-              [readonly]="false"
-              [multiple]="true"
-              [items]="items"
-              formControlName="select"
-              [hint]="'Товари'"
-            ></stroytorg-select>
-      
-            <stroytorg-text-input
-              [readonly]="false"
-              formControlName="textInput"
-              [hint]="'Прізвище'"
-            ></stroytorg-text-input>
+  <div class="mt-3 d-flex justify-content-around align-items-center">
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [type]="buttonType.DEFAULT"
+      [disabled]="true"
+      (clickFn)="someFunction()"
+    ></stroytorg-button>
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [type]="buttonType.PRIMARY"
+    ></stroytorg-button>
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [type]="buttonType.OUTLINED"
+    ></stroytorg-button>
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [type]="buttonType.WARNING"
+    ></stroytorg-button>
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [type]="buttonType.DANGER"
+    ></stroytorg-button>
+    <stroytorg-button
+      [tooltip]="tooltip"
+      [rounded]="true"
+      [icon]="icon"
+      [type]="buttonType.DANGER"
+    ></stroytorg-button>
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [type]="buttonType.DANGER"
+    ></stroytorg-button>
+  </div>
 
-            <stroytorg-checkbox
-              [readonly]="false"
-              formControlName="checkbox"
-              [title]="'Підтвердіть, що ви згодні на все*'"
-            ></stroytorg-checkbox>
+  <div class="mt-4">
+    <form
+      [formGroup]="formGroup"
+      class="d-flex justify-content-around align-items-center"
+    >
+      <stroytorg-select
+        [readonly]="false"
+        [multiple]="true"
+        [items]="items"
+        formControlName="select"
+        [hint]="'Товари'"
+      ></stroytorg-select>
 
-            <stroytorg-date
-              [readonly]="true"
-              formControlName="date"
-              [title]="'Підтвердіть, що ви згодні на все*'"
-              [hint]="'Дата'"
-            ></stroytorg-date>
-          </form>
-    </div>
+      <stroytorg-text-input
+        [readonly]="false"
+        formControlName="textInput"
+        [hint]="'Прізвище'"
+      ></stroytorg-text-input>
+
+      <stroytorg-checkbox
+        [readonly]="false"
+        formControlName="checkbox"
+        [title]="'Підтвердіть, що ви згодні на все*'"
+      ></stroytorg-checkbox>
+
+      <stroytorg-date
+        [readonly]="false"
+        formControlName="date"
+        [hint]="'Дата'"
+      ></stroytorg-date>
+
+      <stroytorg-time
+        [readonly]="false"
+        formControlName="time"
+        [hint]="'Час'"
+      ></stroytorg-time>
+    </form>
+  </div>
 </div>

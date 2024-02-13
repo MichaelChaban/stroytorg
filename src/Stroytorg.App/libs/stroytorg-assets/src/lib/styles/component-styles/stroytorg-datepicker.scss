@@ -2,15 +2,13 @@
   display: none;
   position: absolute;
   top: 2.5em;
-  left: 0;
+  left: -3em;
   width: 16.5em;
   min-width: 8em;
   max-width: 80dvw;
   box-shadow: 0px 0px 4px 1px $color-grey-500;
-  border-radius: 5px;
   border-radius: 1em;
   animation: fadeInOut $default-transition ease-in-out forwards;
-  cursor: pointer;
 
   &:active,
   &:focus,
@@ -28,6 +26,7 @@
 
 .stroytorg-datepicker-container-body {
   padding: 0.5em 1em;
+  background-color: $color-white;
 }
 
 .stroytorg-month-year-selector-container {
@@ -88,11 +87,4 @@
   & > button > span {
     color: $color-grey-500;
   }
-}
-
-.year-selector {
-  min-width: 10em;
-  min-height: 30em;
-  z-index: 10;
-  position: relative;
 }

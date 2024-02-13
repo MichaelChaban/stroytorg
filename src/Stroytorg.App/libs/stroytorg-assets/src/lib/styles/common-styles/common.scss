@@ -1,97 +1,110 @@
 @import './variables.scss';
 
-.mr-2{
-    margin-right: 0.6rem;
+.mr-2 {
+  margin-right: 0.6rem;
 }
 
-.ml-1{
-    margin-left: 0.3rem;
+.ml-1 {
+  margin-left: 0.3rem;
 }
 
-.ml-2{
-    margin-left: 0.6rem;
+.ml-2 {
+  margin-left: 0.6rem;
 }
 
-.h-fit-content{
-    height: fit-content !important;
-} 
+.h-fit-content {
+  height: fit-content !important;
+}
 
 .no-min-width {
-    min-width: unset !important;
+  min-width: unset !important;
 }
 
 .x-small-width {
-    max-width: 5.6rem;
-    min-width: 5.6rem;
+  max-width: 5.6rem;
+  min-width: 5.6rem;
 }
 
 .small-width {
-    max-width: 8rem;
-    min-width: 8rem;
+  max-width: 8rem;
+  min-width: 8rem;
 }
 
 .default-width {
-    max-width: 10rem;
-    min-width: 10rem;
+  max-width: 10rem;
+  min-width: 10rem;
 }
 
 .large-width {
-    max-width: 14rem;
-    min-width: 14rem;
+  max-width: 14rem;
+  min-width: 14rem;
 }
 
 .x-large-width {
-    max-width: 18rem;
-    min-width: 18rem;
+  max-width: 18rem;
+  min-width: 18rem;
 }
 
 .full-width {
-    max-width: 100%;
-    min-width: 100%;
+  max-width: 100%;
+  min-width: 100%;
 }
 
 .ng-value {
-    background-color:$color-lighter-orange !important;
-    transition: $default-transition;
+  background-color: $color-lighter-orange !important;
+  transition: $default-transition;
 
-    &>.ng-value-icon:hover{
-        background-color: $color-light-orange !important;
-    }
+  & > .ng-value-icon:hover {
+    background-color: $color-light-orange !important;
+  }
 }
 
 .ng-option {
-    transition: $default-transition;
+  transition: $default-transition;
 
-    &.ng-option-marked{
-        background-color:$color-lighter-orange-700 !important;
-    }
+  &.ng-option-marked {
+    background-color: $color-lighter-orange-700 !important;
+  }
 
-    &.ng-option-selected{
-        background-color: $color-light-orange-500 !important;
-    }
+  &.ng-option-selected {
+    background-color: $color-light-orange-500 !important;
+  }
 }
 
-.ng-select.ng-select-opened .ng-select-container{
-    z-index: 0 !important;
+.ng-select.ng-select-opened .ng-select-container {
+  z-index: 0 !important;
 }
 
-.ng-select.ng-select-disabled{
-    .ng-value{
-        background-color: $color-grey-300 !important;
-    }
+.ng-select.ng-select-disabled {
+  .ng-value {
+    background-color: $color-grey-300 !important;
+  }
 }
 
-.ng-select.ng-select-single{
-    .ng-value{
-        background-color: transparent !important;
-    }
+.ng-select.ng-select-single {
+  .ng-value {
+    background-color: transparent !important;
+  }
 }
 
 .stroytorg-error-message-container {
-    padding: $error-message-padding;
+  padding: $error-message-padding;
 
-    &>li {
-        font-size: $errpr-message-font-size;
-        color: $color-red;
-    }
+  & > li {
+    font-size: $errpr-message-font-size;
+    color: $color-red;
+  }
 }
+
+// @mixin hover-active($styles) {
+//   &:hover,
+//   &:focus {
+//     @content;
+//   }
+
+//   @media (hover: none) {
+//     &:active {
+//       @content;
+//     }
+//   }
+// }

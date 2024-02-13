@@ -1,10 +1,10 @@
 import { Icon } from "@stroytorg/shared";
 
 export enum ButtonSize {
-  small = 'small',
-  normal = '',
-  large = 'large',
-  xlarge = 'x-large',
+  SMALL = 'small',
+  DEFAULT = '',
+  LARGE = 'large',
+  XLARGE = 'x-large',
 }
 
 export enum ButtonType {

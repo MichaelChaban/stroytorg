@@ -2,27 +2,23 @@
 <div
   class="d-flex justify-content-center align-items-center align-items-center gap-1"
 >
-  <div class="stroytorg-date-container {{ size }}">
+  <div class="stroytorg-time-container {{ size }}">
     <input
-      class="stroytorg-date"
-      type="date"
+      class="stroytorg-time"
+      type="time"
       title=""
-      [class.stroytorg-date-invalid]="
+      [class.stroytorg-time-invalid]="
         formControl.invalid && formControl.touched
       "
-      [class.stroytorg-date-with-value]="formControl.value"
+      [class.stroytorg-time-with-value]="formControl.value"
       [readOnly]="readonly"
       [formControl]="formControl"
-      [ngModel]="formattedValue"
     />
-    <stroytorg-datepicker
-      [initialDate]="getInitialDate()"
-      (datePickerChanges)="selectDate($event)"
-    ></stroytorg-datepicker>
+    <stroytorg-timepicker
+      (timePickerChanges)="selectTime($event)"
+    ></stroytorg-timepicker>
     @if(hint){
-    <label class="stroytorg-floating-hint active">{{
-      hint
-    }}</label>
+    <label class="stroytorg-floating-hint active">{{ hint }}</label>
     } @if(formControl && formControl.invalid && formControl.touched && !readonly
     && showErrors){
     <ul class="stroytorg-error-message-container">

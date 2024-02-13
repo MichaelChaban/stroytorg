@@ -26,8 +26,11 @@ $color-red: #ec0202;
 $color-dark-red: #cc0000;
 $color-darker-red: #990000;
 
+$color-light-grey: #fafafa;
 $color-grey-100: rgb(175, 171, 171, 0.1);
+$color-grey-200: rgb(175, 171, 171, 0.2);
 $color-grey-300: rgb(175, 171, 171, 0.3);
+$color-grey-400: rgb(175, 171, 171, 0.4);
 $color-grey-500: rgb(175, 171, 171, 0.5);
 $color-grey-800: rgb(175, 171, 171, 0.8);
 $color-grey: #afabab;
@@ -64,12 +67,10 @@ $default-transition: 0.1s;
   font-weight: 500;
   font-size: 15px;
   transition: $default-transition;
-  width: var(--button-width);
   border: none;
 
   &:disabled,
   &[disabled] {
-    opacity: 0.6;
     cursor: not-allowed !important;
   }
 
@@ -101,9 +102,15 @@ $default-transition: 0.1s;
     box-shadow: $shadowColor 0px 0px 0px 3px;
   }
 
-  &:active:not(:focus),
+  &:active:not(:focus, :disabled, [disabled]),
   &.enter-pressed:not(:focus) {
     background-color: $bgColor;
+  }
+
+  &:disabled,
+  &[disabled] {
+    background-color: $hoverColor;
+    color: rgb($color, 0.8);
   }
 }
 

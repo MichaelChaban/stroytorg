@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Icon } from '@stroytorg/shared';
 import { WEEK_DAYS_NANE, MONTH_OPTIONS, DatePickerDate, patchValueToModel, createFormGroup, YEAR_OPTIONS, dateToPickerDate, areDatesEqual } from './stroytorg-datepicker.models';
 import { StroytorgDatePickerService } from './stroytorg-datepicker.service';
-import { SelectSize } from '../../../stroytorg-select';
+import { InputSize } from '../../../stroytorg-base-form';
 
 @Injectable()
 export class StroytorgDatePickerFacade {
@@ -18,7 +18,7 @@ export class StroytorgDatePickerFacade {
   monthOptions = MONTH_OPTIONS;
   yearOptions = YEAR_OPTIONS;
 
-  selectSize = SelectSize;
+  selectSize = InputSize;
 
   monthDates!: DatePickerDate[];
   monthNumber!: number;

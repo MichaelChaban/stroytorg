@@ -60,31 +60,33 @@
         [multiple]="true"
         [items]="items"
         formControlName="select"
-        [hint]="'Товари'"
+        [hint]="'Products'"
       ></stroytorg-select>
 
       <stroytorg-text-input
         [readonly]="false"
         formControlName="textInput"
-        [hint]="'Прізвище'"
+        [hint]="'Last Name'"
       ></stroytorg-text-input>
 
       <stroytorg-checkbox
         [readonly]="false"
         formControlName="checkbox"
-        [title]="'Згодні на все*'"
+        [title]="'Agree with policies*'"
       ></stroytorg-checkbox>
 
       <stroytorg-date
         [readonly]="false"
         formControlName="date"
-        [hint]="'Дата'"
+        [hint]="'Date'"
+        [inputSize]="inputSize"
       ></stroytorg-date>
 
       <stroytorg-time
         [readonly]="false"
         formControlName="time"
-        [hint]="'Час'"
+        [hint]="'Time'"
+        [inputSize]="inputSize"
       ></stroytorg-time>
     </form>
   </div>

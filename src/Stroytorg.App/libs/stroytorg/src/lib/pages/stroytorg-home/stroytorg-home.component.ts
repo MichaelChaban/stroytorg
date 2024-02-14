@@ -9,6 +9,7 @@ import {
   StroytorgCheckboxComponent,
   StroytorgDateComponent,
   StroytorgTimeComponent,
+  InputSize,
 } from '@stroytorg/stroytorg-components';
 import { Icon } from '@stroytorg/shared';
 import {
@@ -37,6 +38,7 @@ import {
 export class StroytorgHomeComponent {
   buttonType = ButtonType;
   icon = Icon.HOME;
+  inputSize = InputSize.XLARGE;
 
   tooltip: TooltipDefinition = {
     tooltipPosition: 'above',

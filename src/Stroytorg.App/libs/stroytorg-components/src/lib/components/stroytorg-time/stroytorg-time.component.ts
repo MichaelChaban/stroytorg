@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
   Optional,
   Output,
   Self,
@@ -15,7 +14,6 @@ import {
   StroytorgBaseInputControls,
 } from '../stroytorg-base-form';
 import { ErrorPipe, FloatingHintDirective } from '@stroytorg/shared';
-import { TimeSize } from './stroytorg-time.models';
 import { StroytorgTimePickerComponent } from './components';
 
 @Component({
@@ -43,9 +41,6 @@ export class StroytorgTimeComponent
   extends StroytorgBaseFormInputComponent
   implements ControlValueAccessor
 {
-  @Input()
-  size = TimeSize.DEFAULT as string;
-
   @Output()
   valueChange = new EventEmitter<string>();
 

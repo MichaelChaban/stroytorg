@@ -13,6 +13,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { StroytorgBaseInputControls } from './stroytorg-base-form-input-controls';
+import { InputSize } from './stroytorg-base-form.models';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
@@ -65,6 +66,9 @@ export class StroytorgBaseFormInputComponent
 
   @Input()
   placeholder!: string;
+
+  @Input()
+  inputSize: InputSize = InputSize.DEFAULT;
 
   onChange: any = noop;
 

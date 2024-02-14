@@ -109,7 +109,7 @@ $default-transition: 0.1s;
 
   &:disabled,
   &[disabled] {
-    background-color: $hoverColor;
+    background-color: rgb($hoverColor, 0.3);
     color: rgb($color, 0.8);
   }
 }

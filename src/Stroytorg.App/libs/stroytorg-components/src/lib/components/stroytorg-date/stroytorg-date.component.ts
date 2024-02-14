@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
   Optional,
   Output,
   Self,
@@ -10,7 +9,6 @@ import {
   inject,
 } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { DateSize } from './stroytorg-date.models';
 import {
   ControlValueAccessor,
   NgControl,
@@ -51,9 +49,6 @@ export class StroytorgDateComponent
   extends StroytorgBaseFormInputComponent
   implements ControlValueAccessor
 {
-  @Input()
-  size = DateSize.DEFAULT as string;
-
   @Output()
   valueChange = new EventEmitter<string>();
 

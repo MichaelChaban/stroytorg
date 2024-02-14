@@ -3,8 +3,6 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnChanges,
-  SimpleChanges,
   Optional,
   Self,
 } from '@angular/core';
@@ -14,12 +12,6 @@ import {
   NgControl,
   ReactiveFormsModule,
 } from '@angular/forms';
-import {
-  CompareWithFn,
-  SelectSize,
-  SelectableItem,
-  compareWithId,
-} from './stroytorg-select.models';
 import {
   ErrorPipe,
   FloatingHintDirective
@@ -57,12 +49,6 @@ export class StroytorgSelectComponent<T>
 
   @Input()
   bindValue: string = 'value';
-
-  @Input()
-  size = SelectSize.DEFAULT as string;
-
-  @Input()
-  compareWith!: CompareWithFn;
 
   @Input()
   items!: T[];

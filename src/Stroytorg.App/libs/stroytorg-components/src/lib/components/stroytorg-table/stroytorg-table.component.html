@@ -34,7 +34,7 @@
             (click)="sort(column)"
             role="button"
             tabindex="0"
-            >{{ column.headerGetter(column.headerName, $index) }}</span
+            >{{ column?.headerGetter }}</span
           >
         </th>
         }
@@ -64,25 +64,25 @@
             <span>{{ getIndex($index) }}</span>
           </span>
         </td>
-        } @for(cd of tableColumns; track cd.configuration.id){
+        } @for(columnDefinition of tableColumns; track columnDefinition.configuration.id){
         <td>
           @if(isMobileBlock | async){
           <h6>
-            {{ cd.headerGetter(cd.headerName, $index) }}
+            {{ columnDefinition.headerGetter }}
           </h6>
           }
-          <div [class]="cd.columnClass!">
-            @if(cd.template){
+          <div [class]="columnDefinition.columnClass!">
+            @if(columnDefinition.template){
             <span
               *ngTemplateOutlet="
-                cd.template;
+                columnDefinition.template;
               "
             ></span>
             } @else{
             <span
-              [queryParams]="cd.queryParams ? cd.queryParams : undefined"
-              [routerLink]="cd.routerLink ? cd.routerLink(row.row) : undefined"
-              [innerHTML]="cd.valueGetter(row.row, $index)"
+              [queryParams]="columnDefinition.queryParams ? columnDefinition.queryParams : undefined"
+              [routerLink]="columnDefinition.routerLink ? columnDefinition.routerLink(row.row) : undefined"
+              [innerHTML]="columnDefinition.valueGetter(row.row)"
             ></span>
             }
           </div>

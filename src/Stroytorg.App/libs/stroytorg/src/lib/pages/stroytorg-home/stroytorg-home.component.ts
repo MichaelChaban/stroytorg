@@ -10,6 +10,7 @@ import {
   StroytorgDateComponent,
   StroytorgTimeComponent,
   InputSize,
+  StroytorgTableComponent,
 } from '@stroytorg/stroytorg-components';
 import { Icon } from '@stroytorg/shared';
 import {
@@ -18,6 +19,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { getColumnDefinitions, mockData } from './stroytorg-home.column-definitions';
 
 @Component({
   selector: 'stroytorg-stroytorg-home',
@@ -30,7 +32,8 @@ import {
     StroytorgSelectComponent,
     StroytorgCheckboxComponent,
     StroytorgDateComponent,
-    StroytorgTimeComponent
+    StroytorgTimeComponent,
+    StroytorgTableComponent
   ],
   templateUrl: './stroytorg-home.component.html',
   styleUrl: './stroytorg-home.component.scss'
@@ -39,6 +42,10 @@ export class StroytorgHomeComponent {
   buttonType = ButtonType;
   icon = Icon.HOME;
   inputSize = InputSize.XLARGE;
+
+  mockDATA = mockData;
+  
+  columnDefinitions = getColumnDefinitions();
 
   tooltip: TooltipDefinition = {
     tooltipPosition: 'above',

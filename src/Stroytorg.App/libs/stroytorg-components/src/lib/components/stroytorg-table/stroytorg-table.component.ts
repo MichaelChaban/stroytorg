@@ -94,15 +94,19 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
   sorted!: boolean;
   
   @Input()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   set markedIds(values: any[]) {
     this._markedIds = values;
     this.markRows();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _markedIds!: any[];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() selectedRows: any[] | null | undefined = [];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected isMobileBlock = <any>(
     window.matchMedia('(max-width: 31.99em)').matches
   );
@@ -138,6 +142,7 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
     if (changes['selectedRows']) {
       const newSelectedRows = changes['selectedRows'].currentValue || [];
       this.tableRows.forEach((x) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         x.selected = newSelectedRows.some((y: any) => ObjectUtils.objectsEqual(y, x.row))
       })
     }
@@ -200,6 +205,7 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
     this.cdRef.detectChanges();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   pageChanged(paginatorState: any): void {
     if (this.currentPage != paginatorState.page) {
       this.currentPage = paginatorState.page;
@@ -222,12 +228,14 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
     this.tableSelection.emit(this.selectedRows);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   checkboxChecked(event: boolean, item: any) {
     console.log(event, item);
 
     this.tableRows
       .filter((x) => x.row === item)
       .forEach((x) => (x.selected = event));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sItems: any[] | undefined = event
       ? [...(this.selectedRows ? [...this.selectedRows] : []), item]
       : this.selectedRows?.filter((x) => !ObjectUtils.objectsEqual(x, item));
@@ -260,6 +268,7 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
     this.cdRef.detectChanges();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
   protected comapareIds(a: any[], b: any): boolean {
     if (a && a.length === 0) {
       return false;

@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { InjectionToken, TemplateRef } from '@angular/core';
 import { Params } from '@angular/router';
-import { Sort, SortDirection } from '@stroytorg/shared';
+import { Sort, SortDirection, keyOrFn } from '@stroytorg/shared';
 
 export interface ColumnDefinition<T, _KEY = keyof T> {
   id: string;
-  value?: (row: T, index?: number) => string;
-  headerName?: (column: string, index?: number) => string | string;
-  icon?: string | ((row?: T | undefined) => string);
+  value?: ((row?: T) => string | undefined) | string;
+  headerName?: string;
+  icon?: string | ((row?: T) => string);
   type?: string;
   sortable?: boolean;
-  routerLink?: (row: T) => string | string;
+  routerLink?: ((row?: T) => string) | string;
   queryParams?: Params;
   columnClass?: string;
   template?: TemplateRef<T>;
@@ -39,28 +39,19 @@ export class ColumnModel<T> {
   sortColumn: Sort<T> | undefined = undefined;
   columnClass?: string;
   queryParams?: Params;
-  routerLink?: (row: T) => string | string;
-  valueGetter!: (row: T, index: number) => string;
-  headerGetter!: (column: string, index: number) => string | string;
+  routerLink?: ((row: T) => string);
+  valueGetter!: (row: T) => string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  headerGetter!: string;
   template?: TemplateRef<T>;
-
-  get headerName(): string {
-    return this.configuration.headerName?.toString() ?? 'undefined';
-  }
 
   constructor(readonly configuration: ColumnDefinition<T>) {
     if (this.configuration.value) {
-      this.valueGetter = (row, index) =>
-        this.configuration.value?.(row, index) ?? '';
-    } else {
-      this.valueGetter = (row) =>
-        ((row as { [key: string]: string })?.[
-          this.configuration.id
-        ] as string) ?? '';
+      this.valueGetter = (row) => keyOrFn(this.configuration.value!, row);
     }
 
     if (this.configuration.routerLink) {
-      this.routerLink = this.configuration.routerLink;
+      this.routerLink = (row) => keyOrFn(this.configuration.routerLink!, row);
     }
 
     if (this.configuration.columnClass) {
@@ -72,10 +63,7 @@ export class ColumnModel<T> {
     }
 
     if (this.configuration.headerName) {
-      this.headerGetter = (column, index) =>
-        this.configuration.headerName?.(column, index) ?? '';
-    } else {
-      this.headerGetter = (column, index) => column[index];
+      this.headerGetter = this.configuration.headerName;
     }
 
     if (this.configuration.queryParams) {

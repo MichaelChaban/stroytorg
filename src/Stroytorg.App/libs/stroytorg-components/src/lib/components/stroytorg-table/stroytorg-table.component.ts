@@ -18,6 +18,7 @@ import { ObjectUtils, Page, Sort } from '@stroytorg/shared';
 import { StroytorgCheckboxComponent } from '../stroytorg-checkbox';
 import { StroytorgPaginatorComponent } from '../stroytorg-paginator';
 import { TABLE_COLUMN_PROVIDER, ColumnProvider, ColumnDefinition, ColumnModel, RowModel } from './stroytorg-table.models';
+import { StroytorgLoaderComponent } from '../stroytorg-loader';
 
 @Component({
   selector: 'stroytorg-table',
@@ -27,9 +28,9 @@ import { TABLE_COLUMN_PROVIDER, ColumnProvider, ColumnDefinition, ColumnModel, R
     StroytorgPaginatorComponent,
     StroytorgCheckboxComponent,
     RouterModule,
+    StroytorgLoaderComponent
   ],
   templateUrl: './stroytorg-table.component.html',
-  styleUrls: ['./stroytorg-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChanges {
@@ -115,6 +116,10 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
 
   get columnDefinitions(): ColumnDefinition<T>[] {
     return this._columnDefinitions;
+  }
+
+  get areAllSelected(): boolean {
+    return this.tableRows.every((x) => x.selected);
   }
 
   @Input()
@@ -220,7 +225,7 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
     this.router.navigate([url]);
   }
 
-  checkAllCheckBoxes(event: boolean) {
+  selectAllRows(event: boolean) {
     this.tableRows.forEach((x) => (x.selected = event));
     this.selectedRows = this.tableRows
       .filter((row) => row.selected)
@@ -229,9 +234,7 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  checkboxChecked(event: boolean, item: any) {
-    console.log(event, item);
-
+  selectRow(event: boolean, item: any) {
     this.tableRows
       .filter((x) => x.row === item)
       .forEach((x) => (x.selected = event));

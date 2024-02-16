@@ -16,7 +16,7 @@ $color-lighter-orange: rgb(253, 224, 211);
 $color-light-orange-500: rgb(248, 173, 140, 0.5);
 $color-light-orange: #f8ad8c;
 $color-orange: #ff7e47;
-$color-dark-orange: #ee6124;
+$color-dark-orange: #f26a31;
 $color-darker-orange: #db4b0f;
 
 $color-light-red-300: rgb(253, 137, 137, 0.3);
@@ -26,12 +26,16 @@ $color-red: #ec0202;
 $color-dark-red: #cc0000;
 $color-darker-red: #990000;
 
+$color-dark-blue-100: rgb(#20374f, 0.1);
+$color-dark-blue: #20374f;
+
 $color-light-grey: #fafafa;
 $color-grey-100: rgb(175, 171, 171, 0.1);
 $color-grey-200: rgb(175, 171, 171, 0.2);
 $color-grey-300: rgb(175, 171, 171, 0.3);
 $color-grey-400: rgb(175, 171, 171, 0.4);
 $color-grey-500: rgb(175, 171, 171, 0.5);
+$color-grey-600: rgb(175, 171, 171, 0.6);
 $color-grey-800: rgb(175, 171, 171, 0.8);
 $color-grey: #afabab;
 $color-dark-grey: #333333;
@@ -41,6 +45,8 @@ $color-black-700: rgba(0, 0, 0, 0.7);
 $color-black: #000000;
 
 // Stroytorg text-input variables
+$cell-padding-block: 0.75em;
+$cell-padding-inline: 1.5em;
 $input-padding: 0.3em 0.5em;
 $hint-padding: 0 0.3em;
 $error-message-padding: 0.5em 1em;

@@ -1,11 +1,11 @@
 <div class="stroytorg-checkbox-container">
   @if(formControl){
-  <div class="d-flex justify-content-center align-items-center align-items-center justify-content-start">
+  <div class="d-flex justify-content-between align-items-center">
     <label class="stroytorg-checkbox">
       <input
         type="checkbox"
         [disabled]="readonly"
-        [checked]="isChecked"
+        [checked]="checked"
         (change)="toggle()"
       />
       <span
@@ -13,11 +13,11 @@
         [class.stroytorg-checkbox-invalid]="
           formControl.invalid && formControl.touched
         "
-        [class.checked]="isChecked && readonly"
+        [class.checked]="checked && readonly"
       ></span>
     </label>
     @if(title){
-    <span class="ml-1 stroytorg-checkbox-title">{{ title }}</span>
+    <span class="stroytorg-checkbox-title">{{ title }}</span>
     }
   </div>
   @if(formControl.invalid && formControl.touched && !disabled && showErrors){

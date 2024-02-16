@@ -7,6 +7,8 @@ import {
   EventEmitter,
   Optional,
   Self,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -36,7 +38,7 @@ import {
 })
 export class StroytorgCheckboxComponent
   extends StroytorgBaseFormInputComponent
-  implements ControlValueAccessor
+  implements ControlValueAccessor, OnChanges
 {
   @Input()
   checked = this.ngControl?.value;
@@ -44,16 +46,17 @@ export class StroytorgCheckboxComponent
   @Input()
   title?: string;
 
-
-  get isChecked(){
-    this.checked = this.ngControl?.value;
-    return this.ngControl?.value;
-  }
-
   @Output() valueChange = new EventEmitter<boolean>();
 
   constructor(@Optional() @Self() ngControl: NgControl) {
     super(ngControl);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['checked']) {
+      this.checked = changes['checked'].currentValue;
+      this.ngControl?.control?.setValue(this.checked);
+    }
   }
 
   toggle(): void {

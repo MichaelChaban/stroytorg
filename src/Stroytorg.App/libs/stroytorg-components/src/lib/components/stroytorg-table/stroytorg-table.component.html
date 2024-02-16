@@ -1,70 +1,36 @@
-<div class="gov-table-cover" style="position: relative">
-  <table
-    class="gov-table gov-sortable-table gov-js-sortable-table gov-table--mobile-block"
-    style="overflow: auto"
-  >
-    <thead>
+<div class="stroytorg-table-container">
+  <table class="stroytorg-table">
+    <thead class="stroytorg-table__header">
       <tr>
         @if(multipleSelect){
-        <th>
-          <!-- <div style="display: flex; align-items: start">
-              <komix-gov-checkbox id="checkAll-checkbox" style="padding-bottom: 1rem !important"
-                (valueChange)="checkAllCheckBoxes($event)"></komix-gov-checkbox>
-            </div> -->
+        <th class="stroytorg-table__checkbox">
+          <stroytorg-checkbox
+            id="checkAll-checkbox"
+            [checked]="areAllSelected"
+            (valueChange)="selectAllRows($event)"
+          ></stroytorg-checkbox>
         </th>
-        } @if(autoIndex){
+        }@for(column of tableColumns; track $index){
         <th>
-          <span
-            style="color: #2362a2"
-            onmouseover="this.style.cursor='default'"
-            role="button"
-            tabindex="0"
-            >#</span
-          >
-        </th>
-        } @for(column of tableColumns; track $index){
-        <th>
-          <span
-            style="color: #2362a2; width: max-content !important"
-            onmouseover="this.style.cursor='pointer'"
-            [class.gov-sortable-table__trigger]="column.sortDirection"
-            class="gov-sortable-table__trigger--{{
-              column.sortDirection
-            }} flex-wrap d-inline-flex"
-            (click)="sort(column)"
-            role="button"
-            tabindex="0"
-            >{{ column?.headerGetter }}</span
-          >
+          <span (click)="sort(column)" role="button">{{
+            column?.headerGetter
+          }}</span>
         </th>
         }
       </tr>
     </thead>
-    <tbody class="gov-table__body">
+    <tbody class="stroytorg-table__body">
       @for(row of tableRows; track $index){
-      <tr
-        [ngClass]="{ 'marked-row': row.marked, 'row-border': row.focused }"
-        [attr.row-index]="getIndex($index)"
-      >
+      <tr>
         @if(multipleSelect){
-        <td>
-          <span style="display: flex; align-items: end; padding-top: 0.3rem">
-            <stroytorg-checkbox
-              [id]="'cb-' + $index"
-              [attr.index]="getIndex($index)"
-              style="padding-bottom: 1.5rem !important"
-              [checked]="row.selected"
-              (valueChange)="checkboxChecked($event, row.row)"
-            ></stroytorg-checkbox>
-          </span>
+        <td class="stroytorg-table__checkbox">
+          <stroytorg-checkbox
+            [checked]="row.selected"
+            (valueChange)="selectRow($event, row.row)"
+          ></stroytorg-checkbox>
         </td>
-        } @if(autoIndex){
-        <td>
-          <span style="display: flex; align-items: end">
-            <span>{{ getIndex($index) }}</span>
-          </span>
-        </td>
-        } @for(columnDefinition of tableColumns; track columnDefinition.configuration.id){
+        } @for(columnDefinition of tableColumns; track
+        columnDefinition.configuration.id){
         <td>
           @if(isMobileBlock | async){
           <h6>
@@ -73,15 +39,19 @@
           }
           <div [class]="columnDefinition.columnClass!">
             @if(columnDefinition.template){
-            <span
-              *ngTemplateOutlet="
-                columnDefinition.template;
-              "
-            ></span>
+            <span *ngTemplateOutlet="columnDefinition.template"></span>
             } @else{
             <span
-              [queryParams]="columnDefinition.queryParams ? columnDefinition.queryParams : undefined"
-              [routerLink]="columnDefinition.routerLink ? columnDefinition.routerLink(row.row) : undefined"
+              [queryParams]="
+                columnDefinition.queryParams
+                  ? columnDefinition.queryParams
+                  : undefined
+              "
+              [routerLink]="
+                columnDefinition.routerLink
+                  ? columnDefinition.routerLink(row.row)
+                  : undefined
+              "
               [innerHTML]="columnDefinition.valueGetter(row.row)"
             ></span>
             }
@@ -91,29 +61,14 @@
       </tr>
       }
     </tbody>
-    @if(loading){
-    <div class="sg-loaders__item sg-loaders__item--block loader">
-      <div class="gov-loader gov-loader--block">
-        <span>&nbsp;</span>
-        <span>&nbsp;</span>
-        <span>&nbsp;</span>
-        <span>&nbsp;</span>
-        <span>&nbsp;</span>
-        <span>&nbsp;</span>
-        <span>&nbsp;</span>
-        <span>&nbsp;</span>
-      </div>
-    </div>
-    }
   </table>
+  @if(loading){
+  <stroytorg-loader></stroytorg-loader>
+  }
 </div>
-<div style="display: flex; align-items: center">
-  <span style="float: left; padding-left: 16px; color: #686868"
-    >Celkem nalezeno záznamů: {{ total ? total : 0 }}</span
-  >
+<div class="d-flex align-items-center justify-content-between px-3">
   @if(showPaginator){
   <stroytorg-paginator
-    style="float: right; margin-left: auto"
     [rows]="pageSize"
     [totalRecords]="total"
     [currentPage]="currentPage"

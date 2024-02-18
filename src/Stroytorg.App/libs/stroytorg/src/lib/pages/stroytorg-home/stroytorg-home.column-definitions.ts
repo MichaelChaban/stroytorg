@@ -1,4 +1,5 @@
-import { ColumnDefinition } from "@stroytorg/stroytorg-components";
+import { Icon } from "@stroytorg/shared";
+import { ButtonStyle, ColumnDefinition } from "@stroytorg/stroytorg-components";
 
 export interface SomeModel{
     id: number;
@@ -23,6 +24,26 @@ export function getColumnDefinitions() : ColumnDefinition<SomeModel>[]{
             type: 'string',
             sortable: true
         },
+        {
+            id: 'actions',
+            type: 'actions',
+            columnActions: [
+                {
+                    icon: Icon.TASK_ALT,
+                    buttonStyle: ButtonStyle.DEFAULT,
+                    onClick: (row: SomeModel) => {
+                        console.log('Edit', row);
+                    }
+                },
+                {
+                    title: 'Delete',
+                    buttonStyle: ButtonStyle.DANGER,
+                    onClick: (row: SomeModel) => {
+                        console.log('Delete', row);
+                    }
+                }
+            ]
+        }
     ];
 }
 

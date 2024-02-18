@@ -6,7 +6,7 @@
       title="See Categories"
       [tooltip]="tooltip"
       [icon]="icon"
-      [type]="buttonType.DEFAULT"
+      [style]="buttonType.DEFAULT"
       [disabled]="true"
       (clickFn)="someFunction()"
     ></stroytorg-button>
@@ -14,37 +14,37 @@
       title="See Categories"
       [tooltip]="tooltip"
       [icon]="icon"
-      [type]="buttonType.PRIMARY"
+      [style]="buttonType.PRIMARY"
     ></stroytorg-button>
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
       [icon]="icon"
-      [type]="buttonType.OUTLINED"
+      [style]="buttonType.OUTLINED"
     ></stroytorg-button>
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
       [icon]="icon"
-      [type]="buttonType.WARNING"
+      [style]="buttonType.WARNING"
     ></stroytorg-button>
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
       [icon]="icon"
-      [type]="buttonType.DANGER"
+      [style]="buttonType.DANGER"
     ></stroytorg-button>
     <stroytorg-button
       class="w-100 d-flex justify-content-center align-items-center"
       [tooltip]="tooltip"
       [rounded]="true"
       [icon]="icon"
-      [type]="buttonType.DANGER"
+      [style]="buttonType.DANGER"
     ></stroytorg-button>
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [type]="buttonType.DANGER"
+      [style]="buttonType.DANGER"
     ></stroytorg-button>
   </div>
 
@@ -94,7 +94,11 @@
   <hr />
 
   <div class="mt-4">
-    <stroytorg-table [showPaginator]="true" [loading]="true" [autoIndex]="true" [multipleSelect]="true" [data]="mockDATA" [columnDefinitions]="columnDefinitions">
+    <stroytorg-table [showPaginator]="true" [loading]="false" [autoIndex]="true" [multipleSelect]="true" [data]="mockDATA" [columnDefinitions]="columnDefinitions">
     </stroytorg-table>
   </div>
+
+  <!-- <div class="page-loader">
+    <stroytorg-loader ></stroytorg-loader>
+  </div> -->
 </div>

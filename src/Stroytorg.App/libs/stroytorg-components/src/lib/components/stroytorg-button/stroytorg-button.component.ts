@@ -10,7 +10,7 @@ import {
 import { CommonModule } from '@angular/common';
 import {
   ButtonSize,
-  ButtonType,
+  ButtonStyle,
   TooltipDefinition,
 } from './stroytorg-buttons.models';
 import { RouterModule } from '@angular/router';
@@ -63,7 +63,7 @@ export class StroytorgButtonComponent extends UnsubscribeControlComponent {
   rounded = false as boolean;
 
   @Input()
-  type? = ButtonType.DEFAULT as string;
+  style? = ButtonStyle.DEFAULT as string;
 
   @Input()
   title?: string;
@@ -76,6 +76,9 @@ export class StroytorgButtonComponent extends UnsubscribeControlComponent {
 
   @Input()
   tooltip?: TooltipDefinition;
+
+  @Input()
+  buttonClass = '';
 
   @Output() clickFn = new EventEmitter<void>();
 

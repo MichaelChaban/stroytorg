@@ -1,4 +1,4 @@
-.button {
+.stroytorg-button {
   @include buttonBase;
   background: linear-gradient(to bottom, var(--button-bg-bottom), var(--button-bg-top));
 }

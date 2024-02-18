@@ -18,13 +18,13 @@
     } @if(element?.actions){
     <div class="mt-1" *ngFor="let action of element.actions">
       <stroytorg-button
-        [type]="action?.buttonType"
+        [style]="action?.buttonStyle"
         [title]="action?.title"
         [tooltip]="action?.tooltip"
         [icon]="action?.icon"
         [queryParams]="isSet(action?.queryParams)"
         [routerLink]="isSet(action?.routerLink)"
-        (clicked)="action?.onClick(cardData)"
+        (clickFn)="action?.onClick(cardData)"
       ></stroytorg-button>
     </div>
     }

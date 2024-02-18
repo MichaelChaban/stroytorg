@@ -12,9 +12,11 @@
         </th>
         }@for(column of tableColumns; track $index){
         <th>
-          <span (click)="sort(column)" role="button">{{
-            column?.headerGetter
-          }}</span>
+          <span
+            (click)="column.sortable ? sort(column) : null"
+            [attr.role]="column.sortable ? 'button' : null"
+            >{{ column?.headerGetter }}</span
+          >
         </th>
         }
       </tr>
@@ -37,10 +39,25 @@
             {{ columnDefinition.headerGetter }}
           </h6>
           }
-          <div [class]="columnDefinition.columnClass!">
+          <div
+            [class]="columnDefinition.columnClass!"
+            [class.stroytorg-table__actions]="columnDefinition.columnActions"
+          >
             @if(columnDefinition.template){
             <span *ngTemplateOutlet="columnDefinition.template"></span>
-            } @else{
+            } @if(columnDefinition.columnActions){ @for(columnAction of
+            columnDefinition.columnActions!; track $index){
+            <stroytorg-button
+              [style]="columnAction?.buttonStyle"
+              [title]="columnAction?.title"
+              [tooltip]="columnAction?.tooltip"
+              [icon]="columnAction?.icon"
+              [queryParams]="isSet(columnAction?.queryParams)"
+              [routerLink]="isSet(columnAction?.routerLink)"
+              [buttonClass]="columnAction?.buttonClass ? columnAction.buttonClass! : ''"
+              (clickFn)="columnAction?.onClick(row)"
+            ></stroytorg-button>
+            } } @else{
             <span
               [queryParams]="
                 columnDefinition.queryParams
@@ -63,7 +80,7 @@
     </tbody>
   </table>
   @if(loading){
-  <stroytorg-loader></stroytorg-loader>
+  <stroytorg-loader class="stroytorg-table-loader"></stroytorg-loader>
   }
 </div>
 <div class="d-flex align-items-center justify-content-between px-3">

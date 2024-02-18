@@ -1,4 +1,4 @@
-import { Icon } from "@stroytorg/shared";
+import { Icon } from '@stroytorg/shared';
 
 export enum ButtonSize {
   SMALL = 'small',
@@ -7,26 +7,26 @@ export enum ButtonSize {
   XLARGE = 'x-large',
 }
 
-export enum ButtonType {
+export enum ButtonStyle {
   DEFAULT = 'default-button',
   PRIMARY = 'primary-button',
   OUTLINED = 'outlined-button',
   WARNING = 'warning-button',
-  DANGER = 'danger-button'
+  DANGER = 'danger-button',
 }
 
-export interface ButtonDefinition{
-    title?: string;
-    icon?: Icon;
-    buttonType?: string;
-    routerLink?: string;
-    queryParams?: string;
-    tooltip?: TooltipDefinition;
-    size: ButtonSize;
-    onClick?: (row: any) => any;
+export interface ButtonDefinition {
+  title?: string;
+  icon?: Icon;
+  buttonStyle?: string;
+  routerLink?: string;
+  queryParams?: string;
+  tooltip?: TooltipDefinition;
+  size: ButtonSize;
+  onClick?: (row: any) => any;
 }
 
-export interface TooltipDefinition{
+export type TooltipDefinition = {
   tooltipText: string;
-  tooltipPosition: 'above' | 'left' | 'right' | 'below';
-}
+  tooltipPosition?: 'above' | 'left' | 'right' | 'below';
+};

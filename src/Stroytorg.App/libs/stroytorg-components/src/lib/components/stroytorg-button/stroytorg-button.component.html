@@ -1,6 +1,7 @@
 @if (title || icon) {
 <button
-  class="button d-flex align-items-center {{ type }} {{ size }}"
+  class="stroytorg-button {{ style }} {{ size }}"
+  [ngClass]="buttonClass"
   enterPress
   [tooltip]="tooltip"
   [class.icon-label-button]="icon && title"

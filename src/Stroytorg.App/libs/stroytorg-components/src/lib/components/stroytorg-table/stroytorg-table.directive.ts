@@ -24,9 +24,9 @@ export class TemplateColumnDirective<T> implements ColumnProvider<T> {
 
   @Input() sortable!: boolean;
 
-  @Input() routerLink!: (row: T) => string;
+  @Input() routerLink!: (row?: T) => string;
 
-  @Input() headerName!: (column: string, index?: number) => string | string;
+  @Input() headerName!: string;
 
   getDefinition(): ColumnDefinition<T> {
     return {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  ButtonType,
+  ButtonStyle,
   StroytorgButtonComponent,
   TooltipDefinition,
   StroytorgTextInputComponent,
@@ -11,6 +11,7 @@ import {
   StroytorgTimeComponent,
   InputSize,
   StroytorgTableComponent,
+  StroytorgLoaderComponent,
 } from '@stroytorg/stroytorg-components';
 import { Icon } from '@stroytorg/shared';
 import {
@@ -33,13 +34,14 @@ import { getColumnDefinitions, mockData } from './stroytorg-home.column-definiti
     StroytorgCheckboxComponent,
     StroytorgDateComponent,
     StroytorgTimeComponent,
-    StroytorgTableComponent
+    StroytorgTableComponent,
+    StroytorgLoaderComponent
   ],
   templateUrl: './stroytorg-home.component.html',
   styleUrl: './stroytorg-home.component.scss'
 })
 export class StroytorgHomeComponent {
-  buttonType = ButtonType;
+  buttonType = ButtonStyle;
   icon = Icon.HOME;
   inputSize = InputSize.XLARGE;
 

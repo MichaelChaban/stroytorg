@@ -19,16 +19,18 @@ import { StroytorgCheckboxComponent } from '../stroytorg-checkbox';
 import { StroytorgPaginatorComponent } from '../stroytorg-paginator';
 import { TABLE_COLUMN_PROVIDER, ColumnProvider, ColumnDefinition, ColumnModel, RowModel } from './stroytorg-table.models';
 import { StroytorgLoaderComponent } from '../stroytorg-loader';
+import { StroytorgButtonComponent } from '../stroytorg-button';
 
 @Component({
   selector: 'stroytorg-table',
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     StroytorgPaginatorComponent,
     StroytorgCheckboxComponent,
-    RouterModule,
-    StroytorgLoaderComponent
+    StroytorgLoaderComponent,
+    StroytorgButtonComponent
   ],
   templateUrl: './stroytorg-table.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
@@ -269,6 +271,12 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
       );
     });
     this.cdRef.detectChanges();
+  }
+
+  isSet(element: any) {
+    if (element) {
+      return element;
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars

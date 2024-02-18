@@ -1,19 +1,32 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { InjectionToken, TemplateRef } from '@angular/core';
 import { Params } from '@angular/router';
-import { Sort, SortDirection, keyOrFn } from '@stroytorg/shared';
+import { Icon, Sort, SortDirection, keyOrFn } from '@stroytorg/shared';
+import { ButtonStyle, TooltipDefinition } from '../stroytorg-button';
 
 export interface ColumnDefinition<T, _KEY = keyof T> {
   id: string;
   value?: ((row?: T) => string | undefined) | string;
   headerName?: string;
-  icon?: string | ((row?: T) => string);
+  icon?: Icon;
   type?: string;
   sortable?: boolean;
   routerLink?: ((row?: T) => string) | string;
   queryParams?: Params;
   columnClass?: string;
+  columnActions?: ColumnActionDefinition[];
   template?: TemplateRef<T>;
+}
+
+export interface ColumnActionDefinition{
+  buttonStyle?: ButtonStyle;
+  tooltip?: TooltipDefinition;
+  icon?: Icon;
+  title?: string;
+  buttonClass?: string;
+  onClick?: (row: any) => any;
+  routerLink?: string;
+  queryParams?: { [key: string]: any };
 }
 
 export function LinkRenderer<T>(text: string, href: string) {
@@ -39,6 +52,8 @@ export class ColumnModel<T> {
   sortColumn: Sort<T> | undefined = undefined;
   columnClass?: string;
   queryParams?: Params;
+  columnActions?: ColumnActionDefinition[];
+  sortable?: boolean;
   routerLink?: ((row: T) => string);
   valueGetter!: (row: T) => string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -72,6 +87,14 @@ export class ColumnModel<T> {
 
     if (this.routerLink) {
       this.columnClass += ' ' + 'link';
+    }
+
+    if (this.sortable) {
+      this.sortable = this.configuration.sortable;
+    }
+
+    if (this.configuration.columnActions) {
+      this.columnActions = this.configuration.columnActions;
     }
   }
 }

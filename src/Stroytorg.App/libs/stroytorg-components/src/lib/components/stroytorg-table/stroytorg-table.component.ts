@@ -57,9 +57,6 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
   total!: number;
 
   @Input()
-  stickyHeader = false;
-
-  @Input()
   loading!: boolean;
 
   @Input()
@@ -95,16 +92,6 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
   sortColumn: Sort<T>[] = [];
 
   sorted!: boolean;
-  
-  @Input()
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  set markedIds(values: any[]) {
-    this._markedIds = values;
-    this.markRows();
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private _markedIds!: any[];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() selectedRows: any[] | null | undefined = [];
@@ -159,7 +146,6 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
   updateData(): void {
     this.getPage(this.page);
     this.tableRows = (this.data ?? []).map((x) => new RowModel(x, false));
-    this.markRows();
   }
 
   getIndex(index: number) {
@@ -260,15 +246,6 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
   resetSelectedRows() {
     this.tableRows = this.tableRows.map((x: RowModel<T>) => {
       return { ...x, selected: false };
-    });
-    this.cdRef.detectChanges();
-  }
-
-  markRows() {
-    this.tableRows?.forEach((item) => {
-      item.marked = this._markedIds?.some(
-        (x) => x[this.entityId as keyof T] === item?.row[this.entityId as keyof T]
-      );
     });
     this.cdRef.detectChanges();
   }

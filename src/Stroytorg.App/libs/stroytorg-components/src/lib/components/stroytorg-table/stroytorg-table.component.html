@@ -34,11 +34,11 @@
         } @for(columnDefinition of tableColumns; track
         columnDefinition.configuration.id){
         <td>
-          @if(isMobileBlock | async){
+          <!-- @if(isMobileBlock | async){
           <h6>
             {{ columnDefinition.headerGetter }}
           </h6>
-          }
+          } -->
           <div
             [class]="columnDefinition.columnClass!"
             [class.stroytorg-table__actions]="columnDefinition.columnActions"
@@ -54,7 +54,9 @@
               [icon]="columnAction?.icon"
               [queryParams]="isSet(columnAction?.queryParams)"
               [routerLink]="isSet(columnAction?.routerLink)"
-              [buttonClass]="columnAction?.buttonClass ? columnAction.buttonClass! : ''"
+              [buttonClass]="
+                columnAction?.buttonClass ? columnAction.buttonClass! : ''
+              "
               (clickFn)="columnAction?.onClick(row)"
             ></stroytorg-button>
             } } @else{
@@ -81,16 +83,15 @@
   </table>
   @if(loading){
   <stroytorg-loader class="stroytorg-table-loader"></stroytorg-loader>
-  }
-</div>
-<div class="d-flex align-items-center justify-content-between px-3">
-  @if(showPaginator){
-  <stroytorg-paginator
-    [rows]="pageSize"
-    [totalRecords]="total"
-    [currentPage]="currentPage"
-    (pageChanged)="pageChanged($event)"
-  >
-  </stroytorg-paginator>
+  } @if(showPaginator){
+  <div class="stroytorg-table__footer">
+    <stroytorg-paginator class="w-100"
+      [rows]="pageSize"
+      [totalRecords]="total"
+      [currentPage]="currentPage"
+      (pageChanged)="pageChanged($event)"
+    >
+    </stroytorg-paginator>
+  </div>
   }
 </div>

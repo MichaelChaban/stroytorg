@@ -29,13 +29,15 @@ $color-darker-red: #990000;
 $color-dark-blue-100: rgb(#20374f, 0.1);
 $color-dark-blue: #20374f;
 
-$color-light-grey: #fafafa;
+$color-lighter-grey: #fcf8f8;
+$color-light-grey: #ecebeb;
 $color-grey-100: rgb(175, 171, 171, 0.1);
 $color-grey-200: rgb(175, 171, 171, 0.2);
 $color-grey-300: rgb(175, 171, 171, 0.3);
 $color-grey-400: rgb(175, 171, 171, 0.4);
 $color-grey-500: rgb(175, 171, 171, 0.5);
 $color-grey-600: rgb(175, 171, 171, 0.6);
+$color-grey-700: rgb(175, 171, 171, 0.7);
 $color-grey-800: rgb(175, 171, 171, 0.8);
 $color-grey: #afabab;
 $color-dark-grey: #333333;
@@ -50,6 +52,8 @@ $cell-padding-inline: 1.5em;
 $input-padding: 0.3em 0.5em;
 $hint-padding: 0 0.3em;
 $error-message-padding: 0.5em 1em;
+$paginator-button-padding: 0.3em;
+$default-gap: 0.7em;
 $input-border-radius: 0.3em;
 $floating-hint-font-size: 14px;
 $errpr-message-font-size: 14px;
@@ -76,6 +80,7 @@ $default-transition: 0.1s;
   font-size: 15px;
   transition: $default-transition;
   border: none;
+  user-select: none;
 
   &:disabled,
   &[disabled] {
@@ -117,7 +122,7 @@ $default-transition: 0.1s;
 
   &:disabled,
   &[disabled] {
-    background-color: rgb($hoverColor, 0.3);
+    background-color: rgb($hoverColor, 0.1);
     color: rgb($color, 0.8);
   }
 }

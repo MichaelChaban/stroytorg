@@ -7,10 +7,11 @@
     color: $color-grey;
     padding: $input-padding;
     position: absolute;
-    top: -0.05em;
+    top: 0.15em;
     left: 0.03em;
     transition: 0.2s ease all;
     pointer-events: none;
+    user-select: none;
 
     &.active {
         font-size: $floating-hint-font-size;

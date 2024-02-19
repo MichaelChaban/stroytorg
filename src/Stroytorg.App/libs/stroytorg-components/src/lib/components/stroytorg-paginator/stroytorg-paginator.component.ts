@@ -11,12 +11,17 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PaginatorPageModel } from './stroytorg-paginator.models';
+import { PAGE_SIZE_OPTIONS, PaginatorPageModel } from './stroytorg-paginator.models';
+import { StroytorgButtonComponent } from '../stroytorg-button';
+import { Icon } from '@stroytorg/shared';
+import { StroytorgSelectComponent } from '../stroytorg-select';
+import { InputSize } from '../stroytorg-base-form';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'stroytorg-paginator',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, StroytorgButtonComponent, StroytorgSelectComponent],
   templateUrl: './stroytorg-paginator.component.html',
   encapsulation: ViewEncapsulation.None,
 })
@@ -32,18 +37,23 @@ export class StroytorgPaginatorComponent implements OnInit, OnChanges {
 
   @Output() pageChanged: EventEmitter<void> = new EventEmitter();
 
+  icon = Icon;
+
   paginatorState: any;
 
   pageCount!: number;
 
+  pageSizeOptions = PAGE_SIZE_OPTIONS;
+
+  selectSize = InputSize;
+
   constructor(private cdRef: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['totalRecords'] || changes['currentPage']) {
+    if (changes['totalRecords'] || changes['currentPage']) {
       this.updatePaginatorState();
     }
   }
-
 
   ngOnInit() {
     this.updatePaginatorState();
@@ -67,7 +77,6 @@ export class StroytorgPaginatorComponent implements OnInit, OnChanges {
     return this.getPage() === lastPage;
   }
 
-
   getPageCount(): number {
     this.pageCount = Math.ceil(this.totalRecords / this.rows);
     return this.pageCount;
@@ -75,17 +84,36 @@ export class StroytorgPaginatorComponent implements OnInit, OnChanges {
 
   getPageArray(): PaginatorPageModel[] {
     const pageArray: PaginatorPageModel[] = [];
-    const startPage = Math.max(this.currentPage - 1, 1);
-    const endPage = Math.min(this.currentPage + 1, this.pageCount);
+    const startPage = Math.max(
+      1,
+      this.currentPage >= this.pageCount
+        ? this.currentPage - 2
+        : this.currentPage - 1
+    );
+    const endPage = Math.min(
+      this.currentPage <= 1 ? this.currentPage + 2 : this.currentPage + 1,
+      this.pageCount
+    );
 
     for (let i = startPage; i <= endPage; i++) {
       pageArray.push({ page: i, visible: true });
     }
+
+    if (startPage > 1) {
+      pageArray.unshift({ page: 0, space: true, visible: true });
+    }
+
+    if (endPage < this.pageCount) {
+      pageArray.push({ page: 0, space: true, visible: true });
+    }
+
     return pageArray;
   }
 
-
   pageChange(event: any) {
+    if (event.target.innerText.includes('...')) {
+      return;
+    }
     this.currentPage = Number.parseInt(event.target.innerText);
     this.updatePaginatorState();
   }
@@ -97,6 +125,16 @@ export class StroytorgPaginatorComponent implements OnInit, OnChanges {
 
   prevPage(): void {
     this.currentPage -= 1;
+    this.updatePaginatorState();
+  }
+
+  firstPage(): void {
+    this.currentPage = 1;
+    this.updatePaginatorState();
+  }
+
+  lastPage(): void {
+    this.currentPage = this.pageCount;
     this.updatePaginatorState();
   }
 

@@ -6,7 +6,8 @@
   width: 16.5em;
   min-width: 8em;
   max-width: 80dvw;
-  box-shadow: 0px 0px 4px 1px $color-grey-500;
+  background-color: $color-darker-orange;
+  box-shadow: 0 0 4px 2px $color-grey-500;
   border-radius: 1em;
   animation: fadeInOut $default-transition ease-in-out forwards;
   z-index: 1000;
@@ -28,6 +29,7 @@
 .stroytorg-datepicker-container-body {
   padding: 0.5em 1em;
   background-color: $color-white;
+  border-radius: 0.8em;
 }
 
 .stroytorg-month-year-selector-container {
@@ -41,6 +43,7 @@
   display: grid;
   grid-template-columns: repeat(7, 2rem);
   justify-content: center;
+  gap: 0.15rem;
 }
 
 .stroytorg-day-header div {
@@ -61,6 +64,7 @@
   width: 2em;
   text-align: center;
   color: $color-light-black !important;
+  background-color: $color-grey-100;
 
   &:focus,
   :active {

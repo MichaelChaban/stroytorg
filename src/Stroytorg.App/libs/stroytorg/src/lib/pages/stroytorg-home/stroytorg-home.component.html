@@ -94,7 +94,17 @@
   <hr />
 
   <div class="mt-4">
-    <stroytorg-table [showPaginator]="true" [loading]="false" [autoIndex]="true" [multipleSelect]="true" [data]="mockDATA" [columnDefinitions]="columnDefinitions">
+    <stroytorg-table
+      [showPaginator]="true"
+      [loading]="false"
+      [autoIndex]="true"
+      [multipleSelect]="true"
+      [data]="mockDATA"
+      [pageSize]="2"
+      [total]="mockDATA.length"
+      [currentPage]="1"
+      [columnDefinitions]="columnDefinitions"
+    >
     </stroytorg-table>
   </div>
 

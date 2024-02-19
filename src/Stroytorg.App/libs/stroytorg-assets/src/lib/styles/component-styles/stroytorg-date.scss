@@ -56,6 +56,15 @@
   }
 
   &:has(
+      .stroytorg-date:active:not(:read-only, [readonly]),
+      .stroytorg-date:focus:not(:read-only, [readonly])
+    ) {
+    .stroytorg-floating-hint.active {
+      @extend .stroytorg-floating-hint-active;
+    }
+  }
+
+  &:has(
       .stroytorg-date-invalid:not(
           .stroytorg-date:read-only,
           .stroytorg-date[readonly]

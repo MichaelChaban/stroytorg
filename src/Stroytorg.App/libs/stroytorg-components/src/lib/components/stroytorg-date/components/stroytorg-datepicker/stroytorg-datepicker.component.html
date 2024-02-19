@@ -37,12 +37,14 @@
           class="stroytorg-date-picker-button"
           [icon]="viewFacade.previosMonthIcon"
           (clickFn)="previousMonth()"
+          [rounded]="true"
         ></stroytorg-button>
         <span class="text-center">{{ viewFacade.monthHeader }}</span>
         <stroytorg-button
           class="stroytorg-date-picker-button"
           [icon]="viewFacade.nextMonthIcon"
           (clickFn)="nextMonth()"
+          [rounded]="true"
         ></stroytorg-button>
       </div>
     </div>
@@ -78,6 +80,7 @@
         [class.selected-date]="date.isSelected"
         [title]="(date.monthDayNumber + 1).toString()"
         (clickFn)="selectDate(date)"
+        [rounded]="true"
       ></stroytorg-button>
       }
     </div>

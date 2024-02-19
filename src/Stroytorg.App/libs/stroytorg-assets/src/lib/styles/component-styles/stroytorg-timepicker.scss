@@ -26,12 +26,13 @@
 }
 
 .stroytorg-timepicker-container-body {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    justify-content: center;
-    padding: 0.5em 1em;
-    background-color: $color-white;
-    gap: 3px;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: center;
+  padding: 0.5em 1em;
+  background-color: $color-white;
+  gap: 3px;
+  border-radius: 0.8em;
 }
 
 .stroytorg-timepicker-button-container {
@@ -42,7 +43,7 @@
 }
 
 .stroytorg-timepicker-button > button {
-    width: 5.1rem;
+  width: 5.1rem;
   padding: 0.5em 1.5em;
   text-align: center;
   color: $color-light-black !important;
@@ -50,6 +51,10 @@
   &:focus,
   :active {
     box-shadow: none !important;
+  }
+
+  &:disabled > span {
+    text-decoration: line-through;
   }
 }
 

@@ -13,9 +13,11 @@
       [class.stroytorg-time-with-value]="formControl.value"
       [readOnly]="readonly"
       [formControl]="formControl"
+      [ngModel]="formattedValue"
+      (keydown)="onKeyDown($event)"
     />
     <stroytorg-timepicker
-      (timePickerChanges)="selectTime($event)"
+      (timeChanges)="selectTime($event)"
     ></stroytorg-timepicker>
     @if(hint){
     <label class="stroytorg-floating-hint active">{{ hint }}</label>

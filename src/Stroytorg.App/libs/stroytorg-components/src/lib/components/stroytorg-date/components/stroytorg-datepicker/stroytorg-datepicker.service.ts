@@ -93,8 +93,8 @@ export class StroytorgDatePickerService {
       monthIndex: monthIndex,
       monthDayNumber: monthDayNumber,
       weekDayNumber: weekDayNumber,
-      weekDayShortName: this.getWeekDayShortName(weekDayNumber),
-      weekDayFullName: this.getWeekDayFullName(weekDayNumber),
+      weekDayShortName: this.getWeekDayShortName(weekDayNumber + 1),
+      weekDayFullName: this.getWeekDayFullName(weekDayNumber + 1),
       classNames: isCurrentMonth ? 'current-month' : 'not-current-month',
       isToday: isToday,
       isCurrentMonth: isCurrentMonth

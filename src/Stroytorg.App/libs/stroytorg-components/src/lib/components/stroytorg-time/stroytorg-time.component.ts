@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  HostListener,
   Optional,
   Output,
   Self,
@@ -14,7 +15,7 @@ import {
   StroytorgBaseInputControls,
 } from '../stroytorg-base-form';
 import { ErrorPipe, FloatingHintDirective } from '@stroytorg/shared';
-import { StroytorgTimePickerComponent } from './components';
+import { AVAILABLE_HOURS, StroytorgTimePickerComponent } from './components';
 
 @Component({
   selector: 'stroytorg-time',
@@ -47,14 +48,30 @@ export class StroytorgTimeComponent
   constructor(@Optional() @Self() ngControl: NgControl) {
     super(ngControl);
   }
-
-  selectTime(time: any): void {
-    if (this.formControl && !this.readonly) {
-      this.formControl.setValue(time);
-    }
+  
+  get formattedValue() {
+    return this.formatTime(this.formControl?.value);
   }
 
-  getInitialTime() {
-    return this.formControl?.value ? new Date(this.formControl?.value) : null;
+  protected formatTime(id: number | string): string | null {
+    if (!id || typeof id === 'string') {
+      return typeof id === 'string' ? id : null;
+    }
+
+    const selectedTime = AVAILABLE_HOURS.find(x => x.id === id);
+    return selectedTime ? `${selectedTime.title}:00` : null;
+  }
+
+  @HostListener('keydown', ['$event'])
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onKeyDown(event: any) {
+    event.preventDefault();
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  selectTime(timeId: number): void {
+    if (this.formControl && !this.readonly) {
+      this.formControl.setValue(timeId);
+    }
   }
 }

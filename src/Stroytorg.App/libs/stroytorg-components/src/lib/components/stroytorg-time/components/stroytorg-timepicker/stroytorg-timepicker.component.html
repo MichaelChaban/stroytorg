@@ -8,6 +8,7 @@
         class="stroytorg-timepicker-button"
         [title]="time.title"
         [disabled]="!time.isAvailable"
+        (clickFn)="onHourChange(time.id)"
       ></stroytorg-button>
       }
 </div>

@@ -14,12 +14,10 @@ export class StroytorgTimePickerComponent {
   readonly availableHours = AVAILABLE_HOURS;
   readonly buttonSize = ButtonSize;
 
-  @Output() timeSelected = new EventEmitter<string>();
+  @Output() timeChanges = new EventEmitter<number>();
 
-  @Output() hourSelected = new EventEmitter<number>();
-  @Output() minuteSelected = new EventEmitter<number>();
-
-  onHourChange(event: any) {
-    this.hourSelected.emit(event.target.value);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onHourChange(timeId: number) {
+    this.timeChanges.emit(timeId);
   }
 }

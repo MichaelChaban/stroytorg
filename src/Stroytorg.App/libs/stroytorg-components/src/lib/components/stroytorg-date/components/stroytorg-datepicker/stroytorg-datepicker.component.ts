@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
-import { DEFAULT_DATE, DatePickerDate } from './stroytorg-datepicker.models';
+import { DatePickerDate } from './stroytorg-datepicker.models';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';

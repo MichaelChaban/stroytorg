@@ -1,1 +1,38 @@
-<p>stroytorg-select works!</p>
+@if(formControl){
+<div class="d-flex justify-content-center align-items-center align-items-center gap-1">
+  <div class="stroytorg-select-container {{ inputSize }}">
+    <ng-select
+      floatingHint
+      class="stroytorg-select"
+      [class.stroytorg-select-invalid]="
+        formControl.invalid && formControl.touched
+      "
+      [items]="items"
+      [bindLabel]="bindLabel"
+      [bindValue]="bindValue"
+      [multiple]="multiple"
+      [readonly]="readonly"
+      [formControl]="formControl"
+      [clearable]="clearable"
+      title=""
+    />
+    @if(hint){
+    <label
+      [class.active]="
+        (!readonly && formControl.value) ||
+        (formControl.invalid && formControl.touched) ||
+        (readonly && formControl.value)
+      "
+      class="stroytorg-floating-hint"
+      >{{ hint }}</label
+    >} @if(formControl && formControl.invalid && formControl.touched &&
+    !readonly && showErrors){
+    <ul class="stroytorg-error-message-container">
+      @for(error of (formControl.errors | error); track $index){
+      <li>{{ error }}</li>
+      }
+    </ul>
+    }
+  </div>
+</div>
+}

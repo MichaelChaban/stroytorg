@@ -1,0 +1,83 @@
+.stroytorg-time {
+  @extend %input-common;
+  border: 0.25px solid $color-grey;
+
+  &::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus:not(:read-only, [readonly]),
+  &:active:not(:read-only, [readonly]) {
+    ::-webkit-time-edit {
+      color: $color-dark-grey;
+    }
+
+    & + stroytorg-timepicker > .stroytorg-timepicker-container {
+      display: block !important;
+    }
+
+    border-color: $color-white;
+    box-shadow: $color-orange 0px 0px 0px 2px;
+  }
+
+  &:read-only,
+  &[readonly] {
+    cursor: auto !important;
+    background-color: $color-grey-100;
+  }
+
+  &:is(textarea) {
+    width: 100%;
+    resize: vertical;
+  }
+}
+
+.stroytorg-time-invalid:not(
+    .stroytorg-time:read-only,
+    .stroytorg-time[readonly]
+  ) {
+  @extend %input-common;
+  border-color: $color-white;
+  box-shadow: $color-red 0px 0px 0px 2px;
+}
+
+.stroytorg-time-container {
+  position: relative;
+
+  &:has(.stroytorg-time:read-only),
+  &:has(.stroytorg-time[readonly]) {
+    .stroytorg-floating-hint {
+      @extend .stroytorg-floating-hint-disabled;
+    }
+  }
+
+  &:has(
+      .stroytorg-time:active:not(:read-only, [readonly]),
+      .stroytorg-time:focus:not(:read-only, [readonly])
+    ) {
+    .stroytorg-floating-hint.active {
+      @extend .stroytorg-floating-hint-active;
+    }
+  }
+
+  &:has(
+      .stroytorg-time-invalid:not(
+          .stroytorg-time:read-only,
+          .stroytorg-time[readonly]
+        )
+    ) {
+    .stroytorg-floating-hint {
+      color: $color-red !important;
+    }
+  }
+}
+
+.stroytorg-time-with-value {
+  &::-webkit-time-edit {
+    color: $color-dark-grey !important;
+  }
+}

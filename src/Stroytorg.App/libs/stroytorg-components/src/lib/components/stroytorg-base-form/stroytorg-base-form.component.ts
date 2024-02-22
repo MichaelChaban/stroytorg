@@ -1,6 +1,17 @@
-import { AfterViewInit, ChangeDetectorRef, Directive, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormGroup } from '@angular/forms';
-import { Subject, takeUntil, filter, map } from 'rxjs';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Directive,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy, OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { Subject, filter, map, takeUntil } from 'rxjs';
 import { FormState, isFormStateEqual } from './stroytorg-base-form.models';
 
 @Directive()
@@ -70,12 +81,12 @@ export abstract class StroytorgBaseFormComponent<T extends object>
   createCompleteData() {
     const change = this.toModel(this.formGroup?.value);
     this.recursiveObjectAttributesTransformation(change);
-    // const updatedData = this.applyChanges(
-    //   cloneDeep(this.initialData),
-    //   cloneDeep(change)
-    // );
+    const updatedData = this.applyChanges(
+      {...this.initialData},
+      {...change}
+    );
 
-    return { ahoj: 'pojeb'} as unknown as T;
+    return updatedData;
   }
 
   submit() {
@@ -98,12 +109,11 @@ export abstract class StroytorgBaseFormComponent<T extends object>
         map((value) => {
           const change = this.toModel(value);
           this.recursiveObjectAttributesTransformation(change);
-          // const updatedData = this.applyChanges(
-          //   cloneDeep(this.initialData),
-          //   cloneDeep(change)
-
-          // );
-          return { ahoj: 'test'} as unknown as T;
+          const updatedData = this.applyChanges(
+            {...this.initialData},
+            {...change}
+          );
+          return updatedData;
         })
       )
       .subscribe((updatedData) => {

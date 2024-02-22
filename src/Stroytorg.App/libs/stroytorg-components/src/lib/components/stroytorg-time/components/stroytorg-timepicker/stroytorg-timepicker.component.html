@@ -1,0 +1,14 @@
+<div class="stroytorg-timepicker-container">
+  <div class="stroytorg-timepicker-container-header">
+    <h6 class="m-0 text-center">Select Available Time</h6>
+  </div>
+  <div class="stroytorg-timepicker-container-body">
+    @for (time of availableHours; track $index) {
+      <stroytorg-button
+        class="stroytorg-timepicker-button"
+        [title]="time.title"
+        [disabled]="!time.isAvailable"
+        (clickFn)="onHourChange(time.id)"
+      ></stroytorg-button>
+      }
+</div>

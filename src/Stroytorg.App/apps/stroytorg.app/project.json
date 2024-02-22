@@ -20,7 +20,10 @@
           "apps/stroytorg.app/src/favicon.ico",
           "apps/stroytorg.app/src/assets"
         ],
-        "styles": ["libs/stroytorg-assets/src/lib/shared-styles.scss"],
+        "styles": [
+          "libs/stroytorg-assets/src/lib/shared-styles.scss",
+          "apps/stroytorg.app/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {

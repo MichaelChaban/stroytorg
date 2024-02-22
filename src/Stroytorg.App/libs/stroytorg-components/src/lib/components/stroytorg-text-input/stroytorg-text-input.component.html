@@ -1,1 +1,44 @@
-<p>stroytorg-input works!</p>
+@if(formControl){
+<div
+  class="d-flex justify-content-center align-items-center align-items-center gap-1"
+>
+  <div class="stroytorg-text-input-container {{ inputSize }}">
+    @if(type === 'singleline'){
+    <input
+      floatingHint
+      class="stroytorg-text-input"
+      title=""
+      [class.stroytorg-text-input-invalid]="
+        formControl.invalid && formControl.touched
+      "
+      [formControl]="formControl"
+      [readOnly]="readonly"
+    />
+    } @else if(type === 'multiline'){
+    <textarea
+      floatingHint
+      class="stroytorg-text-input w-100"
+      title=""
+      [class.stroytorg-text-input-invalid]="
+        formControl.invalid && formControl.touched
+      "
+      [formControl]="formControl"
+      [readOnly]="readonly"
+      [disabled]="disabled"
+      [required]="isRequired()"
+    ></textarea>
+    } @if(hint){
+    <label class="stroytorg-floating-hint" [class.active]="formControl.value">{{
+      hint
+    }}</label>
+    } @if(formControl && formControl.invalid && formControl.touched && !readonly
+    && showErrors){
+    <ul class="stroytorg-error-message-container">
+      @for(error of (formControl.errors | error); track $index){
+      <li>{{ error }}</li>
+      }
+    </ul>
+    }
+  </div>
+</div>
+}

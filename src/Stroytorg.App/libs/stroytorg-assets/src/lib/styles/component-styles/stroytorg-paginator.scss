@@ -1,0 +1,37 @@
+.stroytorg-paginator {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: $default-gap;
+}
+
+.stroytorg-paginator__button > button {
+  padding: $paginator-button-padding !important;
+}
+
+.stroytorg-paginator__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $default-gap;
+  padding: $paginator-button-padding;
+  border-radius: $input-border-radius;
+  color: $color-light-black;
+  cursor: pointer;
+  transition: $default-transition;
+  user-select: none;
+  text-decoration: none;
+
+  &:hover:not(.space) {
+    background-color: $color-grey-200;
+  }
+
+  &.active:not(.space) {
+    text-decoration: underline;
+  }
+
+  &.space {
+    cursor: initial;
+  }
+}

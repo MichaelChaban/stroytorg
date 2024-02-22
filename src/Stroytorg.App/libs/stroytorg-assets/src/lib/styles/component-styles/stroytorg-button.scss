@@ -1,0 +1,60 @@
+.stroytorg-button {
+  @include buttonBase;
+  background: linear-gradient(to bottom, var(--button-bg-bottom), var(--button-bg-top));
+}
+
+.default-button {
+  @include buttonPalette($color-grey-200, $color-dark-grey, $color-grey-400, $color-grey-500, transparent);
+}
+
+.primary-button {
+  @include buttonPalette($color-orange, $color-white, $color-dark-orange, $color-darker-orange, $color-light-orange);
+}
+
+.outlined-button {
+  @include buttonPalette($color-white, $color-orange, #fff2f2, #fff2f2, $color-light-orange);
+  border: 2px solid $color-orange;
+
+  &:active:enabled,
+  &.enter-pressed {
+    border-color: $color-light-orange;
+  }
+
+  &:active:not(:focus),
+  &.enter-pressed:not(:focus) {
+    border: 2px solid $color-orange;
+  }
+}
+
+.warning-button {
+  @include buttonPalette($color-yellow, $color-white, $color-dark-yellow, $color-darker-yellow, $color-light-yellow);
+}
+
+.danger-button {
+  @include buttonPalette($color-red, $color-white, $color-dark-red, $color-darker-red, $color-light-red);
+}
+
+.icon-label-button {
+  @include buttonWithIcon;
+  padding-left: 1rem !important;
+  padding-right: 2rem !important;
+}
+
+.icon-button {
+  @include buttonWithIcon;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: $color-black-700;
+  color: $color-white;
+  text-align: center;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 2;
+}
+
+.button-rounded {
+  border-radius: 100% !important;
+}

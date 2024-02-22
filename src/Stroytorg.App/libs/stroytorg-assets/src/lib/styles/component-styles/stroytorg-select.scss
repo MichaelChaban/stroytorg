@@ -1,0 +1,47 @@
+.stroytorg-select {
+    resize: vertical;
+
+    &:active:enabled>div,
+    &.ng-select-focused>div {
+        border-color: $color-white !important;
+        box-shadow: $color-orange 0px 0px 0px 2px !important;
+        
+        .stroytorg-floating-hint {
+            @extend .stroytorg-floating-hint-active;
+        }
+    }
+
+    &>div {
+        transition: $default-transition;
+    }
+}
+
+
+
+.stroytorg-select-invalid:not(:has(.ng-select-disabled))>div {
+    border-color: $color-white !important;
+    box-shadow: $color-red 0px 0px 0px 2px !important;
+}
+
+.stroytorg-select-container {
+    position: relative;
+
+    &:has(.stroytorg-select.ng-select-disabled) {
+        .stroytorg-floating-hint {
+            @extend .stroytorg-floating-hint-disabled;
+        }
+    }
+
+    &:has(.stroytorg-select-invalid:not(.stroytorg-select.ng-select-disabled)) {
+        .stroytorg-floating-hint {
+            @extend .stroytorg-floating-hint-active;
+            color: $color-red !important;
+        }
+    }
+
+    &:has(.stroytorg-select.ng-select-focused) {
+        .stroytorg-floating-hint {
+            @extend .stroytorg-floating-hint-active;
+        }
+    }
+}

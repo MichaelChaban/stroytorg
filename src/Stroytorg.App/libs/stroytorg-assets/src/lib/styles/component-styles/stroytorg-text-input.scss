@@ -1,0 +1,53 @@
+.stroytorg-text-input {
+    @extend %input-common;
+    border: 0.25px solid $color-grey;
+
+    &:focus:not(:read-only, [readonly]),
+    &:active:not(:read-only, [readonly]) {
+        border-color: $color-white;
+        box-shadow: $color-orange 0px 0px 0px 2px;
+    }
+
+    &:read-only,
+    &[readonly] {
+        opacity: 0.6;
+        cursor: auto !important;
+        background-color: $color-grey-100;
+    }
+
+    &:is(textarea) {
+        width: 100%;
+        resize: vertical;
+    }
+}
+
+.stroytorg-text-input-invalid:not(.stroytorg-text-input:read-only, .stroytorg-text-input[readonly]) {
+    @extend %input-common;
+    border-color: $color-white;
+    box-shadow: $color-red 0px 0px 0px 2px;
+}
+
+.stroytorg-text-input-container {
+    position: relative;
+
+    &:has(.stroytorg-text-input:read-only),
+    &:has(.stroytorg-text-input[readonly]) {
+        .stroytorg-floating-hint {
+            @extend .stroytorg-floating-hint-disabled;
+        }
+    }
+
+
+    &:has(.stroytorg-text-input:active:enabled, .stroytorg-text-input:focus:enabled) {
+        .stroytorg-floating-hint.active {
+            @extend .stroytorg-floating-hint-active;
+        }
+    }
+
+    &:has(.stroytorg-text-input-invalid) {
+        .stroytorg-floating-hint {
+            @extend .stroytorg-floating-hint-active;
+            color: $color-red !important;
+        }
+    }
+}

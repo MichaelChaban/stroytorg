@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Sort, Page } from '../stroytorg-table.models';
+import { Sort, Page } from '@stroytorg/shared';
 
 /*
   TABLE
@@ -64,21 +64,8 @@ export function createFilterPageTableAction<T>(tableRepository: string) {
   );
 }
 
-export function createSortPageTableAction<T>(tableRepository: string) {
-  return createAction(
-    `${tableRepository} ${TablePageAction.SORT_PAGE}`,
-    props<{ sort: Sort<T>[] }>()
-  );
-}
 export function createDestroyTableAction(tableRepository: string) {
   return createAction(`${tableRepository} ${TablePageAction.DESTROY}`);
-}
-
-export function badgeClosedTableAction<T>(tableRepository: string) {
-  return createAction(
-    `[${tableRepository} | Update Filter`,
-    props<{ filter: Partial<T> }>()
-  );
 }
 
 export function createSelectItemsTableAction<T>(tableRepository: string) {

@@ -1,6 +1,5 @@
-import { DetailState } from "@stroytorg/shared";
+import { DetailState, Page, RequestParams } from "@stroytorg/shared";
 import { DEFAULT_SEARCH_PARAMS } from "../models/datasource.models";
-import { RequestParams, Page } from "../stroytorg-table.models";
 
 export interface TableState<T> {
   dataLoading: boolean;

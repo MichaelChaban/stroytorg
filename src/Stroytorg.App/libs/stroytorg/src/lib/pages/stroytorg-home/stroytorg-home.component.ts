@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ButtonStyle,
@@ -12,6 +12,7 @@ import {
   InputSize,
   StroytorgTableComponent,
   StroytorgLoaderComponent,
+  StroytorgSnackbarService,
 } from '@stroytorg/stroytorg-components';
 import { Icon } from '@stroytorg/shared';
 import {
@@ -46,6 +47,7 @@ export class StroytorgHomeComponent {
   inputSize = InputSize.XLARGE;
 
   mockDATA = mockData;
+  snackbar = inject(StroytorgSnackbarService);
   
   columnDefinitions = getColumnDefinitions();
 
@@ -74,7 +76,11 @@ export class StroytorgHomeComponent {
   ];
 
   someFunction() {
-    console.log('some function');
+    this.snackbar.showError('Majk je pan');
+  }
+
+  anotherFunction() {
+    this.snackbar.showSuccess('Majk ma kokot jak slon');
   }
 
   formGroup = new FormGroup({

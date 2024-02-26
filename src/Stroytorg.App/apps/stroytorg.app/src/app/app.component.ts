@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NavbarModel, StroytorgNavbarComponent } from '@stroytorg/stroytorg-components';
+import { NavbarModel, StroytorgNavbarComponent, StroytorgSnackbarComponent } from '@stroytorg/stroytorg-components';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, StroytorgNavbarComponent],
+  imports: [RouterModule, StroytorgNavbarComponent, StroytorgSnackbarComponent],
   selector: 'stroytorg-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

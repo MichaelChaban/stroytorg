@@ -6,8 +6,6 @@ import {
   createDataLoadSuccessTableAction,
   createDataLoadErrorTableAction,
   createFilterPageTableAction,
-  badgeClosedTableAction,
-  createSortPageTableAction,
   createDestroyTableAction,
   createSelectItemsTableAction,
 } from './actions';
@@ -75,40 +73,6 @@ export function createTablePageReducers<
         requestParams: {
           ...state.requestParams,
           filter: filter,
-          page: 1,
-        },
-        dataLoading: true,
-      };
-    }),
-    on(badgeClosedTableAction(tableRepository), (state, { filter }) => {
-      const matchingFilters =
-        state.requestParams?.filter !== undefined
-          ? Object.entries(<any>state.requestParams.filter).reduce(
-              (acc, [key, value]) => {
-                if (filter[key as keyof typeof filter] === value) {
-                  return { ...acc, [key]: null };
-                }
-                return { ...acc, [key]: value };
-              },
-              {}
-            )
-          : {};
-      return {
-        ...state,
-        requestParams: {
-          ...state.requestParams,
-          filter: matchingFilters,
-          page: 1,
-        },
-        dataLoading: true,
-      };
-    }),
-    on(createSortPageTableAction(tableRepository), (state, { sort }) => {
-      return {
-        ...state,
-        requestParams: {
-          ...state.requestParams,
-          sort,
           page: 1,
         },
         dataLoading: true,

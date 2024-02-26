@@ -1,0 +1,6 @@
+<div [@snackbarAnimation]="snackAnimationState" [ngClass]="success ? 'success-snackbar' : 'error-snackbar'">
+    <div class="d-block px-2">
+        <h5 style="color: #fff">{{ getTitle() }}</h5>
+        <span style="color: #fff;">{{message}}</span>
+    </div>
+</div>

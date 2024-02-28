@@ -112,4 +112,14 @@
   <!-- <div class="page-loader">
     <stroytorg-loader ></stroytorg-loader>
   </div> -->
+
+  <!-- <div>
+    <img src="{{environmentImageResource}}Volcano.jpg" alt="">
+  </div> -->
+
+  <div class="mt-4">
+    <stroytorg-card      [pageSize]="2"
+    [total]="cardMockData.length"
+    [currentPage]="1" [cardRowDefinition]="cardRowDefinition" [data]="cardMockData"></stroytorg-card>
+  </div>
 </div>

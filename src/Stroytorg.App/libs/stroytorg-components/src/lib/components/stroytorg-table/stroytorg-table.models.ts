@@ -9,7 +9,6 @@ export interface ColumnDefinition<T, _KEY = keyof T> {
   value?: ((row?: T) => string | undefined) | string;
   headerName?: string;
   icon?: Icon;
-  type?: string;
   sortable?: boolean;
   routerLink?: ((row?: T) => string) | string;
   queryParams?: Params;

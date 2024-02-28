@@ -1,24 +1,25 @@
-@if(cardDefinition && cardData){ @for(element of cardDefinition; track $index){
+@if(cardRowDefinition && cardData){ @for(element of cardRowDefinition; track $index){
 <div class="w-100">
-  @if(element?.title || element?.content || element?.actions){
-  <div class="default-p {{ element?.classes }}">
+  @if(element?.title || element?.content || element?.cardRowActions){
+  <div class="default-p" [ngClass]="element?.cardRowClass">
     @if(element?.title){
     <h1 class="fw-bold fs-5 mt-3">
       {{ element.title | keyOrFn : cardData }}
     </h1>
-    } @if (element?.content) {
-    <div class="card-content-container" [ngClass]="{ 'show-all': showContent }">
+    } @else if (element?.content) {
+    <div class="card-content-container" [ngClass]="{ 'show-all': isContentShown }">
       {{ element.content | keyOrFn : cardData }}
     </div>
     <p class="text-end">
-      <small class="show-more-less" (click)="showContent = !showContent">
-        {{ showContent ? 'менше' : 'більше' }}
+      <small class="show-more-less" (click)="isContentShown = !isContentShown">
+        {{ isContentShown ? 'less' : 'more' }}
       </small>
     </p>
-    } @if(element?.actions){
-    <div class="mt-1" *ngFor="let action of element.actions">
+    } @else if(element?.cardRowActions){
+    <div class="mt-1" *ngFor="let action of element.cardRowActions">
       <stroytorg-button
         [style]="action?.buttonStyle"
+        [size]="action?.size ? action?.size! : ButtonSize.FULL"
         [title]="action?.title"
         [tooltip]="action?.tooltip"
         [icon]="action?.icon"
@@ -30,7 +31,9 @@
     }
   </div>
   } @if(element?.imageName){
-  <div class="imageClass" [style.--imageName]="element?.imageName"></div>
+  <div class="imageClass">
+    <img src="{{ baseImagePath }}{{ element.imageName }}" alt="" />
+  </div>
   } @if(element?.template){
   <ng-template [ngTemplateOutlet]="element.template!"></ng-template>
   }

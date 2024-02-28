@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TemplateRef } from '@angular/core';
 import { ButtonDefinition } from '../stroytorg-button';
 
-export interface CardDefinition {
-  display?: 'flex';
+export interface CardRowDefinition {
   title?: string | ((row: any) => string);
   content?: string | ((row: any) => string);
   imageName?: string;
-  actions?: ButtonDefinition[];
+  cardRowActions?: ButtonDefinition[];
   template?: TemplateRef<any>;
-  classes?: string;
+  cardRowClass?: string;
+  isContentShown?: boolean;
 }

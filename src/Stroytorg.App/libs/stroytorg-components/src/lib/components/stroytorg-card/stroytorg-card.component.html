@@ -1,11 +1,25 @@
-@if(data && cardDefinition){
+@if(data && cardRowDefinition){
 <div class="cards-container">
   @for (row of data; track $index) {
   <stroytorg-card-element
-    class="card"
-    [cardDefinition]="cardDefinition"
+    class="stroytorg-card"
+    [cardRowDefinition]="cardRowDefinition"
     [cardData]="row"
   ></stroytorg-card-element>
   }
 </div>
+@if(showPaginator){
+  <div>
+    <div class="stroytorg-table__footer">
+      <stroytorg-paginator
+        class="w-100"
+        [rows]="pageSize"
+        [totalRecords]="total"
+        [currentPage]="currentPage"
+        (pageChanged)="pageChanged($event)"
+      >
+      </stroytorg-paginator>
+    </div>
+  </div>
+  }
 }

@@ -54,7 +54,7 @@ export class StroytorgButtonComponent extends UnsubscribeControlComponent {
   queryParams?: { [key: string]: unknown };
 
   @Input()
-  size = ButtonSize.DEFAULT as string;
+  size = ButtonSize.FIT_CONTENT as string;
 
   @Input()
   disabled!: boolean;

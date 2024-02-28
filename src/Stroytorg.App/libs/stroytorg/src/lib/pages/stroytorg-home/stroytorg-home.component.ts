@@ -13,6 +13,7 @@ import {
   StroytorgTableComponent,
   StroytorgLoaderComponent,
   StroytorgSnackbarService,
+  StroytorgCardComponent,
 } from '@stroytorg/stroytorg-components';
 import { Icon } from '@stroytorg/shared';
 import {
@@ -21,7 +22,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { getColumnDefinitions, mockData } from './stroytorg-home.column-definitions';
+import { cardMockData, getCardRowDefinition, getColumnDefinitions, mockData } from './stroytorg-home.column-definitions';
+import { environment} from 'apps/stroytorg.app/src/environments/environment';
 
 @Component({
   selector: 'stroytorg-stroytorg-home',
@@ -36,20 +38,28 @@ import { getColumnDefinitions, mockData } from './stroytorg-home.column-definiti
     StroytorgDateComponent,
     StroytorgTimeComponent,
     StroytorgTableComponent,
-    StroytorgLoaderComponent
+    StroytorgLoaderComponent,
+    StroytorgCardComponent
   ],
   templateUrl: './stroytorg-home.component.html',
   styleUrl: './stroytorg-home.component.scss'
 })
 export class StroytorgHomeComponent {
+
+  environmentImageResource =environment.baseImagePath;
+
   buttonType = ButtonStyle;
   icon = Icon.HOME;
   inputSize = InputSize.XLARGE;
 
   mockDATA = mockData;
   snackbar = inject(StroytorgSnackbarService);
+
+  cardMockData = cardMockData;
   
   columnDefinitions = getColumnDefinitions();
+
+  cardRowDefinition = getCardRowDefinition();
 
   tooltip: TooltipDefinition = {
     tooltipPosition: 'above',
@@ -82,6 +92,8 @@ export class StroytorgHomeComponent {
   anotherFunction() {
     this.snackbar.showSuccess('Majk ma kokot jak slon');
   }
+
+
 
   formGroup = new FormGroup({
     select: new FormControl(null, [Validators.required]),

@@ -1,10 +1,12 @@
 import { Icon } from '@stroytorg/shared';
 
 export enum ButtonSize {
-  SMALL = 'small',
-  DEFAULT = '',
-  LARGE = 'large',
-  XLARGE = 'x-large',
+  SMALL = 'small-width',
+  DEFAULT = 'default-width',
+  LARGE = 'large-width',
+  XLARGE = 'x-large-width',
+  FULL = 'full-width',
+  FIT_CONTENT = 'fit-content-width',
 }
 
 export enum ButtonStyle {
@@ -23,7 +25,7 @@ export interface ButtonDefinition {
   queryParams?: string;
   tooltip?: TooltipDefinition;
   size: ButtonSize;
-  onClick?: (row: any) => any;
+  onClick?: (row: unknown) => unknown;
 }
 
 export type TooltipDefinition = {

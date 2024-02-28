@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
@@ -16,6 +17,6 @@ export class KeyOrFunctionPipe implements PipeTransform {
                 return value;
             }
         }
-        return '';
+        return keyOrFn;
     }
 }

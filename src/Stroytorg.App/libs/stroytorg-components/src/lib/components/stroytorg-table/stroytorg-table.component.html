@@ -86,15 +86,17 @@
   @if(loading){
   <stroytorg-loader class="stroytorg-table-loader"></stroytorg-loader>
   } @if(showPaginator){
-  <div class="stroytorg-table__footer">
-    <stroytorg-paginator
-      class="w-100"
-      [rows]="pageSize"
-      [totalRecords]="total"
-      [currentPage]="currentPage"
-      (pageChanged)="pageChanged($event)"
-    >
-    </stroytorg-paginator>
+  <div>
+    <div class="stroytorg-table__footer">
+      <stroytorg-paginator
+        class="w-100"
+        [rows]="pageSize"
+        [totalRecords]="total"
+        [currentPage]="currentPage"
+        (pageChanged)="pageChanged($event)"
+      >
+      </stroytorg-paginator>
+    </div>
   </div>
   }
 </div>

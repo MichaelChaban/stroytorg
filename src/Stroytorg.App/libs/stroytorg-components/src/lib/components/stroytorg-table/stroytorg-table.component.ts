@@ -10,11 +10,12 @@ import {
   ChangeDetectionStrategy,
   OnChanges,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ObjectUtils, Page, Sort } from '@stroytorg/shared';
+import { MobileService, ObjectUtils, Page, Sort } from '@stroytorg/shared';
 import { StroytorgCheckboxComponent } from '../stroytorg-checkbox';
 import { StroytorgPaginatorComponent } from '../stroytorg-paginator';
 import { TABLE_COLUMN_PROVIDER, ColumnProvider, ColumnDefinition, ColumnModel, RowModel } from './stroytorg-table.models';
@@ -39,7 +40,6 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
   sorters!: Sort<T>[];
 
   constructor(
-    // private screenSizeService: ScreenSizeService,
     public cdRef: ChangeDetectorRef,
     readonly router: Router,
     readonly route: ActivatedRoute
@@ -96,10 +96,12 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() selectedRows: any[] | null | undefined = [];
 
+  private readonly mobileService = inject(MobileService);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  protected isMobileBlock = <any>(
-    window.matchMedia('(max-width: 31.99em)').matches
-  );
+  get isMobile(){
+    return this.mobileService.getIsMobile();
+  }
 
   private _columnDefinitions!: ColumnDefinition<T>[];
 

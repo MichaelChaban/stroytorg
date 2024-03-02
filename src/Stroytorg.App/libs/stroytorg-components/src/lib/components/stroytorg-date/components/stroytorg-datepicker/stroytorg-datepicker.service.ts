@@ -19,26 +19,25 @@ export class StroytorgDatePickerService {
   public getMonth(monthIndex: number, year: number): DatePickerDate[] {
     const days = [];
     const firstday = this.createDatePicker(
-      0,
+      1,
       monthIndex,
       year,
       true
     );
-    const previousMonthIndex = monthIndex - 1 < 0 ? 11 : monthIndex - 1;
-    const previousYear = previousMonthIndex === 11 ? year - 1 : year;
+    const previousYear = monthIndex === 11 ? year - 1 : year;
     const previosMonthDaysCount = new Date(
       previousYear,
-      previousMonthIndex,
+      monthIndex,
       0
     ).getDate();
     const nextMonthIndex = monthIndex + 1 > 11 ? 0 : monthIndex + 1;
     const nextYear = nextMonthIndex === 0 ? year + 1 : year;
 
-    for (let i = firstday.weekDayNumber; i > 0; i--) {
+    for (let i = firstday.weekDayNumber - 1; i > 0; i--) {
       days.push(
         this.createDatePicker(
-          previosMonthDaysCount - 1 - i,
-          previousMonthIndex,
+          previosMonthDaysCount - i + 1,
+          monthIndex - 1,
           previousYear,
           false
         )
@@ -47,12 +46,12 @@ export class StroytorgDatePickerService {
 
     days.push(firstday);
 
-    const countDaysInMonth = new Date(year, monthIndex, 0).getDate() - 1;
-    for (let i = 1; i < countDaysInMonth + 1; i++) {
+    const countDaysInMonth = new Date(year, nextMonthIndex, 0).getDate();
+    for (let i = 2; i < countDaysInMonth + 1; i++) {
       days.push(this.createDatePicker(i, monthIndex, year, true));
     }
 
-    for (let i = 0; days.length < DAYS_IN_PICKER; i++) {
+    for (let i = 1; days.length < DAYS_IN_PICKER; i++) {
       days.push(
         this.createDatePicker(i, nextMonthIndex, nextYear, false)
       );
@@ -93,8 +92,8 @@ export class StroytorgDatePickerService {
       monthIndex: monthIndex,
       monthDayNumber: monthDayNumber,
       weekDayNumber: weekDayNumber,
-      weekDayShortName: this.getWeekDayShortName(weekDayNumber + 1),
-      weekDayFullName: this.getWeekDayFullName(weekDayNumber + 1),
+      weekDayShortName: this.getWeekDayShortName(weekDayNumber),
+      weekDayFullName: this.getWeekDayFullName(weekDayNumber),
       classNames: isCurrentMonth ? 'current-month' : 'not-current-month',
       isToday: isToday,
       isCurrentMonth: isCurrentMonth

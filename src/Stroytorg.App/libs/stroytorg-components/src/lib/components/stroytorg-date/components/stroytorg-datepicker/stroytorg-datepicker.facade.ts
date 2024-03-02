@@ -4,6 +4,7 @@ import { Icon } from '@stroytorg/shared';
 import { WEEK_DAYS_NANE, MONTH_OPTIONS, DatePickerDate, patchValueToModel, createFormGroup, YEAR_OPTIONS, dateToPickerDate, areDatesEqual } from './stroytorg-datepicker.models';
 import { StroytorgDatePickerService } from './stroytorg-datepicker.service';
 import { InputSize } from '../../../stroytorg-base-form';
+import { ButtonSize } from '../../../stroytorg-button';
 
 @Injectable()
 export class StroytorgDatePickerFacade {
@@ -14,6 +15,7 @@ export class StroytorgDatePickerFacade {
 
   previosMonthIcon = Icon.DOUBLE_LEFT;
   nextMonthIcon = Icon.DOUBLE_RIGHT;
+  buttonSize = ButtonSize;
   weekDaysName = WEEK_DAYS_NANE;
   monthOptions = MONTH_OPTIONS;
   yearOptions = YEAR_OPTIONS;
@@ -86,7 +88,7 @@ export class StroytorgDatePickerFacade {
   private setMonthDays(days: DatePickerDate[]) {
     this.monthDates = days;
     const currectMonthDate = this.monthDates.find(
-      (x) => x.monthDayNumber === 0
+      (x) => x.monthDayNumber === 1
     )!;
     this.monthNumber = currectMonthDate.monthIndex;
     this.year = currectMonthDate.year;

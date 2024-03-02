@@ -35,6 +35,9 @@ export class StroytorgPaginatorComponent implements OnInit, OnChanges {
   @Input()
   currentPage = 1;
 
+  @Input()
+  isSelectHidden = false;
+
   @Output() pageChanged: EventEmitter<void> = new EventEmitter();
 
   icon = Icon;

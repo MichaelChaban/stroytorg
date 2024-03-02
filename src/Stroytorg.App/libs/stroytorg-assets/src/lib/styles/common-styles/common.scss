@@ -55,6 +55,11 @@
   min-width: fit-content;
 }
 
+.auto-width {
+  max-width: auto;
+  min-width: auto;
+}
+
 .ng-value {
   background-color: $color-lighter-orange !important;
   transition: $default-transition;

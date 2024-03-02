@@ -72,16 +72,16 @@ export const YEAR_OPTIONS = (() => {
 
 export const TODAY = new Date();
 
-export const DEFAULT_DATE : Date | null = null;
+export const DEFAULT_DATE: Date | null = null;
 
 export enum Day {
+  'Sunday' = 0,
   'Monday' = 1,
   'Tuesday' = 2,
   'Wednesday' = 3,
   'Thursday' = 4,
   'Friday' = 5,
   'Saturday' = 6,
-  'Sunday' = 7,
 }
 
 export enum Month {
@@ -101,27 +101,29 @@ export enum Month {
 
 export const DAYS_IN_PICKER = 42;
 
-export function dateToPickerDate(date?: Date | null) : DatePickerDate | null {
-  if(!date){
+export function dateToPickerDate(date?: Date | null): DatePickerDate | null {
+  if (!date) {
     return null;
   }
-
-  const convertedWeekDay = date.getDay() - 1 < 0 ? date.getDay() + 7 : date.getDay() - 1;
 
   const datePickerDate = {
     year: date.getFullYear(),
     monthName: MONTHS_NAMES[date.getMonth()],
     monthIndex: date.getMonth(),
-    monthDayNumber: date.getDate() - 1,
-    weekDayNumber: convertedWeekDay,
-    weekDayShortName: Day[convertedWeekDay]?.slice(0, 2),
-    weekDayFullName: Day[convertedWeekDay],
+    monthDayNumber: date.getDate(),
+    weekDayNumber: date.getDay(),
+    weekDayShortName: Day[date.getDay()]?.slice(0, 2),
+    weekDayFullName: Day[date.getDay()],
     classNames: '',
     isToday: false,
-    isSelected: true
+    isSelected: true,
   } as DatePickerDate;
-  
-  datePickerDate.isToday = checkToday(datePickerDate.monthDayNumber, datePickerDate.monthIndex, datePickerDate.year);
+
+  datePickerDate.isToday = checkToday(
+    datePickerDate.monthDayNumber,
+    datePickerDate.monthIndex,
+    datePickerDate.year
+  );
 
   return datePickerDate;
 }
@@ -133,14 +135,19 @@ export function checkToday(
 ): boolean {
   const dateToCheck = new Date(year, monthIndex, monthDayNumber);
   return (
-    dateToCheck.getDate() === TODAY.getDate() - 1 &&
+    dateToCheck.getDate() === TODAY.getDate() &&
     dateToCheck.getMonth() === TODAY.getMonth() &&
     dateToCheck.getFullYear() === TODAY.getFullYear()
   );
 }
 
-export function areDatesEqual(date1?: DatePickerDate | null, date2?: DatePickerDate | null): boolean {
-  return date1?.year === date2?.year &&
-         date1?.monthIndex === date2?.monthIndex &&
-         date1?.monthDayNumber === date2?.monthDayNumber;
+export function areDatesEqual(
+  date1?: DatePickerDate | null,
+  date2?: DatePickerDate | null
+): boolean {
+  return (
+    date1?.year === date2?.year &&
+    date1?.monthIndex === date2?.monthIndex &&
+    date1?.monthDayNumber === date2?.monthDayNumber
+  );
 }

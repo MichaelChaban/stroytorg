@@ -18,7 +18,7 @@
         (viewFacade.selectedDate
           ? viewFacade.selectedDate
           : viewFacade.todayDate
-        ).monthDayNumber + 1
+        ).monthDayNumber
       }}
     </h6>
     <h6 class="m-0">
@@ -78,9 +78,10 @@
         class="stroytorg-date-picker-button {{ date.classNames }}"
         [class.today]="date.isToday"
         [class.selected-date]="date.isSelected"
-        [title]="(date.monthDayNumber + 1).toString()"
+        [title]="date.monthDayNumber.toString()"
         (clickFn)="selectDate(date)"
         [rounded]="true"
+        [size]="viewFacade.buttonSize.AUTO"
       ></stroytorg-button>
       }
     </div>

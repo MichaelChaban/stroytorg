@@ -99,7 +99,7 @@ export class StroytorgHomeComponent {
     select: new FormControl(null, [Validators.required]),
     textInput: new FormControl(null, [Validators.required]),
     checkbox: new FormControl(null, [Validators.required]),
-    date: new FormControl(null, [Validators.required]),
+    date: new FormControl(new Date(2024, 2, 11), [Validators.required]),
     time: new FormControl(null, [Validators.required]),
   });
 }

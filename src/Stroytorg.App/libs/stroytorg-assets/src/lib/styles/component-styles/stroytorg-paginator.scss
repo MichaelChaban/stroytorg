@@ -35,3 +35,30 @@
     cursor: initial;
   }
 }
+
+.stroytorg-paginator__select_container {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stroytorg-paginator__paginate_container {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $default-gap;
+}
+
+@media screen and (max-width: 600px) {
+  .stroytorg-paginator{
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4em;
+  }
+
+  .stroytorg-paginator__paginate_container {
+    gap: 0.15em;
+  }
+}

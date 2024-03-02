@@ -7,6 +7,7 @@ export enum ButtonSize {
   XLARGE = 'x-large-width',
   FULL = 'full-width',
   FIT_CONTENT = 'fit-content-width',
+  AUTO = 'auto-width',
 }
 
 export enum ButtonStyle {

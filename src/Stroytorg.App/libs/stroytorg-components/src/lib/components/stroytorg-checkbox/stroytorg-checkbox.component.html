@@ -1,30 +1,34 @@
-<div class="stroytorg-checkbox-container">
-  @if(formControl){
-  <div class="d-flex justify-content-between align-items-center">
-    <label class="stroytorg-checkbox">
-      <input
-        type="checkbox"
-        [disabled]="readonly"
-        [checked]="checked"
-        (change)="toggle()"
-      />
-      <span
-        class="checkmark"
-        [class.stroytorg-checkbox-invalid]="
-          formControl.invalid && formControl.touched
-        "
-        [class.checked]="checked && readonly"
-      ></span>
-    </label>
-    @if(title){
-    <span class="stroytorg-checkbox-title">{{ title }}</span>
+<div class="stroytorg-checkbox">
+  @if (formControl) {
+    <div class="stroytorg-checkbox__container">
+      <div class="stroytorg-checkbox__checkbox-container">
+        <input
+          class="stroytorg-checkbox__checkbox"
+          type="checkbox"
+          [disabled]="formControl.disabled"
+          [checked]="formControl.value || checked"
+          (change)="toggle()"
+        />
+        <span
+          class="stroytorg-checkbox__checkmark"
+          [class.stroytorg-checkbox-invalid]="
+            formControl.invalid && formControl.touched
+          "
+          [class.checked]="checked && readonly"
+        ></span>
+      </div>
+      @if (title) {
+        <span class="stroytorg-checkbox__title">{{ title }}</span>
+      }
+    </div>
+    @if (
+      formControl.invalid && formControl.touched && !disabled && showErrors
+    ) {
+      <ul class="stroytorg-error-message-container">
+        @for (error of formControl.errors | error; track $index) {
+          <li>{{ error }}</li>
+        }
+      </ul>
     }
-  </div>
-  @if(formControl.invalid && formControl.touched && !disabled && showErrors){
-  <ul class="stroytorg-error-message-container">
-    @for(error of (formControl.errors | error); track $index){
-    <li>{{ error }}</li>
-    }
-  </ul>
-  }}
+  }
 </div>

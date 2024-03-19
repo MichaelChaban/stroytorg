@@ -1,25 +1,31 @@
-@if(data && cardRowDefinition){
-<div class="cards-container">
-  @for (row of data; track $index) {
-  <stroytorg-card-element
-    class="stroytorg-card"
-    [cardRowDefinition]="cardRowDefinition"
-    [cardData]="row"
-  ></stroytorg-card-element>
-  }
-</div>
-@if(showPaginator){
-  <div>
-    <div class="stroytorg-table__footer">
-      <stroytorg-paginator
-        class="w-100"
-        [rows]="pageSize"
-        [totalRecords]="total"
-        [currentPage]="currentPage"
-        (pageChanged)="pageChanged($event)"
-      >
-      </stroytorg-paginator>
+@if (data && cardRowDefinition) {
+  <div class="stroytorg-card__component-container">
+    @if (filters && filters.length) {
+      <stroytorg-card-filter />
+    }
+    <div class="stroytorg-card__cards-container" #cardsContainer>
+      @for (row of data; track $index) {
+        <stroytorg-card-element
+          class="stroytorg-card"
+          [cardRowDefinition]="cardRowDefinition"
+          [cardData]="row"
+        />
+      }
     </div>
+    @if (currentPage < totalPages) {
+      <div class="stroytorg-card__load-next">
+        <stroytorg-button
+          [style]="buttonStyle.PRIMARY"
+          [icon]="buttonIcon.ARROW_DOWN"
+          [title]="'Show next'"
+          [isLoadingVisible]="true"
+        />
+      </div>
+    }
+    @if (loading) {
+      <div class="stroytorg-card__loader-container">
+        <stroytorg-loader />
+      </div>
+    }
   </div>
-  }
 }

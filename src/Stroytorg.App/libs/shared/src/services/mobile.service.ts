@@ -10,7 +10,7 @@ export class MobileService {
 
   constructor(private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver
-      .observe([Breakpoints.Handset, Breakpoints.Tablet, Breakpoints.Small])
+      .observe([Breakpoints.Handset])
       .subscribe((result) => {
         this.isMobile = result.matches;
       });

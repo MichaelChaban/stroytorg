@@ -1,5 +1,5 @@
 # Use the official PostgreSQL image
-FROM postgres
+FROM postgres:16.2
 
 ENV POSTGRES_DB Stroytorg
 ENV POSTGRES_USER postgres

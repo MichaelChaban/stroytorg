@@ -1,18 +1,46 @@
 .stroytorg-button {
   @include buttonBase;
-  background: linear-gradient(to bottom, var(--button-bg-bottom), var(--button-bg-top));
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    var(--button-bg-bottom),
+    var(--button-bg-top)
+  );
 }
 
 .default-button {
-  @include buttonPalette($color-grey-200, $color-dark-grey, $color-grey-400, $color-grey-500, transparent);
+  @include buttonPalette(
+    $color-grey-200,
+    $color-light-black,
+    $color-grey-400,
+    $color-grey-500,
+    $color-white
+  );
+
+  &:hover:enabled,
+  &:focus:enabled {
+    box-shadow: none;
+  }
 }
 
 .primary-button {
-  @include buttonPalette($color-orange, $color-white, $color-dark-orange, $color-darker-orange, $color-light-orange);
+  @include buttonPalette(
+    $color-orange,
+    $color-white,
+    $color-dark-orange,
+    $color-darker-orange,
+    $color-light-orange
+  );
 }
 
 .outlined-button {
-  @include buttonPalette($color-white, $color-orange, #fff2f2, #fff2f2, $color-light-orange);
+  @include buttonPalette(
+    $color-white,
+    $color-orange,
+    #fff2f2,
+    #fff2f2,
+    $color-light-orange
+  );
   border: 2px solid $color-orange;
 
   &:active:enabled,
@@ -27,11 +55,23 @@
 }
 
 .warning-button {
-  @include buttonPalette($color-yellow, $color-white, $color-dark-yellow, $color-darker-yellow, $color-light-yellow);
+  @include buttonPalette(
+    $color-yellow,
+    $color-white,
+    $color-dark-yellow,
+    $color-darker-yellow,
+    $color-light-yellow
+  );
 }
 
 .danger-button {
-  @include buttonPalette($color-red, $color-white, $color-dark-red, $color-darker-red, $color-light-red);
+  @include buttonPalette(
+    $color-red,
+    $color-white,
+    $color-dark-red,
+    $color-darker-red,
+    $color-light-red
+  );
 }
 
 .icon-label-button {
@@ -44,7 +84,7 @@
   @include buttonWithIcon;
 }
 
-.tooltip {
+.stroytorg-tooltip {
   position: absolute;
   background-color: $color-black-700;
   color: $color-white;
@@ -57,4 +97,13 @@
 
 .button-rounded {
   border-radius: 100% !important;
+}
+
+.stroytorg-button__loader {
+  & > * > .loader-container {
+    background-color: $color-white-500;
+    & > .loader {
+      transform: scale(0.5) rotate(45deg);
+    }
+  }
 }

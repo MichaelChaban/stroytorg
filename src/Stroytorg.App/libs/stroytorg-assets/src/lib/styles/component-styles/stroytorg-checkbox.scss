@@ -1,14 +1,20 @@
-.stroytorg-checkbox-title {
-  color: $color-dark-grey;
+.stroytorg-checkbox__title {
+  color: $color-light-black;
   margin-left: 0.5rem;
 }
 
-.stroytorg-checkbox-container {
+.stroytorg-checkbox {
   position: relative;
   width: fit-content;
 }
 
-.stroytorg-checkbox {
+.stroytorg-checkbox__container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.stroytorg-checkbox__checkbox-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,40 +23,37 @@
   cursor: pointer;
   font-size: 18px;
 
-  input[type='checkbox'] {
+  .stroytorg-checkbox__checkbox {
     opacity: 0;
+
+    &:checked + .stroytorg-checkbox__checkmark:after {
+      content: '✓';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 5px;
+      color: $color-dark-orange;
+      font-weight: bold;
+    }
   }
 
-  input[type='checkbox']:checked + .checkmark:after {
-    content: '✓';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 5px;
-    color: $color-dark-orange;
-    font-weight: bold;
-  }
-
-  input[type='checkbox']:enabled + .checkmark:active,
-  .checkmark:hover,
-  .checkmark:focus,
-  .checkmark:focus:not(:active) {
+  .stroytorg-checkbox__checkbox:enabled + .stroytorg-checkbox__checkmark:active,
+  .stroytorg-checkbox__checkmark:hover,
+  .stroytorg-checkbox__checkmark:focus,
+  .stroytorg-checkbox__checkmark:focus:not(:active) {
     box-shadow: $color-lighter-orange 0 0 0 7px;
   }
 
-  input[type='checkbox']:enabled + .checkmark:active {
+  .stroytorg-checkbox__checkbox:enabled
+    + .stroytorg-checkbox__checkmark:active {
     transform: scale(0.96);
     color: $color-dark-orange;
   }
 
-  input[type='checkbox']:disabled + .checkmark {
+  .stroytorg-checkbox__checkbox:disabled + .stroytorg-checkbox__checkmark {
     background-color: $color-grey-100;
     border: none;
     cursor: default;
-  }
-
-  input[type='checkbox']:disabled + .checkmark:after {
-    display: none;
   }
 }
 
@@ -60,11 +63,11 @@
   position: absolute;
   top: 0;
   left: 5px;
-  color: $color-dark-grey;
+  color: $color-light-black;
   font-weight: bold;
 }
 
-.checkmark {
+.stroytorg-checkbox__checkmark {
   position: absolute;
   height: 1.5rem;
   width: 1.5rem;
@@ -74,13 +77,13 @@
   transition: $default-transition;
 }
 
-.checkmark.stroytorg-checkbox-invalid:not(
+.stroytorg-checkbox__checkmark.stroytorg-checkbox-invalid:not(
     .stroytorg-text-input:disabled,
     .stroytorg-text-input[disabled]
   ) {
   border-color: $color-red;
 
-  &:hover{
+  &:hover {
     box-shadow: $color-light-red-500 0 0 0 7px;
   }
 }

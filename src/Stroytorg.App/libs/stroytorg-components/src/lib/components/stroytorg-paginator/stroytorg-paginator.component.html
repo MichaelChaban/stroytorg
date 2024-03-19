@@ -1,10 +1,10 @@
 <div class="stroytorg-paginator">
-  @if (!isSelectHidden) {
+  @if (!showPageSizeSelect) {
   <div class="stroytorg-paginator__select_container">
     <stroytorg-select
       [clearable]="false"
       [items]="pageSizeOptions"
-      [inputSize]="selectSize.SMALL"
+      [inputSize]="'small-width'"
       [hint]="'Total items'"
     >
     </stroytorg-select>

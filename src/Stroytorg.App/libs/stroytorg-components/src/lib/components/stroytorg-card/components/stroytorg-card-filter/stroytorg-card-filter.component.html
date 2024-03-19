@@ -1,0 +1,33 @@
+@if (filters) {
+  <div class="stroytorg-card__filter-container" [formGroup]="formGroup">
+    @for (filter of filters; track $index) {
+      <label>{{ filter.label }}</label>
+      <div class="stroytorg-card__filter-item">
+        @if (filter.type === 'boolean') {
+          <stroytorg-checkbox [formControlName]="filter.label" />
+        } @else if (filter.type === 'select') {
+          <stroytorg-select
+            [formControlName]="filter.label"
+            [items]="filter.options ?? []"
+          />
+        } @else if (filter.type === 'range') {
+          <stroytorg-range
+            [formControlName]="filter.label"
+            [minValue]="filter.rangeMinValue ?? 0"
+            [maxValue]="filter.rangeMaxValue ?? 1000"
+          />
+        } @else if (filter.type === 'text') {
+          <stroytorg-text-input [formControlName]="filter.label" />
+        } @else if (filter.type === 'date') {
+          <stroytorg-date [formControlName]="filter.label" />
+        } @else if (filter.type === 'multiselect') {
+          <stroytorg-select
+            [multiple]="true"
+            [formControlName]="filter.label"
+            [items]="filter.options ?? []"
+          />
+        }
+      </div>
+    }
+  </div>
+}

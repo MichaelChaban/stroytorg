@@ -1,5 +1,9 @@
 <ul id="stroytorg-navbar">
-    <li *ngFor="let item of items" [attr.active]="item.active">
-        <a [routerLink]="[item.link]" (click)="navigationChange($event)">{{ item.name }}</a>
-    </li>
+  @for (item of items; track $index) {
+  <li [attr.active]="item.active">
+    <a [routerLink]="[item.link]" (click)="navigationChange($event)">{{
+      item.name
+    }}</a>
+  </li>
+  }
 </ul>

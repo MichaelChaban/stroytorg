@@ -13,7 +13,7 @@
   &:focus:not(:read-only, [readonly]),
   &:active:not(:read-only, [readonly]) {
     ::-webkit-datetime-edit {
-      color: $color-dark-grey;
+      color: $color-light-black;
     }
 
     & + stroytorg-datepicker > .stroytorg-datepicker-container {
@@ -78,6 +78,6 @@
 
 .stroytorg-date-with-value {
   &::-webkit-datetime-edit {
-    color: $color-dark-grey !important;
+    color: $color-light-black !important;
   }
 }

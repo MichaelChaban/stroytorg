@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -15,7 +16,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MobileService, ObjectUtils, Page, Sort } from '@stroytorg/shared';
+import { MobileService, Page, Sort, objectsEqual } from '@stroytorg/shared';
 import { StroytorgCheckboxComponent } from '../stroytorg-checkbox';
 import { StroytorgPaginatorComponent } from '../stroytorg-paginator';
 import { TABLE_COLUMN_PROVIDER, ColumnProvider, ColumnDefinition, ColumnModel, RowModel } from './stroytorg-table.models';
@@ -139,7 +140,7 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
       const newSelectedRows = changes['selectedRows'].currentValue || [];
       this.tableRows.forEach((x) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        x.selected = newSelectedRows.some((y: any) => ObjectUtils.objectsEqual(y, x.row))
+        x.selected = newSelectedRows.some((y: any) => objectsEqual(y, x.row))
       })
     }
   }
@@ -231,7 +232,7 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sItems: any[] | undefined = event
       ? [...(this.selectedRows ? [...this.selectedRows] : []), item]
-      : this.selectedRows?.filter((x) => !ObjectUtils.objectsEqual(x, item));
+      : this.selectedRows?.filter((x) => !objectsEqual(x, item));
 
     this.tableSelection.emit(sItems);
   }

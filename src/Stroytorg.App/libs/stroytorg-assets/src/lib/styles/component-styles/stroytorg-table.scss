@@ -8,20 +8,6 @@
   max-height: 600px;
   overflow-y: auto;
   border-radius: 0.5em 0 0 0.5em;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: $color-grey-600;
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: $color-grey-100 !important;
-  }
 }
 
 .stroytorg-table {

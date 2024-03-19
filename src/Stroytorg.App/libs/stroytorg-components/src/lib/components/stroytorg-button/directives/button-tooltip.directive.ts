@@ -21,7 +21,7 @@ import { TooltipDefinition } from '../stroytorg-buttons.models';
 export class ButtonTooltipDirective implements OnInit, OnDestroy {
   @Input() tooltip?: TooltipDefinition;
   private tooltipElement!: HTMLElement;
-  private tooltipTimeout: number = 0;
+  private tooltipTimeout = 0;
   private readonly TRANSITION_DURATION = 150;
 
   constructor(
@@ -71,7 +71,7 @@ export class ButtonTooltipDirective implements OnInit, OnDestroy {
   private createTooltip() {
     if (!this.tooltipElement) {
       this.tooltipElement = this.renderer.createElement('div');
-      this.tooltipElement.className = 'tooltip';
+      this.tooltipElement.className = 'stroytorg-tooltip';
       this.tooltipElement.textContent = this.tooltip!.tooltipText;
       this.renderer.appendChild(document.body, this.tooltipElement);
       this.setTooltipPosition();

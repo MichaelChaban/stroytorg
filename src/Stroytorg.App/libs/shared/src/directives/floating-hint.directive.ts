@@ -13,13 +13,18 @@ export class FloatingHintDirective {
 
   @HostListener('input')
   onInput() {
+    if(!this.el){
+      return;
+    }
     this.toggleLabel();
   }
 
   private toggleLabel() {
     this.inputValue = this.el.nativeElement.value;
     const label = this.el.nativeElement.parentElement.querySelector('label');
-
+    if (!label) {
+      return;
+    }
     if (this.inputValue) {
       return this.renderer.addClass(label, 'active');
     }

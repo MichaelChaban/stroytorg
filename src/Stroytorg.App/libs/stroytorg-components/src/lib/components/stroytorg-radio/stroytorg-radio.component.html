@@ -1,0 +1,37 @@
+<div class="stroytorg-radio">
+  @if (formControl && options && options.length > 0) {
+    @for (option of options; track $index) {
+      <div class="stroytorg-radio__option-container">
+        <div class="stroytorg-radio__container">
+          <div class="stroytorg-radio__radio-container">
+            <input
+              class="stroytorg-radio__radio"
+              type="radio"
+              [name]="radioName"
+              [disabled]="option.disabled || disabled"
+              [checked]="formControl.value === option.value || option.selected"
+              (change)="toggle(option.value)"
+            />
+            <span
+              class="stroytorg-radio__checkmark"
+              [class.stroytorg-radio-invalid]="
+                formControl.invalid && formControl.touched
+              "
+              [class.checked]="checked && readonly"
+            ></span>
+          </div>
+        </div>
+        @if (option.label) {
+          <span class="stroytorg-radio__title">{{ option.label }}</span>
+        }
+      </div>
+    }
+    @if (formControl.invalid && formControl.touched && !disabled) {
+      <ul class="stroytorg-error-message-container">
+        @for (error of formControl.errors | error; track $index) {
+          <li>{{ error }}</li>
+        }
+      </ul>
+    }
+  }
+</div>

@@ -1,9 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StroytorgCardElementComponent } from './components/card-element.component';
-import { CardRowDefinition } from './stroytorg-card.models';
 import { StroytorgPaginatorComponent } from '../stroytorg-paginator';
+import { StroytorgLoaderComponent } from '../stroytorg-loader';
+import { ButtonStyle, StroytorgButtonComponent } from '../stroytorg-button';
+import { Icon } from '@stroytorg/shared';
+import {
+  FilterDefinition,
+  StroytorgCardElementComponent,
+  StroytorgCardFilterComponent,
+} from './components';
+import { CardRowDefinition } from './stroytorg-card.models';
 
 @Component({
   selector: 'stroytorg-card',
@@ -12,13 +29,17 @@ import { StroytorgPaginatorComponent } from '../stroytorg-paginator';
     CommonModule,
     StroytorgCardElementComponent,
     StroytorgPaginatorComponent,
+    StroytorgLoaderComponent,
+    StroytorgButtonComponent,
+    StroytorgCardFilterComponent,
   ],
   templateUrl: './stroytorg-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StroytorgCardComponent<T> {
-
   cdRef = inject(ChangeDetectorRef);
+
+  @ViewChild('cardsContainer') cardsContainer!: ElementRef;
 
   @Input()
   cardRowDefinition!: CardRowDefinition[];
@@ -41,8 +62,19 @@ export class StroytorgCardComponent<T> {
   @Input()
   currentPage!: number;
 
+  @Input()
+  filters: FilterDefinition[] = [];
+
   @Output()
   pageChange = new EventEmitter<number>();
+
+  get totalPages(): number {
+    return Math.ceil(this.total / this.pageSize);
+  }
+
+  buttonStyle = ButtonStyle;
+
+  buttonIcon = Icon;
 
   pageChanged(paginatorState: any): void {
     if (this.currentPage != paginatorState.page) {
@@ -53,4 +85,25 @@ export class StroytorgCardComponent<T> {
     this.pageChange.emit(this.currentPage);
     this.cdRef.detectChanges();
   }
+
+  // @HostListener('window:scroll', ['$event'])
+  // onScroll() {
+  //   this.checkIfScrolledToBottom();
+  // }
+
+  // checkIfScrolledToBottom() {
+  //   if (!this.cardsContainer || !this.cardsContainer.nativeElement) {
+  //     return;
+  //   }
+  //   const cardsContainer = this.cardsContainer.nativeElement;
+  //   const lastCard = cardsContainer.querySelector('.stroytorg-card:last-child');
+  //   if (lastCard) {
+  //     const lastCardRect = lastCard.getBoundingClientRect().top;
+  //     if (window.scrollY >= lastCardRect) {
+  //       if (!this.loading) {
+  //         this.pageChange.emit(this.currentPage + 1);
+  //       }
+  //     }
+  //   }
+  // }
 }

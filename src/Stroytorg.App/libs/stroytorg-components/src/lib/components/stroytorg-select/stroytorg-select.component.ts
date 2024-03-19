@@ -5,6 +5,7 @@ import {
   EventEmitter,
   Optional,
   Self,
+  forwardRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -12,10 +13,7 @@ import {
   NgControl,
   ReactiveFormsModule,
 } from '@angular/forms';
-import {
-  ErrorPipe,
-  FloatingHintDirective
-} from '@stroytorg/shared';
+import { ErrorPipe, FloatingHintDirective } from '@stroytorg/shared';
 import {
   StroytorgBaseInputControls,
   StroytorgBaseFormInputComponent,
@@ -36,28 +34,29 @@ import { NgSelectModule } from '@ng-select/ng-select';
   providers: [
     {
       provide: StroytorgBaseInputControls,
-      useExisting: StroytorgSelectComponent,
+      useExisting: forwardRef(() => StroytorgSelectComponent),
+      multi: true
     },
   ],
 })
-export class StroytorgSelectComponent<T>
+export class StroytorgSelectComponent
   extends StroytorgBaseFormInputComponent
   implements ControlValueAccessor
 {
   @Input()
-  bindLabel: string = 'label';
+  bindLabel = 'label';
 
   @Input()
-  bindValue: string = 'value';
+  bindValue = 'value';
 
   @Input()
-  items!: T[];
+  items!: any[];
 
   @Input()
-  multiple: boolean = false;
+  multiple = false;
 
   @Input()
-  clearable: boolean = true;
+  clearable = true;
 
   @Output() valueChange = new EventEmitter<string>();
 

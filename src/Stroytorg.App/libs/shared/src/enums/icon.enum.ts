@@ -10,5 +10,6 @@ export enum Icon {
   RIGHT = 'keyboard_arrow_right',
   EXPAND_MORE = 'expand_more',
   CLOSE = 'close',
+  ARROW_DOWN = 'arrow_downward',
   NONE = '',
 }

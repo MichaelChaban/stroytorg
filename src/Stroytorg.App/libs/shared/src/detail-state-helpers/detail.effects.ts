@@ -7,7 +7,7 @@ import {
   createLoadDetailSuccessAction,
 } from './detail.actions';
 import { BaseHttpService } from '../api';
-import { ObjectUtils } from '../utils';
+import { isNumber } from '../utils';
 
 export interface CreateInitFormConfig<T> {
   service?: BaseHttpService<T>;
@@ -51,7 +51,7 @@ export function createInitDetailEffect<T, SERVICE extends BaseHttpService<T>>(
     return actions$.pipe(
       ofType(createInitDetailAction(detailsRepository)),
       switchMap(({ obj }) => {
-        if (ObjectUtils.isNumber(obj)) {
+        if (isNumber(obj)) {
           return httpService.get(obj as unknown as number).pipe(
             map((item) => {
               return createLoadDetailSuccessAction(detailsRepository)({ item });

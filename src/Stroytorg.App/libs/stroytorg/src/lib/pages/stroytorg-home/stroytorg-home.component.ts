@@ -151,8 +151,8 @@ export class StroytorgHomeComponent implements OnInit {
   formGroup = new FormGroup({
     select: new FormControl(null, [Validators.required]),
     textInput: new FormControl(null, [Validators.required]),
-    checkbox: new FormControl(true, [Validators.required]),
-    radio: new FormControl(1, [Validators.required]),
+    checkbox: new FormControl(false, [Validators.required]),
+    radio: new FormControl(2, [Validators.required]),
     date: new FormControl(new Date(2024, 2, 11), [Validators.required]),
     time: new FormControl(null, [Validators.required]),
     range: new FormControl(null, [Validators.required]),

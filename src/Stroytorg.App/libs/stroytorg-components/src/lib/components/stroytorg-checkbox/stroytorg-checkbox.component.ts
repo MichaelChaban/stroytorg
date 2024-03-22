@@ -62,7 +62,6 @@ export class StroytorgCheckboxComponent
   }
 
   toggle(): void {
-    console.log(this.formControl?.disabled);
     if (this.formControl?.disabled) {
       return;
     }

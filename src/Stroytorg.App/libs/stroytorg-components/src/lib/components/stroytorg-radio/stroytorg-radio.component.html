@@ -3,7 +3,7 @@
     @for (option of options; track $index) {
       <div class="stroytorg-radio__option-container">
         <div class="stroytorg-radio__container">
-          <div class="stroytorg-radio__radio-container">
+          <label class="stroytorg-radio__radio-container">
             <input
               class="stroytorg-radio__radio"
               type="radio"
@@ -17,9 +17,8 @@
               [class.stroytorg-radio-invalid]="
                 formControl.invalid && formControl.touched
               "
-              [class.checked]="checked && readonly"
             ></span>
-          </div>
+          </label>
         </div>
         @if (option.label) {
           <span class="stroytorg-radio__title">{{ option.label }}</span>

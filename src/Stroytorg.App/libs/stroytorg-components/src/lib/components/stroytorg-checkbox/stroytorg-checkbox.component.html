@@ -1,7 +1,7 @@
 <div class="stroytorg-checkbox">
   @if (formControl) {
     <div class="stroytorg-checkbox__container">
-      <div class="stroytorg-checkbox__checkbox-container">
+      <label class="stroytorg-checkbox__checkbox-container">
         <input
           class="stroytorg-checkbox__checkbox"
           type="checkbox"
@@ -16,7 +16,7 @@
           "
           [class.checked]="checked && readonly"
         ></span>
-      </div>
+      </label>
       @if (title) {
         <span class="stroytorg-checkbox__title">{{ title }}</span>
       }

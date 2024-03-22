@@ -53,6 +53,7 @@
   .stroytorg-checkbox__checkbox:disabled + .stroytorg-checkbox__checkmark {
     background-color: $color-grey-100;
     border: none;
+    box-shadow: none;
     cursor: default;
   }
 }

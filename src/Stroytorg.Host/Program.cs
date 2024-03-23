@@ -20,11 +20,11 @@ var app = builder.Build();
 
 app.MigrateDatabase();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Stroytorg.API v1");
+});
 
 app.UseExceptionHandler();
 

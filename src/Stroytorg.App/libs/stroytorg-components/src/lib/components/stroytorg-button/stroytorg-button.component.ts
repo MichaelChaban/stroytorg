@@ -1,12 +1,11 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   HostListener,
   Input,
-  OnInit,
   Output,
-  ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -16,9 +15,12 @@ import {
   ButtonStyle,
 } from './stroytorg-buttons.models';
 import { RouterModule } from '@angular/router';
-import { Icon } from '@stroytorg/shared';
+import { Icon, StroytorgRippleDirective } from '@stroytorg/shared';
 import { UnsubscribeControlComponent } from 'libs/shared/src/utils/unsubcribe-control.component';
-import { ButtonTooltipDirective, ButtonEnterPressedDirective, ButtonFillActiveDirective } from './directives';
+import {
+  ButtonTooltipDirective,
+  ButtonEnterPressedDirective
+} from './directives';
 import { MatIconModule } from '@angular/material/icon';
 import { BehaviorSubject, Subject, debounceTime, takeUntil } from 'rxjs';
 import { StroytorgLoaderComponent } from '../stroytorg-loader';
@@ -32,21 +34,20 @@ import { StroytorgLoaderComponent } from '../stroytorg-loader';
     RouterModule,
     ButtonTooltipDirective,
     ButtonEnterPressedDirective,
-    ButtonFillActiveDirective,
+    StroytorgRippleDirective,
     MatIconModule,
     StroytorgLoaderComponent,
   ],
   templateUrl: './stroytorg-button.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
-  encapsulation: ViewEncapsulation.None,
 })
 export class StroytorgButtonComponent
   extends UnsubscribeControlComponent
-  implements OnInit
+  implements AfterViewInit
 {
   private clickSubject = new Subject<any>();
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.clickSubject
       .pipe(takeUntil(this.destroyed$), debounceTime(100))
       .subscribe(() => {
@@ -64,10 +65,10 @@ export class StroytorgButtonComponent
   size: ButtonSize = 'fit-content-width';
 
   @Input()
-  disabled!: boolean;
+  disabled = false;
 
   @Input()
-  rounded = false as boolean;
+  rounded? = false;
 
   @Input()
   palette?: ButtonPalette = 'default-button';

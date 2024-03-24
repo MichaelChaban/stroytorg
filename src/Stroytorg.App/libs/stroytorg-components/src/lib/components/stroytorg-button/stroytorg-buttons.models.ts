@@ -12,7 +12,7 @@ export type ButtonSize =
 export type ButtonPalette =
   | 'default-button'
   | 'primary-button'
-  | 'outlined-button'
+  | 'secondary-button'
   | 'warning-button'
   | 'danger-button';
 
@@ -27,6 +27,8 @@ export interface ButtonDefinition {
   icon?: Icon;
   buttonPalette?: ButtonPalette;
   buttonStyle?: ButtonStyle;
+  rounded?: boolean;
+  disabled?: ((data: any) => boolean) | boolean;
   routerLink?: string;
   queryParams?: string;
   tooltip?: TooltipDefinition;
@@ -35,6 +37,6 @@ export interface ButtonDefinition {
 }
 
 export type TooltipDefinition = {
-  tooltipText: string;
-  tooltipPosition?: 'above' | 'left' | 'right' | 'below';
+  title: string;
+  position?: 'above' | 'left' | 'right' | 'below';
 };

@@ -35,14 +35,14 @@
       <div class="stroytorg-date-picker-button-container">
         <stroytorg-button
           class="stroytorg-date-picker-button"
-          [icon]="viewFacade.previosMonthIcon"
+          [icon]="'keyboard_arrow_left'"
           (clickFn)="previousMonth()"
           [rounded]="true"
         ></stroytorg-button>
         <span class="text-center">{{ viewFacade.monthHeader }}</span>
         <stroytorg-button
           class="stroytorg-date-picker-button"
-          [icon]="viewFacade.nextMonthIcon"
+          [icon]="'keyboard_arrow_right'"
           (clickFn)="nextMonth()"
           [rounded]="true"
         ></stroytorg-button>
@@ -68,21 +68,21 @@
     </div>
     <div class="mt-2 d-flex stroytorg-day-header">
       @for (weekDay of viewFacade.weekDaysName; track $index) {
-      <div>{{ weekDay }}</div>
+        <div>{{ weekDay }}</div>
       }
     </div>
-    <hr class="m-2"/>
+    <hr class="m-2" />
     <div class="stroytorg-days-container">
       @for (date of viewFacade.monthDates; track $index) {
-      <stroytorg-button
-        class="stroytorg-date-picker-button {{ date.classNames }}"
-        [class.today]="date.isToday"
-        [class.selected-date]="date.isSelected"
-        [title]="date.monthDayNumber.toString()"
-        (clickFn)="selectDate(date)"
-        [rounded]="true"
-        [size]="'auto-width'"
-      ></stroytorg-button>
+        <stroytorg-button
+          class="stroytorg-date-picker-button {{ date.classNames }}"
+          [class.today]="date.isToday"
+          [class.selected-date]="date.isSelected"
+          [title]="date.monthDayNumber.toString()"
+          (clickFn)="selectDate(date)"
+          [rounded]="true"
+          [size]="'auto-width'"
+        ></stroytorg-button>
       }
     </div>
   </div>

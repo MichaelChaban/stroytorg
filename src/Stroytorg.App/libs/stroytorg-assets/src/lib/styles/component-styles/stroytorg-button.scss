@@ -1,3 +1,131 @@
+@mixin buttonBase {
+  display: flex;
+  align-self: center;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  font-weight: 500;
+  font-size: 15px;
+  transition: 0.2s;
+  border: none;
+  user-select: none;
+
+  &:disabled,
+  &[disabled] {
+    cursor: not-allowed !important;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+/// Basic button
+@mixin basicButton($color, $bgColor) {
+  color: $color;
+  background-color: transparent;
+
+  &:disabled {
+    color: rgb($color, 0.5);
+  }
+
+  &:enabled:hover {
+    background-color: rgb($bgColor, 0.15);
+  }
+
+  .stroytorg-ripple {
+    background-color: rgb($bgColor, 0.4);
+  }
+}
+
+/// Raised button
+@mixin raisedButton($color, $bgColor, $rippleBgColor) {
+  color: $color;
+  background-color: $bgColor;
+  box-shadow: 0px 2px 4px rgb($color-black, 0.3);
+
+  &:disabled {
+    color: rgb($color, 0.8);
+    background-color: rgb($bgColor, 0.5);
+  }
+
+  &:enabled:hover {
+    background-color: rgb($bgColor, 0.8);
+    box-shadow: 0px 3px 7px rgb($color-black, 0.3);
+  }
+
+  &:enabled:active {
+    box-shadow: 0px 5px 10px rgb($color-black, 0.3);
+  }
+
+  .stroytorg-ripple {
+    background-color: $rippleBgColor;
+  }
+}
+
+/// Stroked button
+@mixin strokedButton($color, $bgColor) {
+  color: $color;
+  background-color: transparent;
+  border: 1px solid $color;
+
+  &:disabled {
+    color: rgb($color, 0.5);
+    border-color: rgb($color, 0.5);
+  }
+
+  &:enabled:hover {
+    background-color: rgb($bgColor, 0.15);
+  }
+
+  .stroytorg-ripple {
+    background-color: rgb($bgColor, 0.4);
+  }
+}
+
+/// Flat button
+@mixin flatButton($color, $bgColor, $rippleBgColor) {
+  color: $color;
+  background-color: $bgColor;
+
+  &:disabled {
+    color: rgb($color, 0.8);
+    background-color: rgb($bgColor, 0.5);
+  }
+
+  &:enabled:hover {
+    background-color: rgb($bgColor, 0.8);
+  }
+
+  .stroytorg-ripple {
+    background-color: $rippleBgColor;
+  }
+}
+
+@mixin buttonWithIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em !important;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  50% {
+    opacity: 0.5;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 .stroytorg-button {
   @include buttonBase;
   position: relative;
@@ -25,7 +153,7 @@
 .primary-button.raised-button {
   @include raisedButton($color-white, $color-orange, $color-lighter-gray-300);
 }
-.outlined-button.raised-button {
+.secondary-button.raised-button {
   @include raisedButton($color-orange, $color-white, $color-lighter-orange-500);
 }
 .warning-button.raised-button {
@@ -56,7 +184,7 @@
 .primary-button.flat-button {
   @include flatButton($color-white, $color-orange, $color-lighter-gray-300);
 }
-.outlined-button.flat-button {
+.secondary-button.flat-button {
   @include flatButton($color-orange, $color-white, $color-lighter-orange-500);
 }
 .warning-button.flat-button {
@@ -78,9 +206,11 @@
 
 .stroytorg-tooltip {
   position: absolute;
-  background-color: $color-black-700;
+  background-color: $color-black-900;
   color: $color-white;
   text-align: center;
+  text-wrap: wrap;
+  max-width: 10rem;
   padding: 5px;
   border-radius: 4px;
   font-size: 12px;
@@ -97,23 +227,5 @@
     & > .loader {
       transform: scale(0.5) rotate(45deg);
     }
-  }
-}
-
-.stroytorg-ripple {
-  border-radius: 50%;
-  background-color: $color-lighter-gray-300;
-  position: absolute;
-  transform: scale(1);
-  animation: spreadClick 0.6s ease;
-}
-
-@keyframes spreadClick {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(8);
-    opacity: 0;
   }
 }

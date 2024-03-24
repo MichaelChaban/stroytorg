@@ -1,33 +1,149 @@
-@if (filters) {
-  <div class="stroytorg-card__filter-container" [formGroup]="formGroup">
-    @for (filter of filters; track $index) {
-      <label>{{ filter.label }}</label>
-      <div class="stroytorg-card__filter-item">
-        @if (filter.type === 'boolean') {
-          <stroytorg-checkbox [formControlName]="filter.label" />
-        } @else if (filter.type === 'select') {
-          <stroytorg-select
-            [formControlName]="filter.label"
-            [items]="filter.options ?? []"
-          />
-        } @else if (filter.type === 'range') {
-          <stroytorg-range
-            [formControlName]="filter.label"
-            [minValue]="filter.rangeMinValue ?? 0"
-            [maxValue]="filter.rangeMaxValue ?? 1000"
-          />
-        } @else if (filter.type === 'text') {
-          <stroytorg-text-input [formControlName]="filter.label" />
-        } @else if (filter.type === 'date') {
-          <stroytorg-date [formControlName]="filter.label" />
-        } @else if (filter.type === 'multiselect') {
-          <stroytorg-select
-            [multiple]="true"
-            [formControlName]="filter.label"
-            [items]="filter.options ?? []"
+@if (filter && filter.length) {
+  <div class="stroytorg-card-filter__container">
+    @if (isMobile) {
+      <stroytorg-button
+        [icon]="'filter_alt'"
+        [style]="'stroked-button'"
+        (clickFn)="showFilter()"
+      />
+    }
+    <div
+      class="stroytorg-card-filter"
+      [class.stroytorg-card-filter-mobile]="isMobile"
+      [ngClass]="{
+        'stroytorg-card-filter-mobile-visible':
+          isFilterVisible$.value && isMobile
+      }"
+      [formGroup]="formGroup"
+    >
+      <div class="stroytorg-card-filter__actions">
+        <stroytorg-button
+          [icon]="'refresh'"
+          [rounded]="true"
+          [tooltip]="{ title: 'Reset filter', position: 'above' }"
+          (clickFn)="resetFilter()"
+        />
+        @if (isMobile) {
+          <stroytorg-button
+            [icon]="'close'"
+            [rounded]="true"
+            [tooltip]="{ title: 'Close', position: 'above' }"
+            (clickFn)="showFilter()"
           />
         }
       </div>
-    }
+      <div class="stroytorg-card-filter__header">
+        <h4>Filter</h4>
+      </div>
+      @for (filter of filter; track $index) {
+        <div class="stroytorg-card-filter__filter-item">
+          @if (filter.type === 'boolean') {
+            <stroytorg-checkbox
+              [formControlName]="filter.label"
+              [title]="filter.label"
+            />
+          } @else if (filter.type === 'select') {
+            <div class="stroytorg-card-filter__label">
+              <label>{{ filter.label }}</label>
+              @if (filter.description) {
+                <stroytorg-button
+                  [icon]="'info_i'"
+                  [tooltip]="{
+                    title: filter.description,
+                    position: isMobile ? 'below' : 'right'
+                  }"
+                  [rounded]="true"
+                />
+              }
+            </div>
+            <stroytorg-select
+              [formControlName]="filter.label"
+              [inputSize]="'full-width'"
+              [items]="filter.options ?? []"
+            />
+          } @else if (filter.type === 'range') {
+            <div class="stroytorg-card-filter__label">
+              <label>{{ filter.label }}</label>
+              @if (filter.description) {
+                <stroytorg-button
+                  [icon]="'info_i'"
+                  [tooltip]="{
+                    title: filter.description,
+                    position: isMobile ? 'below' : 'right'
+                  }"
+                  [rounded]="true"
+                />
+              }
+            </div>
+            <stroytorg-range
+              [formControlName]="filter.label"
+              [minValue]="filter.rangeMinValue ? filter.rangeMinValue : 0"
+              [maxValue]="filter.rangeMaxValue ? filter.rangeMaxValue : 100000"
+              [rangeStep]="filter.rangeStep ? filter.rangeStep : 1"
+              [twoSidesRange]="
+                filter.twoSidesRange ? filter.twoSidesRange : false
+              "
+              [inputSize]="'full-width'"
+            />
+          } @else if (filter.type === 'text') {
+            <div class="stroytorg-card-filter__label">
+              <label>{{ filter.label }}</label>
+              @if (filter.description) {
+                <stroytorg-button
+                  [icon]="'info_i'"
+                  [tooltip]="{
+                    title: filter.description,
+                    position: isMobile ? 'below' : 'right'
+                  }"
+                  [rounded]="true"
+                />
+              }
+            </div>
+            <stroytorg-text-input
+              [formControlName]="filter.label"
+              [inputSize]="'full-width'"
+            />
+          } @else if (filter.type === 'date') {
+            <div class="stroytorg-card-filter__label">
+              <label>{{ filter.label }}</label>
+              @if (filter.description) {
+                <stroytorg-button
+                  [icon]="'info_i'"
+                  [tooltip]="{
+                    title: filter.description,
+                    position: isMobile ? 'below' : 'right'
+                  }"
+                  [rounded]="true"
+                />
+              }
+            </div>
+            <stroytorg-date
+              [formControlName]="filter.label"
+              [inputSize]="'full-width'"
+            />
+          } @else if (filter.type === 'multiselect') {
+            <div class="stroytorg-card-filter__label">
+              <label>{{ filter.label }}</label>
+              @if (filter.description) {
+                <stroytorg-button
+                  [icon]="'info_i'"
+                  [tooltip]="{
+                    title: filter.description,
+                    position: isMobile ? 'below' : 'right'
+                  }"
+                  [rounded]="true"
+                />
+              }
+            </div>
+            <stroytorg-select
+              [multiple]="true"
+              [formControlName]="filter.label"
+              [inputSize]="'full-width'"
+              [items]="filter.options ?? []"
+            />
+          }
+        </div>
+      }
+    </div>
   </div>
 }

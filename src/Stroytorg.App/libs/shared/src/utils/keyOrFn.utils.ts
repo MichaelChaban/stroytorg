@@ -9,5 +9,8 @@ export function keyOrFn(keyOrFn: ((row: any) => string | undefined) | string, ro
             return value;
         }
     }
+    else if (typeof keyOrFn === 'boolean') {
+      return keyOrFn;
+  }
     return '';
 }

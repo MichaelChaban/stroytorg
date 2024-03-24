@@ -2,9 +2,11 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnInit,
   Optional,
+  Output,
   Self,
   ViewEncapsulation,
   forwardRef,
@@ -21,6 +23,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { StroytorgTextInputComponent } from '../stroytorg-text-input';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'stroytorg-range',
@@ -32,7 +35,7 @@ import { StroytorgTextInputComponent } from '../stroytorg-text-input';
   providers: [
     {
       provide: StroytorgBaseInputControls,
-      useExisting: forwardRef(() => StroytorgRangeComponent)
+      useExisting: forwardRef(() => StroytorgRangeComponent),
     },
   ],
 })
@@ -57,7 +60,7 @@ export class StroytorgRangeComponent
   maxValue!: number;
 
   @Input()
-  twoSidesRange = true;
+  twoSidesRange = false;
 
   @Input()
   showInputs = true;
@@ -95,6 +98,16 @@ export class StroytorgRangeComponent
       maxRange: new FormControl(this.maxValue),
     });
 
+    this.ngControl.valueChanges?.subscribe((value) => {
+      this.formGroup.setValue(
+        {
+          minRange: value ? value?.minRange : this.minValue,
+          maxRange: value ? value?.maxRange : this.maxValue,
+        },
+        { emitEvent: false },
+      );
+    });
+
     this.formGroup?.get('minRange')?.valueChanges.subscribe((value) => {
       this.minRangeValueChange(
         isNaN(Number(value ? +value : 'undefined')) ? undefined : value,
@@ -104,6 +117,9 @@ export class StroytorgRangeComponent
       this.maxRangeValueChange(
         isNaN(Number(value ? +value : 'undefined')) ? undefined : value,
       );
+    });
+    this.formGroup.valueChanges.pipe(debounceTime(200)).subscribe((value) => {
+      this.formControl?.setValue(value);
     });
   }
 

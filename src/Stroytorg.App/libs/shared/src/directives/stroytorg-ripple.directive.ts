@@ -8,10 +8,10 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[fillActive]',
+  selector: '[ripple]',
   standalone: true,
 })
-export class ButtonFillActiveDirective {
+export class StroytorgRippleDirective {
   private el = inject(ElementRef);
   private renderer = inject(Renderer2);
   private ripple?: HTMLElement;
@@ -26,15 +26,15 @@ export class ButtonFillActiveDirective {
   }
 
   private addRipple(event: MouseEvent) {
-    const button = this.el.nativeElement;
+    const nativeEl = this.el.nativeElement;
     const circle = this.renderer.createElement('div');
     this.ripple = circle;
-    this.renderer.appendChild(button, circle);
+    this.renderer.appendChild(nativeEl, circle);
 
-    const diameter = Math.min(button.clientHeight, button.clientWidth);
+    const diameter = Math.min(nativeEl.clientHeight, nativeEl.clientWidth);
     this.renderer.setStyle(circle, 'width', diameter + 'px');
     this.renderer.setStyle(circle, 'height', diameter + 'px');
-    const rect = button.getBoundingClientRect();
+    const rect = nativeEl.getBoundingClientRect();
     const x = event.clientX - rect.left - diameter;
     const y = event.clientY - rect.top - diameter / 2;
     this.renderer.setStyle(circle, 'left', x + 'px');
@@ -44,7 +44,7 @@ export class ButtonFillActiveDirective {
 
     setTimeout(() => {
       if (this.ripple) {
-        this.renderer.removeChild(button, this.ripple);
+        this.renderer.removeChild(nativeEl, this.ripple);
         this.ripple = undefined;
       }
     }, 600);

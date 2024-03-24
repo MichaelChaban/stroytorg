@@ -59,6 +59,8 @@ $color-light-black-850: rgba(#333333, 0.85);
 $color-light-black-900: rgba(#333333, 0.9);
 $color-light-black: #333333;
 $color-black-700: rgba(0, 0, 0, 0.7);
+$color-black-800: rgba(0, 0, 0, 0.8);
+$color-black-900: rgba(0, 0, 0, 0.9);
 $color-black: #000000;
 
 // Stroytorg text-input variables
@@ -83,113 +85,4 @@ $default-transition: 0.1s;
   border-radius: $input-border-radius;
   outline: none;
   transition: $default-transition;
-}
-
-@mixin buttonBase {
-  display: flex;
-  align-self: center;
-  border-radius: 5px;
-  padding: 0.5em 1em;
-  font-weight: 500;
-  font-size: 15px;
-  transition: 0.2s;
-  border: none;
-  user-select: none;
-
-  &:disabled,
-  &[disabled] {
-    cursor: not-allowed !important;
-  }
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
-}
-
-/// Basic button
-@mixin basicButton($color, $bgColor) {
-  color: $color;
-  background-color: transparent;
-
-  &:enabled:hover {
-    background-color: rgb($bgColor, 0.15);
-  }
-
-  .stroytorg-ripple {
-    background-color: rgb($bgColor, 0.4);
-  }
-}
-
-/// Raised button
-@mixin raisedButton($color, $bgColor, $rippleBgColor) {
-  color: $color;
-  background-color: $bgColor;
-  box-shadow: 0px 2px 4px rgb($color-black, 0.3);
-
-  &:hover {
-    background-color: rgb($bgColor, 0.8);
-    box-shadow: 0px 3px 7px rgb($color-black, 0.3);
-  }
-
-  &:active {
-    box-shadow: 0px 5px 10px rgb($color-black, 0.3);
-  }
-
-  .stroytorg-ripple {
-    background-color: $rippleBgColor;
-  }
-}
-
-/// Stroked button
-@mixin strokedButton($color, $bgColor) {
-  color: $color;
-  background-color: transparent;
-  border: 1px solid $color;
-
-  &:enabled:hover {
-    background-color: rgb($bgColor, 0.15);
-  }
-
-  .stroytorg-ripple {
-    background-color: rgb($bgColor, 0.4);
-  }
-}
-
-/// Flat button
-@mixin flatButton($color, $bgColor, $rippleBgColor) {
-  color: $color;
-  background-color: $bgColor;
-
-  &:hover {
-    background-color: rgb($bgColor, 0.8);
-  }
-
-  .stroytorg-ripple {
-    background-color: $rippleBgColor;
-  }
-}
-
-@mixin buttonWithIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5em !important;
-}
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  50% {
-    opacity: 0.5;
-    visibility: visible;
-  }
-
-  100% {
-    opacity: 1;
-    visibility: visible;
-  }
 }

@@ -1,15 +1,19 @@
-export enum Icon {
-  HOME = 'home',
-  CANCEL = 'cancel',
-  TASK_ALT = 'task_alt',
-  SEARCH = 'search',
-  ERROR = 'error_outline',
-  DOUBLE_RIGHT = 'keyboard_double_arrow_right',
-  DOUBLE_LEFT = 'keyboard_double_arrow_left',
-  LEFT = 'keyboard_arrow_left',
-  RIGHT = 'keyboard_arrow_right',
-  EXPAND_MORE = 'expand_more',
-  CLOSE = 'close',
-  ARROW_DOWN = 'arrow_downward',
-  NONE = '',
-}
+export type Icon =
+  | 'home'
+  | 'cancel'
+  | 'task_alt'
+  | 'search'
+  | 'error_outline'
+  | 'keyboard_double_arrow_right'
+  | 'keyboard_double_arrow_left'
+  | 'keyboard_arrow_left'
+  | 'keyboard_arrow_right'
+  | 'expand_more'
+  | 'close'
+  | 'arrow_downward'
+  | 'filter_alt'
+  | 'forward_media'
+  | 'refresh'
+  | 'info'
+  | 'info_i'
+  | '';

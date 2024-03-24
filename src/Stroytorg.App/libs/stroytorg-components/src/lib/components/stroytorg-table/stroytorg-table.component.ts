@@ -16,10 +16,22 @@ import {
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MobileService, Page, Sort, objectsEqual } from '@stroytorg/shared';
+import {
+  KeyOrFunctionPipe,
+  MobileService,
+  Page,
+  Sort,
+  objectsEqual,
+} from '@stroytorg/shared';
 import { StroytorgCheckboxComponent } from '../stroytorg-checkbox';
 import { StroytorgPaginatorComponent } from '../stroytorg-paginator';
-import { TABLE_COLUMN_PROVIDER, ColumnProvider, ColumnDefinition, ColumnModel, RowModel } from './stroytorg-table.models';
+import {
+  TABLE_COLUMN_PROVIDER,
+  ColumnProvider,
+  ColumnDefinition,
+  ColumnModel,
+  RowModel,
+} from './stroytorg-table.models';
 import { StroytorgLoaderComponent } from '../stroytorg-loader';
 import { StroytorgButtonComponent } from '../stroytorg-button';
 
@@ -32,18 +44,22 @@ import { StroytorgButtonComponent } from '../stroytorg-button';
     StroytorgPaginatorComponent,
     StroytorgCheckboxComponent,
     StroytorgLoaderComponent,
-    StroytorgButtonComponent
+    StroytorgButtonComponent,
+    KeyOrFunctionPipe,
   ],
   templateUrl: './stroytorg-table.component.html',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChanges {
+export class StroytorgTableComponent<T>
+  implements AfterViewInit, OnInit, OnChanges
+{
   sorters!: Sort<T>[];
+  private readonly mobileService = inject(MobileService);
 
   constructor(
     public cdRef: ChangeDetectorRef,
     readonly router: Router,
-    readonly route: ActivatedRoute
+    readonly route: ActivatedRoute,
   ) {}
 
   @ContentChildren(TABLE_COLUMN_PROVIDER) viewColumns!: ColumnProvider<T>[];
@@ -97,10 +113,8 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() selectedRows: any[] | null | undefined = [];
 
-  private readonly mobileService = inject(MobileService);
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  get isMobile(){
+  get isMobile() {
     return this.mobileService.getIsMobile();
   }
 
@@ -140,11 +154,10 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
       const newSelectedRows = changes['selectedRows'].currentValue || [];
       this.tableRows.forEach((x) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        x.selected = newSelectedRows.some((y: any) => objectsEqual(y, x.row))
-      })
+        x.selected = newSelectedRows.some((y: any) => objectsEqual(y, x.row));
+      });
     }
   }
-
 
   updateData(): void {
     this.getPage(this.page);
@@ -179,8 +192,8 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
       column.sortDirection === undefined
         ? 'asc'
         : column.sortDirection === 'desc'
-        ? undefined
-        : 'desc';
+          ? undefined
+          : 'desc';
     if (!this.sortMultiple) {
       this.tableColumns
         .filter((x) => x !== column)
@@ -194,7 +207,7 @@ export class StroytorgTableComponent<T> implements AfterViewInit, OnInit, OnChan
           ({
             id: x.configuration.id,
             sortDirection: x.sortDirection,
-          } as unknown as Sort<T>)
+          }) as unknown as Sort<T>,
       );
 
     this.sortChange.emit(this.sortColumn);

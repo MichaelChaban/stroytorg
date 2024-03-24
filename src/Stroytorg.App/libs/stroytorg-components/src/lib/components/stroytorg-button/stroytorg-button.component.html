@@ -1,11 +1,9 @@
 @if (title || icon) {
   <button
-    class="stroytorg-button {{ palette ? palette : 'default-button' }} {{
-      style ? style : 'basic-button'
-    }} {{ size }}"
+    class="stroytorg-button {{ palette }} {{ style }} {{ size }}"
     [ngClass]="buttonClass"
     enterPress
-    fillActive
+    ripple
     [tooltip]="tooltip"
     [class.icon-label-button]="icon && title"
     [class.icon-button]="icon && !title"
@@ -14,6 +12,7 @@
     [type]="buttonType"
     [routerLink]="routerLink"
     [queryParams]="queryParams"
+    title=""
   >
     @if (icon) {
       <mat-icon [ngClass]="{ 'mr-2': title }">

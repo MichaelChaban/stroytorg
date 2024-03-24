@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  ButtonPalette,
   StroytorgButtonComponent,
   TooltipDefinition,
   StroytorgTextInputComponent,
@@ -16,8 +15,8 @@ import {
   StroytorgRangeComponent,
   StroytorgRadioComponent,
   StroytorgRadioOption,
+  StroytorgChipComponent,
 } from '@stroytorg/stroytorg-components';
-import { Icon } from '@stroytorg/shared';
 import {
   FormControl,
   FormGroup,
@@ -26,6 +25,7 @@ import {
 } from '@angular/forms';
 import {
   cardMockData,
+  getCardFilterDefinitions,
   getCardRowDefinition,
   getColumnDefinitions,
   mockData,
@@ -49,14 +49,13 @@ import { environment } from 'apps/stroytorg.app/src/environments/environment';
     StroytorgCardComponent,
     StroytorgRangeComponent,
     StroytorgRadioComponent,
+    StroytorgChipComponent,
   ],
   templateUrl: './stroytorg-home.component.html',
   styleUrl: './stroytorg-home.component.scss',
 })
 export class StroytorgHomeComponent implements OnInit {
   environmentImageResource = environment.baseImagePath;
-
-  icon = Icon.HOME;
 
   mockDATA = mockData;
   snackbar = inject(StroytorgSnackbarService);
@@ -67,9 +66,11 @@ export class StroytorgHomeComponent implements OnInit {
 
   cardRowDefinition = getCardRowDefinition();
 
+  cardFilter = getCardFilterDefinitions();
+
   tooltip: TooltipDefinition = {
-    tooltipPosition: 'above',
-    tooltipText: 'Stroytorg',
+    position: 'above',
+    title: 'Stroytorg',
   };
 
   items = [

@@ -6,26 +6,26 @@
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'default-button'"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'primary-button'"
       (clickFn)="anotherFunction()"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'warning-button'"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'danger-button'"
     />
   </div>
@@ -38,14 +38,14 @@
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'default-button'"
       [style]="'raised-button'"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'primary-button'"
       [style]="'raised-button'"
       (clickFn)="anotherFunction()"
@@ -53,22 +53,22 @@
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
-      [palette]="'outlined-button'"
+      [icon]="'home'"
+      [palette]="'secondary-button'"
       [style]="'raised-button'"
       (clickFn)="someFunction()"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'warning-button'"
       [style]="'raised-button'"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'danger-button'"
       [style]="'raised-button'"
     />
@@ -82,14 +82,14 @@
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'default-button'"
       [style]="'stroked-button'"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'primary-button'"
       [style]="'stroked-button'"
       (clickFn)="anotherFunction()"
@@ -97,14 +97,14 @@
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'warning-button'"
       [style]="'stroked-button'"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'danger-button'"
       [style]="'stroked-button'"
     />
@@ -118,14 +118,14 @@
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'default-button'"
       [style]="'flat-button'"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'primary-button'"
       [style]="'flat-button'"
       (clickFn)="anotherFunction()"
@@ -133,15 +133,15 @@
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
-      [palette]="'outlined-button'"
+      [icon]="'home'"
+      [palette]="'secondary-button'"
       [style]="'flat-button'"
       (clickFn)="someFunction()"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [icon]="icon"
+      [icon]="'home'"
       [palette]="'warning-button'"
       [style]="'flat-button'"
     />
@@ -212,6 +212,34 @@
 
   <hr />
 
+  <div class="mt-3 d-flex justify-content-around align-items-center flex-wrap gap-1">
+    <stroytorg-chip
+      [title]="'some chip'"
+      [selectable]="false"
+      [removable]="true"
+    />
+    <stroytorg-chip
+      [title]="'some chip'"
+      [selectable]="true"
+      [removable]="true"
+      [palette]="'primary-chip'"
+    />
+    <stroytorg-chip
+      [title]="'some chip'"
+      [selectable]="true"
+      [removable]="true"
+      [palette]="'warning-chip'"
+    />
+    <stroytorg-chip
+      [title]="'some chip'"
+      [selectable]="true"
+      [removable]="true"
+      [palette]="'danger-chip'"
+    />
+  </div>
+
+  <hr />
+
   <!-- TABLE -->
   <div class="mt-4">
     <stroytorg-table
@@ -243,9 +271,10 @@
       [pageSize]="2"
       [total]="cardMockData.length"
       [currentPage]="1"
-      [cardRowDefinition]="cardRowDefinition"
+      [cardDefinition]="cardRowDefinition"
       [data]="cardMockData"
       [loading]="loading"
+      [filter]="cardFilter"
       (pageChange)="scrollDown($event)"
     />
   </div>

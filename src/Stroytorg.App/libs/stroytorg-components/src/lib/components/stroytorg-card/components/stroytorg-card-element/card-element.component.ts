@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { KeyOrFunctionPipe } from '@stroytorg/shared';
 import { StroytorgButtonComponent } from '../../../stroytorg-button';
-import { CardRowDefinition } from '../../stroytorg-card.models';
+import { CardDefinition } from '../../stroytorg-card.models';
 import { environment } from 'apps/stroytorg.app/src/environments/environment';
 
 @Component({
@@ -16,7 +16,7 @@ import { environment } from 'apps/stroytorg.app/src/environments/environment';
 export class StroytorgCardElementComponent<T> {
 
   @Input()
-  cardRowDefinition!: CardRowDefinition[];
+  cardDefinition!: CardDefinition;
 
   @Input()
   cardData!: T;

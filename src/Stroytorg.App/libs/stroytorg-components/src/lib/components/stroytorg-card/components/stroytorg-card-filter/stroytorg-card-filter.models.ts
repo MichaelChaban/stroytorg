@@ -10,9 +10,12 @@ export interface FilterOption {
 export interface FilterDefinition {
     type: FilterType;
     label: string;
+    description?: string;
     value: any;
     options?: FilterOption[];
     rangeMinValue?: number;
     rangeMaxValue?: number;
-    template: TemplateRef<any>;
+    rangeStep?: number;
+    twoSidesRange?: boolean;
+    template?: TemplateRef<any>;
 }

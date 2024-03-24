@@ -1,0 +1,78 @@
+.stroytorg-chip {
+  width: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.2rem;
+  padding: 0.2rem 1rem;
+  border-radius: 20px;
+  text-wrap: nowrap;
+  transition: 0.3s;
+  user-select: none;
+}
+
+@mixin chip($color, $bgColor) {
+  color: $color;
+  background-color: rgb($bgColor, 0.3);
+
+  &:disabled {
+    color: rgb($color, 0.5);
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgb($bgColor, 0.4);
+  }
+
+  .stroytorg-ripple {
+    z-index: 100;
+  }
+
+  .stroytorg-chip__remove {
+    background-color: rgb($bgColor, 0.5);
+
+    &:active {
+      background-color: rgb($bgColor, 0.2);
+    }
+  }
+}
+
+.default-chip {
+  @include chip($color-light-black, $color-gray);
+}
+
+.primary-chip {
+  @include chip($color-orange, $color-light-orange);
+}
+
+.warning-chip {
+  @include chip($color-yellow, $color-light-yellow);
+}
+
+.danger-chip {
+  @include chip($color-red, $color-light-red);
+}
+
+.stroytorg-selected-chip.stroytorg-chip-selected {
+  animation: extendingChip 0.2s ease-in-out;
+}
+
+.stroytorg-chip__remove {
+  width: fit-content !important;
+  height: fit-content !important;
+  font-size: 1.1rem;
+  padding: 0.1rem;
+  border-radius: 100%;
+  margin: 0;
+  transition: 0.2s;
+}
+
+@keyframes extendingChip {
+  0% {
+    width: 90%;
+  }
+  100% {
+    width: 100%;
+  }
+}

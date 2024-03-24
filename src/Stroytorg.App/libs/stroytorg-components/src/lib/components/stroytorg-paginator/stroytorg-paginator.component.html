@@ -1,14 +1,14 @@
 <div class="stroytorg-paginator">
   @if (!showPageSizeSelect) {
-  <div class="stroytorg-paginator__select_container">
-    <stroytorg-select
-      [clearable]="false"
-      [items]="pageSizeOptions"
-      [inputSize]="'small-width'"
-      [hint]="'Total items'"
-    >
-    </stroytorg-select>
-  </div>
+    <div class="stroytorg-paginator__select_container">
+      <stroytorg-select
+        [clearable]="false"
+        [items]="pageSizeOptions"
+        [inputSize]="'small-width'"
+        [hint]="'Total items'"
+      >
+      </stroytorg-select>
+    </div>
   }
 
   <div class="stroytorg-paginator__paginate_container">
@@ -16,37 +16,39 @@
       class="stroytorg-paginator__button"
       [disabled]="isFirstPage()"
       (clickFn)="firstPage()"
-      [icon]="icon.DOUBLE_LEFT"
+      [icon]="'keyboard_double_arrow_left'"
       [rounded]="true"
     ></stroytorg-button>
     <stroytorg-button
       class="stroytorg-paginator__button"
       [disabled]="isFirstPage()"
       (clickFn)="prevPage()"
-      [icon]="icon.LEFT"
+      [icon]="'keyboard_arrow_left'"
       [rounded]="true"
     ></stroytorg-button>
-    @for(page of getPageArray(); track $index) { @if(page.visible){
-    <a
-      class="stroytorg-paginator__item"
-      [class.active]="activePage(page.page)"
-      [class.space]="page.space"
-      (click)="pageChange($event)"
-      >{{ page.space ? '...' : page.page }}</a
-    >
-    } }
+    @for (page of getPageArray(); track $index) {
+      @if (page.visible) {
+        <a
+          class="stroytorg-paginator__item"
+          [class.active]="activePage(page.page)"
+          [class.space]="page.space"
+          (click)="pageChange($event)"
+          >{{ page.space ? '...' : page.page }}</a
+        >
+      }
+    }
     <stroytorg-button
       class="stroytorg-paginator__button"
       [disabled]="isLastPage()"
       (clickFn)="nextPage()"
-      [icon]="icon.RIGHT"
+      [icon]="'keyboard_arrow_right'"
       [rounded]="true"
     ></stroytorg-button>
     <stroytorg-button
       class="stroytorg-paginator__button"
       [disabled]="isLastPage()"
       (clickFn)="lastPage()"
-      [icon]="icon.DOUBLE_RIGHT"
+      [icon]="'keyboard_double_arrow_right'"
       [rounded]="true"
     ></stroytorg-button>
   </div>

@@ -1,156 +1,186 @@
 <div class="stroytorg-table-container">
   <div class="stroytorg-table-content">
     <table class="stroytorg-table">
-      @if(!isMobile){
-      <thead class="stroytorg-table__header">
-        <tr>
-          @if(multipleSelect){
-          <th class="stroytorg-table__checkbox">
-            <stroytorg-checkbox
-              id="checkAll-checkbox"
-              [checked]="areAllSelected"
-              (valueChange)="selectAllRows($event)"
-            ></stroytorg-checkbox>
-          </th>
-          }@for(column of tableColumns; track $index){
-          <th>
-            <span
-              (click)="column.sortable ? sort(column) : null"
-              [attr.role]="column.sortable ? 'button' : null"
-              >{{ column?.headerGetter }}</span
-            >
-          </th>
-          }
-        </tr>
-      </thead>
-      } @if(!isMobile){
-      <tbody class="stroytorg-table__body">
-        @for(row of tableRows; track $index){
-        <tr>
-          @if(multipleSelect){
-          <td class="stroytorg-table__checkbox">
-            <stroytorg-checkbox
-              [checked]="row.selected"
-              (valueChange)="selectRow($event, row.row)"
-            ></stroytorg-checkbox>
-          </td>
-          } @for(column of tableColumns; track column.configuration.id){
-          <td>
-            <div
-              [class]="column.columnClass!"
-              [class.stroytorg-table__actions]="column.columnActions"
-            >
-              @if(column.template){
-              <span *ngTemplateOutlet="column.template"></span>
-              } @if(column.columnActions){ @for(columnAction of
-              column.columnActions!; track $index){
-              <stroytorg-button
-                [palette]="columnAction?.buttonPalette"
-                [title]="columnAction?.title"
-                [tooltip]="columnAction?.tooltip"
-                [icon]="columnAction?.icon"
-                [queryParams]="isSet(columnAction?.queryParams)"
-                [routerLink]="isSet(columnAction?.routerLink)"
-                [buttonClass]="
-                  columnAction?.buttonClass ? columnAction.buttonClass! : ''
-                "
-                (clickFn)="columnAction?.onClick(row)"
-              ></stroytorg-button>
-              } } @else{
-              <span
-                [queryParams]="
-                  column.queryParams ? column.queryParams : undefined
-                "
-                [routerLink]="
-                  column.routerLink ? column.routerLink(row.row) : undefined
-                "
-                [innerHTML]="column.valueGetter(row.row)"
-              ></span>
-              }
-            </div>
-          </td>
-          }
-        </tr>
-        }
-      </tbody>
-      } @else {
-      <tbody class="stroytorg-table__body_mobile">
-        @for(row of tableRows; track $index){
-        <tr>
-          @if(multipleSelect){
-          <td class="stroytorg-table__checkbox">
-            <stroytorg-checkbox
-              [checked]="row.selected"
-              (valueChange)="selectRow($event, row.row)"
-            ></stroytorg-checkbox>
-          </td>
-          }
-          <div class="stroytorg-table__row_container_mobile">
-            @for(column of tableColumns; track column.configuration.id){
-            <td>
-              @if(column.headerGetter){
-              <div>
+      @if (!isMobile) {
+        <thead class="stroytorg-table__header">
+          <tr>
+            @if (multipleSelect) {
+              <th class="stroytorg-table__checkbox">
+                <stroytorg-checkbox
+                  id="checkAll-checkbox"
+                  [checked]="areAllSelected"
+                  (valueChange)="selectAllRows($event)"
+                ></stroytorg-checkbox>
+              </th>
+            }
+            @for (column of tableColumns; track $index) {
+              <th>
                 <span
-                  ><b>{{ column?.headerGetter }}:</b>&emsp;</span
+                  (click)="column.sortable ? sort(column) : null"
+                  [attr.role]="column.sortable ? 'button' : null"
+                  >{{ column?.headerGetter }}</span
                 >
-              </div>
+              </th>
+            }
+          </tr>
+        </thead>
+      }
+      @if (!isMobile) {
+        <tbody class="stroytorg-table__body">
+          @for (row of tableRows; track $index) {
+            <tr>
+              @if (multipleSelect) {
+                <td class="stroytorg-table__checkbox">
+                  <stroytorg-checkbox
+                    [checked]="row.selected"
+                    (valueChange)="selectRow($event, row.row)"
+                  ></stroytorg-checkbox>
+                </td>
               }
-              <div
-                [class]="column.columnClass!"
-                [class.stroytorg-table__actions]="column.columnActions"
-              >
-                @if(column.template){
-                <span *ngTemplateOutlet="column.template"></span>
-                } @if(column.columnActions){ @for(columnAction of
-                column.columnActions!; track $index){
-                <stroytorg-button
-                  [palette]="columnAction?.buttonPalette"
-                  [title]="columnAction?.title"
-                  [tooltip]="columnAction?.tooltip"
-                  [icon]="columnAction?.icon"
-                  [queryParams]="isSet(columnAction?.queryParams)"
-                  [routerLink]="isSet(columnAction?.routerLink)"
-                  [buttonClass]="
-                    columnAction?.buttonClass ? columnAction.buttonClass! : ''
-                  "
-                  (clickFn)="columnAction?.onClick(row)"
-                ></stroytorg-button>
-                } } @else{
-                <span
-                  [queryParams]="
-                    column.queryParams ? column.queryParams : undefined
-                  "
-                  [routerLink]="
-                    column.routerLink ? column.routerLink(row.row) : undefined
-                  "
-                  [innerHTML]="column.valueGetter(row.row)"
-                ></span>
+              @for (column of tableColumns; track column.configuration.id) {
+                <td>
+                  <div
+                    [class]="column.columnClass!"
+                    [class.stroytorg-table__actions]="column.columnActions"
+                  >
+                    @if (column.template) {
+                      <span *ngTemplateOutlet="column.template"></span>
+                    }
+                    @if (column.columnActions) {
+                      @for (
+                        columnAction of column.columnActions!;
+                        track $index
+                      ) {
+                        <stroytorg-button
+                          [palette]="columnAction?.buttonPalette"
+                          [style]="columnAction?.buttonStyle"
+                          [rounded]="columnAction?.rounded"
+                          [disabled]="columnAction?.disabled | keyOrFn: row.row"
+                          [title]="columnAction?.title"
+                          [tooltip]="columnAction?.tooltip"
+                          [icon]="columnAction?.icon"
+                          [queryParams]="isSet(columnAction?.queryParams)"
+                          [routerLink]="isSet(columnAction?.routerLink)"
+                          [buttonClass]="
+                            columnAction?.buttonClass
+                              ? columnAction.buttonClass!
+                              : ''
+                          "
+                          (clickFn)="columnAction?.onClick(row)"
+                        ></stroytorg-button>
+                      }
+                    } @else {
+                      <span
+                        [queryParams]="
+                          column.queryParams ? column.queryParams : undefined
+                        "
+                        [routerLink]="
+                          column.routerLink
+                            ? column.routerLink(row.row)
+                            : undefined
+                        "
+                        [innerHTML]="column.valueGetter(row.row)"
+                      ></span>
+                    }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      } @else {
+        <tbody class="stroytorg-table__body_mobile">
+          @for (row of tableRows; track $index) {
+            <tr>
+              @if (multipleSelect) {
+                <td class="stroytorg-table__checkbox">
+                  <stroytorg-checkbox
+                    [checked]="row.selected"
+                    (valueChange)="selectRow($event, row.row)"
+                  ></stroytorg-checkbox>
+                </td>
+              }
+              <div class="stroytorg-table__row_container_mobile">
+                @for (column of tableColumns; track column.configuration.id) {
+                  <td>
+                    @if (column.headerGetter) {
+                      <div>
+                        <span
+                          ><b>{{ column?.headerGetter }}:</b>&emsp;</span
+                        >
+                      </div>
+                    }
+                    <div
+                      [class]="column.columnClass!"
+                      [class.stroytorg-table__actions]="column.columnActions"
+                    >
+                      @if (column.template) {
+                        <span *ngTemplateOutlet="column.template"></span>
+                      }
+                      @if (column.columnActions) {
+                        @for (
+                          columnAction of column.columnActions!;
+                          track $index
+                        ) {
+                          <stroytorg-button
+                            [palette]="columnAction?.buttonPalette"
+                            [style]="columnAction?.buttonStyle"
+                            [rounded]="columnAction?.rounded"
+                            [disabled]="
+                              columnAction?.disabled | keyOrFn: row.row
+                            "
+                            [title]="columnAction?.title"
+                            [tooltip]="columnAction?.tooltip"
+                            [icon]="columnAction?.icon"
+                            [queryParams]="isSet(columnAction?.queryParams)"
+                            [routerLink]="isSet(columnAction?.routerLink)"
+                            [buttonClass]="
+                              columnAction?.buttonClass
+                                ? columnAction.buttonClass!
+                                : ''
+                            "
+                            (clickFn)="columnAction?.onClick(row)"
+                          ></stroytorg-button>
+                        }
+                      } @else {
+                        <span
+                          [queryParams]="
+                            column.queryParams ? column.queryParams : undefined
+                          "
+                          [routerLink]="
+                            column.routerLink
+                              ? column.routerLink(row.row)
+                              : undefined
+                          "
+                          [innerHTML]="column.valueGetter(row.row)"
+                        ></span>
+                      }
+                    </div>
+                  </td>
                 }
               </div>
-            </td>
-            }
-          </div>
-        </tr>
-        }
-      </tbody>
+            </tr>
+          }
+        </tbody>
       }
     </table>
   </div>
-  @if(loading){
-  <stroytorg-loader class="stroytorg-table-loader"></stroytorg-loader>
-  } @if(showPaginator){
-  <div>
-    <div class="stroytorg-table__footer">
-      <stroytorg-paginator
-        class="w-100"
-        [rows]="pageSize"
-        [totalRecords]="total"
-        [currentPage]="currentPage"
-        [showPageSizeSelect]="isMobile"
-        (pageChanged)="pageChanged($event)"
-      >
-      </stroytorg-paginator>
+  @if (loading) {
+    <stroytorg-loader class="stroytorg-table-loader"></stroytorg-loader>
+  }
+  @if (showPaginator) {
+    <div>
+      <div class="stroytorg-table__footer">
+        <stroytorg-paginator
+          class="w-100"
+          [rows]="pageSize"
+          [totalRecords]="total"
+          [currentPage]="currentPage"
+          [showPageSizeSelect]="isMobile"
+          (pageChanged)="pageChanged($event)"
+        >
+        </stroytorg-paginator>
+      </div>
     </div>
-  </div>
   }
 </div>

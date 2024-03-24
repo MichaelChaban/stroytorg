@@ -1,9 +1,9 @@
-import { Icon } from '@stroytorg/shared';
 import {
   ButtonDefinition,
-  CardRowDefinition,
+  CardDefinition,
   ColumnDefinition,
 } from '@stroytorg/stroytorg-components';
+import { FilterDefinition } from 'libs/stroytorg-components/src/lib/components/stroytorg-card/components';
 
 export interface SomeModel {
   id: number;
@@ -35,61 +35,69 @@ export function getColumnDefinitions(): ColumnDefinition<SomeModel>[] {
       id: 'actions',
       columnActions: [
         {
-          icon: Icon.TASK_ALT,
+          icon: 'task_alt',
+          rounded: true,
+          buttonStyle: 'raised-button',
           buttonPalette: 'default-button',
           onClick: (row: SomeModel) => {
             console.log('Edit', row);
           },
+          buttonClass: 'p-0',
         },
         {
           title: 'Delete',
+          buttonStyle: 'raised-button',
           buttonPalette: 'danger-button',
           onClick: (row: SomeModel) => {
             console.log('Delete', row);
           },
+          disabled: (row: SomeModel) => row.name === 'John Doe',
         },
       ],
     },
   ];
 }
 
-export function getCardRowDefinition(): CardRowDefinition[] {
-  return [
-    {
-      title: 'name',
-      content: (row: SomeRowDataModel) => row.name,
-    },
-    {
-      imageName: 'Volcano.jpg',
-    },
-    {
-      title: 'Description',
-    },
-    {
-      content: (row: SomeRowDataModel) => row.description,
-    },
-    {
-      cardRowActions: [
-        {
-          title: 'Buy',
-          icon: Icon.SEARCH,
-          buttonPalette: 'primary-button',
-          buttonStyle: 'basic-button',
-          onClick: (row: SomeModel) => {
-            console.log('Delete', row);
+export function getCardRowDefinition(): CardDefinition {
+  return {
+    cardRowDefinition: [
+      {
+        title: 'name',
+        content: (row: SomeRowDataModel) => row.name,
+      },
+      {
+        imageName: 'Volcano.jpg',
+      },
+      {
+        title: 'Description',
+      },
+      {
+        content: (row: SomeRowDataModel) => row.description,
+      },
+      {
+        cardRowActions: [
+          {
+            title: 'Buy',
+            icon: 'search',
+            buttonPalette: 'primary-button',
+            buttonStyle: 'basic-button',
+            onClick: (row: SomeModel) => {
+              console.log('Delete', row);
+            },
           },
-        },
-        {
-          title: 'Delete',
-          buttonPalette: 'primary-button',
-          buttonStyle: 'flat-button',
-          onClick: (row: SomeModel) => {
-            console.log('Delete', row);
+          {
+            title: 'Delete',
+            buttonPalette: 'primary-button',
+            buttonStyle: 'flat-button',
+            onClick: (row: SomeModel) => {
+              console.log('Delete', row);
+            },
           },
-        },
-      ] as ButtonDefinition[],
-    },
-  ];
+        ] as ButtonDefinition[],
+      },
+    ],
+    cardDisabled: (row: SomeRowDataModel) => row.name === 'John Doe',
+  };
 }
 
 export const mockData: SomeModel[] = [
@@ -259,19 +267,47 @@ export const cardMockData: SomeRowDataModel[] = [
   },
 ];
 
-export function getCardFilterDefinitions() {
+export function getCardFilterDefinitions(): FilterDefinition[] {
   return [
     {
       type: 'text',
       label: 'Name',
+      description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
       value: '',
-      template: null,
     },
     {
       type: 'text',
       label: 'Description',
       value: '',
-      template: null,
+    },
+    {
+      type: 'range',
+      label: 'Price range',
+      value: '',
+    },
+    {
+      type: 'boolean',
+      label: 'Is in stock?',
+      value: '',
+    },
+    {
+      type: 'select',
+      label: 'Select',
+      value: 1,
+      options: [
+        {
+          label: 'Option 1',
+          value: 1,
+        },
+        {
+          label: 'Option 2',
+          value: 2,
+        },
+        {
+          label: 'Option 3',
+          value: 3,
+        }
+      ]
     },
   ];
 }

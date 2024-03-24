@@ -1,6 +1,90 @@
-.stroytorg-card__component-container {
+.stroytorg-card__container {
   position: relative;
   top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.stroytorg-card__filter-container {
+  padding: $cell-padding-block $cell-padding-inline;
+  min-width: 18rem;
+  height: 100%;
+}
+
+.stroytorg-card-filter__container {
+  position: relative;
+}
+
+.stroytorg-card-filter {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: self-start;
+  flex-direction: column;
+  background-color: $color-lighter-gray;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.25);
+  padding: $cell-padding-inline $cell-padding-inline;
+  row-gap: 1.5rem;
+}
+
+.stroytorg-card-filter-mobile {
+  display: none;
+  position: absolute !important;
+  opacity: 0;
+  top: 150%;
+  left: 0;
+  z-index: 10;
+  transition: $default-transition;
+}
+
+.stroytorg-card-filter-mobile-visible {
+  display: flex !important;
+  opacity: 1;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.stroytorg-card-filter__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  & > h4 {
+    margin: 0;
+    width: 100%;
+    font-weight: bold;
+  }
+  color: $color-light-black;
+}
+
+.stroytorg-card-filter__actions {
+  position: absolute;
+  top: 3.5%;
+  right: 5%;
+  display: flex;
+  justify-content: self-start;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.stroytorg-card-filter__filter-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+.stroytorg-card-filter__label {
+  color: $color-light-black;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  & > label {
+    font-size: 1.2em;
+    font-weight: 500;
+    padding-bottom: 0.1em;
+  }
 }
 
 .stroytorg-card__cards-container {
@@ -15,10 +99,10 @@
   width: 100%;
   height: fit-content !important;
   min-width: 10em;
-  max-width: 18em;
+  max-width: 16em;
   border: none;
   transition: $default-transition;
-  padding-bottom: 0.7em;
+  padding-block: 0.7em;
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.25);
 
   &:hover {
@@ -82,10 +166,26 @@
   padding: 5rem;
 }
 
-.stroytorg-card__load-next{
+.stroytorg-card__load-next {
   width: 100%;
   margin-top: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.card-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+@keyframes fadeIn {
+  from {
+    scale: 0;
+    height: 0;
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+  }
 }

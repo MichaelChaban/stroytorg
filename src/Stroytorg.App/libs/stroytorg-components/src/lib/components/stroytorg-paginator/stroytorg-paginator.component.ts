@@ -13,9 +13,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { PAGE_SIZE_OPTIONS, PaginatorPageModel } from './stroytorg-paginator.models';
 import { StroytorgButtonComponent } from '../stroytorg-button';
-import { Icon } from '@stroytorg/shared';
 import { StroytorgSelectComponent } from '../stroytorg-select';
-import { InputSize } from '../stroytorg-base-form';
 
 @Component({
   selector: 'stroytorg-paginator',
@@ -38,8 +36,6 @@ export class StroytorgPaginatorComponent implements OnInit, OnChanges {
   showPageSizeSelect = false;
 
   @Output() pageChanged: EventEmitter<void> = new EventEmitter();
-
-  icon = Icon;
 
   paginatorState: any;
 

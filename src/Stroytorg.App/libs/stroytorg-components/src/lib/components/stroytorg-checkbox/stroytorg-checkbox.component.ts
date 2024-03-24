@@ -42,7 +42,7 @@ export class StroytorgCheckboxComponent
   implements ControlValueAccessor, OnChanges
 {
   @Input()
-  checked = this.ngControl?.value;
+  checked = this.formControl?.value;
 
   @Input()
   title?: string;

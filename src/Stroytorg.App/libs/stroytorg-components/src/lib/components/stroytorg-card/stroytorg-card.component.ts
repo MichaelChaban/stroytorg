@@ -14,13 +14,13 @@ import { CommonModule } from '@angular/common';
 import { StroytorgPaginatorComponent } from '../stroytorg-paginator';
 import { StroytorgLoaderComponent } from '../stroytorg-loader';
 import { StroytorgButtonComponent } from '../stroytorg-button';
-import { Icon } from '@stroytorg/shared';
+import { KeyOrFunctionPipe, MobileService } from '@stroytorg/shared';
 import {
   FilterDefinition,
   StroytorgCardElementComponent,
   StroytorgCardFilterComponent,
 } from './components';
-import { CardRowDefinition } from './stroytorg-card.models';
+import { CardDefinition } from './stroytorg-card.models';
 
 @Component({
   selector: 'stroytorg-card',
@@ -32,17 +32,19 @@ import { CardRowDefinition } from './stroytorg-card.models';
     StroytorgLoaderComponent,
     StroytorgButtonComponent,
     StroytorgCardFilterComponent,
+    KeyOrFunctionPipe,
   ],
   templateUrl: './stroytorg-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StroytorgCardComponent<T> {
-  cdRef = inject(ChangeDetectorRef);
+  private readonly mobileService = inject(MobileService);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   @ViewChild('cardsContainer') cardsContainer!: ElementRef;
 
   @Input()
-  cardRowDefinition!: CardRowDefinition[];
+  cardDefinition!: CardDefinition;
 
   @Input()
   data!: T[];
@@ -63,16 +65,21 @@ export class StroytorgCardComponent<T> {
   currentPage!: number;
 
   @Input()
-  filters: FilterDefinition[] = [];
+  filter: FilterDefinition[] = [];
 
   @Output()
   pageChange = new EventEmitter<number>();
+
+  @Output()
+  filterChange = new EventEmitter<any>();
 
   get totalPages(): number {
     return Math.ceil(this.total / this.pageSize);
   }
 
-  buttonIcon = Icon;
+  get isMobile() {
+    return this.mobileService.getIsMobile();
+  }
 
   pageChanged(paginatorState: any): void {
     if (this.currentPage != paginatorState.page) {
@@ -82,6 +89,10 @@ export class StroytorgCardComponent<T> {
     }
     this.pageChange.emit(this.currentPage);
     this.cdRef.detectChanges();
+  }
+
+  filterValueChange(value: any) {
+    this.filterChange.emit(value);
   }
 
   // @HostListener('window:scroll', ['$event'])

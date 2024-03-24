@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AVAILABLE_HOURS } from './stroytorg-timepicker.models';
-import { ButtonSize, StroytorgButtonComponent } from '../../../stroytorg-button';
+import { StroytorgButtonComponent } from '../../../stroytorg-button';
 
 @Component({
   selector: 'stroytorg-timepicker',
@@ -12,7 +12,6 @@ import { ButtonSize, StroytorgButtonComponent } from '../../../stroytorg-button'
 export class StroytorgTimePickerComponent {
 
   readonly availableHours = AVAILABLE_HOURS;
-  readonly buttonSize = ButtonSize;
 
   @Output() timeChanges = new EventEmitter<number>();
 

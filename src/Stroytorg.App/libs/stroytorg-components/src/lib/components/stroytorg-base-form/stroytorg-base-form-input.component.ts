@@ -62,7 +62,7 @@ export class StroytorgBaseFormInputComponent
   hint!: string;
 
   @Input()
-  disabled = true;
+  disabled = false;
 
   @Input()
   showErrors = false;

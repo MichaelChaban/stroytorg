@@ -1,27 +1,32 @@
 import { Icon } from '@stroytorg/shared';
 
-export enum ButtonSize {
-  SMALL = 'small-width',
-  DEFAULT = 'default-width',
-  LARGE = 'large-width',
-  XLARGE = 'x-large-width',
-  FULL = 'full-width',
-  FIT_CONTENT = 'fit-content-width',
-  AUTO = 'auto-width',
-}
+export type ButtonSize =
+  | 'small-width'
+  | 'default-width'
+  | 'large-width'
+  | 'x-large-width'
+  | 'full-width'
+  | 'fit-content-width'
+  | 'auto-width';
 
-export enum ButtonStyle {
-  DEFAULT = 'default-button',
-  PRIMARY = 'primary-button',
-  OUTLINED = 'outlined-button',
-  WARNING = 'warning-button',
-  DANGER = 'danger-button',
-}
+export type ButtonPalette =
+  | 'default-button'
+  | 'primary-button'
+  | 'outlined-button'
+  | 'warning-button'
+  | 'danger-button';
+
+export type ButtonStyle =
+  | 'basic-button'
+  | 'raised-button'
+  | 'stroked-button'
+  | 'flat-button';
 
 export interface ButtonDefinition {
   title?: string;
   icon?: Icon;
-  buttonStyle?: string;
+  buttonPalette?: ButtonPalette;
+  buttonStyle?: ButtonStyle;
   routerLink?: string;
   queryParams?: string;
   tooltip?: TooltipDefinition;

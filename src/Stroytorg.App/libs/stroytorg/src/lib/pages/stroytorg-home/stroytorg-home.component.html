@@ -7,46 +7,149 @@
       title="See Categories"
       [tooltip]="tooltip"
       [icon]="icon"
-      [style]="buttonType.DEFAULT"
-      [disabled]="true"
+      [palette]="'default-button'"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
       [icon]="icon"
-      [style]="buttonType.PRIMARY"
+      [palette]="'primary-button'"
       (clickFn)="anotherFunction()"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
       [icon]="icon"
-      [style]="buttonType.OUTLINED"
+      [palette]="'warning-button'"
+    />
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [palette]="'danger-button'"
+    />
+  </div>
+
+  <hr />
+
+  <div
+    class="mt-3 d-flex justify-content-around align-items-center flex-wrap gap-1"
+  >
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [palette]="'default-button'"
+      [style]="'raised-button'"
+    />
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [palette]="'primary-button'"
+      [style]="'raised-button'"
+      (clickFn)="anotherFunction()"
+    />
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [palette]="'outlined-button'"
+      [style]="'raised-button'"
       (clickFn)="someFunction()"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
       [icon]="icon"
-      [style]="buttonType.WARNING"
+      [palette]="'warning-button'"
+      [style]="'raised-button'"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
       [icon]="icon"
-      [style]="buttonType.DANGER"
+      [palette]="'danger-button'"
+      [style]="'raised-button'"
     />
+  </div>
+
+  <hr />
+
+  <div
+    class="mt-3 d-flex justify-content-around align-items-center flex-wrap gap-1"
+  >
     <stroytorg-button
-      class="w-100 d-flex justify-content-center align-items-center"
+      title="See Categories"
       [tooltip]="tooltip"
-      [rounded]="true"
       [icon]="icon"
-      [style]="buttonType.DANGER"
+      [palette]="'default-button'"
+      [style]="'stroked-button'"
     />
     <stroytorg-button
       title="See Categories"
       [tooltip]="tooltip"
-      [style]="buttonType.DANGER"
+      [icon]="icon"
+      [palette]="'primary-button'"
+      [style]="'stroked-button'"
+      (clickFn)="anotherFunction()"
+    />
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [palette]="'warning-button'"
+      [style]="'stroked-button'"
+    />
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [palette]="'danger-button'"
+      [style]="'stroked-button'"
+    />
+  </div>
+
+  <hr />
+
+  <div
+    class="mt-3 d-flex justify-content-around align-items-center flex-wrap gap-1"
+  >
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [palette]="'default-button'"
+      [style]="'flat-button'"
+    />
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [palette]="'primary-button'"
+      [style]="'flat-button'"
+      (clickFn)="anotherFunction()"
+    />
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [palette]="'outlined-button'"
+      [style]="'flat-button'"
+      (clickFn)="someFunction()"
+    />
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [icon]="icon"
+      [palette]="'warning-button'"
+      [style]="'flat-button'"
+    />
+    <stroytorg-button
+      title="See Categories"
+      [tooltip]="tooltip"
+      [palette]="'danger-button'"
+      [style]="'flat-button'"
     />
   </div>
 
@@ -73,7 +176,6 @@
       />
 
       <stroytorg-checkbox
-        [disabled]="true"
         formControlName="checkbox"
         [title]="'Agree with policies*'"
       />

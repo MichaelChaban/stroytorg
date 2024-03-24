@@ -15,7 +15,8 @@
     @if (currentPage < totalPages) {
       <div class="stroytorg-card__load-next">
         <stroytorg-button
-          [style]="buttonStyle.PRIMARY"
+          [palette]="'primary-button'"
+          [style]="'raised-button'"
           [icon]="buttonIcon.ARROW_DOWN"
           [title]="'Show next'"
           [isLoadingVisible]="true"

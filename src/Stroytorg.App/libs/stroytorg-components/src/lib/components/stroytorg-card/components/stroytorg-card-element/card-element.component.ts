@@ -3,7 +3,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { KeyOrFunctionPipe } from '@stroytorg/shared';
-import { ButtonSize, StroytorgButtonComponent } from '../../../stroytorg-button';
+import { StroytorgButtonComponent } from '../../../stroytorg-button';
 import { CardRowDefinition } from '../../stroytorg-card.models';
 import { environment } from 'apps/stroytorg.app/src/environments/environment';
 
@@ -20,8 +20,6 @@ export class StroytorgCardElementComponent<T> {
 
   @Input()
   cardData!: T;
-
-  ButtonSize = ButtonSize;
 
   baseImagePath = environment.baseImagePath;
 

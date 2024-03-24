@@ -51,7 +51,7 @@
   }
 
   .stroytorg-checkbox__checkbox:disabled + .stroytorg-checkbox__checkmark {
-    background-color: $color-grey-100;
+    background-color: $color-gray-100;
     border: none;
     box-shadow: none;
     cursor: default;
@@ -74,7 +74,7 @@
   width: 1.5rem;
   background-color: $color-white;
   border-radius: 5px;
-  border: 1px solid $color-grey;
+  border: 1px solid $color-gray;
   transition: $default-transition;
 }
 

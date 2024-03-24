@@ -1,7 +1,6 @@
 import { Icon } from '@stroytorg/shared';
 import {
   ButtonDefinition,
-  ButtonStyle,
   CardRowDefinition,
   ColumnDefinition,
 } from '@stroytorg/stroytorg-components';
@@ -37,14 +36,14 @@ export function getColumnDefinitions(): ColumnDefinition<SomeModel>[] {
       columnActions: [
         {
           icon: Icon.TASK_ALT,
-          buttonStyle: ButtonStyle.DEFAULT,
+          buttonPalette: 'default-button',
           onClick: (row: SomeModel) => {
             console.log('Edit', row);
           },
         },
         {
           title: 'Delete',
-          buttonStyle: ButtonStyle.DANGER,
+          buttonPalette: 'danger-button',
           onClick: (row: SomeModel) => {
             console.log('Delete', row);
           },
@@ -74,14 +73,16 @@ export function getCardRowDefinition(): CardRowDefinition[] {
         {
           title: 'Buy',
           icon: Icon.SEARCH,
-          buttonStyle: ButtonStyle.DEFAULT,
+          buttonPalette: 'primary-button',
+          buttonStyle: 'basic-button',
           onClick: (row: SomeModel) => {
             console.log('Delete', row);
           },
         },
         {
           title: 'Delete',
-          buttonStyle: ButtonStyle.PRIMARY,
+          buttonPalette: 'primary-button',
+          buttonStyle: 'flat-button',
           onClick: (row: SomeModel) => {
             console.log('Delete', row);
           },

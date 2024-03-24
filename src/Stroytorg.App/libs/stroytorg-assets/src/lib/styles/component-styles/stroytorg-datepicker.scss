@@ -7,7 +7,7 @@
   min-width: 8em;
   max-width: 80dvw;
   background-color: $color-darker-orange;
-  box-shadow: 0 0 4px 2px $color-grey-500;
+  box-shadow: 0 0 4px 2px $color-gray-500;
   border-radius: 1em;
   animation: fadeInOut $default-transition ease-in-out forwards;
   z-index: 1000;
@@ -64,7 +64,7 @@
   width: 2em;
   text-align: center;
   color: $color-light-black !important;
-  background-color: $color-grey-100;
+  background-color: $color-gray-100;
 
   &:focus,
   :active {
@@ -84,12 +84,12 @@
 
 .selected-date {
   & > button {
-    background-color: $color-grey-300;
+    background-color: $color-gray-300;
   }
 }
 
 .not-current-month {
   & > button > span {
-    color: $color-grey-500;
+    color: $color-gray-500;
   }
 }

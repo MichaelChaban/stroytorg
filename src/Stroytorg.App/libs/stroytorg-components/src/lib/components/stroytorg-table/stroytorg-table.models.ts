@@ -2,7 +2,7 @@
 import { InjectionToken, TemplateRef } from '@angular/core';
 import { Params } from '@angular/router';
 import { Icon, Sort, SortDirection, keyOrFn } from '@stroytorg/shared';
-import { ButtonStyle, TooltipDefinition } from '../stroytorg-button';
+import { ButtonPalette, TooltipDefinition } from '../stroytorg-button';
 
 export interface ColumnDefinition<T, _KEY = keyof T> {
   id: string;
@@ -18,7 +18,7 @@ export interface ColumnDefinition<T, _KEY = keyof T> {
 }
 
 export interface ColumnActionDefinition{
-  buttonStyle?: ButtonStyle;
+  buttonPalette?: ButtonPalette;
   tooltip?: TooltipDefinition;
   icon?: Icon;
   title?: string;

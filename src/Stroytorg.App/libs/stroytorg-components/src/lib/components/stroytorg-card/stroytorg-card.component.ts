@@ -13,7 +13,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { StroytorgPaginatorComponent } from '../stroytorg-paginator';
 import { StroytorgLoaderComponent } from '../stroytorg-loader';
-import { ButtonStyle, StroytorgButtonComponent } from '../stroytorg-button';
+import { StroytorgButtonComponent } from '../stroytorg-button';
 import { Icon } from '@stroytorg/shared';
 import {
   FilterDefinition,
@@ -71,8 +71,6 @@ export class StroytorgCardComponent<T> {
   get totalPages(): number {
     return Math.ceil(this.total / this.pageSize);
   }
-
-  buttonStyle = ButtonStyle;
 
   buttonIcon = Icon;
 

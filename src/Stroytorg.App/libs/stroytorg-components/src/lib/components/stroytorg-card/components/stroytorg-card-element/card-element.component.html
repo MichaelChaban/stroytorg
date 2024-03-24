@@ -25,7 +25,8 @@ $index){
     <div class="mt-1">
       <stroytorg-button
         [style]="action?.buttonStyle"
-        [size]="action?.size ? action?.size! : ButtonSize.FULL"
+        [palette]="action?.buttonPalette"
+        [size]="action?.size ? action?.size! : 'full-width'"
         [title]="action?.title"
         [tooltip]="action?.tooltip"
         [icon]="action?.icon"

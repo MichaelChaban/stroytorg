@@ -11,15 +11,15 @@ import {
 import { CommonModule } from '@angular/common';
 import {
   ButtonSize,
-  ButtonStyle,
+  ButtonPalette,
   TooltipDefinition,
+  ButtonStyle,
 } from './stroytorg-buttons.models';
 import { RouterModule } from '@angular/router';
 import { Icon } from '@stroytorg/shared';
 import { UnsubscribeControlComponent } from 'libs/shared/src/utils/unsubcribe-control.component';
-import { ButtonTooltipDirective } from './directives/button-tooltip.directive';
+import { ButtonTooltipDirective, ButtonEnterPressedDirective, ButtonFillActiveDirective } from './directives';
 import { MatIconModule } from '@angular/material/icon';
-import { ButtonEnterPressedDirective } from './directives/button-enter-pressed.directive';
 import { BehaviorSubject, Subject, debounceTime, takeUntil } from 'rxjs';
 import { StroytorgLoaderComponent } from '../stroytorg-loader';
 // import { APP_CONFIG_ASSETS_BASE_URL } from "@stroytorg/shared";
@@ -31,8 +31,9 @@ import { StroytorgLoaderComponent } from '../stroytorg-loader';
     CommonModule,
     RouterModule,
     ButtonTooltipDirective,
-    MatIconModule,
     ButtonEnterPressedDirective,
+    ButtonFillActiveDirective,
+    MatIconModule,
     StroytorgLoaderComponent,
   ],
   templateUrl: './stroytorg-button.component.html',
@@ -60,7 +61,7 @@ export class StroytorgButtonComponent
   queryParams?: { [key: string]: unknown };
 
   @Input()
-  size = ButtonSize.FIT_CONTENT as string;
+  size: ButtonSize = 'fit-content-width';
 
   @Input()
   disabled!: boolean;
@@ -69,7 +70,10 @@ export class StroytorgButtonComponent
   rounded = false as boolean;
 
   @Input()
-  style? = ButtonStyle.DEFAULT as string;
+  palette?: ButtonPalette = 'default-button';
+
+  @Input()
+  style?: ButtonStyle = 'basic-button';
 
   @Input()
   title?: string;

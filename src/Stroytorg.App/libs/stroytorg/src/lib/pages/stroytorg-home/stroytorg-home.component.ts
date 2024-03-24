@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  ButtonStyle,
+  ButtonPalette,
   StroytorgButtonComponent,
   TooltipDefinition,
   StroytorgTextInputComponent,
@@ -56,7 +56,6 @@ import { environment } from 'apps/stroytorg.app/src/environments/environment';
 export class StroytorgHomeComponent implements OnInit {
   environmentImageResource = environment.baseImagePath;
 
-  buttonType = ButtonStyle;
   icon = Icon.HOME;
 
   mockDATA = mockData;

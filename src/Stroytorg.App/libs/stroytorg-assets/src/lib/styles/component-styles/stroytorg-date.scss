@@ -1,6 +1,6 @@
 .stroytorg-date {
   @extend %input-common;
-  border: 0.25px solid $color-grey;
+  border: 0.25px solid $color-gray;
 
   &::-webkit-calendar-picker-indicator {
     display: none;
@@ -27,7 +27,7 @@
   &:read-only,
   &[readonly] {
     cursor: auto !important;
-    background-color: $color-grey-100;
+    background-color: $color-gray-100;
   }
 
   &:is(textarea) {

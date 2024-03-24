@@ -13,10 +13,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { PAGE_SIZE_OPTIONS, PaginatorPageModel } from './stroytorg-paginator.models';
 import { StroytorgButtonComponent } from '../stroytorg-button';
-import { Icon } from '@stroytorg/shared';
 import { StroytorgSelectComponent } from '../stroytorg-select';
-import { InputSize } from '../stroytorg-base-form';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'stroytorg-paginator',
@@ -35,17 +32,16 @@ export class StroytorgPaginatorComponent implements OnInit, OnChanges {
   @Input()
   currentPage = 1;
 
-  @Output() pageChanged: EventEmitter<void> = new EventEmitter();
+  @Input()
+  showPageSizeSelect = false;
 
-  icon = Icon;
+  @Output() pageChanged: EventEmitter<void> = new EventEmitter();
 
   paginatorState: any;
 
   pageCount!: number;
 
   pageSizeOptions = PAGE_SIZE_OPTIONS;
-
-  selectSize = InputSize;
 
   constructor(private cdRef: ChangeDetectorRef) {}
 

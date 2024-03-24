@@ -15,11 +15,10 @@ export function isFormStateEqual(current: FormState, other: FormState) {
   return false;
 }
 
-export enum InputSize {
-  XSMALL = 'x-small-width',
-  SMALL = 'small-width',
-  DEFAULT = 'default-width',
-  LARGE = 'large-width',
-  XLARGE = 'x-large-width',
-  FULL = 'full-width',
-};
+export type InputSize =
+  | 'x-small-width'
+  | 'small-width'
+  | 'default-width'
+  | 'large-width'
+  | 'x-large-width'
+  | 'full-width';

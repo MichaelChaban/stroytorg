@@ -1,0 +1,71 @@
+<div class="stroytorg-range {{ inputSize }}" [formGroup]="formGroup">
+  <div class="stroytorg-range__container">
+    @if (title) {
+      <label class="stroytorg-range__title">
+        @for (word of title.split(' '); track $index) {
+          @if ($index % 2 === 0) {
+            {{ word }}
+          } @else if ($index % 2 !== 0) {
+            <b>{{ word }}</b>
+          } @else if ($index !== title.split(' ').length - 1) {
+            &nbsp;
+          }
+        }
+      </label>
+    }
+    @if (twoSidesRange) {
+      <div class="stroytorg-range__range-container">
+        <input
+          class="stroytorg-range__range"
+          type="range"
+          [disabled]="disabled"
+          [min]="minValue"
+          [max]="maxValue"
+          [step]="rangeStep"
+          formControlName="minRange"
+        />
+        <input
+          class="stroytorg-range__range"
+          type="range"
+          [disabled]="disabled"
+          [min]="minValue"
+          [max]="maxValue"
+          [step]="rangeStep"
+          formControlName="maxRange"
+        />
+      </div>
+    } @else {
+      <div class="stroytorg-range__range-container">
+        <input
+          class="stroytorg-range__range"
+          type="range"
+          [min]="minValue"
+          [max]="maxValue"
+          [step]="rangeStep"
+          formControlName="maxRange"
+        />
+      </div>
+    }
+    @if (showInputs && minValue !== undefined && maxValue !== undefined) {
+      <div class="stroytorg-range__range-values-container">
+        <div>
+          <span><b>From</b></span>
+          <stroytorg-text-input
+            [disabled]="disabled"
+            formControlName="minRange"
+            [inputSize]="'full-width'"
+            [readonly]="!twoSidesRange"
+          ></stroytorg-text-input>
+        </div>
+        <div>
+          <span><b>To</b></span>
+          <stroytorg-text-input
+            [disabled]="disabled"
+            formControlName="maxRange"
+            [inputSize]="'full-width'"
+          ></stroytorg-text-input>
+        </div>
+      </div>
+    }
+  </div>
+</div>

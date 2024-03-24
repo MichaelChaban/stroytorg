@@ -1,32 +1,42 @@
 import { Icon } from '@stroytorg/shared';
 
-export enum ButtonSize {
-  SMALL = 'small',
-  DEFAULT = '',
-  LARGE = 'large',
-  XLARGE = 'x-large',
-}
+export type ButtonSize =
+  | 'small-width'
+  | 'default-width'
+  | 'large-width'
+  | 'x-large-width'
+  | 'full-width'
+  | 'fit-content-width'
+  | 'auto-width';
 
-export enum ButtonStyle {
-  DEFAULT = 'default-button',
-  PRIMARY = 'primary-button',
-  OUTLINED = 'outlined-button',
-  WARNING = 'warning-button',
-  DANGER = 'danger-button',
-}
+export type ButtonPalette =
+  | 'default-button'
+  | 'primary-button'
+  | 'secondary-button'
+  | 'warning-button'
+  | 'danger-button';
+
+export type ButtonStyle =
+  | 'basic-button'
+  | 'raised-button'
+  | 'stroked-button'
+  | 'flat-button';
 
 export interface ButtonDefinition {
   title?: string;
   icon?: Icon;
-  buttonStyle?: string;
+  buttonPalette?: ButtonPalette;
+  buttonStyle?: ButtonStyle;
+  rounded?: boolean;
+  disabled?: ((data: any) => boolean) | boolean;
   routerLink?: string;
   queryParams?: string;
   tooltip?: TooltipDefinition;
   size: ButtonSize;
-  onClick?: (row: any) => any;
+  onClick?: (row: unknown) => unknown;
 }
 
 export type TooltipDefinition = {
-  tooltipText: string;
-  tooltipPosition?: 'above' | 'left' | 'right' | 'below';
+  title: string;
+  position?: 'above' | 'left' | 'right' | 'below';
 };

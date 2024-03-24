@@ -21,14 +21,14 @@ import { TooltipDefinition } from '../stroytorg-buttons.models';
 export class ButtonTooltipDirective implements OnInit, OnDestroy {
   @Input() tooltip?: TooltipDefinition;
   private tooltipElement!: HTMLElement;
-  private tooltipTimeout: number = 0;
+  private tooltipTimeout = 0;
   private readonly TRANSITION_DURATION = 150;
 
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
     private zone: NgZone,
-    @Inject(PLATFORM_ID) private platformId: object
+    @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
   ngOnInit() {
@@ -71,8 +71,8 @@ export class ButtonTooltipDirective implements OnInit, OnDestroy {
   private createTooltip() {
     if (!this.tooltipElement) {
       this.tooltipElement = this.renderer.createElement('div');
-      this.tooltipElement.className = 'tooltip';
-      this.tooltipElement.textContent = this.tooltip!.tooltipText;
+      this.tooltipElement.className = 'stroytorg-tooltip';
+      this.tooltipElement.textContent = this.tooltip!.title;
       this.renderer.appendChild(document.body, this.tooltipElement);
       this.setTooltipPosition();
       this.renderer.setStyle(this.tooltipElement, 'transform', 'scale(75%)');
@@ -115,7 +115,7 @@ export class ButtonTooltipDirective implements OnInit, OnDestroy {
     let tooltipPositionTop;
     let tooltipPositionLeft;
 
-    switch (this.tooltip!.tooltipPosition) {
+    switch (this.tooltip!.position) {
       case 'above':
         tooltipPositionTop = hostPosition.top - tooltipDimensions.height - 8;
         tooltipPositionLeft =
@@ -128,7 +128,7 @@ export class ButtonTooltipDirective implements OnInit, OnDestroy {
           (hostPosition.height - tooltipDimensions.height) / 2;
         tooltipPositionLeft = hostPosition.left - tooltipDimensions.width - 8;
         if (tooltipPositionLeft < 0) {
-          this.tooltip!.tooltipPosition = 'right';
+          this.tooltip!.position = 'right';
           tooltipPositionLeft = hostPosition.left + hostPosition.width + 8;
         }
         break;
@@ -138,9 +138,8 @@ export class ButtonTooltipDirective implements OnInit, OnDestroy {
           (hostPosition.height - tooltipDimensions.height) / 2;
         tooltipPositionLeft = hostPosition.left + hostPosition.width + 8;
         if (tooltipPositionLeft + tooltipDimensions.width > window.innerWidth) {
-          this.tooltip!.tooltipPosition = 'left';
-          tooltipPositionLeft =
-            hostPosition.left - tooltipDimensions.width - 8;
+          this.tooltip!.position = 'left';
+          tooltipPositionLeft = hostPosition.left - tooltipDimensions.width - 8;
         }
         break;
       case 'below':
@@ -156,12 +155,12 @@ export class ButtonTooltipDirective implements OnInit, OnDestroy {
     this.renderer.setStyle(
       this.tooltipElement,
       'top',
-      `${tooltipPositionTop}px`
+      `${tooltipPositionTop}px`,
     );
     this.renderer.setStyle(
       this.tooltipElement,
       'left',
-      `${tooltipPositionLeft}px`
+      `${tooltipPositionLeft}px`,
     );
   }
 }

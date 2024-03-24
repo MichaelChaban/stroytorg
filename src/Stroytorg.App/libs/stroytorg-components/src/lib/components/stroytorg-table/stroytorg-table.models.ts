@@ -2,14 +2,13 @@
 import { InjectionToken, TemplateRef } from '@angular/core';
 import { Params } from '@angular/router';
 import { Icon, Sort, SortDirection, keyOrFn } from '@stroytorg/shared';
-import { ButtonStyle, TooltipDefinition } from '../stroytorg-button';
+import { ButtonPalette, ButtonStyle, TooltipDefinition } from '../stroytorg-button';
 
 export interface ColumnDefinition<T, _KEY = keyof T> {
   id: string;
   value?: ((row?: T) => string | undefined) | string;
   headerName?: string;
   icon?: Icon;
-  type?: string;
   sortable?: boolean;
   routerLink?: ((row?: T) => string) | string;
   queryParams?: Params;
@@ -19,11 +18,14 @@ export interface ColumnDefinition<T, _KEY = keyof T> {
 }
 
 export interface ColumnActionDefinition{
+  buttonPalette?: ButtonPalette;
   buttonStyle?: ButtonStyle;
   tooltip?: TooltipDefinition;
   icon?: Icon;
   title?: string;
   buttonClass?: string;
+  rounded?: boolean;
+  disabled?: ((row?: any) => boolean) | boolean;
   onClick?: (row: any) => any;
   routerLink?: string;
   queryParams?: { [key: string]: any };
@@ -85,14 +87,9 @@ export class ColumnModel<T> {
       this.queryParams = this.configuration.queryParams;
     }
 
-    if (this.routerLink) {
-      this.columnClass += ' ' + 'link';
-    }
-
     if (this.sortable) {
       this.sortable = this.configuration.sortable;
     }
-
     if (this.configuration.columnActions) {
       this.columnActions = this.configuration.columnActions;
     }

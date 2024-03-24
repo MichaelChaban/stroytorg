@@ -1,4 +1,7 @@
 // Stroytorg color palette variables
+$color-white-500: rgb(255, 255, 255, 0.5);
+$color-white-600: rgb(255, 255, 255, 0.6);
+$color-white-700: rgb(255, 255, 255, 0.7);
 $color-white-800: rgb(255, 255, 255, 0.8);
 $color-white-900: rgb(255, 255, 255, 0.9);
 $color-white: #ffffff;
@@ -6,15 +9,20 @@ $color-white: #ffffff;
 $color-green: #009b00;
 
 $color-light-yellow: #fdec8c;
-$color-yellow: #ffd800;
+$color-yellow: #ffc107;
 $color-dark-yellow: #ecc900;
 $color-darker-yellow: #d4b101;
 
+$color-lighter-orange-200: rgb(253, 224, 211, 0.2);
+$color-lighter-orange-300: rgb(253, 224, 211, 0.3);
 $color-lighter-orange-400: rgb(253, 224, 211, 0.4);
+$color-lighter-orange-500: rgb(253, 224, 211, 0.5);
 $color-lighter-orange-700: rgba(253, 224, 211, 0.7);
 $color-lighter-orange: rgb(253, 224, 211);
 $color-light-orange-500: rgb(248, 173, 140, 0.5);
+$color-light-orange-700: rgb(248, 173, 140, 0.7);
 $color-light-orange: #f8ad8c;
+$color-orange-800: rgb(255, 126, 71, 0.8);
 $color-orange: #ff7e47;
 $color-dark-orange: #f26a31;
 $color-darker-orange: #db4b0f;
@@ -22,28 +30,37 @@ $color-darker-orange: #db4b0f;
 $color-light-red-300: rgb(253, 137, 137, 0.3);
 $color-light-red-500: rgb(253, 137, 137, 0.5);
 $color-light-red: #fd8989;
-$color-red: #ec0202;
+$color-red: #f44336;
 $color-dark-red: #cc0000;
 $color-darker-red: #990000;
 
 $color-dark-blue-100: rgb(#20374f, 0.1);
+$color-dark-blue-800: rgb(#20374f, 0.8);
+$color-dark-blue-900: rgb(#20374f, 0.9);
 $color-dark-blue: #20374f;
 
-$color-lighter-grey: #fcf8f8;
-$color-light-grey: #ecebeb;
-$color-grey-100: rgb(175, 171, 171, 0.1);
-$color-grey-200: rgb(175, 171, 171, 0.2);
-$color-grey-300: rgb(175, 171, 171, 0.3);
-$color-grey-400: rgb(175, 171, 171, 0.4);
-$color-grey-500: rgb(175, 171, 171, 0.5);
-$color-grey-600: rgb(175, 171, 171, 0.6);
-$color-grey-700: rgb(175, 171, 171, 0.7);
-$color-grey-800: rgb(175, 171, 171, 0.8);
-$color-grey: #afabab;
-$color-dark-grey: #333333;
+$color-lighter-gray-300: rgb(252, 248, 248, 0.3);
+$color-lighter-gray-500: rgb(252, 248, 248, 0.5);
+$color-lighter-gray: #fcf8f8;
+$color-light-gray: #ecebeb;
+$color-gray-100: rgb(175, 171, 171, 0.1);
+$color-gray-200: rgb(175, 171, 171, 0.2);
+$color-gray-300: rgb(175, 171, 171, 0.3);
+$color-gray-400: rgb(175, 171, 171, 0.4);
+$color-gray-500: rgb(175, 171, 171, 0.5);
+$color-gray-600: rgb(175, 171, 171, 0.6);
+$color-gray-700: rgb(175, 171, 171, 0.7);
+$color-gray-800: rgb(175, 171, 171, 0.8);
+$color-gray: #afabab;
 
+$color-light-black-700: rgba(#333333, 0.7);
+$color-light-black-800: rgba(#333333, 0.8);
+$color-light-black-850: rgba(#333333, 0.85);
+$color-light-black-900: rgba(#333333, 0.9);
 $color-light-black: #333333;
 $color-black-700: rgba(0, 0, 0, 0.7);
+$color-black-800: rgba(0, 0, 0, 0.8);
+$color-black-900: rgba(0, 0, 0, 0.9);
 $color-black: #000000;
 
 // Stroytorg text-input variables
@@ -63,90 +80,9 @@ $default-transition: 0.1s;
 
 %input-common {
   width: 100%;
-  color: $color-dark-grey;
+  color: $color-light-black;
   padding: $input-padding;
   border-radius: $input-border-radius;
   outline: none;
   transition: $default-transition;
-}
-
-//Stroytorg button functions
-@mixin buttonBase {
-  display: flex;
-  align-self: center;
-  border-radius: 5px;
-  padding: 0.75em 2em;
-  font-weight: 500;
-  font-size: 15px;
-  transition: $default-transition;
-  border: none;
-  user-select: none;
-
-  &:disabled,
-  &[disabled] {
-    cursor: not-allowed !important;
-  }
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
-}
-
-@mixin buttonPalette(
-  $bgColor,
-  $color,
-  $hoverColor,
-  $activeColor,
-  $shadowColor
-) {
-  background-color: $bgColor;
-  color: $color;
-
-  &:hover:enabled,
-  &:focus:enabled {
-    background-color: $hoverColor;
-    cursor: pointer;
-  }
-
-  &:active:enabled,
-  &.enter-pressed {
-    background-color: $activeColor;
-    box-shadow: $shadowColor 0px 0px 0px 3px;
-  }
-
-  &:active:not(:focus, :disabled, [disabled]),
-  &.enter-pressed:not(:focus) {
-    background-color: $bgColor;
-  }
-
-  &:disabled,
-  &[disabled] {
-    background-color: rgb($hoverColor, 0.1);
-    color: rgb($color, 0.8);
-  }
-}
-
-@mixin buttonWithIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75em !important;
-}
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  50% {
-    opacity: 0.5;
-    visibility: visible;
-  }
-
-  100% {
-    opacity: 1;
-    visibility: visible;
-  }
 }

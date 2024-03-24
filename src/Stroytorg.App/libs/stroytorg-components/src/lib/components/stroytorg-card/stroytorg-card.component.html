@@ -1,11 +1,40 @@
-@if(data && cardDefinition){
-<div class="cards-container">
-  @for (row of data; track $index) {
-  <stroytorg-card-element
-    class="card"
-    [cardDefinition]="cardDefinition"
-    [cardData]="row"
-  ></stroytorg-card-element>
-  }
-</div>
+@if (data && cardDefinition) {
+  <div [ngClass]="{ 'stroytorg-card__container': !isMobile }">
+    <div class="stroytorg-card__filter-container">
+      @if (filter && filter.length) {
+        <stroytorg-card-filter
+          [filter]="filter"
+          (valueChange)="filterValueChange($event)"
+        />
+      }
+    </div>
+    <div class="stroytorg-card__card-container">
+      <div class="stroytorg-card__cards-container" #cardsContainer>
+        @for (row of data; track $index) {
+          <stroytorg-card-element
+            class="stroytorg-card"
+            [class.card-disabled]="cardDefinition.cardDisabled | keyOrFn: row"
+            [cardDefinition]="cardDefinition"
+            [cardData]="row"
+          />
+        }
+      </div>
+      @if (currentPage < totalPages) {
+        <div class="stroytorg-card__load-next">
+          <stroytorg-button
+            [palette]="'primary-button'"
+            [style]="'raised-button'"
+            [icon]="'arrow_downward'"
+            [title]="'Show next'"
+            [isLoadingVisible]="true"
+          />
+        </div>
+      }
+      @if (loading) {
+        <div class="stroytorg-card__loader-container">
+          <stroytorg-loader />
+        </div>
+      }
+    </div>
+  </div>
 }

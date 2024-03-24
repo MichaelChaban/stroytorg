@@ -12,3 +12,6 @@ export * from './stroytorg-text-input';
 export * from './stroytorg-time';
 export * from './stroytorg-loader';
 export * from './stroytorg-snackbar';
+export * from './stroytorg-range';
+export * from './stroytorg-radio';
+export * from './stroytorg-chip';

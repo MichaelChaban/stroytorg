@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Stroytorg.Application;
 using Stroytorg.Application.Behaviors;
 using Stroytorg.Application.Extensions;
@@ -39,7 +40,8 @@ public static class ServiceExtensions
             .AddMicroservices()
             .AddFacades()
             .AddRepositories()
-            .AddDb();
+            .AddDb()
+            .AddSwagger();
     }
 
     public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
@@ -153,6 +155,16 @@ public static class ServiceExtensions
     {
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
+
+        return services;
+    }
+
+    private static IServiceCollection AddSwagger(this IServiceCollection services)
+    {
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Stroytorg.API", Version = "v1" });
+        });
 
         return services;
     }

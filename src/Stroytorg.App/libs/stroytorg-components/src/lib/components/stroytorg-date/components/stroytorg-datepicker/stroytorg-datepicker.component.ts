@@ -31,7 +31,7 @@ export class StroytorgDatePickerComponent implements OnInit {
 
   selectDate(date: DatePickerDate): void {
     this.viewFacade.selectDate(date);
-    this.datePickerChanges.emit(new Date(date.year, date.monthIndex, date.monthDayNumber + 1));
+    this.datePickerChanges.emit(new Date(date.year, date.monthIndex, date.monthDayNumber));
   }
 
   getMonthName(): void {

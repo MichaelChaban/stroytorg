@@ -8,20 +8,6 @@
   max-height: 600px;
   overflow-y: auto;
   border-radius: 0.5em 0 0 0.5em;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: $color-grey-600;
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: $color-grey-100 !important;
-  }
 }
 
 .stroytorg-table {
@@ -48,7 +34,7 @@
   top: 0;
   left: 0;
   z-index: 1;
-  height: 3.5rem;
+  padding-block: $cell-padding-block;
   color: $color-white-900;
   background-color: $color-darker-orange;
 }
@@ -58,18 +44,51 @@
 
   tr {
     &:not(:last-child) {
-      border-bottom: 1px solid $color-grey-400;
+      border-bottom: 1px solid $color-gray-400;
     }
 
     &:nth-of-type(even) {
-      background-color: $color-grey-100;
+      background-color: $color-gray-100;
     }
+  }
+}
+
+.stroytorg-table__body_mobile {
+  width: 100%;
+
+  tr {
+    &:not(:last-child) {
+      border-bottom: 1px solid $color-gray-400;
+    }
+
+    &:nth-of-type(even) {
+      background-color: $color-gray-100;
+    }
+  }
+}
+
+.stroytorg-table__row_container_mobile{
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-wrap: wrap;
+  column-count: 1;
+  padding-block: $cell-padding-block;
+  row-gap: 1.5rem;
+
+  td {
+    padding: 0 !important;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    column-gap: 1.5rem;
   }
 }
 
 .stroytorg-table__footer {
   width: 100%;
-  height: 3.5rem;
+  padding-block: $cell-padding-block;
   padding-inline: $cell-padding-inline;
   position: sticky;
   bottom: 0;
@@ -77,7 +96,7 @@
   display: flex;
   align-items: center;
   z-index: 1;
-  background-color: $color-lighter-grey;
+  background-color: $color-lighter-gray;
 }
 
 .stroytorg-table__checkbox {
@@ -104,5 +123,9 @@ stroytorg-table {
 @media screen and (max-width: 600px) {
   .stroytorg-table__checkbox {
     padding-right: $cell-padding-inline;
+  }
+
+  .stroytorg-table__footer {
+    padding-inline: 0;
   }
 }

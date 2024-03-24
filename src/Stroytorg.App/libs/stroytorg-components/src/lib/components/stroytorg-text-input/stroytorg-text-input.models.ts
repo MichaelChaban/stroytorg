@@ -1,4 +1,1 @@
-export enum InputType {
-  MULTILINE = 'multiline',
-  SINGLELINE = 'singleline',
-}
+export type InputType = 'multiline' | 'singleline';

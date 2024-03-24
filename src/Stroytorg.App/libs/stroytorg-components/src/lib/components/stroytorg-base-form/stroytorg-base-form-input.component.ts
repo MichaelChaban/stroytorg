@@ -14,9 +14,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { StroytorgBaseInputControls } from './stroytorg-base-form-input-controls';
 import { InputSize } from './stroytorg-base-form.models';
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = () => {};
+import { OnChanges } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
 
 @Component({
   template: '',
@@ -24,7 +23,11 @@ const noop = () => {};
   imports: [CommonModule, ReactiveFormsModule],
 })
 export class StroytorgBaseFormInputComponent
-  implements StroytorgBaseInputControls<any>, ControlValueAccessor, OnInit
+  implements
+    StroytorgBaseInputControls<any>,
+    ControlValueAccessor,
+    OnInit,
+    OnChanges
 {
   readonly ngControl: NgControl;
 
@@ -59,20 +62,20 @@ export class StroytorgBaseFormInputComponent
   hint!: string;
 
   @Input()
-  disabled!: boolean;
+  disabled = false;
 
   @Input()
-  showErrors: boolean = false;
+  showErrors = false;
 
   @Input()
   placeholder!: string;
 
   @Input()
-  inputSize: InputSize = InputSize.DEFAULT;
+  inputSize: InputSize = 'default-width';
 
-  onChange: any = noop;
+  onChange(event?: any): void {}
 
-  onTouch: any = noop;
+  onTouch(event?: any): void {}
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -104,22 +107,32 @@ export class StroytorgBaseFormInputComponent
         this.formControl = this.ngControl.control;
         if (this.ngControl instanceof NgModel) {
           this.formControl.valueChanges.subscribe(() =>
-            this.ngControl.viewToModelUpdate(this.control.value)
+            this.ngControl.viewToModelUpdate(this.control.value),
           );
         }
       } else {
         this.formControl = new FormControl();
       }
-    }
-    else {
+    } else {
       this.formControl = new FormControl();
+    }
+    if (this.disabled) {
+      this.formControl.disable();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['disabled']) {
+      this.disabled = changes['disabled'].currentValue;
+    } else if (changes['readonly']) {
+      this.readonly = changes['readonly'].currentValue;
     }
   }
 
   isRequired() {
     if (this.ngControl) {
       const validator = this.ngControl?.control?.validator?.(
-        {} as AbstractControl
+        {} as AbstractControl,
       );
       return this.required || (validator && validator['required']);
     }

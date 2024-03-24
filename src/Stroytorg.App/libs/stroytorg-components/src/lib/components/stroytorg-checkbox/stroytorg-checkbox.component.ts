@@ -9,6 +9,7 @@ import {
   Self,
   OnChanges,
   SimpleChanges,
+  forwardRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -32,7 +33,7 @@ import {
   providers: [
     {
       provide: StroytorgBaseInputControls,
-      useExisting: StroytorgCheckboxComponent,
+      useExisting: forwardRef(() => StroytorgCheckboxComponent),
     },
   ],
 })
@@ -41,7 +42,7 @@ export class StroytorgCheckboxComponent
   implements ControlValueAccessor, OnChanges
 {
   @Input()
-  checked = this.ngControl?.value;
+  checked = this.formControl?.value;
 
   @Input()
   title?: string;
@@ -52,15 +53,16 @@ export class StroytorgCheckboxComponent
     super(ngControl);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  override ngOnChanges(changes: SimpleChanges): void {
+    super.ngOnChanges(changes);
     if (changes['checked']) {
       this.checked = changes['checked'].currentValue;
-      this.ngControl?.control?.setValue(this.checked);
+      this.formControl?.setValue(this.checked);
     }
   }
 
   toggle(): void {
-    if (this.ngControl?.disabled) {
+    if (this.formControl?.disabled) {
       return;
     }
     this.checked = !this.checked;

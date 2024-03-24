@@ -1,0 +1,64 @@
+@if (cardDefinition && cardData) {
+  <div>
+    @for (element of cardDefinition.cardRowDefinition; track $index) {
+      <div class="w-100">
+        @if (element?.title || element?.content || element?.cardRowActions) {
+          <div
+            class="stroytorg-card-default-p"
+            [ngClass]="element?.cardRowClass"
+          >
+            @if (element?.title) {
+              <h1 class="fw-bold fs-5">
+                {{ element.title | keyOrFn: cardData }}
+              </h1>
+            } @else if (element?.content) {
+              <div
+                class="stroytorg-card-content-container"
+                [ngClass]="{ 'stroytorg-card-show-all': isContentShown }"
+              >
+                {{ element.content | keyOrFn: cardData }}
+              </div>
+              <p class="text-end">
+                <small
+                  class="stroytorg-card-show-more-less"
+                  (click)="isContentShown = !isContentShown"
+                >
+                  {{ isContentShown ? 'less' : 'more' }}
+                </small>
+              </p>
+            } @else if (element?.cardRowActions) {
+              @for (action of element.cardRowActions; track $index) {
+                <div class="mt-1">
+                  <stroytorg-button
+                    [style]="action?.buttonStyle"
+                    [palette]="action?.buttonPalette"
+                    [size]="action?.size ? action?.size! : 'full-width'"
+                    [disabled]="action?.disabled | keyOrFn: cardData"
+                    [title]="action?.title"
+                    [tooltip]="action?.tooltip"
+                    [icon]="action?.icon"
+                    [rounded]="action?.rounded"
+                    [queryParams]="isSet(action?.queryParams)"
+                    [routerLink]="isSet(action?.routerLink)"
+                    (clickFn)="action?.onClick(cardData)"
+                  ></stroytorg-button>
+                </div>
+              }
+            }
+          </div>
+        }
+        @if (element?.imageName) {
+          <div class="stroytorg-card-image">
+            <img
+              src="{{ baseImagePath }}{{ element.imageName }}"
+              alt="{{ element.imageName }}"
+            />
+          </div>
+        }
+        @if (element?.template) {
+          <ng-template [ngTemplateOutlet]="element.template!"></ng-template>
+        }
+      </div>
+    }
+  </div>
+}

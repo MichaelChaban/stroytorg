@@ -1,6 +1,6 @@
 .stroytorg-time {
   @extend %input-common;
-  border: 0.25px solid $color-grey;
+  border: 0.25px solid $color-gray;
 
   &::-webkit-calendar-picker-indicator {
     display: none;
@@ -13,7 +13,7 @@
   &:focus:not(:read-only, [readonly]),
   &:active:not(:read-only, [readonly]) {
     ::-webkit-time-edit {
-      color: $color-dark-grey;
+      color: $color-light-black;
     }
 
     & + stroytorg-timepicker > .stroytorg-timepicker-container {
@@ -27,7 +27,7 @@
   &:read-only,
   &[readonly] {
     cursor: auto !important;
-    background-color: $color-grey-100;
+    background-color: $color-gray-100;
   }
 
   &:is(textarea) {
@@ -78,6 +78,6 @@
 
 .stroytorg-time-with-value {
   &::-webkit-time-edit {
-    color: $color-dark-grey !important;
+    color: $color-light-black !important;
   }
 }

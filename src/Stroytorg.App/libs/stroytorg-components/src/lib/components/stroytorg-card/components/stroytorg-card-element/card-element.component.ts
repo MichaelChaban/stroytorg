@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-selector */
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { KeyOrFunctionPipe } from '@stroytorg/shared';
-import { StroytorgButtonComponent } from '../../stroytorg-button';
-import { CardDefinition } from '../stroytorg-card.models';
+import { StroytorgButtonComponent } from '../../../stroytorg-button';
+import { CardDefinition } from '../../stroytorg-card.models';
+import { environment } from 'apps/stroytorg.app/src/environments/environment';
 
 @Component({
   selector: 'stroytorg-card-element',
@@ -12,15 +14,16 @@ import { CardDefinition } from '../stroytorg-card.models';
   templateUrl: './card-element.component.html',
 })
 export class StroytorgCardElementComponent<T> {
+
   @Input()
-  cardDefinition!: CardDefinition[];
+  cardDefinition!: CardDefinition;
 
   @Input()
   cardData!: T;
 
-  baseImagePath = '';
+  baseImagePath = environment.baseImagePath;
 
-  showContent = false;
+  isContentShown = false;
 
   isSet(element: any) {
     if (element) {

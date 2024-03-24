@@ -1,25 +1,33 @@
 @if (title || icon) {
-<button
-  class="stroytorg-button {{ style }} {{ size }}"
-  [ngClass]="buttonClass"
-  enterPress
-  [tooltip]="tooltip"
-  [class.icon-label-button]="icon && title"
-  [class.icon-button]="icon && !title"
-  [class.button-rounded]="rounded"
-  [disabled]="disabled"
-  [type]="buttonType"
-  [routerLink]="routerLink"
-  [queryParams]="queryParams"
->
-  @if(icon){
-  <mat-icon [ngClass]="{ 'mr-2': title }">
-    {{ icon }}
-  </mat-icon>
-  } @if(title){
-  <span [ngClass]="{ 'm-auto': !icon }">
-    {{ title }}
-  </span>
-  }
-</button>
+  <button
+    class="stroytorg-button {{ palette }} {{ style }} {{ size }}"
+    [ngClass]="buttonClass"
+    enterPress
+    ripple
+    [tooltip]="tooltip"
+    [class.icon-label-button]="icon && title"
+    [class.icon-button]="icon && !title"
+    [class.button-rounded]="rounded"
+    [disabled]="disabled"
+    [type]="buttonType"
+    [routerLink]="routerLink"
+    [queryParams]="queryParams"
+    title=""
+  >
+    @if (icon) {
+      <mat-icon [ngClass]="{ 'mr-2': title }">
+        {{ icon }}
+      </mat-icon>
+    }
+    @if (title) {
+      <span [ngClass]="{ 'm-auto': !icon }">
+        {{ title }}
+      </span>
+    }
+    @if (isLoadingVisible && (loading$ | async)) {
+      <div class="stroytorg-button__loader">
+        <stroytorg-loader></stroytorg-loader>
+      </div>
+    }
+  </button>
 }

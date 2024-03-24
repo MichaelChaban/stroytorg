@@ -1,0 +1,18 @@
+@if (title) {
+  <div
+    class="stroytorg-chip {{ palette }}"
+    [ngClass]="selected ? 'stroytorg-selected-chip' : ''"
+    [class.stroytorg-chip-selected]="selectable"
+    (click)="selectChip()"
+  >
+    @if (selected && selectable) {
+      <mat-icon class="stroytorg-chip__check">check</mat-icon>
+    }
+    <span>{{ title }}</span>
+    @if (true) {
+      <mat-icon class="stroytorg-chip__remove" (click)="removeChip($event)"
+        >close</mat-icon
+      >
+    }
+  </div>
+}

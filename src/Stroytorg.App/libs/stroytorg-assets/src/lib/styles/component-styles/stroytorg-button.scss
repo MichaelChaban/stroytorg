@@ -1,37 +1,197 @@
+@mixin buttonBase {
+  display: flex;
+  align-self: center;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  font-weight: 500;
+  font-size: 15px;
+  transition: 0.2s;
+  border: none;
+  user-select: none;
+
+  &:disabled,
+  &[disabled] {
+    cursor: not-allowed !important;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+/// Basic button
+@mixin basicButton($color, $bgColor) {
+  color: $color;
+  background-color: transparent;
+
+  &:disabled {
+    color: rgb($color, 0.5);
+  }
+
+  &:enabled:hover {
+    background-color: rgb($bgColor, 0.15);
+  }
+
+  .stroytorg-ripple {
+    background-color: rgb($bgColor, 0.4);
+  }
+}
+
+/// Raised button
+@mixin raisedButton($color, $bgColor, $rippleBgColor) {
+  color: $color;
+  background-color: $bgColor;
+  box-shadow: 0px 2px 4px rgb($color-black, 0.3);
+
+  &:disabled {
+    color: rgb($color, 0.8);
+    background-color: rgb($bgColor, 0.5);
+  }
+
+  &:enabled:hover {
+    background-color: rgb($bgColor, 0.8);
+    box-shadow: 0px 3px 7px rgb($color-black, 0.3);
+  }
+
+  &:enabled:active {
+    box-shadow: 0px 5px 10px rgb($color-black, 0.3);
+  }
+
+  .stroytorg-ripple {
+    background-color: $rippleBgColor;
+  }
+}
+
+/// Stroked button
+@mixin strokedButton($color, $bgColor) {
+  color: $color;
+  background-color: transparent;
+  border: 1px solid $color;
+
+  &:disabled {
+    color: rgb($color, 0.5);
+    border-color: rgb($color, 0.5);
+  }
+
+  &:enabled:hover {
+    background-color: rgb($bgColor, 0.15);
+  }
+
+  .stroytorg-ripple {
+    background-color: rgb($bgColor, 0.4);
+  }
+}
+
+/// Flat button
+@mixin flatButton($color, $bgColor, $rippleBgColor) {
+  color: $color;
+  background-color: $bgColor;
+
+  &:disabled {
+    color: rgb($color, 0.8);
+    background-color: rgb($bgColor, 0.5);
+  }
+
+  &:enabled:hover {
+    background-color: rgb($bgColor, 0.8);
+  }
+
+  .stroytorg-ripple {
+    background-color: $rippleBgColor;
+  }
+}
+
+@mixin buttonWithIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em !important;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  50% {
+    opacity: 0.5;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 .stroytorg-button {
   @include buttonBase;
-  background: linear-gradient(to bottom, var(--button-bg-bottom), var(--button-bg-top));
+  position: relative;
+  overflow: hidden;
 }
 
-.default-button {
-  @include buttonPalette($color-grey-200, $color-dark-grey, $color-grey-400, $color-grey-500, transparent);
+/// Basic buttons
+.default-button.basic-button {
+  @include basicButton($color-light-black, $color-gray);
+}
+.primary-button.basic-button {
+  @include basicButton($color-orange, $color-light-orange);
+}
+.warning-button.basic-button {
+  @include basicButton($color-yellow, $color-light-yellow);
+}
+.danger-button.basic-button {
+  @include basicButton($color-red, $color-light-red);
 }
 
-.primary-button {
-  @include buttonPalette($color-orange, $color-white, $color-dark-orange, $color-darker-orange, $color-light-orange);
+/// Raised buttons
+.default-button.raised-button {
+  @include raisedButton($color-light-black, $color-white, $color-gray-400);
+}
+.primary-button.raised-button {
+  @include raisedButton($color-white, $color-orange, $color-lighter-gray-300);
+}
+.secondary-button.raised-button {
+  @include raisedButton($color-orange, $color-white, $color-lighter-orange-500);
+}
+.warning-button.raised-button {
+  @include raisedButton($color-white, $color-yellow, $color-lighter-gray-300);
+}
+.danger-button.raised-button {
+  @include raisedButton($color-white, $color-red, $color-lighter-gray-300);
 }
 
-.outlined-button {
-  @include buttonPalette($color-white, $color-orange, #fff2f2, #fff2f2, $color-light-orange);
-  border: 2px solid $color-orange;
-
-  &:active:enabled,
-  &.enter-pressed {
-    border-color: $color-light-orange;
-  }
-
-  &:active:not(:focus),
-  &.enter-pressed:not(:focus) {
-    border: 2px solid $color-orange;
-  }
+/// Stroked buttons
+.default-button.stroked-button {
+  @include strokedButton($color-light-black, $color-gray);
+}
+.primary-button.stroked-button {
+  @include strokedButton($color-orange, $color-light-orange);
+}
+.warning-button.stroked-button {
+  @include strokedButton($color-yellow, $color-light-yellow);
+}
+.danger-button.stroked-button {
+  @include strokedButton($color-red, $color-light-red);
 }
 
-.warning-button {
-  @include buttonPalette($color-yellow, $color-white, $color-dark-yellow, $color-darker-yellow, $color-light-yellow);
+/// Flat buttons
+.default-button.flat-button {
+  @include flatButton($color-light-black, $color-white, $color-gray-400);
 }
-
-.danger-button {
-  @include buttonPalette($color-red, $color-white, $color-dark-red, $color-darker-red, $color-light-red);
+.primary-button.flat-button {
+  @include flatButton($color-white, $color-orange, $color-lighter-gray-300);
+}
+.secondary-button.flat-button {
+  @include flatButton($color-orange, $color-white, $color-lighter-orange-500);
+}
+.warning-button.flat-button {
+  @include flatButton($color-white, $color-yellow, $color-lighter-gray-300);
+}
+.danger-button.flat-button {
+  @include flatButton($color-white, $color-red, $color-lighter-gray-300);
 }
 
 .icon-label-button {
@@ -44,11 +204,13 @@
   @include buttonWithIcon;
 }
 
-.tooltip {
+.stroytorg-tooltip {
   position: absolute;
-  background-color: $color-black-700;
+  background-color: $color-black-900;
   color: $color-white;
   text-align: center;
+  text-wrap: wrap;
+  max-width: 10rem;
   padding: 5px;
   border-radius: 4px;
   font-size: 12px;
@@ -57,4 +219,13 @@
 
 .button-rounded {
   border-radius: 100% !important;
+}
+
+.stroytorg-button__loader {
+  & > * > .loader-container {
+    background-color: $color-white-800;
+    & > .loader {
+      transform: scale(0.5) rotate(45deg);
+    }
+  }
 }

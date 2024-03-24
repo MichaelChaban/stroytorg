@@ -13,5 +13,5 @@
     "jest.config.ts",
     "src/**/*.test.ts"
   ],
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "../stroytorg-components/src/lib/components/stroytorg-base-form/unsubcribe-control.component.ts"]
 }

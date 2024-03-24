@@ -1,9 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Icon } from '@stroytorg/shared';
 import { WEEK_DAYS_NANE, MONTH_OPTIONS, DatePickerDate, patchValueToModel, createFormGroup, YEAR_OPTIONS, dateToPickerDate, areDatesEqual } from './stroytorg-datepicker.models';
 import { StroytorgDatePickerService } from './stroytorg-datepicker.service';
-import { InputSize } from '../../../stroytorg-base-form';
 
 @Injectable()
 export class StroytorgDatePickerFacade {
@@ -12,13 +10,9 @@ export class StroytorgDatePickerFacade {
 
   formGroup!: FormGroup;
 
-  previosMonthIcon = Icon.DOUBLE_LEFT;
-  nextMonthIcon = Icon.DOUBLE_RIGHT;
   weekDaysName = WEEK_DAYS_NANE;
   monthOptions = MONTH_OPTIONS;
   yearOptions = YEAR_OPTIONS;
-
-  selectSize = InputSize;
 
   monthDates!: DatePickerDate[];
   monthNumber!: number;
@@ -86,7 +80,7 @@ export class StroytorgDatePickerFacade {
   private setMonthDays(days: DatePickerDate[]) {
     this.monthDates = days;
     const currectMonthDate = this.monthDates.find(
-      (x) => x.monthDayNumber === 0
+      (x) => x.monthDayNumber === 1
     )!;
     this.monthNumber = currectMonthDate.monthIndex;
     this.year = currectMonthDate.year;
